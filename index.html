@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhurta Calendar — Vedic Panchang Ledger</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --canvas:#F2EECB; --paper:#F8F0DE; --ink:#3D2412; --ink-soft:#7a5a44;
+    --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#C8A86E; --line-faint:#E2D3AE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.55;
+  }
+  h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:24px 26px 30px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(248,240,222,.92);
+    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(248,240,222,.5)}
+  .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+  .frame::after{content:"";position:absolute;inset:9px;border:1px solid var(--line-faint);pointer-events:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .range{display:flex;align-items:center;border:1px solid var(--gold);background:var(--paper)}
+  .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink)}
+  .range button.active{background:var(--saffron);color:#2b1505;font-weight:600}
+  .range .nav{color:var(--vermilion);font-weight:600}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.small{padding:4px 10px;font-size:13px}
+  .card{border:1px solid var(--line-faint);background:rgba(255,251,240,.72);padding:15px;margin-bottom:15px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .card h2 svg{width:15px;height:15px}
+  .profile{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+  .kv .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft)}
+  .kv .v{font-weight:600}
+  .kv .v em{font-style:normal;color:var(--vermilion)}
+  .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .dow{text-align:center;font-size:12px;font-weight:600;color:var(--vermilion);letter-spacing:.08em;padding:5px 0;border-bottom:1px solid var(--line-faint)}
+  .cell{min-height:86px;background:rgba(255,251,240,.9);border:1px solid var(--line-faint);padding:4px;position:relative;cursor:pointer}
+  .cell:hover{border-color:var(--gold)}
+  .cell.selected{border-color:var(--vermilion);outline:1px solid var(--vermilion)}
+  .cell.today{border-color:var(--vermilion)}
+  .cell .num{font-size:14px;color:var(--ink)}
+  .cell .num.today{background:var(--vermilion);color:var(--paper);padding:1px 6px}
+  .cell.other{opacity:.4}
+  .cell .tm{font-size:11px;color:var(--ink-soft);font-weight:600}
+  .cell .tithi{font-size:10px;color:var(--gold)}
+  .cell .icons{display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
+  .cell .icons svg{width:14px;height:14px}
+  .cell .tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
+  .cell .tags span{font-size:9px;padding:0 4px;color:var(--paper);background:var(--saffron);border-radius:2px}
+  .cell .tags span.bad{background:var(--vermilion)}
+  .bar{position:absolute;left:4px;right:4px;bottom:5px;height:13px;overflow:hidden}
+  .bar.coarse{background:repeating-linear-gradient(45deg,#E9CFA8 0 6px,#F0DCB8 6px 12px);border:1px solid rgba(61,36,18,.25)}
+  .bar .peak{position:absolute;top:0;bottom:0;background:var(--vermilion)}
+  .layout{display:grid;grid-template-columns:1fr;gap:0}
+  .detail{display:grid;gap:6px}
+  .period{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-left:3px solid var(--gold);background:rgba(255,251,240,.85)}
+  .period .l{display:flex;align-items:center;gap:9px;min-width:0}
+  .period .l svg{width:20px;height:20px;flex:none}
+  .period .t{font-weight:600}
+  .period .tt{font-size:12px;color:var(--ink-soft)}
+  .period .tag{font-family:"Rozha One",serif;font-size:11px;padding:2px 8px;color:var(--paper);flex:none}
+  .tag.bad{background:var(--vermilion)} .tag.mid{background:var(--saffron)}
+  .tag.mut{background:var(--gold)} .tag.per{background:var(--night)}
+  .sunset{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px}
+  .legend .item{display:flex;align-items:center;gap:7px;font-size:13px}
+  .legend .item svg{width:17px;height:17px;flex:none}
+  .swatch{width:18px;height:10px;display:inline-block;border:1px solid var(--line)}
+  .swatch.two{width:24px;background:repeating-linear-gradient(45deg,#E9CFA8 0 5px,#F0DCB8 5px 10px);position:relative;overflow:hidden}
+  .swatch.two::after{content:"";position:absolute;top:0;bottom:0;right:0;width:45%;background:var(--vermilion)}
+  .note{font-size:11px;color:var(--ink-soft);margin-top:6px;font-style:italic}
+  /* forms */
+  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+  .field .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:3px}
+  .field input,.field select{width:100%;font-family:"Eczar",serif;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:6px 8px}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--gold)}
+  .events{display:grid;gap:6px}
+  .ev{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--line-faint);background:rgba(255,251,240,.85)}
+  .ev .t{font-weight:600;font-size:14px}
+  .ev .tt{font-size:12px;color:var(--ink-soft)}
+  .ev .rm{cursor:pointer;color:var(--vermilion);font-family:"Eczar",serif;font-size:13px;border:1px solid var(--line-faint);background:transparent;padding:2px 8px}
+  .range-inputs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .range-inputs input{font-family:"Eczar",serif;font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:4px 6px}
+  #landing{text-align:center}
+  #landing h2{margin-bottom:6px;font-size:19px;text-transform:none;color:var(--ink);border:0;display:block}
+  #landing p{color:var(--ink-soft);margin-bottom:14px;font-size:13px}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .cal-head .title{font-size:18px}
+  .cal-head .tamil-year{font-size:12px;color:var(--ink-soft)}
+  /* ---------- NIGHT MODE ---------- */
+  body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
+    --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
+    --saffron:#E8792B; --vermilion:#E25B4A; --gold:#C9A227; --gold-bright:#E4C45A;
+    --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
+    box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .frame::before{border-color:var(--line)}
+  body.night .frame::after{border-color:var(--line-faint)}
+  body.night .card{background:rgba(29,34,66,.72);border-color:var(--line-faint)}
+  body.night .range{background:rgba(29,34,66,.85)}
+  body.night .cell{background:rgba(29,34,66,.9);border-color:var(--line-faint)}
+  body.night .cell .tm{color:#c6bfa8}
+  body.night .bar.coarse{background:repeating-linear-gradient(45deg,#3A2F1B 0 6px,#463A22 6px 12px);border-color:rgba(239,228,204,.25)}
+  body.night .period{background:rgba(29,34,66,.85)}
+  body.night .swatch.two{background:repeating-linear-gradient(45deg,#3A2F1B 0 5px,#463A22 5px 10px)}
+  body.night .tag.per{background:#3D4678;color:var(--ink)}
+  body.night .dow{color:var(--gold-bright)}
+  body.night .field input,body.night .field select,body.night .range-inputs input{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
+  body.night .frame svg [fill="#3D2412"]{fill:var(--ink)}
+  body.night .frame svg [stroke="#B13B2B"]{stroke:var(--vermilion)}
+  body.night .frame svg [fill="#B13B2B"]{fill:var(--vermilion)}
+  body.night .frame svg [stroke="#B98A3E"]{stroke:var(--gold)}
+  body.night .frame svg [fill="#B98A3E"]{fill:var(--gold)}
+  body.night .frame svg [stroke="#D97427"]{stroke:var(--saffron)}
+  body.night .frame svg [fill="#D97427"]{fill:var(--saffron)}
+  body.night .frame svg [stroke="#D3A94F"]{stroke:var(--gold-bright)}
+  body.night .frame svg [fill="#D3A94F"]{fill:var(--gold-bright)}
+  body.night .frame svg [stroke="#262A4A"]{stroke:#3D4678}
+  body.night .frame svg [fill="#262A4A"]{fill:#3D4678}
+  body.night .frame svg [stroke="#F8F0DE"]{stroke:var(--ink)}
+  body.night .frame svg [fill="#F8F0DE"]{fill:var(--ink)}
+  body.night .frame svg [stroke="#EFE4CC"]{stroke:var(--ink)}
+  body.night .frame svg [fill="#EFE4CC"]{fill:var(--ink)}
+  @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="frame">
+
+  <header class="top">
+    <div class="logo"><span class="mark">॥ श्री ॥</span><h1>Muhurta Calendar</h1><span class="sub">Vedic Panchang Ledger</span></div>
+    <div class="controls">
+      <div class="range">
+        <button class="nav" id="navPrev" title="Previous">‹</button>
+        <button data-range="month" class="active">Month</button>
+        <button data-range="year">Year</button>
+        <button data-range="custom">Custom</button>
+        <button class="nav" id="navNext" title="Next">›</button>
+      </div>
+      <button class="btn ghost" id="editBirth">Edit birth details</button>
+      <button class="btn ghost" id="themeBtn">Night mode</button>
+      <button class="btn" id="icsBtn">Download ICS</button>
+    </div>
+  </header>
+
+  <section class="card" id="landing">
+    <h2>॥ श्री ॥</h2>
+    <p>Enter birth details to generate your Vedic muhurta calendar — chandrashtama, moon phases, eclipses, and daily inauspicious windows. All computation is local and private.</p>
+    <div class="form" id="birthForm">
+      <div class="field"><div class="k">Birth date</div><input type="date" id="bDate" required></div>
+      <div class="field"><div class="k">Birth time</div><input type="time" id="bTime" value="06:42"></div>
+      <div class="field"><div class="k">Place</div><input type="text" id="bPlace" value="Chennai" placeholder="Place name"></div>
+      <div class="field"><div class="k">Latitude</div><input type="number" id="bLat" step="0.0001" value="13.0827"></div>
+      <div class="field"><div class="k">Longitude</div><input type="number" id="bLon" step="0.0001" value="80.2707"></div>
+      <div class="field"><div class="k">Timezone offset (hours)</div><input type="number" id="bTz" step="0.5" value="5.5"></div>
+      <div class="field"><button class="btn" id="computeBtn" type="button">Compute calendar</button></div>
+    </div>
+  </section>
+
+  <section class="card" id="app" hidden>
+    <h2>Birth profile</h2>
+    <div class="profile" id="profile"></div>
+  </section>
+
+  <div class="layout">
+    <section class="card">
+      <div class="cal-head">
+        <div><span class="title" id="calTitle"></span><br><span class="tamil-year" id="calTamilYear"></span></div>
+        <div class="range-inputs" id="customRange" hidden>
+          <input type="date" id="cStart"><input type="date" id="cEnd">
+          <button class="btn small ghost" id="cGo">Apply</button>
+        </div>
+      </div>
+      <div class="calendar" id="cal"></div>
+      <div class="note">Two-tone bar = chandrashtama (coarse rashi window light · peak star dark). Icons = amavasya, purnima, eclipse, personal, festival, shraddha.</div>
+    </section>
+
+    <section class="card">
+      <h2 id="detailTitle">Select a day</h2>
+      <div class="detail" id="detail"></div>
+      <h2 style="margin-top:14px">Day rhythm</h2>
+      <div class="sunset" id="rhythm"><div class="kv"><div class="k">Sunrise</div><div class="v" id="rSunrise">–</div></div><div class="kv"><div class="k">Sunset</div><div class="v" id="rSunset">–</div></div><div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Personal events <span id="evCount" style="font-weight:400;color:var(--ink-soft)"></span></h2>
+    <div class="form" id="evForm" style="margin-bottom:10px">
+      <div class="field"><div class="k">Name</div><input type="text" id="evName" placeholder="e.g. Dad's birthday"></div>
+      <div class="field"><div class="k">Type</div><select id="evType">
+        <option value="birthday">Birthday (annual)</option>
+        <option value="blocked">Blocked / inauspicious day</option>
+        <option value="important">Important day</option>
+        <option value="shraddha">Shraddha (death tithi)</option>
+        <option value="tamil">Tamil-month event</option>
+      </select></div>
+      <div class="field" id="evDateF"><div class="k">Date</div><input type="date" id="evDate"></div>
+      <div class="field" id="evTamilF" hidden>
+        <div class="k">Tamil month</div><select id="evTMonth"></select>
+        <div class="k" style="margin-top:5px">Match on</div><select id="evTKind" style="margin-bottom:3px">
+          <option value="nakshatra">Nakshatra</option><option value="tithi">Tithi</option><option value="tamday">Tamil day number</option>
+        </select>
+        <div class="k" style="margin-top:3px">Value (0-26 nakshatra, 1-30 tithi, 1-30 day)</div><input type="number" id="evTVal" min="0" max="30" placeholder="e.g. 7 = Poosam">
+      </div>
+      <div class="field"><button class="btn small" type="button" id="evAdd">Add event</button></div>
+    </div>
+    <div class="events" id="evList"></div>
+  </section>
+
+  <section class="card">
+    <h2>Legend</h2>
+    <div class="legend" id="legend"></div>
+    <div class="note">Moon-phase discs for amavasya/purnima · Rahu = dragon's severed head (Brihat Samhita) · Yama = noose/pasha · Gulika = dark serpent head (son of Shani) · shraddha = diya · personal = birth star. Two-tone bar: coarse chandrashtama (light) + peak (dark).</div>
+  </section>
+
+</div>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

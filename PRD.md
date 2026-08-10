@@ -2,7 +2,7 @@
 title: Astro-Cal — Vedic Muhurta Calendar
 type: plan
 status: draft
-last_updated: 2026-08-08
+last_updated: 2026-08-10
 related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.md]
 ---
 
@@ -19,6 +19,13 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 
 - **Janma nakshatra + rashi** (birth star + moon sign) — computed from birth date/time/place
   (not picked manually). Janma rashi is required for chandrashtama.
+- **Tithi + moon phase** — the lunar day (Shukla/Krishna paksha + ordinal, e.g. "Shukla
+  Dashami") shown per day cell; Amavasya (new moon) / Purnima (full moon) flagged with the
+  phase-disc icons from the approved UI. Day-detail panel lists tithi + paksha.
+- **Tamil solar calendar** — Tamil month + day rendered beside the English date in every cell
+  (e.g. "Thai 05"), a Tamil year label at the top, and the **sankranti** day (Tamil month start
+  = Sun's ingress into a rashi) highlighted. Tamil festivals are always scheduled in Tamil
+  months, so the Tamil date must be visible to make sense of them.
 - **Chandrashtama (Ashtama Chandra)** — two-tier period (coarse + peak):
   - **Coarse (Drik parity):** transit moon in the 8th **rashi** counted inclusively from janma
     rashi (`(janma_rashi+7) mod 12`); ≈2.25 days, no margin, sunrise→sunrise day.
@@ -31,6 +38,15 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 - **Rahu Kalam / Yama Kalam / Gulika** — daily inauspicious daytime windows (sunrise→sunset split).
 - **Shraddha tithis** — per-ancestor lunar death-anniversary days.
 - **Personal days** — family birthdays, custom important/blocked days.
+- **Tamil festivals** — a curated built-in list of festivals that are *always* computed on the
+  **Tamil solar calendar** (not the Gregorian/lunar month), e.g. **Thai Poosam** = Poosam
+  (Pushya) nakshatra in the month of Thai; **Karthigai Deepam** = Karthigai month (Krittika
+  nakshatra / full-moon rule); **Panguni Uthiram** = Uthiram (Uttara Phalguni) nakshatra in
+  Panguni; **Aadi Perukku** = 18th Tamil day of Aadi; **Aavani Avittam** = Avittam (Dhanishta)
+  nakshatra in Aavani. Rule = **Tamil month + nakshatra/tithi/day-number**, computed from the
+  Tamil date of each day. Plus **custom Tamil-month events**: the user adds an event keyed to a
+  Tamil month + nakshatra (or tithi / Tamil day-number) and it recurs yearly on the computed
+  Tamil date (e.g. a family festival that follows the Tamil calendar).
 
 ## Requirements
 
@@ -45,6 +61,11 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 - Amavasya / Purnima dates + times
 - Eclipse start/max/end (native swisseph)
 - Rahu / Yama / Gulika daily windows
+- **Tithi per day** — paksha + ordinal (e.g. "Shukla Dashami"), shown as a text label under
+  each day cell (and in the day-detail panel).
+- **Tamil solar date per day** — Tamil month + day (e.g. "Thai 05") rendered beside the
+  English date in every cell; **sankranti day** (Sun's ingress into a rashi = Tamil month
+  start) highlighted. Tamil year label at the top of the calendar header.
 
 ### UI / UX
 - **Calculator flow:** land on a birth-details form → compute → preview calendar. No auth; any
@@ -52,14 +73,19 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 - **Range model:** default = **current month** preview; **Month / Year / Custom(start–end)**
   selectors switch the view and drive the ICS export. Today anchored.
 - **Month-view grid** color-flagged by period type; click a day → detail panel with that day's
-  periods + timings; two-tone chandrashtama bar (coarse light + peak dark).
+  periods + timings; two-tone chandrashtama bar (coarse light + peak dark). **Each cell shows
+  the English date, the Tamil solar month + day (e.g. "Thai 05"), and the tithi label**; the
+  Tamil month-start (sankranti) day is highlighted and the header carries the Tamil year name.
 - **Legend:** inline **SVG** symbols + color chips for every period type (deterministic, no image
   files), including the two-tone bar convention.
-- Personal events: add-event form + settings view; edits persist to localStorage.
+- Personal events: add-event form + settings view; edits persist to localStorage. The add-event
+  form also supports **Tamil-calendar events** (Tamil month + nakshatra/tithi/Tamil day-number,
+  yearly recurrence).
 
 ### Export
 - **ICS file** importable into Google / other calendars (all-day + timed events) covering the
-  **selected range**.
+  **selected range** — includes Tamil festivals, personal events, amavasya/purnima, eclipses,
+  and chandrashtama windows. Tithi labels and Tamil dates ride along as the event summary text.
 
 ### Persistence
 - Personal data: **browser localStorage** only — private per browser, no server state, no external
@@ -70,11 +96,22 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 
 - **Match Drik Panchang exactly.** Validated by batch comparison against Drik Panchang **and a
   second independent source** (e.g. AstroSage) across sample dates.
+- **Tithi & Tamil dates:** tithi names + Tamil month/day verified against a Tamil panchangam
+  (e.g. Drik's Tamil calendar view) across the sample set.
+- **Tamil festivals:** the built-in list's rule → date matches Drik's festival calendar for the
+  same sample years (Thai Poosam, Karthigai Deepam, Panguni Uthiram, Aadi Perukku, Aavani
+  Avittam, etc.).
 
 ## Engine
 
 - **Swiss Ephemeris WASM** (offline, browser-capable; VSOP87-grade hand-rolling is insufficient).
 - Lahiri ayanamsa; native solar/lunar eclipse computation; sunrise/sunset at location.
+- **Tithi:** `floor((moon_longitude − sun_longitude) / 12°)` → paksha + ordinal
+  (0–14 Shukla, 15–29 Krishna; Amavasya = 29/0, Purnima = 14).
+- **Tamil solar calendar:** the Tamil month is the rashi the Sun occupies; the month starts at
+  the **sankranti** (Sun's ingress into that rashi). Tamil day = days since the current
+  month's sankranti. Tamil year name = cycle position (60-year cycle) counted from the Chithirai
+  (Mesha) sankranti. All derived from Sun longitude via swisseph — no external calendar data.
 
 ## Deferred — phase 2
 
@@ -180,10 +217,15 @@ astroshastra/hindutva. Rahu matched the prior assumption; Yama and Gulika were w
 ## Build order (proposed)
 
 1. **Research** — DONE (2026-08-08). Findings + corrections in Open items section; all five
-   items resolved.
+   items resolved. Added (2026-08-10): Tamil solar calendar (tithi label, Tamil month/day per
+   cell, Tamil year) + Tamil festivals (built-in + custom Tamil-month events) — all derivable
+   from swisseph, no new research dependency beyond validating festival rules against Drik.
 2. **Scaffold** — static server + settings/events forms (localStorage) + birth-details form.
-3. **Engine** — swisseph integration → nakshatra / tithi / phases / eclipses / sunrise → chandrashtama.
-4. **Periods** — Rahu/Yama/Gulika + shraddha + birthdays.
-5. **UI** — calculator flow, month/year/custom range, month-view grid, day detail, **inline SVG
+3. **Engine** — swisseph integration → nakshatra / tithi / phases / eclipses / sunrise →
+   chandrashtama → **Tamil solar date + year**.
+4. **Periods** — Rahu/Yama/Gulika + shraddha + birthdays + **Tamil festivals + custom
+   Tamil-month events**.
+5. **UI** — calculator flow, month/year/custom range, month-view grid (English + Tamil date +
+   tithi per cell, sankranti highlight, Tamil year in header), day detail, **inline SVG
    legend**, two-tone chandrashtama bar, ICS export.
 6. **Validate** — batch compare vs Drik + second source; iterate to "exactly".

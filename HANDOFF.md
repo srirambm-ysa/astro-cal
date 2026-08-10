@@ -4,7 +4,7 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-09
+Last updated: 2026-08-10
 
 ## Goal Accomplished (through 2026-08-08)
 - **PRD + research COMPLETE** — `D:\astro-cal\PRD.md` exists; all 5 PRD open items resolved
@@ -22,10 +22,17 @@ Last updated: 2026-08-09
 - Calculator model, no auth: birth details in → calendar out; personal layer in browser localStorage;
   static server (no backend). Default range = current month.
 - UI source = 04 Sacred Ornament (day+night), per above.
+- **Tamil calendar layer (added 2026-08-10):** tithi label + Tamil month/day per cell + Tamil year in
+  header, sankranti day highlighted; built-in Tamil festivals (Thai Poosam, Karthigai Deepam, Panguni
+  Uthiram, Aadi Perukku, Aavani Avittam …) + custom Tamil-month events. All derivable from Sun/Moon
+  longitude via swisseph — no external calendar data. Festivals validated against Drik's festival
+  calendar.
 
 ## Immediate Next Steps
-- **AC-TSK-0001 (high, planned):** build astro-cal v1 from `PRD.md` using 04 Sacred Ornament (day+night)
-  as the UI source. Self-host fonts; ship with `serve.js`. Ganesha/kolam assets parked (ISSUE-0009).
+- **AC-TSK-0001 (high, in_progress):** build astro-cal v1 from `PRD.md` using 04 Sacred Ornament
+  (day+night) as the UI source. Includes the **Tamil calendar layer** (tithi label, Tamil month/day +
+  year, sankranti highlight) and **Tamil festivals** (built-in + custom Tamil-month events).
+  Self-host fonts; ship with `serve.js`. Ganesha/kolam assets parked (ISSUE-0009).
   See the wiki task board: `node D:\knowledge-base\tools\task.js list` (project=astro-cal).
 
 ## Watch Outs
