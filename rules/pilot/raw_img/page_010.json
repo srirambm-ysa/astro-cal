@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "pdf_page": 10,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": true,
+    "usage": {
+      "prompt_tokens": 3221,
+      "completion_tokens": 504,
+      "total_tokens": 3725,
+      "cost": 0.0022263,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0022263,
+        "upstream_inference_prompt_cost": 0.0009663,
+        "upstream_inference_completions_cost": 0.00126
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "AMRITA YOGA ON DAYS SUNDAY ETC.",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [
+          "Nanda",
+          "Bhadra",
+          "Nanda",
+          "Jaya",
+          "Rikta",
+          "Bhadra",
+          "Poorna"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Amrita"
+        ],
+        "planetary": {
+          "freeform": "Sunday with Nanda tithi, Monday with Bhadra tithi, Tuesday with Nanda tithi, Wednesday with Jaya tithi, Thursday with Rikta tithi, Friday with Bhadra tithi, Saturday with Poorna tithi"
+        }
+      },
+      "exclusions": [],
+      "notes": "Amrita Yoga is formed when specific tithi groups coincide with specific weekdays from Sunday to Saturday.",
+      "uncertain": false
+    },
+    {
+      "heading": "DAGDHA YOGA ON DAYS SUNDAY ETC.",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Bharani",
+          "Chitra",
+          "Uttarashadha",
+          "Dhanishtha",
+          "Uttara Phalguni",
+          "Jyeshtha",
+          "Revati"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Dagdha"
+        ],
+        "planetary": {
+          "freeform": "Bharani on Sunday, Chitra on Monday, Uttarashadha on Tuesday, Dhanishtha on Wednesday, Uttara Phalguni on Thursday, Jyeshtha on Friday, Revati on Saturday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Dagdha Yoga occurs when specific nakshatras fall on specific weekdays, creating an inauspicious combination.",
+      "uncertain": false
+    }
+  ]
+}

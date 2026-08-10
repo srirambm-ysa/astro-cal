@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "pdf_page": 8,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2594,
+      "completion_tokens": 369,
+      "total_tokens": 2963,
+      "cost": 0.0017007,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0017007,
+        "upstream_inference_prompt_cost": 0.0007782,
+        "upstream_inference_completions_cost": 0.0009225
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "NANDA ETC. NAMES OF TITHIS AND SIDDHA YOGA",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Friday",
+          "Wednesday",
+          "Tuesday",
+          "Saturday",
+          "Thursday"
+        ],
+        "tithis": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "tithi_groups": [
+          "Nanda",
+          "Bhadra",
+          "Jaya",
+          "Rikta",
+          "Poorna"
+        ],
+        "paksha": "Both",
+        "yogas": [
+          "Siddha"
+        ],
+        "planetary": {
+          "freeform": "Tithis Nanda, Bhadra, Jaya, Rikta and Poorna falling in order on Friday, Wednesday, Tuesday, Saturday and Thursday form Siddha Yoga."
+        }
+      },
+      "exclusions": [],
+      "notes": "Siddha Yoga is formed when specific tithi groups coincide with designated weekdays in both bright and dark pakshas.",
+      "uncertain": false
+    }
+  ]
+}

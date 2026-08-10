@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "pdf_page": 120,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": true,
+    "usage": {
+      "prompt_tokens": 3505,
+      "completion_tokens": 609,
+      "total_tokens": 4114,
+      "cost": 0.002574,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.002574,
+        "upstream_inference_prompt_cost": 0.0010515,
+        "upstream_inference_completions_cost": 0.0015225
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR SIMANTA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "simanta samskara"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Pushya",
+          "Moola",
+          "Shravana",
+          "Punarvasu",
+          "Hasta"
+        ],
+        "weekdays": [
+          "Thursday",
+          "Sunday",
+          "Tuesday"
+        ],
+        "tithis": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          10,
+          11,
+          13
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lord of the month of conception endowed with strength; performed in the 6th or 8th month from conception; benefic planets in angles and trines; malefic planets in 3, 6, 11 houses; ascendant and navamsha of a male sign."
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Amavasya",
+        "12th tithi",
+        "6th tithi",
+        "8th tithi"
+      ],
+      "notes": "Simanta samskara is auspicious on specific weekdays, nakshatras, and tithis when favorable planetary and month conditions are met.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR SIMANTA SAMSKARA (ALTERNATIVE)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "simanta samskara"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Revati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "On auspicious days with ascendant and navamsha of a male sign."
+        }
+      },
+      "exclusions": [],
+      "notes": "Simanta samskara is excellent in Dhruwa nakshatras and Revati on auspicious days with a male sign ascendant and navamsha.",
+      "uncertain": false
+    }
+  ]
+}

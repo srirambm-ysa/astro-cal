@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "pdf_page": 72,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2240,
+      "completion_tokens": 709,
+      "total_tokens": 2949,
+      "cost": 0.0024445,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024445,
+        "upstream_inference_prompt_cost": 0.000672,
+        "upstream_inference_completions_cost": 0.0017725
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "LENDING GRAINS ON INTEREST",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "lending grains on interest"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Pushya",
+          "Vishakha",
+          "Jyeshtha",
+          "Ashwini",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Lending grains on interest is profitable in fixed, movable, and specific other nakshatras.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR PACIFICATION",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "beneficial rites",
+        "pacification of the planets",
+        "shanti karma"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Revati",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Anuradha",
+          "Magha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter in the Ascendant, Sun in the 10th House, and Moon in the 4th House"
+        }
+      },
+      "exclusions": [
+        "combustion of Jupiter",
+        "combustion of Venus"
+      ],
+      "notes": "Planetary pacification and beneficial rites are auspicious in specified nakshatras with favorable planetary positions, except when Jupiter and Venus are combust.",
+      "uncertain": false
+    },
+    {
+      "heading": "PACIFICATION OF NIMITTA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "pacification of nimitta",
+        "shanti karma"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Pacification of portents and bad omens (Nimitta) may be performed even when Jupiter and Venus are combust.",
+      "uncertain": false
+    }
+  ]
+}

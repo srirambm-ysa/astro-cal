@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "pdf_page": 66,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2200,
+      "completion_tokens": 1367,
+      "total_tokens": 3567,
+      "cost": 0.0040775,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0040775,
+        "upstream_inference_prompt_cost": 0.00066,
+        "upstream_inference_completions_cost": 0.0034175
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO DIGGING WELLS OR TANKS AND BEGINNING DANCING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "digging well",
+        "building tank"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Anuradha",
+          "Hasta",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Magha",
+          "Poorvashadha",
+          "Revati",
+          "Pushya",
+          "Mrigashira"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Mercury or Jupiter in Ascendant, malefics weak, Venus in 10th House, Moon in watery signs (9, 10, 11, or 12)"
+        }
+      },
+      "exclusions": [],
+      "notes": "Digging wells and tanks is auspicious in specified nakshatras with benefic planetary placements and weak malefics.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO BEGINNING DANCING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "beginning dancing",
+        "learning dancing"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Anuradha",
+          "Hasta",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Jyeshtha",
+          "Revati",
+          "Pushya",
+          "Mrigashira"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Mercury in Ascendant, Moon in Gemini or Virgo, benefic planets in 4th House"
+        }
+      },
+      "exclusions": [
+        "Poorvashadha",
+        "Magha"
+      ],
+      "notes": "Beginning dancing is auspicious in the specified nakshatras excluding Poorvashadha and Magha but including Jyeshtha, with Mercury in Ascendant, Moon in Gemini or Virgo, and benefics in the 4th house.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF VAAPI OR SMALL WELL",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "digging small well"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Swati",
+          "Ashwini",
+          "Pushya",
+          "Hasta",
+          "Punarvasu",
+          "Revati",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists the auspicious nakshatras for digging a small well.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF DIGGING WELL",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "digging well"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Pushya",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Anuradha",
+          "Magha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists the auspicious nakshatras for digging a well.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF BUILDING TANK",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "building tank"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Mrigashira",
+          "Revati",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Pushya",
+          "Shatabhisha",
+          "Poorvashadha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists the auspicious nakshatras for building a tank.",
+      "uncertain": false
+    }
+  ]
+}

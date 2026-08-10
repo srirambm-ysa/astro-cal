@@ -113,10 +113,13 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
   month's sankranti. Tamil year name = cycle position (60-year cycle) counted from the Chithirai
   (Mesha) sankranti. All derived from Sun longitude via swisseph — no external calendar data.
 
-## Deferred — phase 2
+## Deferred — phase 2 (research complete 2026-08-10 — see below)
 
 - Good-muhurta activity rules (per-activity nakshatra / vara / tithi suitability tables).
 - Per-activity "Shubh Muhurat" matching Drik's pages.
+- **Birth-star personalization of the muhurta table via Nava Tāra (tara bala)** — the layer that
+  keeps the table from being a "straight dump from Drik": the same day is auspicious for one birth
+  star and not another. Model + design in the phase-2 research section below.
 
 ## Non-goals
 
@@ -148,8 +151,7 @@ Drik Panchang's "Ashtama Chandra" is computed by **Rashi (moon sign)**, not by n
   `(janma nakshatra + 16) mod 27` (= "16th star from birth star" / "17th counting birth star as
   1"). The Moon's transit through that one nakshatra is the peak-intensity window ≈24h
   (13°20' ÷ ~13.2°/day), always inside the 8th rashi (8 signs = 18 stars). Verified against TRS
-  Iyengar's per-birth-star table, DailyPanchangam.in, and Hindupad. The +16 star is also the 7th
-  tara (Naidhan/Vadha) — the inauspicious-for-tasks tara, consistent with the app's purpose.
+  Iyengar's per-birth-star table, DailyPanchangam.in, and Hindupad.
   **No padding** (no ±6/12h buffer). Intersect the peak with the coarse rashi window as a guard
   for boundary birth stars.
 - **UI:** single two-tone bar per day — coarse rashi window light, nakshatra peak overlaid dark;
@@ -214,6 +216,152 @@ astroshastra/hindutva. Rahu matched the prior assumption; Yama and Gulika were w
 - **Avoid:** floating times, offset-form DATE-TIME (`+0530` in DTSTART), reused UIDs,
   LF-only endings, TZID without VTIMEZONE.
 
+## Phase 2 research — muhurta table + birth-star customization (2026-08-10)
+
+> The muhurta table is the phase-2 "good muhurta" layer. Without personalization it is a **straight
+> dump of Drik's general per-activity shubh dates** — useful but not personal. This section is the
+> research answer to *"how does customization to the birth star need to be done?"* It defines the
+> one truly personal filter (**Nava Tāra / tara bala**) plus the general panchanga filters, how they
+> combine, and what the engine must add to compute it. Sources verified live 2026-08-10.
+
+### 2.1 The customization problem
+
+A muhurta (electional moment) is judged by **panchanga shuddhi** — the five limbs Tithi, Vara
+(weekday), Nakshatra, Yoga, Karana — each having good/bad values **per activity**. Most of that is
+*impersonal*: Rohini is good for marriage for everyone. But Vedic muhurta adds a **personal** filter
+that makes the same date good for one person and bad for another: the relation of the muhurta's
+nakshatra to the person's **janma nakshatra**. That is the customization the table needs. Everything
+else is a general table.
+
+### 2.2 Nava Tāra (tara bala) — the birth-star personalization (CONFIRMED) ✅
+
+**Rule:** count the nakshatra cycle from the janma nakshatra (janma = count 1, inclusive) to the
+muhurta's nakshatra; fold the count on a cycle of 9. Each position is a tara with a fixed
+nature:
+
+| Count mod 9 | Tara | Meaning | Nature |
+|---|---|---|---|
+| 1 | Janma | birth star | **neutral** (sensitive; fine for rest/spiritual) |
+| 2 | Sampat | wealth | favorable |
+| 3 | Vipat | danger | **unfavorable** |
+| 4 | Kshema | well-being | favorable |
+| 5 | Pratyari | obstacles | **unfavorable** |
+| 6 | Sadhaka | achievement | favorable |
+| 7 | Vadha (Naidhana) | destruction | **unfavorable** |
+| 8 | Mitra | friend | favorable |
+| 9 | Parama Mitra | best friend | favorable |
+
+**Computation:** for the day's nakshatra `n` and janma nakshatra `j`
+`count = ((n - j + 27) mod 27) + 1`, then `tara = ((count - 1) mod 9) + 1`.
+Favorable = {2 Sampat, 4 Kshema, 6 Sadhaka, 8 Mitra, 9 Parama Mitra}; unfavorable = {3 Vipat,
+5 Pratyari, 7 Vadha}; neutral = {1 Janma}. This is the **only** muhurta filter that depends on the
+person — it is exactly what makes the table personal rather than a Drik dump.
+
+**Note — relationship to v1's chandrashtama peak:** the peak nakshatra `(janma + 16) mod 27`
+(= position 17 counting janma as 1, verified DailyPanchangam.in) is tara **8 (Mitra)** under the
+standard convention — the peak is bad because the Moon is in the 8th *rashi* (chandrashtama), not
+because of its tara. Phase 2 generalizes the same wheel to every tara; tara is an *independent*
+axis from chandrashtama.
+
+**Cycle strength (optional refinement, not required for v1):** tara repeats 3× per 27-star cycle;
+positions 1–9 (first cycle) are strongest, 10–18 moderate, 19–27 subtlest. v1 can ignore cycle
+depth and treat tara identity only.
+
+### 2.3 General (impersonal) filters — what Drik's muhurta pages actually apply
+
+Drik's "Shubh Muhurat" pages (vivah, griha pravesh, vehicle, property) are built from panchanga
+shuddhi — the same for everyone. Verified example, **marriage (Drik "Auspicious Nakshatra for
+Marriage", live 2026-08-10):** 11 Shubh nakshatras — Rohini(4), Mrigashira(5), Magha(10),
+Uttara Phalguni(12), Hasta(13), Swati(15), Anuradha(17), Mula(19), Uttara Ashadha(21), Uttara
+Bhadrapada(26), Revati(27) — with pada exceptions (1st quarter of Magha/Moola and last quarter of
+Revati rejected). Drik also lists **Ashubh marriage yogas** (Vishkambha, Atiganda, Shula, Ganda,
+Vyaghata…).
+
+Per-activity building blocks the table needs (all static lookup tables, one per activity):
+- **Nakshatra list:** favourable nakshatras for the activity (Drik's pages + classical tables).
+- **Vara (weekday) fit:** e.g. travel favours Sun/Thu east, Tue/Sat south, Wed/Fri west, Mon north;
+  marriage favours Mon/Wed/Thu/Fri; business Wed/Thu.
+- **Tithi / paksha fit:** Shukla paksha generally; avoid Rikta tithis (Chathurthi, Navami,
+  Chaturdashi); specific tithi rules per activity (e.g. griha pravesh avoids 4th/8th/14th).
+- **Yoga & Karana fit:** favorable yogas (Siddhi, Amrita…) / avoided karanas (Vishti/Bhadra).
+  NOTE: engine currently has **no yoga or karana** computation — see 2.5.
+- **Time-of-day exclusions:** Rahu/Yama/Gulika (already computed). **Abhijit / Durmuhurta are
+  DEFERRED** — not in the phase-2 v1 table (day-granularity verdicts don't need them; they'd only
+  refine a time-of-day pick, and Drik's activity pages are day-based).
+
+### 2.4 How the pieces combine → per-activity verdict
+
+For a chosen activity on a given day, compute:
+1. **Personal (birth-star) filter — tara bala** from `moonNakshatra` vs `birth.nakshatra`
+   (2.2). This is the customization.
+2. **Impersonal panchanga fit** — is the day's nakshatra in the activity's Shubh list, is the vara
+   fit, tithi/paksha fit, yoga/karana fit (2.3).
+3. **Day-star window** — the sunrise nakshatra is the day's "anchor" nakshatra, but nakshatras
+   change mid-day. If the sunrise nakshatra ends **before sunset**, the day is only valid for star-
+   based verdicts **until that time** (e.g. "star valid till 12:27, then Ardra"). This is surfaced
+   in the verdict reason line and in the day-detail panel — the user can read "valid only until the
+   star transitions" so they never book past the change.
+4. **Exclusions** — Rahu/Yama/Gulika windows (already shown) and chandrashtama (already shown).
+
+Verdict = score/mark per activity, e.g. **Shubh / Neutral / Ashubh**, with the *reason line*
+naming which factor(s) drive it ("Tara Sampat ✓ · Rohini ✓ · Shukla Dwitiya ✓ — but Rahu 10:30–
+12:00 ✗"). The tara column is what makes it *this person's* verdict.
+
+**Scope note on marriage (Vivah):** marriage is **deferred** to a later phase. Its tithi/paksha
+rules vary by tradition (Krishna paksha is permitted) and Drik's muhurats are window-precision
+(hour-level muhurat timings) that this day-granular table cannot reproduce faithfully. The phase-2
+starter set is the three simpler activities: **Griha Pravesh / Vehicle / Travel** — each uses the
+consistent rule set below.
+
+
+### 2.5 Engine delta for phase 2
+
+| Needed | Engine today | Work |
+|---|---|---|
+| Day nakshatra at muhurta/sunrise | ✅ `moonNakshatra` (computed) | — |
+| Janma nakshatra | ✅ `birth.nakshatra` (input) | — |
+| Tara bala | — | **pure arithmetic** on the two (2.2), no new astronomy; ✅ implemented |
+| Day-star end (intra-day nakshatra transition) | — | new `nakshatraEnd(jd)` → surfaces the "valid till HH:MM" window |
+| Vara (weekday) | ✅ derivable from civil date | tiny helper |
+| Tithi index/paksha | ✅ `tithi()` | — |
+| Yoga (27 nitya) | ❌ | `(sun_lon + moon_lon) mod (360/27)` → ✅ implemented `yoga(jd)` |
+| Karana (11) | ❌ | from tithi fractional part → ✅ implemented `karana(jd)` |
+| Nakshatra group (fixed/movable/etc.) | ❌ | ✅ static 27-row table `NAKSHATRA_GROUP` |
+| Per-activity Shubh lists (nakshatra/vara/tithi/yoga) | ❌ | ✅ static per-activity tables (see app.js `ACTIVITIES`) |
+| Abhijit / Durmuhurta | ❌ | **deferred — not in phase-2 v1** |
+
+Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lookup tables.
+
+### 2.6 UI / product shape (proposal for owner review)
+
+- **Activity selector** on the calendar (phase 2): pick a *focus* activity from the starter set
+   (**Griha Pravesh / Vehicle / Travel**; Marriage deferred). The table itself is **cumulative**:
+   one row per day listed if it is Shubh or Neutral for *any* activity, with a **per-activity
+   verdict** column (Shubh/Neutral per activity; Ashubh activities omitted from each row, and
+   days that are Ashubh across all activities hidden entirely). The dropdown sets which activity's
+   tara + day-star-window drives the day-detail panel.
+- Right-panel **muhurta table** (replaces/extents the "Key events" table for the chosen activity):
+  columns date · tara (personal) · nakshatra · vara · tithi · yoga/karana · verdict (Shubh/Neutral/
+   Ashubh) + reason line. Colour-coded chips consistent with the approved ledger theme. Days whose
+   sunrise star ends before sunset carry a "valid till HH:MM → next-nakshatra" note.
+- Day-detail panel gains a tara + per-activity verdict section, with the day-star window note.
+- **ICS:** optionally export only Shubh days for the chosen activity (unchanged).
+
+### 2.7 Validation (accuracy bar, phase 2)
+
+- **Panchang parity (regression):** Aug-10-2026 sunrise IST 05:55 → Krishna Dwadashi · Ardra · Vajra ·
+  Taitila — verifies exact against vedpanchang.com (unchanged by phase-2 additions).
+- **Tara bala:** hand-check a sample of dates against a tara-bala calculator (modernastro / steer /
+  panchangbodh) for 2–3 janma nakshatras. (Live-verified 2026-08-10: Ashwini→Sadhaka good,
+  Punarvasu→Parama Mitra good, Hasta→Vipat bad.)
+- **Day-star window:** confirmed `nakshatraEnd` fires on Aug 10 (Ardra transitions 12:27 IST, before
+  sunset) and surfaces the "valid till HH:MM" note.
+- **Per-activity parity vs Drik:** the sunrise-star day verdict matches Drik's *impersonal* Shubh
+  days only where the muhurat window coincides with the sunrise nakshatra. Drik itself reports
+  window-precision muhurats (e.g. Feb 9 Anuradha at 8:25 PM while sunrise nakshatra is Vishakha),
+  which a day-granular table cannot reproduce — this is accepted, not pursued as scope creep.
+- Marriage (Vivah) validation is deferred with the activity (see 2.4).
+
 ## Build order (proposed)
 
 1. **Research** — DONE (2026-08-08). Findings + corrections in Open items section; all five
@@ -229,3 +377,16 @@ astroshastra/hindutva. Rahu matched the prior assumption; Yama and Gulika were w
    tithi per cell, sankranti highlight, Tamil year in header), day detail, **inline SVG
    legend**, two-tone chandrashtama bar, ICS export.
 6. **Validate** — batch compare vs Drik + second source; iterate to "exactly".
+
+### Build order — phase 2 (muhurta table; after v1 ships)
+
+1. **Engine** — ✅ `yoga(jd)` + `karana(kd)` added; ✅ static `NAKSHATRA_GROUP` table; ✅
+   `nakshatraEnd(jd)` for the day-star window.
+2. **Personalization** — ✅ tara bala (arithmetic on `birth.nakshatra` + day nakshatra); verified
+   against a tara-bala calculator.
+3. **Activity tables** — starter set (**griha pravesh / vehicle / travel**; Marriage deferred);
+  per-activity nakshatra/vara/tithi/yoga/karana lookup tables.
+4. **Verdict + UI** — ✅ per-activity score (`Shubh/Neutral/Ashubh`), ✅ muhurta table in the right
+   panel, ✅ tara + day-star-window section in day detail, ✅ activity selector.
+5. **Validate** — ✅ Aug-10 panchang regression vs vedpanchang.com; ✅ tara spot-checks; day-star
+   window fires correctly. Drik day-list parity is intentionally approximate (day-granularity).

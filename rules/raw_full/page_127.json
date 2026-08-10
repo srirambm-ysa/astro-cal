@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "pdf_page": 127,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2253,
+      "completion_tokens": 858,
+      "total_tokens": 3111,
+      "cost": 0.0028209,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0028209,
+        "upstream_inference_prompt_cost": 0.0006759,
+        "upstream_inference_completions_cost": 0.002145
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE JALA POOJANA OF THE PRASUTI WOMAN",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "jala poojana",
+        "worship of water after delivery"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Pushya",
+          "Punarvasu",
+          "Mrigashira",
+          "Hasta",
+          "Moola",
+          "Anuradha"
+        ],
+        "weekdays": [
+          "Monday",
+          "Wednesday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Venus and Jupiter must not be combust; avoid Chaitra, Mala Maasa, and Pausha."
+        }
+      },
+      "exclusions": [
+        "Rikta tithis (4, 9, 14)",
+        "combust Venus",
+        "combust Jupiter",
+        "month of Chaitra",
+        "Mala Maasa",
+        "month of Pausha"
+      ],
+      "notes": "Jala Poojana for a new mother is performed on specific weekdays and nakshatras, avoiding combust planets and certain months.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR ANNA PRASHANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "anna prashana",
+        "eating of grains for the first time"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Even months (6, 8, 10, 12) for male children; odd months (5, 7, 9, 11) for female children."
+        }
+      },
+      "exclusions": [
+        "Rikta tithis (4, 9, 14)",
+        "Nanda tithis (1, 6, 11)",
+        "Ashtami (8)",
+        "Amavasya (30)",
+        "Dwadashi (12)",
+        "Saturday",
+        "Tuesday",
+        "Sunday",
+        "Navamsha of the 8th sign from Janama Rashi and Janama Lagna",
+        "Pisces lagna",
+        "Aries lagna",
+        "Scorpio lagna"
+      ],
+      "notes": "Anna Prashana is auspicious in specified months, nakshatras, and categories (Mridu, Laghu, Chara, Sthira) while avoiding specific tithis, days, and lagnas.",
+      "uncertain": false
+    }
+  ]
+}

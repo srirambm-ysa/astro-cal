@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "pdf_page": 32,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1861,
+      "completion_tokens": 258,
+      "total_tokens": 2119,
+      "cost": 0.0012033,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0012033,
+        "upstream_inference_prompt_cost": 0.0005583,
+        "upstream_inference_completions_cost": 0.000645
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "REJECTION OF HOLASHATAKA ETC IN MARRIAGE ETC",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "marriage",
+        "auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Applicable only in the regions on the shores of Vipasha, Iravati, Shutudra, and Tripushkara during the 8 days before the festival of Holi."
+        }
+      },
+      "exclusions": [
+        "8 days before Holi"
+      ],
+      "notes": "The 8 days before Holi are considered inauspicious for marriage and other auspicious deeds specifically in regions near the Vipasha, Iravati, and Shutudra rivers and Tripushkara.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "pdf_page": 19,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1979,
+      "completion_tokens": 886,
+      "total_tokens": 2865,
+      "cost": 0.0028087,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0028087,
+        "upstream_inference_prompt_cost": 0.0005937,
+        "upstream_inference_completions_cost": 0.002215
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "COMBINATIONS WHICH ARE TO BE LEFT OUT IN DOING ALL AUSPICIOUS DEEDS (MADHU SARPISHA YOGA)",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Mrigashira",
+          "Anuradha",
+          "Revati",
+          "Pushya",
+          "Rohini"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Tuesday",
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Thursday",
+          "Saturday"
+        ],
+        "tithis": [
+          5,
+          7,
+          6,
+          8,
+          10,
+          9,
+          11
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Madhu Sarpisha"
+        ],
+        "planetary": {
+          "freeform": "Conjunction of specific tithi, nakshatra, and weekday forming Madhu Sarpisha yoga"
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific combinations of tithi, nakshatra, and weekday form the inauspicious Madhu Sarpisha yoga which must be avoided for all auspicious deeds.",
+      "uncertain": false
+    },
+    {
+      "heading": "YOGAS (COMBINATIONS) WHICH ARE TO BE AVOIDED IN ENTERING NEW HOUSE, TRAVELLING AND MARRYING (HALAHALA YOGA)",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds",
+        "entering new house",
+        "travelling",
+        "marrying"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Krittika",
+          "Chitra",
+          "Rohini",
+          "Bharani",
+          "Anuradha",
+          "Revati"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Saturday"
+        ],
+        "tithis": [
+          5,
+          2,
+          15,
+          7,
+          13,
+          8
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Halahala",
+          "Madhu Sarpisha"
+        ],
+        "planetary": {
+          "freeform": "Conjunction of Sunday-Panchami-Krittika, Monday-Dwitiya-Chitra, Tuesday-Poornima-Rohini, Wednesday-Saptami-Bharani, Thursday-Trayodashi-Anuradha, and Saturday-Ashtami-Revati"
+        }
+      },
+      "exclusions": [],
+      "notes": "Maharishi Vashistha defines Halahala yoga as specific inauspicious conjunctions of weekday, tithi, and nakshatra.",
+      "uncertain": false
+    },
+    {
+      "heading": "YOGAS WHICH ARE TO BE AVOIDED IN ENTERING NEW HOUSE, TRAVELLING AND MARRYING",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "entering new house",
+        "travelling",
+        "marrying"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Rohini",
+          "Pushya"
+        ],
+        "weekdays": [
+          "Tuesday",
+          "Saturday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ashwini on Tuesday, Rohini on Saturday, and Pushya on Thursday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Even though these nakshatra-weekday combinations form Siddha Yoga normally, they are strictly prohibited for house entry, travel, and marriage.",
+      "uncertain": false
+    }
+  ]
+}

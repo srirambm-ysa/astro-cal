@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "pdf_page": 81,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2250,
+      "completion_tokens": 1627,
+      "total_tokens": 3877,
+      "cost": 0.0047425,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0047425,
+        "upstream_inference_prompt_cost": 0.000675,
+        "upstream_inference_completions_cost": 0.0040675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NADI NAKSHTRAS FOR ORDINARY HUMAN BEINGS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "1st (Janama), 10th (Karma), 16th (Sanghatika), 18th (Samudaya), 23rd (Vinasha), and 25th (Manasa) from birth nakshatra"
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists the six specific directional or sensitive nakshatras relative to a person's birth nakshatra for ordinary individuals.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE BRAHMINS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Krittika"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the Brahmin caste"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the Brahmin caste.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE KSHTRIYAS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the Kshtriya caste"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the Kshtriya caste.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE FARMERS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Revati",
+          "Anuradha",
+          "Magha",
+          "Rohini"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the farmers"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the farmer class.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE VAISHYAS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Punarvasu",
+          "Hasta",
+          "Abhijit",
+          "Ashwini"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the Vaishya caste"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the Vaishya caste.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE CRIMINAL CASTES",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Ardra",
+          "Swati",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with criminal castes"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to criminal castes.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE SHUDRAS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Jyeshtha",
+          "Chitra",
+          "Dhanishtha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the Shudra caste"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the Shudra caste.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS OF THE CHANDALA CASTE",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Ashlesha",
+          "Vishakha",
+          "Shravana",
+          "Bharani"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatras associated with the Chandala caste"
+        }
+      },
+      "exclusions": [],
+      "notes": "Enumerates the four nakshatras corresponding to the Chandala caste.",
+      "uncertain": false
+    }
+  ]
+}

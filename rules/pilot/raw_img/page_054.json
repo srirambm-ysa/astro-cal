@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "pdf_page": 54,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": true,
+    "usage": {
+      "prompt_tokens": 3058,
+      "completion_tokens": 752,
+      "total_tokens": 3810,
+      "cost": 0.0027974,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0027974,
+        "upstream_inference_prompt_cost": 0.0009174,
+        "upstream_inference_completions_cost": 0.00188
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS CALLED KSHIPRA LAGHU (SMALL) ETC. AND THE THINGS WHICH SHOULD BE PERFORMED IN THEM",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "selling",
+        "sexual intercourse",
+        "learning of the shastras",
+        "getting jewels made",
+        "wearing jewels",
+        "64 kalas",
+        "shilpa sculpture and arts",
+        "things advised for chara nakshatras"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Abhijit"
+        ],
+        "weekdays": [
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Kshipra and Laghu nakshatras along with Thursday are auspicious for business, learning, arts, and wearing ornaments.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS MRIDU (DELICATE) AND MAITRA (FRIENDLY) AND THE THINGS WHICH SHOULD BE PERFORMED IN THEM",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "learning and singing of songs",
+        "getting clothes prepared and wearing them",
+        "playing games",
+        "things relating to friends",
+        "getting jewels made and wearing them"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha"
+        ],
+        "weekdays": [
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Mridu and Maitra nakshatras along with Friday are suitable for friendly activities, clothes, jewels, games, and music.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS CALLED TEEKSHNA (SHARP) AND DARUNA (HORRIBLE) AND THE THINGS WHICH SHOULD BE PERFORMED IN THEM",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "abhichaar karma",
+        "marana",
+        "mohan",
+        "uchchatan",
+        "tantrika experiments",
+        "deeds of ambush",
+        "deeds of horror",
+        "causing difference among friends",
+        "training and tying of an animal"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha"
+        ],
+        "weekdays": [
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Teekshna and Daruna nakshatras and Saturday are effective for aggressive acts, magic, malice, and animal training.",
+      "uncertain": false
+    }
+  ]
+}

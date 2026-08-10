@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "pdf_page": 9,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1966,
+      "completion_tokens": 393,
+      "total_tokens": 2359,
+      "cost": 0.0015723,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0015723,
+        "upstream_inference_prompt_cost": 0.0005898,
+        "upstream_inference_completions_cost": 0.0009825
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "SIDDHA YOGA COMBINATIONS",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds",
+        "fasting",
+        "giving alms",
+        "worship",
+        "religious activities"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Friday",
+          "Wednesday",
+          "Tuesday",
+          "Saturday",
+          "Thursday"
+        ],
+        "tithis": [
+          1,
+          6,
+          11,
+          2,
+          7,
+          12,
+          3,
+          8,
+          13,
+          4,
+          9,
+          14,
+          5,
+          10,
+          15
+        ],
+        "tithi_groups": [
+          "Nanda",
+          "Bhadra",
+          "Jaya",
+          "Rikta",
+          "Poorna"
+        ],
+        "paksha": "Both",
+        "yogas": [
+          "Siddha"
+        ],
+        "planetary": {
+          "freeform": "Nanda on Friday, Bhadra on Wednesday, Jaya on Tuesday, Rikta on Saturday, Poorna on Thursday creates Siddha Yoga which destroys Muhurta defects like Masa Shunya and Masa Dagdha."
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific combinations of tithi groups and weekdays form Siddha Yoga, which neutralizes various monthly Muhurta flaws.",
+      "uncertain": false
+    }
+  ]
+}

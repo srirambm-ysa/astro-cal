@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "pdf_page": 125,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2251,
+      "completion_tokens": 1087,
+      "total_tokens": 3338,
+      "cost": 0.0033928,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0033928,
+        "upstream_inference_prompt_cost": 0.0006753,
+        "upstream_inference_completions_cost": 0.0027175
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE BATHING OF THE PRASUTI WOMAN - AUSPICIOUS TIER",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "bathing of the prasuti woman",
+        "sutika snaana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Revati",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Mrigashira",
+          "Hasta",
+          "Swati",
+          "Ashwini",
+          "Anuradha"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Tuesday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Bathing of the newly delivered woman is excellent in specific nakshatras and weekdays.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE BATHING OF THE PRASUTI WOMAN - INAUSPICIOUS TIER",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "bathing of the prasuti woman",
+        "sutika snaana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ardra",
+          "Punarvasu",
+          "Pushya",
+          "Shravana",
+          "Magha",
+          "Bharani",
+          "Vishakha",
+          "Krittika",
+          "Moola",
+          "Chitra"
+        ],
+        "weekdays": [
+          "Wednesday",
+          "Saturday"
+        ],
+        "tithis": [
+          8,
+          6,
+          12,
+          4,
+          9,
+          14
+        ],
+        "tithi_groups": [
+          "Rikta"
+        ],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Bathing of the newly delivered woman is inauspicious on certain nakshatras, weekdays, and tithis including Ashtami, Shashthi, Dwadashi, and Rikta tithis.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE BATHING OF THE PRASUTI WOMAN - MEDIUM TIER",
+      "type": "activity_muhurta",
+      "verdict": "neutral",
+      "activities": [
+        "bathing of the prasuti woman",
+        "sutika snaana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashlesha",
+          "Poorva Phalguni",
+          "Jyeshtha",
+          "Poorvashadha",
+          "Dhanishtha",
+          "Poorva Bhadrapada"
+        ],
+        "weekdays": [
+          "Monday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Bathing of the newly delivered woman has medium auspiciousness in the remaining nakshatras and weekdays.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE TEETHING OF A CHILD",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "child teething"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Teething occurs in the 1st through 10th month after birth, or birth with teeth"
+        }
+      },
+      "exclusions": [],
+      "notes": "The month in which a child gets its first teeth dictates distinct familial and personal outcomes.",
+      "uncertain": false
+    }
+  ]
+}

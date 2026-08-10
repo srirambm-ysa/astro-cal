@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "pdf_page": 42,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2041,
+      "completion_tokens": 441,
+      "total_tokens": 2482,
+      "cost": 0.0017148,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0017148,
+        "upstream_inference_prompt_cost": 0.0006123,
+        "upstream_inference_completions_cost": 0.0011025
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "SUN IN ARIES OR JUPITER IN LEO FOR MARRIAGE",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "marriage"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Sun in Aries or Jupiter in Leo"
+        }
+      },
+      "exclusions": [],
+      "notes": "Marriage when the Sun is in Aries or Jupiter is in Leo grants good conduct, truthfulness, jewels, diamonds, happiness, and fame.",
+      "uncertain": false
+    },
+    {
+      "heading": "DETERMINATION OF THE DEFECTS ARISING OUT OF JUPITER'S SITUATION IN THE SIGN OF LEO",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "auspicious deeds",
+        "marriage",
+        "engagement"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Magha",
+          "Poorva Phalguni"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter in the sign of Leo across specific quarters and regions"
+        }
+      },
+      "exclusions": [],
+      "notes": "Jupiter in Leo is generally rejected for auspicious deeds during the first five quarters (all four of Magha and one of Poorva Phalguni), with regional exceptions.",
+      "uncertain": false
+    }
+  ]
+}

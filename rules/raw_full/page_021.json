@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "pdf_page": 21,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2187,
+      "completion_tokens": 774,
+      "total_tokens": 2961,
+      "cost": 0.0025911,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0025911,
+        "upstream_inference_prompt_cost": 0.0006561,
+        "upstream_inference_completions_cost": 0.001935
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "WEEKDAY AND NAKSHATRA YOGAS",
+      "type": "yoga_combination",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Ardra",
+          "Punarvasu",
+          "Vishakha"
+        ],
+        "weekdays": [
+          "Monday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Ananda",
+          "Kala-Danda",
+          "Dhoomra",
+          "Pravardhamana"
+        ],
+        "planetary": {
+          "freeform": "Yoga formed by counting from Mrigashira to the current nakshatra on Monday, or from Anuradha to Vishakha on Thursday"
+        }
+      },
+      "exclusions": [],
+      "notes": "28 different yogas are formed based on the combination of weekdays and the rising nakshatra.",
+      "uncertain": false
+    },
+    {
+      "heading": "REJECTION OR LEAVING OUT OF INAUSPICIOUS YOGAS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Dhwanksha",
+          "Vajra",
+          "Mudgar",
+          "Padma",
+          "Lumba",
+          "Gada",
+          "Dhumra",
+          "Musala",
+          "Rakshasa",
+          "Mrityu",
+          "Utpaat",
+          "Kala"
+        ],
+        "planetary": {
+          "freeform": "Specific initial ghatis of certain yogas and the entire duration of others are rejected"
+        }
+      },
+      "exclusions": [
+        "first 5 ghatis of Dhwanksha, Vajra, and Mudgar yogas",
+        "first 4 ghatis of Padma and Lumba yogas",
+        "first 7 ghatis of Gada yoga",
+        "first 1 ghati of Dhumra yoga",
+        "first 2 ghatis of Musala yoga",
+        "full time of Rakshasa, Mrityu, Utpaat, and Kala yogas"
+      ],
+      "notes": "Avoid specific initial ghatis of certain malefic yogas, and completely avoid Rakshasa, Mrityu, Utpaat, and Kala yogas for auspicious works.",
+      "uncertain": false
+    },
+    {
+      "heading": "RAVI YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Ravi yoga"
+        ],
+        "planetary": {
+          "freeform": "Counting from the Sun's nakshatra to the Moon's nakshatra results in specific numbers such as 4, 9, 10, 13, or 29"
+        }
+      },
+      "exclusions": [],
+      "notes": "Ravi yoga formed by certain distance counts between the Sun and Moon is considered destructive to all auspicious activities.",
+      "uncertain": true
+    }
+  ]
+}

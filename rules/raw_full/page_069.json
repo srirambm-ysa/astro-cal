@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "pdf_page": 69,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2262,
+      "completion_tokens": 484,
+      "total_tokens": 2746,
+      "cost": 0.0018886,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0018886,
+        "upstream_inference_prompt_cost": 0.0006786,
+        "upstream_inference_completions_cost": 0.00121
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "RAHU CHAKRA OR HALA CHAKRA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "sowing of seeds",
+        "ploughing"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Based on Rahu Chakra and Hala Chakra relative to Rahu and Sun positions"
+        }
+      },
+      "exclusions": [
+        "Shravana",
+        "Shatabhisha",
+        "Punarvasu",
+        "Vishakha",
+        "Tuesday",
+        "Rikta tithis",
+        "Shashthi tithi"
+      ],
+      "notes": "Rules for sowing seeds and ploughing based on the Rahu Chakra / Hala Chakra and specific excluded nakshatras, weekdays, and tithis.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS FOR SHIRA CHHEDANA, VIRECHANA, VAMAN AND RELIGIOUS ANUSTHANS - SHIRA CHHEDANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "shira chhedana",
+        "letting out of blood from veins",
+        "purification of blood"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Chitra",
+          "Swati",
+          "Anuradha",
+          "Jyeshtha",
+          "Rohini",
+          "Mrigashira",
+          "Shatabhisha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Shravana"
+        ],
+        "weekdays": [
+          "Tuesday",
+          "Sunday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists auspicious nakshatras and weekdays for bloodletting and vein puncture treatments.",
+      "uncertain": false
+    }
+  ]
+}

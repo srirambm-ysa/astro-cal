@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "pdf_page": 136,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2117,
+      "completion_tokens": 353,
+      "total_tokens": 2470,
+      "cost": 0.0015176,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0015176,
+        "upstream_inference_prompt_cost": 0.0006351,
+        "upstream_inference_completions_cost": 0.0008825
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR KSHORA-KARMA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "cleaning teeth",
+        "kshora-karma",
+        "cutting nails"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Proper and auspicious tithis, days and nakshatras stated for Mundana muhurta"
+        }
+      },
+      "exclusions": [
+        "Saturday",
+        "Tuesday",
+        "Sunday",
+        "9th day from the previous kshora",
+        "evening time",
+        "Rikta tithis",
+        "Tithis of Parva",
+        "night",
+        "without aasana",
+        "during war on the battlefield",
+        "in some other village",
+        "on the day of travelling",
+        "after having bath",
+        "after oiling",
+        "after having taken meal"
+      ],
+      "notes": "Kshora-karma, nail cutting, and teeth cleaning are auspicious on proper Mundana days but forbidden on certain days, times, tithis, and specific personal conditions.",
+      "uncertain": false
+    }
+  ]
+}

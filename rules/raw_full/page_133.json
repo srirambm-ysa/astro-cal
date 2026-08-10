@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "pdf_page": 133,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1756,
+      "completion_tokens": 262,
+      "total_tokens": 2018,
+      "cost": 0.0011818,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0011818,
+        "upstream_inference_prompt_cost": 0.0005268,
+        "upstream_inference_completions_cost": 0.000655
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "DIFFERENCE OF OPINION WITH REGARD TO THE CHILDHOOD AND THE OLD AGE (OF JUPITER AND VENUS)",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter and Venus have childhood and old age for 10 days, 7 days, or 3 days depending on regional customs around rising and setting. The Moon is a child for half a day after rising and old for 3 days before setting."
+        }
+      },
+      "exclusions": [],
+      "notes": "Regional customs determine the combustion or bala/vriddhi states (childhood and old age) duration for Jupiter, Venus, and the Moon before setting and after rising.",
+      "uncertain": false
+    }
+  ]
+}

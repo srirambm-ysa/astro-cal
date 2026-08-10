@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "pdf_page": 64,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2098,
+      "completion_tokens": 421,
+      "total_tokens": 2519,
+      "cost": 0.0016819,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0016819,
+        "upstream_inference_prompt_cost": 0.0006294,
+        "upstream_inference_completions_cost": 0.0010525
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS ANDHAKSHA, MANDAKSHA, MADHYAKSHA AND SWAKSHA NAMES OF THE NAKSHTRAS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Dhanishtha",
+          "Pushya",
+          "Rohini",
+          "Poorvashadha",
+          "Vishakha",
+          "Uttara Phalguni",
+          "Revati",
+          "Hasta",
+          "Uttarashadha",
+          "Anuradha",
+          "Shatabhisha",
+          "Ashlesha",
+          "Ashwini",
+          "Mrigashira",
+          "Ardra",
+          "Magha",
+          "Poorva Bhadrapada",
+          "Chitra",
+          "Jyeshtha",
+          "Abhijit",
+          "Bharani",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Krittika",
+          "Uttara Bhadrapada",
+          "Moola",
+          "Poorva Phalguni"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Categorization of the 28 nakshatras into Andhaksha, Mandaksha, Madhyaksha, and Swaksha based on eye-related symbolism starting from Rohini.",
+      "uncertain": false
+    }
+  ]
+}

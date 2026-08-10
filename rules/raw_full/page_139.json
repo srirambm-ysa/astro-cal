@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "pdf_page": 139,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2150,
+      "completion_tokens": 236,
+      "total_tokens": 2386,
+      "cost": 0.001235,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001235,
+        "upstream_inference_prompt_cost": 0.000645,
+        "upstream_inference_completions_cost": 0.00059
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE TIME OF UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upayana samskara",
+        "investiture with sacred thread",
+        "vratabandha"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Brahmins in 8th or 5th year from conception/birth, Kshatriyas in 6th or 11th year, Vaishyas in 8th or 12th year (ideal time); twice the prescribed time is medium level"
+        }
+      },
+      "exclusions": [],
+      "notes": "Specifies the ideal and medium years of age from conception or birth for the Upanayana samskara based on varna.",
+      "uncertain": false
+    }
+  ]
+}

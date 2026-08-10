@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "pdf_page": 34,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2251,
+      "completion_tokens": 458,
+      "total_tokens": 2709,
+      "cost": 0.0018203,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0018203,
+        "upstream_inference_prompt_cost": 0.0006753,
+        "upstream_inference_completions_cost": 0.001145
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "DETAILS OF BHADRA",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          4,
+          8,
+          11,
+          15
+        ],
+        "tithi_groups": [],
+        "paksha": "Shukla",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Bhadra karana occurs in the first half of 8th and 15th tithis, and in the latter half of 4th and 11th tithis during Shukla Paksha."
+        }
+      },
+      "exclusions": [],
+      "notes": "Bhadra (Vishti) karana is present during specific halves of certain tithis in Shukla Paksha.",
+      "uncertain": false
+    },
+    {
+      "heading": "DETAILS OF BHADRA KRISHNA PAKSHA",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          3,
+          7,
+          10,
+          14
+        ],
+        "tithi_groups": [],
+        "paksha": "Krishna",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Bhadra karana occurs in the latter half of 3rd and 10th tithis, and in the first half of 7th and 14th tithis during Krishna Paksha."
+        }
+      },
+      "exclusions": [],
+      "notes": "Bhadra karana is present during specific halves of certain tithis in Krishna Paksha.",
+      "uncertain": false
+    }
+  ]
+}

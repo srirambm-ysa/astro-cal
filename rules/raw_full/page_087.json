@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "pdf_page": 87,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2169,
+      "completion_tokens": 634,
+      "total_tokens": 2803,
+      "cost": 0.0022357,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0022357,
+        "upstream_inference_prompt_cost": 0.0006507,
+        "upstream_inference_completions_cost": 0.001585
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE PRET KRIYA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "pret kriya",
+        "cremation",
+        "dummy rite"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Hasta",
+          "Swati",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Not to be done during the time of Ashaucha (period of Pataka); avoid Janama Nakshatra and Pratyari Nakshatras (5th, 10th, 14th, 19th, and 23rd from Janama Nakshatra); avoid Moon in 4th, 8th, or 12th houses."
+        }
+      },
+      "exclusions": [
+        "Ashaucha",
+        "Pataka",
+        "Janama Nakshatra",
+        "Pratyari Nakshatras",
+        "Moon in 4th, 8th, or 12th houses"
+      ],
+      "notes": "Pret Kriya and related cremation rites are auspicious on specific days and nakshatras, but forbidden during Ashaucha, birth nakshatra, specific distance nakshatras, and malefic moon positions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE CONSIDERATION OF ABHUKTA MOOLA",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Jyeshtha",
+          "Moola"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Defined variously by sages: Narada says last 4 ghatis of Jyeshtha and first 4 ghatis of Moola (8 ghatis); Vashishtha says last 1 ghati of Jyeshtha and first 2 ghatis of Moola (3 ghatis); Brahaspati says last half ghati of Jyeshtha and first half ghati of Moola."
+        }
+      },
+      "exclusions": [],
+      "notes": "Abhukta Moola defines specific sensitive junction periods between Jyeshtha and Moola nakshatras considered inauspicious.",
+      "uncertain": false
+    }
+  ]
+}

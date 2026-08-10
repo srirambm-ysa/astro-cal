@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "pdf_page": 128,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2081,
+      "completion_tokens": 712,
+      "total_tokens": 2793,
+      "cost": 0.0024043,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024043,
+        "upstream_inference_prompt_cost": 0.0006243,
+        "upstream_inference_completions_cost": 0.00178
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE SAMSKARAS (ANNA PRASHANA)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "anna prashana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Shukla",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Forenoon is recommended; birth nakshatra is also good."
+        }
+      },
+      "exclusions": [],
+      "notes": "Anna Prashana should be done in the Shukla Paksha during the forenoon, and birth nakshatra is favorable.",
+      "uncertain": false
+    },
+    {
+      "heading": "LAGNA SHUDDHI OR FAVOURABLE ASCENDANT IN ANNA PRASHANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "anna prashana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Benefics in 1, 4, 7, 5, 9, 3 houses; no planet in the 10th house; malefic planets in 3, 6, 11 houses; Ascendant, 8th, and 6th houses without the Moon."
+        }
+      },
+      "exclusions": [
+        "Anuradha",
+        "Shatabhisha",
+        "Swati",
+        "birth nakshatra"
+      ],
+      "notes": "Specifies favorable house placements for benefics and malefics, and lists certain nakshatras as inauspicious according to some teachers.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE PLACES OF THE PLANETS IN ANNA PRASHANA",
+      "type": "activity_muhurta",
+      "verdict": "neutral",
+      "activities": [
+        "anna prashana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Emaciated Moon or Full Moon or Jupiter or Mercury or Mars or Sun or Saturn in houses 9, 5, 12, 1, 4, 7 from natal ascendant."
+        }
+      },
+      "exclusions": [],
+      "notes": "Details the specific life or health results of having various planets placed in the 9th, 5th, 12th, 1st, 4th, or 7th houses during Anna Prashana.",
+      "uncertain": false
+    }
+  ]
+}

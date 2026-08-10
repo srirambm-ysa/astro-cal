@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "pdf_page": 134,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2248,
+      "completion_tokens": 604,
+      "total_tokens": 2852,
+      "cost": 0.0021844,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0021844,
+        "upstream_inference_prompt_cost": 0.0006744,
+        "upstream_inference_completions_cost": 0.00151
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR MUNDANA OR CHUDAKARANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "mundana",
+        "chudakarana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Jyeshtha"
+        ],
+        "weekdays": [
+          "Wednesday",
+          "Monday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [
+          2,
+          3,
+          5,
+          7,
+          10,
+          11,
+          13,
+          15
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Malefic planets in 3rd, 6th, and 11th houses; 8th house from natal ascendant without any planet (though Venus is allowed)"
+        }
+      },
+      "exclusions": [
+        "8th tithi",
+        "12th tithi",
+        "4th tithi",
+        "9th tithi",
+        "14th tithi",
+        "1st tithi",
+        "6th tithi",
+        "Parva days",
+        "Chaitra month",
+        "Anuradha nakshatra",
+        "8th sign from Janama Rashi and Janama Lagna"
+      ],
+      "notes": "Mundana ceremony is prescribed on odd years, specific tithis, months in Uttarayana excluding Chaitra, auspicious weekdays, and particular nakshatras with benefics and malefics in favorable positions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE PLANETS POSITED IN THE ANGLES IN THE LAGNA OR ASCENDANT AT THE TIME OF MUNDANA",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "mundana",
+        "chudakarana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Emaciated Moon, Mars, Saturn, or Sun in an angle (Kendras) from the Lagna"
+        }
+      },
+      "exclusions": [],
+      "notes": "Placement of the weak Moon, Mars, Saturn, or Sun in angular houses during Mundana causes severe harms like death, wounds, lameness, or fever, while Mercury, Jupiter, and Venus in angles are auspicious.",
+      "uncertain": false
+    }
+  ]
+}

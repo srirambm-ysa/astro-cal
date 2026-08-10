@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "pdf_page": 129,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1677,
+      "completion_tokens": 579,
+      "total_tokens": 2256,
+      "cost": 0.0019506,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0019506,
+        "upstream_inference_prompt_cost": 0.0005031,
+        "upstream_inference_completions_cost": 0.0014475
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE SEATING OF THE CHILD ON THE GROUND",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "seating the child on the ground",
+        "wearing kati sutra"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Mrigashira",
+          "Jyeshtha",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "5th month, when Mars is strong, in a Chara or Movable Lagna or Ascendant"
+        }
+      },
+      "exclusions": [
+        "Rikta tithis (4, 9, 14)"
+      ],
+      "notes": "The ceremony of seating the child on the ground for the first time should be performed in the 5th month under specific fixed, moveable, or light nakshatras, avoiding Rikta tithis, with Mars strong.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE DETERMINATION OF THE MEANS OF LIVING OF THE CHILD",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "determining means of living of the child",
+        "choosing livelihood items"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "During the ground-seating ceremony, place various objects like clothes, weapons, books, pens, gold, and silver before the child to determine future livelihood by what the child picks."
+        }
+      },
+      "exclusions": [],
+      "notes": "The child's future livelihood is predicted based on the first object it touches voluntarily when placed before them during the ground-seating ceremony.",
+      "uncertain": false
+    }
+  ]
+}

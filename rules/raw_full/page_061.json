@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "pdf_page": 61,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2126,
+      "completion_tokens": 970,
+      "total_tokens": 3096,
+      "cost": 0.0030628,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0030628,
+        "upstream_inference_prompt_cost": 0.0006378,
+        "upstream_inference_completions_cost": 0.002425
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA OF OPENING (INAUGURATING) A SHOP AND OF SELLING (SELLING)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "selling"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Vishakha",
+          "Krittika",
+          "Ashlesha",
+          "Bharani"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "benefics in angles and trines, malefics in 3, 6, 11 houses, ascendant other than Aquarius, and on auspicious tithis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Selling things is auspicious in the three Poorvas, Vishakha, Krittika, Ashlesha, and Bharani under specified planetary conditions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA OF OPENING (INAUGURATING) A SHOP AND OF SELLING (OPENING SHOP)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "opening a shop",
+        "inaugurating a shop"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Anuradha",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Venus and Moon in the Ascendant, no malefics in 8/12 houses, benefics in 2/10/11 houses, avoiding Aquarius ascendant"
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Tuesday",
+        "Aquarius ascendant"
+      ],
+      "notes": "Opening a shop is auspicious on other tithis/days leaving Rikta tithis, Tuesday, and Aquarius ascendant, in Mitra, Dhruwa, and Kshipra nakshatras with supportive planetary positions.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS WITH REGARD TO ELEPHANT AND HORSE (HORSES)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "purchasing horses",
+        "selling horses",
+        "riding horses",
+        "training horses",
+        "deeds relating to horses"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Revati",
+          "Dhanishtha",
+          "Mrigashira",
+          "Swati",
+          "Shatabhisha",
+          "Punarvasu"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Tuesday"
+      ],
+      "notes": "Deeds relating to horses may be auspiciously done in Kshipra nakshatras, Revati, Dhanishtha, Mrigashira, Swati, Shatabhisha, and Punarvasu, excluding Rikta tithis and Tuesday.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS WITH REGARD TO ELEPHANT AND HORSE (ELEPHANTS)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "deeds related to elephants"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "All deeds related to elephants should be performed in Mridu and Kshipra nakshatras.",
+      "uncertain": false
+    }
+  ]
+}

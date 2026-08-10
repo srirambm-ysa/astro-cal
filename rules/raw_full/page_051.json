@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "pdf_page": 51,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1924,
+      "completion_tokens": 252,
+      "total_tokens": 2176,
+      "cost": 0.0012072,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0012072,
+        "upstream_inference_prompt_cost": 0.0005772,
+        "upstream_inference_completions_cost": 0.00063
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "NAKSHATRA SYNONYMS",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Bharani",
+          "Krittika",
+          "Rohini",
+          "Mrigashira",
+          "Ardra",
+          "Punarvasu",
+          "Pushya",
+          "Ashlesha",
+          "Magha",
+          "Poorva Phalguni",
+          "Uttara Phalguni",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Vishakha",
+          "Anuradha",
+          "Jyeshtha",
+          "Moola",
+          "Poorvashadha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lists traditional synonyms and alternative names for the first 20 nakshatras."
+        }
+      },
+      "exclusions": [],
+      "notes": "This section provides classical synonyms for various nakshatras from Ashwini to Poorvashadha.",
+      "uncertain": false
+    }
+  ]
+}

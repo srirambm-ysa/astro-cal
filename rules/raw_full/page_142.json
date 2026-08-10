@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "pdf_page": 142,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2244,
+      "completion_tokens": 564,
+      "total_tokens": 2808,
+      "cost": 0.0020832,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020832,
+        "upstream_inference_prompt_cost": 0.0006732,
+        "upstream_inference_completions_cost": 0.00141
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE AUSPISIOUSNESS OR THE INAUSPICIOUSNESS OF THE UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana",
+        "yagyopaveeta"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Thursday",
+          "Friday",
+          "Tuesday",
+          "Wednesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Strong position of the planets who are the Lords of the Vedas, Sun, Moon, and Jupiter. For Rigveda: Thursday, 9/12 Lagnas, strength of Jupiter; for Yajurveda: Friday, 2/7 Lagnas, strength of Venus; for Samaveda: Tuesday, 1/8 Lagnas; for Atharvaveda: Wednesday, 3/6 Lagnas, strength of Mercury."
+        }
+      },
+      "exclusions": [
+        "Jupiter and Venus in enemy's sign",
+        "Jupiter and Venus in deep debilitation sign",
+        "Jupiter and Venus defeated in planetary war"
+      ],
+      "notes": "Planetary strengths and specific weekdays/lagnas according to the Vedas are auspicious for the Upanayana ceremony, while debilitated or defeated lords are harmful.",
+      "uncertain": false
+    },
+    {
+      "heading": "EXCEPION OF THE MONTH OF THE BIRTH ETC. IN THE UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Performing Upanayana on the birth nakshatra, month, lagna, and tithi is beneficial for the eldest child of Brahmin varna, or for Kshetriya/Vaishya children born after the first conception."
+        }
+      },
+      "exclusions": [],
+      "notes": "Using birth-time factors (nakshatra, month, lagna, tithi) is exceptionally auspicious for Upanayana under specific birth-order and varna conditions.",
+      "uncertain": false
+    }
+  ]
+}

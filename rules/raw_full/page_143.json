@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "pdf_page": 143,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2179,
+      "completion_tokens": 912,
+      "total_tokens": 3091,
+      "cost": 0.0029337,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0029337,
+        "upstream_inference_prompt_cost": 0.0006537,
+        "upstream_inference_completions_cost": 0.00228
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "JUPITER TRANSIT PLACEMENT IN MARRIAGE AND UPANAYANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "marriage",
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter in 2nd, 5th, 7th, 9th, or 11th houses from Janma Rashi is excellent. Jupiter in 1st, 3rd, 6th, or 10th houses requires pacification/worship. Jupiter in 4th, 8th, or 12th houses is inauspicious."
+        }
+      },
+      "exclusions": [
+        "Jupiter in 4th, 8th, or 12th houses from Janma Rashi"
+      ],
+      "notes": "Jupiter's transit placement from the natal moon determines its favorability for marriage and upanayana.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EXCEPTION OF THE INAUSPICIOUS JUPITER",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "marriage",
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter in exaltation, own sign, or friend's sign, while being in its own Navamsha, Vargottama Navamsha, or exalted Navamsha, becomes auspicious even in the 4th, 8th, or 12th houses."
+        }
+      },
+      "exclusions": [
+        "Jupiter in debilitation or enemy's sign"
+      ],
+      "notes": "Strong navamsha placement can override unfavorable house transits for Jupiter.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE TIME WHICH SHOULD BE REJECTED IN THE UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Saturday"
+        ],
+        "tithis": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          30,
+          1,
+          4
+        ],
+        "tithi_groups": [],
+        "paksha": "Krishna",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Krishna paksha from 6th tithi to Amavasya, Pradosha days, Anadhyaya days, Saturdays, afternoon (Apranha Kaala) on days with morning thunder and lightning, and Galagraha tithis (13, 14, 15, 30, 1, 4, 7, 8, 9)."
+        }
+      },
+      "exclusions": [
+        "Krishna paksha 6th to Amavasya",
+        "Saturday",
+        "Galagraha tithis"
+      ],
+      "notes": "Upanayana is prohibited during specific dark fortnight tithis, Saturdays, and troubled weather or astrological conditions.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "pdf_page": 131,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2005,
+      "completion_tokens": 586,
+      "total_tokens": 2591,
+      "cost": 0.0020665,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020665,
+        "upstream_inference_prompt_cost": 0.0006015,
+        "upstream_inference_completions_cost": 0.001465
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "LAGNA SHUDDHI OR A FAVOURABLE ASCENDANT IN KARNA VEDHA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "karna vedha"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "8th house from natal ascendant without any planet; benefics in angles, trines, and 3/11 houses; ascendant of Venus or Jupiter (Taurus, Libra, Sagittarius, Pisces); malefics in 3/6/11 houses from natal ascendant; Jupiter in the ascendant."
+        }
+      },
+      "exclusions": [],
+      "notes": "Karna Vedha samskara is auspicious under specific planetary placements involving benefics, malefics, and Jupiter relative to the natal ascendant.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE TIME WHICH SHOULD BE REJECTED IN DOING AUSPICIOUS DEEDS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "establish the image of a god",
+        "build a tank",
+        "celebrate a marriage",
+        "agni adhaana",
+        "entry in a newly built house",
+        "mundana",
+        "coronation",
+        "wear yagyopaveeta or janeu"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Dakshinayana of the Sun, childhood or old age of planets, combust condition of Jupiter and Venus, and at the time of the rising of Ketu."
+        }
+      },
+      "exclusions": [
+        "Dakshinayana",
+        "combust Jupiter and Venus",
+        "rising of Ketu",
+        "childhood or old age of planets"
+      ],
+      "notes": "Major auspicious ceremonies and deeds should be avoided during the sun's southern course, planetary combustion, and Ketu's heliacal rise.",
+      "uncertain": false
+    }
+  ]
+}

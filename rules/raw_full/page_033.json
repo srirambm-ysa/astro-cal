@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "pdf_page": 33,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2177,
+      "completion_tokens": 544,
+      "total_tokens": 2721,
+      "cost": 0.0020131,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020131,
+        "upstream_inference_prompt_cost": 0.0006531,
+        "upstream_inference_completions_cost": 0.00136
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "REJECTION OF CERTAIN YOGAS LIKE MRITYU, KRAKACHA ETC",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds",
+        "travelling"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Mrityu",
+          "Krakacha",
+          "Dagdha",
+          "Vishhulashan"
+        ],
+        "planetary": {
+          "freeform": "Good effect due to Moon's auspiciousness in various houses (Gochara); some say good after one prahara, others say reject only for journey"
+        }
+      },
+      "exclusions": [],
+      "notes": "Inauspicious yogas like Mrityu and Krakacha can become auspicious due to the Moon's good transit or after one prahara.",
+      "uncertain": false
+    },
+    {
+      "heading": "OTHER WAYS IN WHICH INAUSPICIOUS YOGAS ARE REMOVED",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Sarvartha Siddhi",
+          "Amrita Siddhi",
+          "Vaidhriti",
+          "Vyatipata"
+        ],
+        "planetary": {
+          "freeform": "Presence of a strong auspicious yoga or a favourable Lagna destroys inauspicious yogas; Bhadra and inauspicious yogas like Vaidhriti and Vyatipata give good effects after noontime."
+        }
+      },
+      "exclusions": [],
+      "notes": "Auspicious yogas or a favourable Lagna neutralize inauspicious combinations, and certain negative periods like Bhadra or Vaidhriti yield good results after noon.",
+      "uncertain": false
+    }
+  ]
+}

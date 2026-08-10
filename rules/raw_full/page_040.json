@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "pdf_page": 40,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2045,
+      "completion_tokens": 750,
+      "total_tokens": 2795,
+      "cost": 0.0024885,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024885,
+        "upstream_inference_prompt_cost": 0.0006135,
+        "upstream_inference_completions_cost": 0.001875
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE THINGS WHICH SHOULD NOT BE DONE IN THE COMBUST ETC. STAGES OF JUPITER AND VENUS",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "building and using of a small well",
+        "garden",
+        "tank",
+        "well",
+        "house",
+        "beginning and ending of a vrata",
+        "coming in of a newly wedded wife",
+        "Mahadaana",
+        "yajna",
+        "Ashtaka Shraddha",
+        "Godan",
+        "eating newly grown grains",
+        "water tank",
+        "first Shrawanikanna",
+        "Vedavrata",
+        "Neelvrashotsarga",
+        "Atipanna Samaskara",
+        "Deva Pratishtha",
+        "learning the first lesson from the guru",
+        "putting on the Sacred thread",
+        "marriage",
+        "first cutting of hair",
+        "first visit to a god",
+        "first going to a place of pilgrimage",
+        "renunciation of the world",
+        "Agnihotra",
+        "first visit to a king",
+        "coronation",
+        "journey",
+        "yajna of four months",
+        "Samavartana",
+        "piercing the ear",
+        "testing of some celestial objects"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "When Jupiter and Venus are in old age, in combustion, or in childhood stage, and during Kshaya (intercalary loss) or Mala (additional/leap) month."
+        }
+      },
+      "exclusions": [],
+      "notes": "Various major sacraments, construction works, and journeys are prohibited during the old age, combustion, or infancy stages of Jupiter and Venus, as well as during Mala or Kshaya months.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE DEFECTIVE PERIOD WHEN JUPITER IS THERE IN THE SIGN OF LEO OR CAPRICORN, OR WHEN HE IS RETROGRADE OR ATICHARI OR WHEN HE COMBINES WITH THE SUN",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "When Jupiter is in the sign of Leo or Capricorn, or is retrograde, atichari (accelerated motion), or combust/combines with the Sun."
+        }
+      },
+      "exclusions": [],
+      "notes": "All deeds prohibited during combustion of Jupiter also apply when Jupiter is in Leo, Capricorn, retrograde, atichari, or with the Sun.",
+      "uncertain": true
+    }
+  ]
+}

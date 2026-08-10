@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "pdf_page": 27,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2143,
+      "completion_tokens": 483,
+      "total_tokens": 2626,
+      "cost": 0.0018504,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0018504,
+        "upstream_inference_prompt_cost": 0.0006429,
+        "upstream_inference_completions_cost": 0.0012075
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS IN WHICH ECLIPSES OCCUR",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatra in which an eclipse occurs is rejected (6 months for full eclipse, 3 months for half eclipse, 1 month for one-fourth eclipse). Avoid 3 days before/after or specific rising/setting eclipse conditions."
+        }
+      },
+      "exclusions": [
+        "eclipsed nakshatras"
+      ],
+      "notes": "Nakshatras afflicted by eclipses are forbidden for auspicious deeds for varying durations depending on the extent of the eclipse.",
+      "uncertain": false
+    },
+    {
+      "heading": "ORGANS OF THE PANCHANGA WHICH ARE TO BE AVOIDED IN DOING AUSPICIOUS DEEDS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Vyatipata",
+          "Vaidhriti"
+        ],
+        "planetary": {
+          "freeform": "Birth nakshatra, birth month, birth date, Vyatipata, Bhadra, Vaidhriti yoga, Amavasya, day of death of father and mother, and tithi that has not occurred."
+        }
+      },
+      "exclusions": [
+        "birth nakshatra",
+        "birth month",
+        "birth date",
+        "Vyatipata yoga",
+        "Bhadra",
+        "Vaidhriti yoga",
+        "Amavasya",
+        "death anniversary of parents",
+        "tithi that has not occurred"
+      ],
+      "notes": "Certain specific sensitive panchang elements like birth star, specific yogas, and dark moon tithi must be avoided for auspicious activities.",
+      "uncertain": false
+    }
+  ]
+}

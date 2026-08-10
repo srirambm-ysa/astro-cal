@@ -103,6 +103,17 @@
   .chip.festival{background:var(--gold)}
   .chip.personal{background:var(--teal)}
   .chip.shraddha{background:var(--vermilion)}
+  .chip.verdict{font-size:10px;padding:2px 8px}
+  .chip.verdict.Shubh{background:var(--teal)}
+  .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
+  .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
+  .muh-act{font-size:11px;text-transform:none;letter-spacing:.03em;color:var(--ink-soft);font-family:"Eczar",serif}
+  .evtab tr.muhrow{cursor:pointer}
+  .evtab td.tara{white-space:nowrap}
+  .muh-detail{border-top:1px solid var(--line-faint);margin-top:12px;padding-top:10px}
+  .muh-line{display:flex;gap:8px;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px}
+  .muh-line .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;flex:none}
+  .muh-line .v{text-align:right;color:var(--ink)}
   .note{font-size:11px;color:var(--ink-soft);margin-top:6px;font-style:italic}
   /* forms */
   .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
@@ -164,6 +175,9 @@
   body.night .chip.festival{background:var(--gold-bright);color:#141835}
   body.night .chip.moon{background:#3D4678}
   body.night .chip.personal{background:var(--teal)}
+  body.night .muh-line .v{color:var(--ink)}
+  body.night .muh-act{color:#c6bfa8}
+  body.night .chip.verdict.Neutral{color:#141835}
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr}}
   /* ---------- PRINT / PDF ---------- */
   @media print{
@@ -238,6 +252,18 @@
     </section>
 
     <section class="card">
+      <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span></span></h2>
+      <div class="form" style="margin-bottom:8px">
+        <div class="field"><div class="k">Activity</div><select id="muhAct"></select></div>
+      </div>
+      <table class="evtab">
+         <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Per-activity verdict</th></tr></thead>
+        <tbody id="muhurtas"></tbody>
+      </table>
+      <div class="note" id="muhSummary"></div>
+    </section>
+
+    <section class="card">
       <h2 id="monthEvTitle">Key events</h2>
       <table class="evtab">
         <thead><tr><th>Date</th><th>Event</th><th>Type</th></tr></thead>
@@ -256,6 +282,10 @@
       <div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div>
     </div>
     <div class="detail" id="detail"></div>
+    <div class="muh-detail" id="muhDetailCard" hidden>
+      <div class="sd-label">Muhurta — <span id="muhDetailAct"></span></div>
+      <div id="muhDetail"></div>
+    </div>
   </section>
 
   <section class="card">

@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "pdf_page": 41,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2130,
+      "completion_tokens": 710,
+      "total_tokens": 2840,
+      "cost": 0.002414,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.002414,
+        "upstream_inference_prompt_cost": 0.000639,
+        "upstream_inference_completions_cost": 0.001775
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "PROHIBITIONS DURING JUPITER IN LEO OR CAPRICORN, RETROGRADE, ATICHARI, OR 13-DAY PAKSHA",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "marriage",
+        "all auspicious deeds",
+        "making things made of ivory or elephant teeth",
+        "wearing things made of ivory or elephant teeth",
+        "making jewels having gems studded in them",
+        "wearing jewels having gems studded in them"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter is in Leo or Capricorn, combust, retrograde, atichari, or when Jupiter and the Sun are in the same sign, or when a paksha consists of 13 days (kshaya tithi)"
+        }
+      },
+      "exclusions": [
+        "Jupiter in Leo or Capricorn",
+        "combust planets",
+        "retrograde Jupiter",
+        "atichari Jupiter",
+        "Jupiter and Sun in the same sign",
+        "13-day paksha"
+      ],
+      "notes": "Auspicious deeds and crafting or wearing ivory and jeweled items are prohibited during problematic planetary conditions like Jupiter in Leo/Capricorn, combustions, retrogradations, atichaar, Sun-Jupiter conjunction, or a 13-day fortnight.",
+      "uncertain": false
+    },
+    {
+      "heading": "LEAVING OUT THE PERIOD IN WHICH JUPITER IS IN THE SIGN OF LEO",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "marriage",
+        "auspicious deeds like marriage etc"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter is in the sign of Leo and also in the Navamsha of Leo (extending from 4s 13°20' to 4s 16°40'), applicable specifically in regions from the Northern Bank of Godavari to the Southern Bank of the Northern Ganga (Central India, Madhya Bharata, Rajasthan)"
+        }
+      },
+      "exclusions": [
+        "Regions outside the area between the Northern Bank of Godavari and the Southern Bank of the Northern Ganga",
+        "When the Sun is in the sign of Aries (removes the defect of Jupiter in Leo)"
+      ],
+      "notes": "Marriage and auspicious deeds are prohibited when Jupiter is in Leo and simultaneously in the Leo Navamsha, specifically within the region between the Godavari and Ganga rivers, unless the Sun is in Aries.",
+      "uncertain": false
+    }
+  ]
+}

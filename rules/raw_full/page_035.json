@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "pdf_page": 35,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2551,
+      "completion_tokens": 530,
+      "total_tokens": 3081,
+      "cost": 0.0020903,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020903,
+        "upstream_inference_prompt_cost": 0.0007653,
+        "upstream_inference_completions_cost": 0.001325
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE STHIR KARANAS (FIXED KARANAS)",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          1,
+          14,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Shakuni occurs in the latter half of the 14th tithi of Krishna Paksha, Naga in the first half of Amavasya, Chatushpada in the second half of Amavasya, and Kinstughana in the first half of Pratipada of Shukla Paksha."
+        }
+      },
+      "exclusions": [],
+      "notes": "Describes the distribution and occurrence of the four fixed karanas (Shakuni, Naga, Chatushpada, and Kinstughana).",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MOVABLE KARANAS",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          11,
+          12,
+          14,
+          15,
+          10
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Bava, Balava, Kaulava, Taitil, Gara, Vanika, and Bhadra (Vishti) rotate cyclically as movable karanas across specific halves of tithis."
+        }
+      },
+      "exclusions": [],
+      "notes": "Details the sequence and cyclic repetition of the seven movable karanas across various tithi halves.",
+      "uncertain": false
+    }
+  ]
+}

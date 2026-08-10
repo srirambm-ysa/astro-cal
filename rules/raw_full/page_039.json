@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "pdf_page": 39,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1638,
+      "completion_tokens": 247,
+      "total_tokens": 1885,
+      "cost": 0.0011089,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0011089,
+        "upstream_inference_prompt_cost": 0.0004914,
+        "upstream_inference_completions_cost": 0.0006175
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE LIVING AND EFFECTS OF BHADRA",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "When the Moon is in Aquarius, Pisces, Cancer, or Leo, Bhadra lives in Mrityu Loka; when in Aries, Taurus, Gemini, or Scorpio, in Swargaloka; when in Virgo, Sagittarius, Libra, or Capricorn, in Patal Loka."
+        }
+      },
+      "exclusions": [],
+      "notes": "The effects of Bhadra are experienced in the specific world (Loka) where she resides based on the Moon's zodiac sign.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "pdf_page": 16,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2068,
+      "completion_tokens": 695,
+      "total_tokens": 2763,
+      "cost": 0.0023579,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0023579,
+        "upstream_inference_prompt_cost": 0.0006204,
+        "upstream_inference_completions_cost": 0.0017375
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "INAUSPICIOUSNESS ARISING OUT OF THE CONJUNCTION OF TITHI AND NAKSHTRA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashlesha",
+          "Uttarashadha",
+          "Anuradha",
+          "Magha",
+          "Uttara Phalguni",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Swati",
+          "Chitra",
+          "Hasta",
+          "Moola",
+          "Krittika",
+          "Poorva Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12,
+          13
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Conjunction of specific nakshatras falling on specific tithis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific combinations of nakshatras falling on particular tithis are considered inauspicious for performing auspicious deeds.",
+      "uncertain": false
+    },
+    {
+      "heading": "ZERO NAKSHTRAS (STARS) IN THE MONTHS CHAITRA ETC.",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "auspicious deed"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Rohini",
+          "Ashwini",
+          "Swati",
+          "Uttarashadha",
+          "Pushya",
+          "Poorva Phalguni",
+          "Dhanishtha",
+          "Shravana",
+          "Shatabhisha",
+          "Revati",
+          "Poorva Bhadrapada",
+          "Krittika",
+          "Magha",
+          "Chitra",
+          "Vishakha",
+          "Ardra",
+          "Hasta",
+          "Moola",
+          "Bharani",
+          "Jyeshtha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Certain nakshatras mapped to specific lunar months causing Zero Nakshatra dosha"
+        }
+      },
+      "exclusions": [],
+      "notes": "Performing auspicious deeds during designated Zero Nakshatras for specific months causes loss of wealth.",
+      "uncertain": false
+    }
+  ]
+}

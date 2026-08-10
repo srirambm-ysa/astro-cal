@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "pdf_page": 20,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2371,
+      "completion_tokens": 862,
+      "total_tokens": 3233,
+      "cost": 0.0028663,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0028663,
+        "upstream_inference_prompt_cost": 0.0007113,
+        "upstream_inference_completions_cost": 0.002155
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "NAMES OF ANAND ETC YOGAS",
+      "type": "yoga_combination",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Anand",
+          "Kala-Danda",
+          "Dhoomra",
+          "Dhata",
+          "Saumaya",
+          "Dhwanksha",
+          "Ketu",
+          "Shrivatsaya",
+          "Vajra",
+          "Mudgar",
+          "Kshira",
+          "Mitra",
+          "Manasa",
+          "Padma",
+          "Lumba",
+          "Utpaat",
+          "Mrityu",
+          "Kaana",
+          "Siddhi",
+          "Shubha",
+          "Amrita",
+          "Musala",
+          "Gada",
+          "Matanga",
+          "Raksha",
+          "Chara",
+          "Susthira",
+          "Pravardhamana"
+        ],
+        "planetary": {
+          "freeform": "These 28 are the Chala or movable yogas. Kaladanda, Dhoomra, Dhawanksha, Vajra, Mudgar, Padma, Lumba, Utpaat, Mrityu, Kaana, Musala, Gada, Raksha are inauspicious yogas and the rest are auspicious."
+        }
+      },
+      "exclusions": [
+        "Kaladanda",
+        "Dhoomra",
+        "Dhawanksha",
+        "Vajra",
+        "Mudgar",
+        "Padma",
+        "Lumba",
+        "Utpaat",
+        "Mrityu",
+        "Kaana",
+        "Musala",
+        "Gada",
+        "Raksha"
+      ],
+      "notes": "There are 28 Ananda etc. yogas, of which specific ones are classified as inauspicious and the rest as auspicious.",
+      "uncertain": false
+    },
+    {
+      "heading": "METHOD OF FINDING OUT THE ANANDA ETC. YOGAS",
+      "type": "yoga_combination",
+      "verdict": "neutral",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Mrigashira",
+          "Ashlesha",
+          "Hasta",
+          "Anuradha",
+          "Uttarashadha",
+          "Shatabhisha"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Count from Ashwini on Sunday, Mrigashira on Monday, Ashlesha on Tuesday, Hasta on Wednesday, Anuradha on Thursday, Uttarashadha on Friday, and Shatabhisha (including Abhijit) on Saturday to the current nakshatra."
+        }
+      },
+      "exclusions": [],
+      "notes": "To find the 28 Ananda yogas, start counting from specific base nakshatras depending on the weekday up to the current nakshatra.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "pdf_page": 130,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2343,
+      "completion_tokens": 861,
+      "total_tokens": 3204,
+      "cost": 0.0028554,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0028554,
+        "upstream_inference_prompt_cost": 0.0007029,
+        "upstream_inference_completions_cost": 0.0021525
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR EATING TAAMBOOL OR BETEL LEAF",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "eating taambool or betel leaf"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Shravana",
+          "Moola",
+          "Punarvasu",
+          "Jyeshtha",
+          "Swati",
+          "Dhanishtha"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Benefic planets in angles (1, 4, 7, 10) and trines (1, 5, 9); malefic planets in 3rd, 6th, and 11th houses; ascendants of Gemini, Capricorn, Virgo, Aquarius, Taurus, and Pisces."
+        }
+      },
+      "exclusions": [
+        "Tuesday",
+        "Saturday"
+      ],
+      "notes": "Betel leaf eating for children should be done on permitted weekdays and nakshatras with benefics in angles/trines and malefics in 3/6/11.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR KARNA VEDHA OR MAKING HOLE IN THE EARS FOR WEARNING JEWELS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "karna vedha",
+        "ear piercing"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Dhanishtha",
+          "Punarvasu",
+          "Mrigashira",
+          "Revati",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Odd years from birth, 6th/7th/8th month or 12th/16th day from birth."
+        }
+      },
+      "exclusions": [
+        "months of Chaitra and Pausha",
+        "sleeping time of Lord Vishnu (Ashadha Shukla Ekadashi to Kartika Shukla Ekadashi)",
+        "birth month",
+        "Rikta tithis (4, 9, 14)",
+        "even years",
+        "Janama Tara (1st, 10th, 11th nakshatras from birth nakshatra)"
+      ],
+      "notes": "Karna Vedha is excellent on specified days, months, and odd years while avoiding malefic periods like Chaturmas and Rikta tithis.",
+      "uncertain": false
+    }
+  ]
+}

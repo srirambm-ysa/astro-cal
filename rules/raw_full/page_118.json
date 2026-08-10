@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "pdf_page": 118,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2132,
+      "completion_tokens": 976,
+      "total_tokens": 3108,
+      "cost": 0.0030796,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0030796,
+        "upstream_inference_prompt_cost": 0.0006396,
+        "upstream_inference_completions_cost": 0.00244
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE TIME WHICH IS TO BE REJECTED IN HAVING SEXUAL INTERCOURSE FOR CONCEPTION",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "sexual intercourse",
+        "conception"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Bharani",
+          "Ashwini",
+          "Revati",
+          "Magha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Vyatipata",
+          "Vaidhriti",
+          "Parigha"
+        ],
+        "planetary": {
+          "freeform": "Leave the three gandantas (Tithi, Nakshatra, Lagna), Vadha and Janama Tara (7/10/16/19/25th Nakshatras), time of solar and lunar eclipse, days of shraddha of father and mother, daytime, first half of Parigha yoga, nakshatra troubled by utpaata, lagna of 8th rashi from janama rashi, and malefic lagna"
+        }
+      },
+      "exclusions": [
+        "tithi gandanta",
+        "nakshatra gandanta",
+        "lagna gandanta",
+        "Vadha tara",
+        "Janama tara",
+        "Moola nakshatra",
+        "Bharani nakshatra",
+        "Ashwini nakshatra",
+        "Revati nakshatra",
+        "Magha nakshatra",
+        "eclipse time",
+        "Vyatipata yoga",
+        "Vaidhriti yoga",
+        "shraddha days",
+        "day time",
+        "first half of Parigha yoga",
+        "utpaata afflicted nakshatra",
+        "8th rashi lagna",
+        "malefic lagna"
+      ],
+      "notes": "Various times, nakshatras, yogas, and lagnas to be avoided for conception.",
+      "uncertain": false
+    },
+    {
+      "heading": "FURTHER THINGS WHICH SHOULD BE KNOWN ABOUT THE MUHURTA OF CONCEPTION",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "sexual intercourse",
+        "conception"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Tuesday",
+          "Sunday",
+          "Saturday"
+        ],
+        "tithis": [
+          6,
+          4,
+          9,
+          14
+        ],
+        "tithi_groups": [
+          "Rikta"
+        ],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Bhadra karana, Shashthi tithi, days of festivals, Rikta tithis, evening time, Tuesday, Sunday, Saturday, and the first 4 nights from the beginning of menstrual discharge should be left"
+        }
+      },
+      "exclusions": [
+        "Bhadra karana",
+        "Shashthi tithi",
+        "festival days",
+        "Rikta tithis",
+        "evening time",
+        "Tuesday",
+        "Sunday",
+        "Saturday",
+        "first 4 nights of menstrual discharge"
+      ],
+      "notes": "Certain karanas, tithis, weekdays, and times must be avoided for conception.",
+      "uncertain": false
+    },
+    {
+      "heading": "FURTHER THINGS WHICH SHOULD BE KNOWN ABOUT THE MUHURTA OF CONCEPTION (AUSPICIOUS NAKSHATRAS)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "sexual intercourse",
+        "conception"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Sexual intercourse for conception is auspicious in the three Uttara nakshatras.",
+      "uncertain": false
+    }
+  ]
+}

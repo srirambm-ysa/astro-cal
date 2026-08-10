@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "pdf_page": 28,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2520,
+      "completion_tokens": 539,
+      "total_tokens": 3059,
+      "cost": 0.0021035,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0021035,
+        "upstream_inference_prompt_cost": 0.000756,
+        "upstream_inference_completions_cost": 0.0013475
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "REJECTION OF KSHAYA TITHI, VRIDDHI TITHI, KULIKA, ARDHAYAMA, PATA AND DOSHAS IN VISHKAMBHA AND VAJRA YOGAS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Vishkambha",
+          "Vajra"
+        ],
+        "planetary": {
+          "freeform": "Reject Kshaya tithi (destroyed tithi), Vriddhi tithi (added tithi), unoccurring month, added month, Kulika, Ardhayama, Pata, and the first 3 ghatis of Vishkambha and Vajra yogas."
+        }
+      },
+      "exclusions": [
+        "Kshaya tithi",
+        "Vriddhi tithi",
+        "adiga masa",
+        "kshaya masa",
+        "Kulika",
+        "Ardhayama",
+        "Pata",
+        "first 3 ghatis of Vishkambha yoga",
+        "first 3 ghatis of Vajra yoga"
+      ],
+      "notes": "Certain days, months, and malefic portions of yogas like Vishkambha and Vajra must be avoided for auspicious activities.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE GHATIS OF PARIDHA ETC. YOGAS THAT ARE TO BE REJECTED",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Paridha",
+          "Shubha",
+          "Ganda",
+          "Atiganda",
+          "Vyaghata"
+        ],
+        "planetary": {
+          "freeform": "First half of Paridha yoga, first 5 ghatis of Shubha yoga, first 6 ghatis of Ganda yoga, first 6 ghatis of Atiganda yoga, and first 9 ghatis of Vyaghata yoga must be rejected."
+        }
+      },
+      "exclusions": [
+        "first half of Paridha yoga",
+        "first 5 ghatis of Shubha yoga",
+        "first 6 ghatis of Ganda yoga",
+        "first 6 ghatis of Atiganda yoga",
+        "first 9 ghatis of Vyaghata yoga"
+      ],
+      "notes": "Specific initial portions of specific yogas are considered inauspicious and should be avoided.",
+      "uncertain": false
+    }
+  ]
+}

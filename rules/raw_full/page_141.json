@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "pdf_page": 141,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2016,
+      "completion_tokens": 820,
+      "total_tokens": 2836,
+      "cost": 0.0026548,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026548,
+        "upstream_inference_prompt_cost": 0.0006048,
+        "upstream_inference_completions_cost": 0.00205
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE AUSPICIOUS LAGNA OR ASCENDANT FOR THE UPANAYANA MUHURTA",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Venus, Jupiter, the Moon and the Ascendant Lord are in the 6th and 8th House; Malefic Planets are in the 1st, 8th, and 5th Houses."
+        }
+      },
+      "exclusions": [
+        "Venus, Jupiter, Moon, and Ascendant Lord in 6th/8th houses",
+        "Malefics in 1st/8th/5th houses"
+      ],
+      "notes": "Venus, Jupiter, Moon, and Ascendant lord should not be in the 6th or 8th house, and malefics in the 1st, 8th, or 5th are inauspicious for upanayana.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE FAVOURABLE LAGNA OR ASCENDANT IN THE UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Benefics should not be in 6/8/12 houses. Malefics in 3/6/11 houses are auspicious. Full Moon in exaltation or own sign in ascendant is excellent."
+        }
+      },
+      "exclusions": [
+        "Benefics in 6th, 8th, or 12th houses"
+      ],
+      "notes": "Benefics are forbidden in 6/8/12, malefics are auspicious in 3/6/11, and the Full Moon is excellent if in exaltation or own sign in the ascendant.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE LORDS OF THE VARNAS LIKE BRAHMINS ETC AND OF THE VEDAS",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lists planetary lords for varnas (Brahmins: Jupiter, Venus; Kshatriyas: Sun, Mars; Vaishyas: Moon; Shudras: Mercury; Antyajas: Saturn) and Vedas (Rigaveda: Jupiter, Yajurveda: Venus, Saamaveda: Mars, Atharvaveda: Mercury)."
+        }
+      },
+      "exclusions": [],
+      "notes": "Provides the planetary rulers for different social classes (varnas) and Vedas.",
+      "uncertain": false
+    }
+  ]
+}

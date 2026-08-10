@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "pdf_page": 70,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2163,
+      "completion_tokens": 896,
+      "total_tokens": 3059,
+      "cost": 0.0028889,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0028889,
+        "upstream_inference_prompt_cost": 0.0006489,
+        "upstream_inference_completions_cost": 0.00224
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "VIRECHANA AND VAMAN (CATHARSIS AND VOMITING)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "virechana",
+        "vaman",
+        "taking medicinal enema",
+        "taking laxative",
+        "taking medicine for vomiting",
+        "cleaning bowels"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Days other than Wednesday and Saturday are auspicious; uses the nakshatras auspicious for Shiro Chhedana."
+        }
+      },
+      "exclusions": [
+        "Wednesday",
+        "Saturday"
+      ],
+      "notes": "Virechana and Vaman procedures are auspicious on specific weekdays (excluding Wednesday and Saturday) and under nakshatras suitable for Shiro Chhedana.",
+      "uncertain": false
+    },
+    {
+      "heading": "PERFORMANCE OF RELIGIOUS RITES OR DEEDS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "performance of religious rites",
+        "religious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "On Sunday and benefic planet days (Wednesday, Thursday, Friday, Monday), if there is the Shadavarga of Mercury or Jupiter in the Ascendant, or if Jupiter is in the Ascendant and strong."
+        }
+      },
+      "exclusions": [],
+      "notes": "Religious rites are auspicious under Mitra, Kshipra, Chara, and Dhruwa nakshatras on favorable weekdays with supportive planetary conditions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR REAPING CORN",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "reaping corn"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Reaping corn should be done in Tikshna nakshatras (Moola, Jyeshtha, Ardra, Ashlesha).",
+      "uncertain": false
+    }
+  ]
+}

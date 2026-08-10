@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "pdf_page": 85,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2272,
+      "completion_tokens": 907,
+      "total_tokens": 3179,
+      "cost": 0.0029491,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0029491,
+        "upstream_inference_prompt_cost": 0.0006816,
+        "upstream_inference_completions_cost": 0.0022675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE YOGAS OF TRIPUSHKARA AND DWIPUSHKARA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "death",
+        "destruction",
+        "increase"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Uttara Phalguni",
+          "Poorva Bhadrapada",
+          "Punarvasu",
+          "Krittika",
+          "Uttarashadha"
+        ],
+        "weekdays": [
+          "Saturday",
+          "Tuesday",
+          "Sunday"
+        ],
+        "tithis": [
+          2,
+          7,
+          12
+        ],
+        "tithi_groups": [
+          "Bhadra"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Tripushkara"
+        ],
+        "planetary": {
+          "freeform": "Conjunction of Saturday, Tuesday, Sunday, specific nakshatras, and Bhadra tithis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Tripushkara yoga multiplies the effect of death, destruction, or profit by threefold.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE YOGAS OF TRIPUSHKARA AND DWIPUSHKARA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "death",
+        "destruction",
+        "increase"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Dhanishtha",
+          "Chitra",
+          "Mrigashira"
+        ],
+        "weekdays": [
+          "Saturday",
+          "Tuesday",
+          "Sunday"
+        ],
+        "tithis": [
+          2,
+          7,
+          12
+        ],
+        "tithi_groups": [
+          "Bhadra"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Dwipushkara"
+        ],
+        "planetary": {
+          "freeform": "Conjunction of Saturday, Tuesday, Sunday, Dhanishtha, Chitra, Mrigashira, and Bhadra tithis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Dwipushkara yoga multiplies the effect of any event by twofold.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE TIME WHICH SHOULD BE REJECTED IN DOING 'PUTTALA DAHA' OR THE BURNING (CREMATION) OF A DUMMY OF SOMEONE",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "puttala daha",
+        "burning of a dummy",
+        "cremation of a dummy"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Bharani",
+          "Magha",
+          "Revati",
+          "Shatabhisha"
+        ],
+        "weekdays": [
+          "Friday",
+          "Tuesday",
+          "Saturday"
+        ],
+        "tithis": [
+          30,
+          14,
+          13,
+          1,
+          6,
+          11
+        ],
+        "tithi_groups": [
+          "Nanda"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Tripushkara"
+        ],
+        "planetary": {
+          "freeform": "Rejected on specific days, tithis, 11 nakshatras, and Tripushkara yoga"
+        }
+      },
+      "exclusions": [
+        "Amavasya",
+        "Chaturdashi",
+        "Tryodoshi",
+        "Nanda tithis",
+        "Tikshna nakshatras",
+        "Ugra nakshatras",
+        "Revati nakshatra",
+        "Shatabhisha nakshatra",
+        "Tripushkara yoga"
+      ],
+      "notes": "Puttala daha should be avoided on specified inauspicious days, tithis, nakshatras, and yoga.",
+      "uncertain": false
+    }
+  ]
+}

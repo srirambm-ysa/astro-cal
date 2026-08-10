@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "pdf_page": 59,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2124,
+      "completion_tokens": 1082,
+      "total_tokens": 3206,
+      "cost": 0.0033422,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0033422,
+        "upstream_inference_prompt_cost": 0.0006372,
+        "upstream_inference_completions_cost": 0.002705
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "MUHURTA WITH REGARD TO PLANTING OF TREES, SEEING ROYALTY, PREPARING WINE AND TRADING OF CATTLE ETC.",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "planting trees",
+        "planting creepers",
+        "seeing royalty",
+        "preparing wine",
+        "drinking wine",
+        "trading of cattle",
+        "purchase and sale of cows"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Moola",
+          "Shatabhisha",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Shravana",
+          "Dhanishtha",
+          "Ardra",
+          "Ashlesha",
+          "Jyeshtha",
+          "Bharani",
+          "Magha",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Specifies auspicious nakshatras for planting trees, seeing royalty, preparing and drinking wine, and trading cattle.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO THE ENTERING AND GOING OUT OF ANIMALS FROM CATTLE PROTECTION AND COW SHEDS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "protect animals",
+        "cattle protection"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Punarvasu",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "auspicious ascendant when there is no planet in the 8th House, in the Nakshatra of one's own yoni"
+        }
+      },
+      "exclusions": [],
+      "notes": "Protecting animals is auspicious in one's own yoni nakshatra and chara nakshatras when no planet is in the 8th house.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO THE ENTERING AND GOING OUT OF ANIMALS FROM CATTLE PROTECTION AND COW SHEDS (INAUSPICIOUS)",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "going of animals out of cow shed",
+        "entering of animals into cow shed",
+        "bringing up animals in cow shed"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Chitra",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [
+          "Tuesday"
+        ],
+        "tithis": [
+          8,
+          30
+        ],
+        "tithi_groups": [
+          "Rikta"
+        ],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Ashtami",
+        "Amavasya",
+        "Tuesday",
+        "Shravana",
+        "Chitra",
+        "Dhruwa nakshatras"
+      ],
+      "notes": "Entering or taking cattle out of sheds is inauspicious on Rikta tithis, 8th tithi, Amavasya, Tuesday, and during Shravana, Chitra, and Dhruwa nakshatras.",
+      "uncertain": false
+    }
+  ]
+}

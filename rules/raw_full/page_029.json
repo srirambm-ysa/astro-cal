@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "pdf_page": 29,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2146,
+      "completion_tokens": 606,
+      "total_tokens": 2752,
+      "cost": 0.0021588,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0021588,
+        "upstream_inference_prompt_cost": 0.0006438,
+        "upstream_inference_completions_cost": 0.001515
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "PAKSHA RANDHRA TITHIS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          4,
+          6,
+          8,
+          9,
+          12,
+          14
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "The first 8, 9, 14, 25, 10, and 5 Ghatis respectively of the 4th, 6th, 8th, 9th, 12th, and 14th tithis should be rejected."
+        }
+      },
+      "exclusions": [
+        "4th tithi",
+        "6th tithi",
+        "8th tithi",
+        "9th tithi",
+        "12th tithi",
+        "14th tithi"
+      ],
+      "notes": "Certain specific portions of the 4th, 6th, 8th, 9th, 12th, and 14th tithis in both pakshas are rejected for auspicious deeds.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE WAY TO FIND OUT KULIKA, KAL-BELA, YAMA-GHANTA AND KANTAKA INAUSPICIOUS MUHURTAS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Count from the current day to Saturday, Wednesday, Thursday, and Tuesday respectively, then double the number to find the corresponding inauspicious Muhurta for Kulika, Kalbela, Yama Ghanta, and Kantaka."
+        }
+      },
+      "exclusions": [],
+      "notes": "Provides a method to calculate the inauspicious Muhurtas of Kulika, Kalbela, Yama Ghanta, and Kantaka based on counting weekdays and doubling the result.",
+      "uncertain": false
+    }
+  ]
+}

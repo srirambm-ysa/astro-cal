@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "pdf_page": 65,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1921,
+      "completion_tokens": 400,
+      "total_tokens": 2321,
+      "cost": 0.0015763,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0015763,
+        "upstream_inference_prompt_cost": 0.0005763,
+        "upstream_inference_completions_cost": 0.001
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS WHICH SHOULD BE REJECTED IN LENDING AND BORROWING AND AMASSING MONEY",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "lending money",
+        "borrowing money",
+        "amassing money",
+        "keeping money in a chest",
+        "burying money underground",
+        "giving money on interest"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha",
+          "Krittika",
+          "Vishakha",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Bharani",
+          "Magha",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Vyatipaata"
+        ],
+        "planetary": {
+          "freeform": "During Bhadra karana and Vyatipaata yoga"
+        }
+      },
+      "exclusions": [],
+      "notes": "Money lent, buried, or invested during Teekshana, Mishra, Dhruwa, and Ugra nakshatras, or during Bhadra karana and Vyatipaata yoga, is not recovered.",
+      "uncertain": false
+    }
+  ]
+}

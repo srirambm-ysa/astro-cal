@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "pdf_page": 116,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1941,
+      "completion_tokens": 565,
+      "total_tokens": 2506,
+      "cost": 0.0019948,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0019948,
+        "upstream_inference_prompt_cost": 0.0005823,
+        "upstream_inference_completions_cost": 0.0014125
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "AUSPICIOUS TIME FOR THE FIRST APPEARANCE OF THE MENSES",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "first appearance of the menses"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Shukla",
+        "yogas": [],
+        "planetary": {
+          "freeform": "in the 7 months of Magha, Margashirsha, Baisakha, Ashwina, Phalguna, Jyeshtha and Shravana; in an auspicious Ascendant and in the day time"
+        }
+      },
+      "exclusions": [],
+      "notes": "First appearance of menses is auspicious during Shukla paksha in specific months, auspicious weekdays, daytime, and auspicious Ascendant.",
+      "uncertain": false
+    },
+    {
+      "heading": "EXCELLENT, MEDIUM AND LOW NAKSHTRAS FOR THE FIRST APPEARANCE OF WOMEN'S MENSES",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "first appearance of the menses"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Uttara Phalguni",
+          "Uttara Bhadrapada",
+          "Uttarashadha",
+          "Rohini",
+          "Swati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "wearing white clean clothes"
+        }
+      },
+      "exclusions": [],
+      "notes": "Lists excellent nakshatras for the first appearance of menses.",
+      "uncertain": false
+    }
+  ]
+}

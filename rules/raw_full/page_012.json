@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "pdf_page": 12,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2273,
+      "completion_tokens": 889,
+      "total_tokens": 3162,
+      "cost": 0.0029044,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0029044,
+        "upstream_inference_prompt_cost": 0.0006819,
+        "upstream_inference_completions_cost": 0.0022225
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "KARKACHA AND SAMVARTAKA YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "cleaning teeth with stick"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [
+          1,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Karkacha",
+          "Samvartaka"
+        ],
+        "planetary": {
+          "freeform": "Shashthi (6) on Saturday, Saptami (7) on Friday, Ashtami (8) on Thursday, Navami (9) on Wednesday, Dashmi (10) on Tuesday, Ekadashi (11) on Monday, Dwadashi (12) on Sunday; or Pratipada (1) on Wednesday and Saptami (7) on Sunday."
+        }
+      },
+      "exclusions": [],
+      "notes": "Certain combinations of tithis and weekdays form inauspicious Karkacha and Samvartaka yogas during which cleaning teeth with a stick is prohibited.",
+      "uncertain": false
+    },
+    {
+      "heading": "COLLECTION OF WOOD PROHIBITION",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "collection of wood"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday"
+        ],
+        "tithis": [
+          1,
+          6,
+          9,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Prohibited on Pratipada, Amavasya, Shashthi, Navami and Sunday according to Kashi Khanda Granatha."
+        }
+      },
+      "exclusions": [],
+      "notes": "Collection of wood should not be made on specific tithis and Sundays.",
+      "uncertain": false
+    },
+    {
+      "heading": "PROHIBITED PERSONAL CARE AND ACTIVITIES",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "oiling the hair",
+        "eating flesh",
+        "shaving",
+        "sexual intercourse",
+        "applying ubatan",
+        "bathing with amla"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          2,
+          6,
+          7,
+          8,
+          9,
+          10,
+          13,
+          14,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Shashthi for oiling, Ashtami for eating flesh, Chaturdashi for shaving, Amavasya for sexual intercourse; Trayodashi, Dashmi, Dwitiya for ubatan; Amavasya, Saptami, Navami for amla bath."
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific tithis are prohibited for personal grooming activities like oiling, shaving, applying ubatan, and other acts.",
+      "uncertain": false
+    }
+  ]
+}

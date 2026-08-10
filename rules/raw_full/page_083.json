@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "pdf_page": 83,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2271,
+      "completion_tokens": 1128,
+      "total_tokens": 3399,
+      "cost": 0.0035013,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0035013,
+        "upstream_inference_prompt_cost": 0.0006813,
+        "upstream_inference_completions_cost": 0.00282
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "FEVER CONTRACTED NAKSHATRAS",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "contracting fever"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Ardra",
+          "Ashlesha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Fever contracted in these specific nakshatras leads to death.",
+      "uncertain": false
+    },
+    {
+      "heading": "FEVER DURATION NAKSHATRAS",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "fever duration"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Revati",
+          "Anuradha",
+          "Bharani",
+          "Shravana",
+          "Shatabhisha",
+          "Chitra",
+          "Vishakha",
+          "Hasta",
+          "Dhanishtha",
+          "Moola",
+          "Krittika",
+          "Ashwini",
+          "Uttara Bhadrapada",
+          "Uttara Phalguni",
+          "Pushya",
+          "Punarvasu",
+          "Rohini",
+          "Mrigashira",
+          "Uttarashadha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Different nakshatras determine the duration of a fever.",
+      "uncertain": false
+    },
+    {
+      "heading": "SNAKE BITE DANGER",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "snake bite"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Bharani",
+          "Ashlesha",
+          "Moola",
+          "Krittika",
+          "Vishakha",
+          "Ardra",
+          "Magha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "A snake bite in these nakshatras leads to death unless the Moon is strong.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE COMBINATION WHICH LEADS TO IMMEDIATE DEATH AT THE BEGINNING OF THE DISEASE",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "onset of disease"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ardra",
+          "Ashlesha",
+          "Jyeshtha",
+          "Shatabhisha",
+          "Bharani",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Vishakha",
+          "Dhanishtha",
+          "Krittika"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Tuesday",
+          "Saturday"
+        ],
+        "tithis": [
+          4,
+          9,
+          14,
+          12,
+          6
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Disease beginning under this combination of nakshatra, weekday, and tithi leads to quick death.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR PRET KRIYA AND THE DEEDS WHICH SHOULD NOT BE DONE DURING PANCHAKA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "pret kriya",
+        "cremation"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Ashlesha",
+          "Moola",
+          "Mrigashira",
+          "Shravana",
+          "Ardra",
+          "Swati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Moon in Aquarius and Pisces, from 3rd quarter of Dhanishtha to Revati (Panchaka)"
+        }
+      },
+      "exclusions": [
+        "cremation during Panchaka"
+      ],
+      "notes": "Pret kriya is favorable in specific nakshatras, but cremation and similar deeds should be avoided during Panchaka.",
+      "uncertain": false
+    }
+  ]
+}

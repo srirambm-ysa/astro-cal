@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "pdf_page": 17,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1955,
+      "completion_tokens": 244,
+      "total_tokens": 2199,
+      "cost": 0.0011965,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0011965,
+        "upstream_inference_prompt_cost": 0.0005865,
+        "upstream_inference_completions_cost": 0.00061
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "ZERO SIGNS IN THE MONTHS CHAITRA ETC.",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Zero signs in Chaitra is Aquarius, Vaishakha is Pisces, Jyeshtha is Taurus, Ashadha is Gemini, Shravana is Aries, Bhadrapada is Virgo, Ashvina is Scorpio, Kartika is Libra, Margashirsha is Sagittarius, Pausha is Cancer, Magha is Capricorn, Phalguna is Leo."
+        }
+      },
+      "exclusions": [],
+      "notes": "Performing auspicious deeds in these zero signs causes destruction of family and money.",
+      "uncertain": false
+    }
+  ]
+}

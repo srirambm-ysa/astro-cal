@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "pdf_page": 68,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2085,
+      "completion_tokens": 661,
+      "total_tokens": 2746,
+      "cost": 0.002278,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.002278,
+        "upstream_inference_prompt_cost": 0.0006255,
+        "upstream_inference_completions_cost": 0.0016525
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR PLOUGHING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "ploughing"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Vishakha",
+          "Magha",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Malefics (Sun, Mars, Saturn) are weakened; Moon is in the Navamsha of watery signs (Cancer, Scorpio, Sagittarius/Capricorn wait - text says 4/10/11/12); Venus and Moon have full strength; Jupiter is in the Ascendant."
+        }
+      },
+      "exclusions": [
+        "Sunday",
+        "Saturday",
+        "Ascendants of Leo, Aquarius, Cancer, Aries, Capricorn and Libra",
+        "Rikta tithis (4, 9, 14)",
+        "Shashthi (6th) tithi"
+      ],
+      "notes": "Ploughing is auspicious under specified nakshatras, weekdays avoiding Sun/Sat, weakened malefics, strong Venus/Moon, and Jupiter in ascendant, while avoiding certain lagnas and tithis.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR SOWING SEEDS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "sowing seeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Magha",
+          "Swati",
+          "Dhanishtha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Same auspicious tithis, days, and nakshatras as prescribed for ploughing."
+        }
+      },
+      "exclusions": [],
+      "notes": "Sowing of seeds is auspicious on the tithis, days, and nakshatras approved for ploughing, specifically highlighting Monday, Wednesday, Thursday, and Friday.",
+      "uncertain": false
+    }
+  ]
+}

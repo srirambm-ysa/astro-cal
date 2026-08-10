@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "pdf_page": 126,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2028,
+      "completion_tokens": 574,
+      "total_tokens": 2602,
+      "cost": 0.0020434,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020434,
+        "upstream_inference_prompt_cost": 0.0006084,
+        "upstream_inference_completions_cost": 0.001435
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE CRADLING OF THE CHILD",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "cradling of the child",
+        "swinging of the infant in the cradle for the first time"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "The first 5 nakshatras from the Sun's current nakshatra are health-giving; the last 7 nakshatras bring happiness."
+        }
+      },
+      "exclusions": [
+        "nakshatras 6 through 20 from the Sun's nakshatra which bring death, weakness, and disease"
+      ],
+      "notes": "The text divides the 27 nakshatras starting from the Sun's position into groups yielding different health outcomes for the child's first cradling.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE DOLAROHAN AND TAKING THE CHILD OUT OF THE HOUSE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "dolarohan",
+        "swinging the child in a cradle",
+        "taking the child out of the house"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini"
+        ],
+        "weekdays": [
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "On specified lunar days (32nd, 12th, 16th, 18th, and 10th from birth) or in the 4th month from birth, or on the 12th day."
+        }
+      },
+      "exclusions": [],
+      "notes": "Dolarohan is auspicious on specific days from birth using Mridu, Laghu, and Dhruwa nakshatras during benefic weekdays.",
+      "uncertain": false
+    }
+  ]
+}

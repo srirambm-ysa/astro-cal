@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "pdf_page": 88,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2112,
+      "completion_tokens": 738,
+      "total_tokens": 2850,
+      "cost": 0.0024786,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024786,
+        "upstream_inference_prompt_cost": 0.0006336,
+        "upstream_inference_completions_cost": 0.001845
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MEASURE OF AND THE EFFECTS OF ABHUKTAMOOLA ACCORDING TO ANOTHER OPINION",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "child birth"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "first eight ghatis of Moola and last 5 ghatis of Jyeshtha"
+        }
+      },
+      "exclusions": [],
+      "notes": "Birth in Abhuktamoola (first 8 ghatis of Moola and last 5 ghatis of Jyeshtha) is highly inauspicious, requiring the child to be given up or the father not to see its face for eight years.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE BIRTH IN THE NAKSHTRA OF MOOLA AS PER DIFFERENCE OF QUARTER AND IN THAT OF ASHLESHA",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "child birth"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "1st quarter causes father's death, 2nd quarter causes mother's death, 3rd quarter causes loss of wealth, 4th quarter is auspicious"
+        }
+      },
+      "exclusions": [],
+      "notes": "Quarter-wise effects for Moola nakshatra birth indicate severe parental or financial harm unless pacification is performed.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE BIRTH IN THE NAKSHTRA OF MOOLA AS PER DIFFERENCE OF QUARTER AND IN THAT OF ASHLESHA",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "child birth"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashlesha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "1st quarter is auspicious, 2nd quarter causes loss of wealth, 3rd quarter causes mother's death, 4th quarter causes father's death"
+        }
+      },
+      "exclusions": [],
+      "notes": "Quarter-wise effects for Ashlesha nakshatra birth reverse the malefic pattern seen in Moola.",
+      "uncertain": false
+    }
+  ]
+}

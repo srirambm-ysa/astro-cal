@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "pdf_page": 49,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1288,
+      "completion_tokens": 268,
+      "total_tokens": 1556,
+      "cost": 0.0010564,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0010564,
+        "upstream_inference_prompt_cost": 0.0003864,
+        "upstream_inference_completions_cost": 0.00067
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE TABLE OF THE TITHIS OF YUGA ETC.",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "yuga calculation",
+        "astrological reference"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          9,
+          3,
+          13,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Satya Yuga begins on Kartika Shukla Navami, Treta Yuga on Vaisakh Shukla Tritiya, Dwapar Yuga on Bhadrapada Krishna Trayodashi, and Kali Yuga on Magh Krishna Amavasya."
+        }
+      },
+      "exclusions": [],
+      "notes": "This table lists the starting tithis for the four Yugas (Satya, Treta, Dwapar, and Kali).",
+      "uncertain": false
+    }
+  ]
+}

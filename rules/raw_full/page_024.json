@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "pdf_page": 24,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1785,
+      "completion_tokens": 363,
+      "total_tokens": 2148,
+      "cost": 0.001443,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001443,
+        "upstream_inference_prompt_cost": 0.0005355,
+        "upstream_inference_completions_cost": 0.0009075
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE ORDER OF THE INAUSPICIOUS YOGAS IN VARIOUS COUNTRIES OR REGIONS",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Anuradha",
+          "Jyeshtha",
+          "Moola",
+          "Purva Phalguni",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Poorva Bhadrapada",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Ashwini",
+          "Bharani",
+          "Krittika",
+          "Rohini",
+          "Mrigashira",
+          "Ardra",
+          "Punarvasu",
+          "Pushya",
+          "Ashlesha",
+          "Magha",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Revati"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Utpaata",
+          "Mrityu",
+          "Kana",
+          "Siddhi"
+        ],
+        "planetary": {
+          "freeform": "Yogas formed by conjunction of tithi, day, and nakshatra"
+        }
+      },
+      "exclusions": [],
+      "notes": "Certain inauspicious yogas formed by combinations of tithi, day, and nakshatra should be rejected in the regions of Punjab, Bengal, and Nepal.",
+      "uncertain": false
+    }
+  ]
+}

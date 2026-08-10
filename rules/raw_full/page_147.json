@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "pdf_page": 147,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2150,
+      "completion_tokens": 1609,
+      "total_tokens": 3759,
+      "cost": 0.0046675,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0046675,
+        "upstream_inference_prompt_cost": 0.000645,
+        "upstream_inference_completions_cost": 0.0040225
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "SAMSKARA ACCORDING TO EACH VEDA: RIGAVEDIS UPANAYANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Ardra",
+          "Ashlesha",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Moola",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Upanayana Samskara for Rigavedis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Upanayana for Rigavedis is auspicious in specified nakshatras including Mrigashira, Ardra, Ashlesha, Hasta, Chitra, Swati, Moola, and the three Poorvas.",
+      "uncertain": false
+    },
+    {
+      "heading": "SAMSKARA ACCORDING TO EACH VEDA: YAJURVEDIS UPANAYANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Revati",
+          "Hasta",
+          "Anuradha",
+          "Mrigashira",
+          "Punarvasu",
+          "Pushya",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Upanayana Samskara for Yajurvedis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Upanayana for Yajurvedis is auspicious in Revati, Hasta, Anuradha, Mrigashira, Punarvasu, Pushya, Rohini, and the three Uttaras.",
+      "uncertain": false
+    },
+    {
+      "heading": "SAMSKARA ACCORDING TO EACH VEDA: SAAMAVEDIS UPANAYANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Dhanishtha",
+          "Pushya",
+          "Hasta",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Ardra",
+          "Shravana"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Upanayana Samskara for Saamavedis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Upanayana for Saamavedis is auspicious in Ashwini, Dhanishtha, Pushya, Hasta, the three Uttaras, Ardra, and Shravana.",
+      "uncertain": false
+    },
+    {
+      "heading": "SAMSKARA ACCORDING TO EACH VEDA: ATHARVAVEDIS UPANAYANA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Anuradha",
+          "Dhanishtha",
+          "Punarvasu"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Upanayana Samskara for Atharvavedis"
+        }
+      },
+      "exclusions": [],
+      "notes": "Upanayana for Atharvavedis is auspicious in Mrigashira, Revati, Laghu nakshatras (Hasta, Ashwini, Pushya), Anuradha, Dhanishtha, and Punarvasu.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE PACIFICATION RITE FOR THE AUSPICIOUS DEEDS IF THE CHILD'S MOTHER IS HAVING MENSES",
+      "type": "general_rule",
+      "verdict": "auspicious",
+      "activities": [
+        "mundana",
+        "upanayana",
+        "marriage"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "If mother has menses after Nandi Shraddha and no proper lagna is available"
+        }
+      },
+      "exclusions": [],
+      "notes": "Samskaras like mundana, upanayana, and marriage can proceed on the same day after a pacification rite if the mother has menses and no other lagna is available.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE CHHURIKA BANDHANA MUHURTA FOR THE KSHATRIYAS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "chhurika bandhana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Months auspicious for Upanayana Samskara, excluding combust Mars"
+        }
+      },
+      "exclusions": [
+        "month of Chaitra",
+        "combust Mars",
+        "Tuesday"
+      ],
+      "notes": "Chhurika Bandhana for Kshatriyas is auspicious in the months suitable for Upanayana, excluding Chaitra, Tuesday, and when Mars is combust.",
+      "uncertain": false
+    }
+  ]
+}

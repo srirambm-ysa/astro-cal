@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "pdf_page": 11,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1830,
+      "completion_tokens": 744,
+      "total_tokens": 2574,
+      "cost": 0.002409,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.002409,
+        "upstream_inference_prompt_cost": 0.000549,
+        "upstream_inference_completions_cost": 0.00186
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "FORMATION OF YOGAS DUE TO TITHI, VARA, AND NAKSHATRA",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          5,
+          10,
+          15
+        ],
+        "tithi_groups": [
+          "Poorna",
+          "Nanda",
+          "Bhadra",
+          "Jaya",
+          "Rikta"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Amrita Yoga",
+          "Siddha Yoga"
+        ],
+        "planetary": {
+          "freeform": "Combination of specific weekdays, tithis, and nakshatras forming Siddha and Amrita yogas."
+        }
+      },
+      "exclusions": [],
+      "notes": "Certain combinations of weekdays and Poorna tithis form auspicious yogas like Amrita Yoga.",
+      "uncertain": true
+    },
+    {
+      "heading": "DAGDHA YOGA",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Bharani",
+          "Chitra",
+          "Uttarashadha",
+          "Dhanishtha",
+          "Uttara Phalguni",
+          "Jyeshtha",
+          "Revati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Dagdha Yoga"
+        ],
+        "planetary": {
+          "freeform": "Auspicious works are prohibited when these nakshatras coincide with respective weekdays."
+        }
+      },
+      "exclusions": [],
+      "notes": "Dagdha yoga formed by specific nakshatras and tithis is inauspicious.",
+      "uncertain": false
+    },
+    {
+      "heading": "VISHA HUTASHANA YAMA-GHANTA YOGAS",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Magha",
+          "Vishakha",
+          "Ardra",
+          "Moola",
+          "Krittika",
+          "Rohini",
+          "Hasta"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Visha",
+          "Hutashana",
+          "Yama-Ghanta"
+        ],
+        "planetary": {
+          "freeform": "These nakshatras combined with specific weekdays create inauspicious yogas."
+        }
+      },
+      "exclusions": [],
+      "notes": "Visha, Hutashana, and Yama-Ghanta yogas formed by these nakshatras are harmful.",
+      "uncertain": false
+    }
+  ]
+}

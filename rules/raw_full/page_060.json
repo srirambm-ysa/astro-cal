@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "pdf_page": 60,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2093,
+      "completion_tokens": 725,
+      "total_tokens": 2818,
+      "cost": 0.0024404,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024404,
+        "upstream_inference_prompt_cost": 0.0006279,
+        "upstream_inference_completions_cost": 0.0018125
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA WITH REGARD TO TAKING MEDICINE AND STITCHING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "taking medicine"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Punarvasu",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Moola"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "benefic planets like Venus, the Moon, Jupiter and Mercury in the Ascendant of Dual Nature (3/6/9/12) and no planet in the 12/7/8 Houses from the Ascendant"
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Amavasya",
+        "nakshatra of one's own birth"
+      ],
+      "notes": "Taking the first dose of medicine is auspicious under Laghu, Mridu, Chara nakshatras and Moola, with specific benefic placements and weekdays, while avoiding birth nakshatra, Rikta tithis, and Amavasya.",
+      "uncertain": false
+    },
+    {
+      "heading": "DOING THE WORK OF STITCHING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "stitching"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Punarvasu",
+          "Dhanishtha",
+          "Chitra",
+          "Anuradha",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Stitching work is auspicious when performed in Punarvasu, Dhanishtha, Chitra, Anuradha, Ashwini, and Pushya nakshatras.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA OF MAKING PURCHASE AND SALE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "making purchase"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Revati",
+          "Shatabhisha",
+          "Ashwini",
+          "Swati",
+          "Shravana",
+          "Chitra"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [
+        "making a purchase in the nakshatras of making sale",
+        "making a sale in the nakshatras of making purchase"
+      ],
+      "notes": "Purchasing is auspicious in Revati, Shatabhisha, Ashwini, Swati, Shravana, and Chitra nakshatras, but purchasing and selling nakshatras should not be interchanged.",
+      "uncertain": false
+    }
+  ]
+}

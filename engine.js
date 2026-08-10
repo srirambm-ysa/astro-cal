@@ -33,6 +33,28 @@ export const TAMIL_YEARS_60 = [
   "Plavanga","Kilaka","Saumya","Sadharana","Virodhikrit","Paridhavi","Pramadi","Ananda","Rakshasa","Nala",
   "Pingala","Kalayukti","Siddharthi","Raudra","Durmati","Dundubhi","Rudhirodgari","Raktaksha","Krodhana","Akshaya",
 ];
+export const YOGA_NAMES = [
+  "Vishkambha","Priti","Ayushman","Saubhagya","Shobhana","Atiganda","Sukarma","Dhriti","Shula","Ganda",
+  "Vriddhi","Dhruva","Vyaghata","Harshana","Vajra","Siddhi","Vyatipata","Variyana","Parigha","Shiva",
+  "Siddha","Sadhya","Shubha","Shukla","Brahma","Indra","Vaidhriti",
+];
+export const KARANA_NAMES = [
+  "Bava","Balava","Kaulava","Taitila","Gara","Vanija","Vishti", // 7 movable (cycle)
+  "Shakuni","Chatushpada","Naga",                               // 3 fixed near amavasya
+  "Kimstughna",                                                 // 1 fixed at shukla pratipada start
+];
+// Nakshatra nature group (index 0-26 → key). Classical 7-fold classification
+// used for per-activity suitability: Dhruva=fixed, Chara=movable, Ubhaya=mixed.
+export const NAKSHATRA_GROUP = [
+  "kshipra","ugra","ubhaya","dhruva","mridu","tikshna","chara","kshipra","tikshna","ugra",
+  "ugra","dhruva","kshipra","mridu","chara","ubhaya","mridu","tikshna","tikshna","ugra",
+  "dhruva","chara","chara","chara","ugra","dhruva","mridu",
+];
+export const TARA_NAMES = [
+  "Janma","Sampat","Vipat","Kshema","Pratyari","Sadhaka","Vadha","Mitra","Parama Mitra",
+];
+// tara index (0-8) → nature
+export const TARA_NATURE = ["neutral","good","bad","good","bad","good","bad","good","good"];
 
 // Rahu/Yama/Gulika table: [Rahu, Yama, Gulika] segment (1-8) by weekday (Sun=0)
 const KALA_TABLE = [
@@ -87,6 +109,46 @@ export class Engine {
     const e = this.elongation(jd);
     const idx = Math.floor(e / 12);
     return { index: idx, paksha: idx < 15 ? "Shukla" : "Krishna", name: TITHI_NAMES[idx], amavasya: idx === 29, purnima: idx === 14 };
+  }
+
+  /* nitya yoga = (sun_lon + moon_lon) in [0,360), each yoga = 360/27.
+     Both sidereal; the sum's zodiac origin cancels out. */
+  yoga(jd) {
+    const s = this.siderealLon(jd, this.swe.SE_SUN);
+    const m = this.siderealLon(jd, this.swe.SE_MOON);
+    const sum = (((s + m) % 360) + 360) % 360;
+    return { index: Math.floor(sum / (360 / 27)), name: YOGA_NAMES[Math.floor(sum / (360 / 27)) % 27] };
+  }
+
+  /* karana = half a tithi. elongation / 6 → 60 halves per synodic month.
+     First half of Shukla Pratipada = Kimstughna (fixed); the 7 movable karanas
+     cycle halves 2..57; Shakuni/Chatushpada/Naga are the 3 fixed before Amavasya. */
+  karana(jd) {
+    const e = this.elongation(jd);
+    const h = Math.floor(e / 6) % 60;
+    let index;
+    if (h === 0) index = 10;            // Kimstughna
+    else if (h >= 57) index = 7 + (h - 57); // Shakuni(57), Chatushpada(58), Naga(59)
+    else index = (h - 1) % 7;           // movable cycle
+    return { index, name: KARANA_NAMES[index] };
+  }
+
+  /* nava tara: count from janma nakshatra (janma=1, inclusive) to the day's
+     nakshatra, fold on a cycle of 9. Returns 1-based tara number (1..9).
+     Favorable {2 Sampat,4 Kshema,6 Sadhaka,8 Mitra,9 Parama Mitra};
+     unfavorable {3 Vipat,5 Pratyari,7 Vadha}; neutral {1 Janma}. */
+   taraBala(janmaNakshatra, dayNakshatra) {
+    const count = ((dayNakshatra - janmaNakshatra) % 27 + 27) % 27 + 1;
+    return { number: ((count - 1) % 9) + 1, count };
+  }
+
+  /* JD when the nakshatra occupied at `jd` ends (next 13°20' boundary), or null.
+     Used to flag same-day star transitions in the muhurta verdict. */
+  nakshatraEnd(jd) {
+    const lon = this.siderealLon(jd, this.swe.SE_MOON);
+    const nak = this.nakshatraOf(lon);
+    const nextBoundary = (nak + 1) * NAKSHA;
+    return this.crossingForward(jd, this.swe.SE_MOON, nextBoundary, 0.05, 4000);
   }
 
   /* sunrise/sunset (geometric, standard refraction) for one civil day.

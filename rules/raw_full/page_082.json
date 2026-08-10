@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "pdf_page": 82,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2099,
+      "completion_tokens": 347,
+      "total_tokens": 2446,
+      "cost": 0.0014972,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0014972,
+        "upstream_inference_prompt_cost": 0.0006297,
+        "upstream_inference_completions_cost": 0.0008675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE FAVOURABLE OR SUITABLE LAGNA OR ASCENDANT FOR DOING ALL THE ORDINARY AUSPICIOUS DEEDS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "all ordinary auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ascendant in Upachaya houses (3rd, 6th, 10th, 11th) from natal ascendant and Janma Rashi, no planets in 8th and 12th houses, benefic planets conjunct or aspecting the ascendant, and Moon in Upachaya signs (3rd, 6th, 10th, 11th) from the ascendant."
+        }
+      },
+      "exclusions": [
+        "planets in 8th house",
+        "planets in 12th house"
+      ],
+      "notes": "Lagna Shuddhi for ordinary auspicious deeds requires the ascendant and Moon to be in Upachaya houses from natal ascendant and Janma Rashi, empty 8th and 12th houses, and benefic influences on the ascendant.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "pdf_page": 31,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2411,
+      "completion_tokens": 279,
+      "total_tokens": 2690,
+      "cost": 0.0014208,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0014208,
+        "upstream_inference_prompt_cost": 0.0007233,
+        "upstream_inference_completions_cost": 0.0006975
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "EVIL MOMENTS AND MUHURTAS (KALAMSHA AND KULIKA)",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Kalamsha is the 6th part of Dinmana; Kulika, Kantaka, Kalabela, Ardhayama, and Yamaghanta are evil Muhurtas based on weekday and tithi combinations."
+        }
+      },
+      "exclusions": [
+        "Kalamsha",
+        "Kulika",
+        "Kantaka",
+        "Kalabela",
+        "Ardhayama",
+        "Yamaghanta"
+      ],
+      "notes": "Specific tithis on each weekday constitute evil moments (Kalamsha) and evil Muhurtas (like Kulika) which must be avoided for all auspicious deeds.",
+      "uncertain": false
+    }
+  ]
+}

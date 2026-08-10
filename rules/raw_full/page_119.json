@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "pdf_page": 119,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1971,
+      "completion_tokens": 600,
+      "total_tokens": 2571,
+      "cost": 0.0020913,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0020913,
+        "upstream_inference_prompt_cost": 0.0005913,
+        "upstream_inference_completions_cost": 0.0015
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "NAKSHATRAS FOR CONCEPTION (SON)",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "sexual intercourse",
+        "conception"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Hasta",
+          "Anuradha",
+          "Rohini",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Tuesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Certain nakshatras and weekdays like Sunday and Tuesday are auspicious for conceiving a son.",
+      "uncertain": false
+    },
+    {
+      "heading": "FAVOURABLE LAGNA OR ASCENDANT FOR CONCEPTION",
+      "type": "yoga_combination",
+      "verdict": "auspicious",
+      "activities": [
+        "sexual intercourse",
+        "conception"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Chitra",
+          "Punarvasu",
+          "Pushya",
+          "Ashwini",
+          "Mrigashira",
+          "Hasta",
+          "Anuradha",
+          "Rohini",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Benefic Planets in the Angles (1/4/7/10) and Trines (5/9); Malefic Planets in 3/6/11 Houses; aspect of male planets (Sun, Mars, Jupiter) on the Ascendant; Moon and Ascendant in the Navamsha of an odd sign"
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific planetary placements in houses, aspect of male planets, and odd navamshas favor the conception of a son on even nights after menses.",
+      "uncertain": false
+    }
+  ]
+}

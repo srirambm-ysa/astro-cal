@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "pdf_page": 78,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2265,
+      "completion_tokens": 430,
+      "total_tokens": 2695,
+      "cost": 0.0017545,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0017545,
+        "upstream_inference_prompt_cost": 0.0006795,
+        "upstream_inference_completions_cost": 0.001075
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR MAKING A BOAT",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "making a boat"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Ashwini",
+          "Mrigashira",
+          "Punarvasu",
+          "Pushya",
+          "Uttara Phalguni",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Anuradha",
+          "Moola",
+          "Poorvashadha",
+          "Uttarashadha",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Poorva Bhadrapada",
+          "Uttara Bhadrapada",
+          "Revati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "auspicious Ascendant"
+        }
+      },
+      "exclusions": [
+        "Bharani",
+        "Krittika",
+        "Rohini",
+        "Vishakha",
+        "Jyeshtha",
+        "Ashlesha",
+        "Magha",
+        "Ardra",
+        "Friday",
+        "Thursday",
+        "Sunday"
+      ],
+      "notes": "Making a boat is auspicious in all nakshatras except Bharani, Krittika, Rohini, Vishakha, Jyeshtha, Ashlesha, Magha, and Ardra, avoiding Friday, Thursday, and Sunday, and during an auspicious ascendant.",
+      "uncertain": false
+    }
+  ]
+}

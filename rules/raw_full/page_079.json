@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "pdf_page": 79,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2124,
+      "completion_tokens": 589,
+      "total_tokens": 2713,
+      "cost": 0.0021097,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0021097,
+        "upstream_inference_prompt_cost": 0.0006372,
+        "upstream_inference_completions_cost": 0.0014725
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE BATHING OF THE PATIENT WHEN HE IS RELIEVED OF THE DISEASE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "bathing of the patient when relieved of disease"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Saturday",
+          "Sunday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ascendant in movable signs (1/4/7/10), Moon emaciated (in 4/8/12 houses), Malefic planets in 11th house, Angles, or Trines"
+        }
+      },
+      "exclusions": [
+        "Revati",
+        "Punarvasu",
+        "Uttara Phalguni",
+        "Uttarashadha",
+        "Uttara Bhadrapada",
+        "Rohini",
+        "Magha",
+        "Swati",
+        "Ashlesha",
+        "Rikta tithis (4, 9, 14)",
+        "Friday",
+        "Monday"
+      ],
+      "notes": "Bathing a recovered patient is auspicious in specific non-excluded nakshatras, tithis, and weekdays with specific planetary placements.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR LEARNING A CRAFT",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "learning a craft"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Mercury or Jupiter in Ascendant or 10th house, and Moon in Shadavarga of Mercury or Jupiter"
+        }
+      },
+      "exclusions": [],
+      "notes": "Commencing the learning of a craft is auspicious in Mridu, Dhruwa, Kshipra, and Chara nakshatras under favorable Mercury/Jupiter conditions.",
+      "uncertain": false
+    }
+  ]
+}

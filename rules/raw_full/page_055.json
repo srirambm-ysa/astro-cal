@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "pdf_page": 55,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1800,
+      "completion_tokens": 1545,
+      "total_tokens": 3345,
+      "cost": 0.0044025,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0044025,
+        "upstream_inference_prompt_cost": 0.00054,
+        "upstream_inference_completions_cost": 0.0038625
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS, STHIR OR DHRUWA (FIXED)",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [
+          "Sunday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Fixed nakshatras are Rohini, Uttara Phalguni, Uttarashadha, and Uttara Bhadrapada, associated with Sunday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS CHARA OR CHALA (MOVABLE)",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [
+          "Monday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Movable nakshatras are Swati, Punarvasu, Shravana, Dhanishtha, and Shatabhisha, associated with Monday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS UGRA OR KRUR (CRUEL)",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Bharani",
+          "Magha"
+        ],
+        "weekdays": [
+          "Tuesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Cruel nakshatras are Poorva Phalguni, Poorvashadha, Poorva Bhadrapada, Bharani, and Magha, associated with Tuesday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS MISHRA OR SADHARANA (MIXED AND ORDINARY)",
+      "type": "nakshatra_classification",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Krittika"
+        ],
+        "weekdays": [
+          "Wednesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Mixed nakshatras are Vishakha and Krittika, associated with Wednesday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS KSHIPRA OR LAGHU (SMALL)",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Abhijit"
+        ],
+        "weekdays": [
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Small or swift nakshatras are Hasta, Ashwini, Pushya, and Abhijit, associated with Thursday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS MRIDU OR MAITRA (DELICATE, FRIENDLY)",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha"
+        ],
+        "weekdays": [
+          "Friday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Delicate or friendly nakshatras are Mrigashira, Revati, Chitra, and Anuradha, associated with Friday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHTRAS TIKSHNA OR DARUNA (SHARP, HORRIBLE)",
+      "type": "nakshatra_classification",
+      "verdict": "inauspicious",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha"
+        ],
+        "weekdays": [
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Sharp or horrible nakshatras are Moola, Jyeshtha, Ardra, and Ashlesha, associated with Saturday.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "pdf_page": 92,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1836,
+      "completion_tokens": 336,
+      "total_tokens": 2172,
+      "cost": 0.0013908,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0013908,
+        "upstream_inference_prompt_cost": 0.0005508,
+        "upstream_inference_completions_cost": 0.00084
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "ESTABLISHING OF IMAGES AND PLANETS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "establishing image of the sun-god",
+        "establishing image of brahma",
+        "establishing image of shankar or shiva",
+        "establishing images of goddesses",
+        "establishing images of gods of lower level",
+        "establishing images of all the gods",
+        "establishing the 8 planets the moon etc",
+        "establishing images of ganesha, yaksha, sarpa and bhoota",
+        "establishing images of the gods of jains"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Pushya",
+          "Revati",
+          "Shravana"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Moon and Malefic Planets in houses 3, 6, 11; Benefic Planets in houses other than 5 and 12; Ascendants specified per deity (Leo for Sun-God, Aquarius for Brahma, Gemini for Shankar/Shiva, dual signs for goddesses, movable signs for lower-level gods, fixed signs for all gods)"
+        }
+      },
+      "exclusions": [
+        "Rikta tithis (4, 9, 14)",
+        "Tuesday"
+      ],
+      "notes": "Rules specify planetary positions, ascendant types, nakshatras, and excluded tithis and days for the installation of various deities and planets.",
+      "uncertain": false
+    }
+  ]
+}

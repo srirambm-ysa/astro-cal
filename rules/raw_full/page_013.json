@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "pdf_page": 13,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2129,
+      "completion_tokens": 1149,
+      "total_tokens": 3278,
+      "cost": 0.0035112,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0035112,
+        "upstream_inference_prompt_cost": 0.0006387,
+        "upstream_inference_completions_cost": 0.0028725
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "DAGDHA YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [
+          12,
+          11,
+          5,
+          3,
+          6,
+          8,
+          9
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Dagdha"
+        ],
+        "planetary": {
+          "freeform": "Dwadashi on Sunday, Ekadashi on Monday, Panchami on Tuesday, Tritiya on Wednesday, Shashthi on Thursday, Ashtami on Friday, Navami on Saturday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Dagdha yoga is formed when specific tithis fall on specific weekdays, making the time inauspicious.",
+      "uncertain": false
+    },
+    {
+      "heading": "VISHA YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [
+          4,
+          6,
+          7,
+          2,
+          8,
+          9
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Visha"
+        ],
+        "planetary": {
+          "freeform": "Chaturthi on Sunday, Shashthi on Monday, Saptami on Tuesday, Dwitiya on Wednesday, Ashtami on Thursday, Navami on Friday, Saptami on Saturday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Visha yoga is formed by specific combinations of tithis and weekdays.",
+      "uncertain": false
+    },
+    {
+      "heading": "HUTASHANA YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [
+          12,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Hutashana"
+        ],
+        "planetary": {
+          "freeform": "Dwadashi on Sunday, Shashthi on Monday, Saptami on Tuesday, Ashtami on Wednesday, Navami on Thursday, Dashmi on Friday, Ekadashi on Saturday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Hutashana yoga is formed when certain tithis coincide with certain weekdays.",
+      "uncertain": false
+    },
+    {
+      "heading": "YAMA GHANTA YOGA",
+      "type": "yoga_combination",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Magha",
+          "Vishakha",
+          "Ardra",
+          "Moola",
+          "Krittika",
+          "Rohini",
+          "Hasta"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [
+          "Yamaghanta"
+        ],
+        "planetary": {
+          "freeform": "Magha on Sunday, Vishakha on Monday, Ardra on Tuesday, Moola on Wednesday, Krittika on Thursday, Rohini on Friday, Hasta on Saturday"
+        }
+      },
+      "exclusions": [],
+      "notes": "Yamaghanta yoga is formed by the concurrence of specific nakshatras and weekdays.",
+      "uncertain": false
+    }
+  ]
+}

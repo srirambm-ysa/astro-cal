@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "pdf_page": 84,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2085,
+      "completion_tokens": 441,
+      "total_tokens": 2526,
+      "cost": 0.001728,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001728,
+        "upstream_inference_prompt_cost": 0.0006255,
+        "upstream_inference_completions_cost": 0.0011025
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "PROHIBITED DEEDS IN PANCHAKA NAKSHTRAS",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "cremation",
+        "travelling to the south",
+        "weaving a cot",
+        "making thatches for a house"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "During Panchaka nakshatras"
+        }
+      },
+      "exclusions": [],
+      "notes": "Certain actions like cremation, southern journeys, bed weaving, and thatching are prohibited during Panchaka nakshatras unless pacification rites are performed.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE COLLECTION OF WOOD ETC.",
+      "type": "activity_muhurta",
+      "verdict": "neutral",
+      "activities": [
+        "collection of wood"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Nakshatra groups counted relative to Sun and Moon positions"
+        }
+      },
+      "exclusions": [],
+      "notes": "The results of collecting wood vary depending on which nakshatra group (Adhaha Sthala, Shirsha, Madhya, Poorva, Dakshina, Pashchima, or Uttara) the collection is made in.",
+      "uncertain": true
+    }
+  ]
+}

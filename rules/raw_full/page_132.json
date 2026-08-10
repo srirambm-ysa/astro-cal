@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "pdf_page": 132,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2020,
+      "completion_tokens": 414,
+      "total_tokens": 2434,
+      "cost": 0.001641,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001641,
+        "upstream_inference_prompt_cost": 0.000606,
+        "upstream_inference_completions_cost": 0.001035
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE RISING OF KETU",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ketu is rising and visible"
+        }
+      },
+      "exclusions": [],
+      "notes": "Auspicious deeds should not be performed while Ketu is rising and visible.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE CHILDHOOD AND OLD AGE OF JUPITER AND VENUS",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Venus has childhood for 3 days after rising in east, 10 days after rising in west; old age 15 days before setting in east, 5 days before setting in west. Jupiter has childhood for 15 days after rising in east and west; old age for 15 days before setting in east and west."
+        }
+      },
+      "exclusions": [],
+      "notes": "Defines the childhood and old age periods of Jupiter and Venus relative to their rising and setting.",
+      "uncertain": false
+    }
+  ]
+}

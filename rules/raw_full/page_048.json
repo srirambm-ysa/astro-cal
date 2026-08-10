@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "pdf_page": 48,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2057,
+      "completion_tokens": 446,
+      "total_tokens": 2503,
+      "cost": 0.0017321,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0017321,
+        "upstream_inference_prompt_cost": 0.0006171,
+        "upstream_inference_completions_cost": 0.001115
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "TITHIS OF MANU",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "beginning manvantaras"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          3,
+          15,
+          12,
+          10,
+          9,
+          7,
+          11,
+          30,
+          8
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Specific tithis and months marking the beginning of the 14 Manus"
+        }
+      },
+      "exclusions": [],
+      "notes": "The text lists specific tithis across various months that mark the beginning of the 14 Manus.",
+      "uncertain": false
+    },
+    {
+      "heading": "TITHIS OF YUGA",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "beginning yugas"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          9,
+          3,
+          13,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Specific tithis and months marking the beginning of Satya, Treta, Dwapara, and Kali yugas"
+        }
+      },
+      "exclusions": [],
+      "notes": "The text notes specific tithis that respectively begin the four yugas.",
+      "uncertain": false
+    }
+  ]
+}

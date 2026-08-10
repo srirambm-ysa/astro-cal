@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "pdf_page": 76,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2131,
+      "completion_tokens": 257,
+      "total_tokens": 2388,
+      "cost": 0.0012818,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0012818,
+        "upstream_inference_prompt_cost": 0.0006393,
+        "upstream_inference_completions_cost": 0.0006425
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR EATING THE NEW GRAINS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "eating the new grains"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Mrigashira"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Eating new grains is auspicious in Chara (Movable), Kshipra, and Mridu nakshatras.",
+      "uncertain": false
+    }
+  ]
+}

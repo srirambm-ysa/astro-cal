@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "pdf_page": 86,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2134,
+      "completion_tokens": 300,
+      "total_tokens": 2434,
+      "cost": 0.0013902,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0013902,
+        "upstream_inference_prompt_cost": 0.0006402,
+        "upstream_inference_completions_cost": 0.00075
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE AUSPICIOUS AND INAUSPICIOUS TIME FOR THE PERSON WHO BURNS THE DUMMY",
+      "type": "activity_muhurta",
+      "verdict": "medium",
+      "activities": [
+        "pret kriya",
+        "cremation",
+        "dummy cremation"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Anuradha",
+          "Poorva Phalguni",
+          "Punarvasu",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Vishakha",
+          "Mrigashira",
+          "Chitra",
+          "Dhanishtha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Avoid Janama and Pratyaari Tara, and when the moon is in 4th, 8th, or 12th house from Janama Rashi."
+        }
+      },
+      "exclusions": [
+        "Janama Tara",
+        "Pratyaari Tara",
+        "Moon in 4th, 8th, or 12th from Janama Rashi"
+      ],
+      "notes": "Pret kriya or dummy cremation yields medium effects when performed in specific nakshatras while avoiding unfavorable transit tara and moon positions.",
+      "uncertain": false
+    }
+  ]
+}

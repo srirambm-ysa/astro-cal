@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "pdf_page": 14,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2374,
+      "completion_tokens": 227,
+      "total_tokens": 2601,
+      "cost": 0.0012797,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0012797,
+        "upstream_inference_prompt_cost": 0.0007122,
+        "upstream_inference_completions_cost": 0.0005675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "ZERO TITHIS OF CHAITRADI MASAS OR MONTHS IN BOTH THE PAKSHAS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Specific tithis in specific lunar months as zero tithis in both pakshas"
+        }
+      },
+      "exclusions": [
+        "Zero tithis"
+      ],
+      "notes": "Certain tithis in specific lunar months are designated as zero tithis during which no auspicious deeds should be performed.",
+      "uncertain": false
+    }
+  ]
+}

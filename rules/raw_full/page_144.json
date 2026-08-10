@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "pdf_page": 144,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2108,
+      "completion_tokens": 706,
+      "total_tokens": 2814,
+      "cost": 0.0023974,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0023974,
+        "upstream_inference_prompt_cost": 0.0006324,
+        "upstream_inference_completions_cost": 0.001765
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE EFFECTS OF THE NAVAMSHA OF THE PLANETS THE SUN ETC IN THE LAGNA OR ASCENDANT OF UPANAYANA",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "upanyana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Sun navamsha in lagna: cruel-minded; Moon navamsha: stupid; Mars navamsha: sinner; Mercury navamsha: clever; Jupiter navamsha: doer of shatakarma; Venus navamsha: doer of yagya and wealthy; Saturn navamsha: stupid."
+        }
+      },
+      "exclusions": [],
+      "notes": "Describes the personality or future traits of the child based on the planetary navamsha rising in the upanayana lagna.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE SPECIALITY ABOUT THE NAVAMSHA OF THE MOON",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "upanyana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Punarvasu"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Moon in auspicious navamsha: gets education; malefic navamsha: penurious; own navamsha: unhappy, but if in Shravana or Punarvasu and in own navamsha: wealthy."
+        }
+      },
+      "exclusions": [],
+      "notes": "Details the results of the Moon occupying various navamshas during the upanayana ceremony.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE EFFECTS OF THE PLANETS THE SUN ETC. WHEN THEY ARE POSITED IN THE ANGLES",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "upanyana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Sun in angle: government service; Moon in angle: merchant; Mars in angle: arms trader or army job; Mercury in angle: teacher; Jupiter in angle: scholar; Venus in angle: wealthy; Saturn in angle: servant to low born."
+        }
+      },
+      "exclusions": [],
+      "notes": "Explains the vocational and life outcomes when specific planets are placed in angles during upanayana.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "pdf_page": 138,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2037,
+      "completion_tokens": 783,
+      "total_tokens": 2820,
+      "cost": 0.0025686,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0025686,
+        "upstream_inference_prompt_cost": 0.0006111,
+        "upstream_inference_completions_cost": 0.0019575
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE SAMSKARAS LETTERS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "beginning of learning the letters of the alphabet",
+        "learning letters samskara"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Shravana",
+          "Swati",
+          "Revati",
+          "Punarvasu",
+          "Ardra",
+          "Chitra",
+          "Anuradha"
+        ],
+        "weekdays": [],
+        "tithis": [
+          11,
+          12,
+          10,
+          2,
+          6,
+          5,
+          3
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "benefic Lagnas (2/3/6/9/12) except Chara Rashis (movable signs); no planet in the 8th House from the Ascendant"
+        }
+      },
+      "exclusions": [
+        "6th tithi (according to Markandeya)",
+        "Ascendants of the Chara Rashis"
+      ],
+      "notes": "Auspicious constellations, tithis, and non-movable lagnas are prescribed for beginning the learning of letters, avoiding the 6th tithi and planets in the 8th house.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE BEGINNING OF GETTING EDUCATION",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "beginning of getting education",
+        "getting education by children"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Ardra",
+          "Punarvasu",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Ashwini",
+          "Moola",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Pushya",
+          "Ashlesha"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Thursday",
+          "Wednesday",
+          "Friday"
+        ],
+        "tithis": [
+          6,
+          5,
+          3,
+          11,
+          12,
+          10,
+          2
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lord of the Ascendant running should be a benefic planet; benefic planets in the Angles and Trines from the Ascendant"
+        }
+      },
+      "exclusions": [],
+      "notes": "Specific nakshatras, weekdays, and tithis are favorable for beginning education, along with benefic placements for the lagna lord and planets in kendras and trines.",
+      "uncertain": false
+    }
+  ]
+}

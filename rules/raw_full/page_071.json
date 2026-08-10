@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "pdf_page": 71,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2062,
+      "completion_tokens": 930,
+      "total_tokens": 2992,
+      "cost": 0.0029436,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0029436,
+        "upstream_inference_prompt_cost": 0.0006186,
+        "upstream_inference_completions_cost": 0.002325
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR KANAMARDANA (THRESHING THE CORN) AND DHANYA ROPANA (PLUCKING THE PLANTS OF CORN FROM ONE PLACE AND PLANTING THEM AT ANOTHER)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "threshing",
+        "kanamardana",
+        "dhanya ropana",
+        "planting corn"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Uttara Phalguni",
+          "Shravana",
+          "Magha",
+          "Jyeshtha",
+          "Rohini",
+          "Moola",
+          "Anuradha",
+          "Revati"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Days other than Saturday and Tuesday"
+        }
+      },
+      "exclusions": [
+        "Saturday",
+        "Tuesday"
+      ],
+      "notes": "Threshing corn is auspicious in specified nakshatras on days other than Saturday and Tuesday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR KANAMARDANA (THRESHING THE CORN) AND DHANYA ROPANA (PLUCKING THE PLANTS OF CORN FROM ONE PLACE AND PLANTING THEM AT ANOTHER)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "dhanya ropana",
+        "planting corn",
+        "plucking the plants of corn"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Poorva Bhadrapada",
+          "Moola",
+          "Rohini",
+          "Shatabhisha",
+          "Uttara Phalguni"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Days other than Saturday and Tuesday"
+        }
+      },
+      "exclusions": [
+        "Saturday",
+        "Tuesday"
+      ],
+      "notes": "Dhanya Ropana is auspicious in specified nakshatras on days other than Saturday and Tuesday.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE STORAGE OF THE GRAINS AND THE INCREASING OF IT",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "storage of the grains",
+        "increasing of grains"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ascendants other than Cancer, Aries, and Libra, on all auspicious days"
+        }
+      },
+      "exclusions": [
+        "Mishra nakshatras (Vishakha, Krittika)",
+        "Ugra nakshatras (Poorva Phalguni, Poorvashadha, Poorva Bhadrapada, Bharani, Magha)",
+        "Ardra",
+        "Ashlesha",
+        "Jyeshtha",
+        "Cancer lagna",
+        "Aries lagna",
+        "Libra lagna"
+      ],
+      "notes": "Storage of grains is auspicious avoiding mixed, intense, and certain other nakshatras, and avoiding Cancer, Aries, and Libra ascendants.",
+      "uncertain": false
+    }
+  ]
+}

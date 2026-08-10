@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "pdf_page": 62,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2117,
+      "completion_tokens": 1920,
+      "total_tokens": 4037,
+      "cost": 0.0054351,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0054351,
+        "upstream_inference_prompt_cost": 0.0006351,
+        "upstream_inference_completions_cost": 0.0048
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "MUHURTAS FOR GETTING JEWELS AND WEAPONS MADE (TRIPUSHKAR)",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "getting jewels made"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Uttara Phalguni",
+          "Poorva Bhadrapada",
+          "Punarvasu",
+          "Krittika",
+          "Uttarashadha",
+          "Punarvasu",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Rohini",
+          "Uttarashadha",
+          "Uttara Bhadrapada"
+        ],
+        "weekdays": [
+          "Saturday",
+          "Tuesday",
+          "Sunday"
+        ],
+        "tithis": [
+          2,
+          7,
+          12
+        ],
+        "tithi_groups": [
+          "Bhadra"
+        ],
+        "paksha": null,
+        "yogas": [
+          "Tripushkar"
+        ],
+        "planetary": {
+          "freeform": "Tripushkar yoga formed by Bhadra tithis (2/7/12), Saturday/Tuesday/Sunday, and specified nakshatras (Chara, Kshipra, Dhruwa groups)"
+        }
+      },
+      "exclusions": [],
+      "notes": "It is auspicious to get jewels made during Tripushkar yoga and under Chara, Kshipra, and Dhruwa nakshatras.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS FOR GETTING JEWELS MADE WITH DIAMONDS AND GEMS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "getting jewels made with diamonds and gems"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Sunday",
+          "Tuesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ascendants of Aries, Scorpio and Leo"
+        }
+      },
+      "exclusions": [
+        "Tikshna nakshatras",
+        "Ugra nakshatras"
+      ],
+      "notes": "Jewels with diamonds and gems should be prepared on Sundays and Tuesdays in Aries, Scorpio, or Leo ascendants, excluding Tikshna and Ugra nakshatras.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS FOR GETTING JEWELS STUDDED WITH PEARLS MADE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "getting jewels studded with pearls made"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Punarvasu",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "auspicious ascendant"
+        }
+      },
+      "exclusions": [],
+      "notes": "Pearls studded jewels should be made under Chara, Mridu, Dhruwa, and Kshipra nakshatras on an auspicious day and ascendant.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS FOR GETTING WEAPONS MADE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "getting weapons made"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Moola",
+          "Jyeshtha",
+          "Ardra",
+          "Ashlesha",
+          "Bharani",
+          "Magha",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Ashwini",
+          "Mrigashira",
+          "Vishakha",
+          "Krittika"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Weapons can be made in Tikshna and Ugra nakshatras as well as Ashwini, Mrigashira, Vishakha, and Krittika.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS FOR COIN MINTING",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "coining",
+        "minting coins"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Punarvasu",
+          "Swati",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Hasta",
+          "Ashwini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [
+          "Poorna",
+          "Jaya"
+        ],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter and Venus are not combust (rising)"
+        }
+      },
+      "exclusions": [
+        "Monday",
+        "Saturday"
+      ],
+      "notes": "Coin minting is auspicious in Dhruwa, Mridu, Chara, and Kshipra nakshatras, excluding Monday and Saturday, on Poorna and Jaya tithis when Jupiter and Venus are not combust.",
+      "uncertain": false
+    },
+    {
+      "heading": "MUHURTAS FOR GETTING CLOTHES WASHED",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "getting clothes washed"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Dhanishtha",
+          "Ashwini",
+          "Hasta",
+          "Chitra",
+          "Swati",
+          "Vishakha",
+          "Anuradha",
+          "Punarvasu",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "It is auspicious to get clothes washed in Dhanishtha, Ashwini, Hasta, Chitra, Swati, Vishakha, Anuradha, Punarvasu, and Pushya.",
+      "uncertain": false
+    }
+  ]
+}

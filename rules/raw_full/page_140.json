@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "pdf_page": 140,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2358,
+      "completion_tokens": 387,
+      "total_tokens": 2745,
+      "cost": 0.0016749,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0016749,
+        "upstream_inference_prompt_cost": 0.0007074,
+        "upstream_inference_completions_cost": 0.0009675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE UPANAYANA SAMSKARA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "upanayana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Ashlesha",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Moola",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Ardra"
+        ],
+        "weekdays": [
+          "Sunday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Monday"
+        ],
+        "tithis": [
+          2,
+          3,
+          5,
+          10,
+          11,
+          12
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Sun in Pisces; first third part of the day (Poorvanha) is main period; first 3rd part (up to 5th Tithi) of Krishna Paksha is also acceptable"
+        }
+      },
+      "exclusions": [
+        "3rd part of the day (Apranha)",
+        "Madhyanha (unless lack of auspicious ascendant in Poorvanha)",
+        "Punarvasu for Brahmins (according to some views)"
+      ],
+      "notes": "Upanayana is prescribed during specific nakshatras, weekdays, and tithis in Shukla paksha or early Krishna paksha, preferably in the morning.",
+      "uncertain": false
+    }
+  ]
+}

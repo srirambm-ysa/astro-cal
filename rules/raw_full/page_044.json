@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "pdf_page": 44,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2328,
+      "completion_tokens": 214,
+      "total_tokens": 2542,
+      "cost": 0.0012334,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0012334,
+        "upstream_inference_prompt_cost": 0.0006984,
+        "upstream_inference_completions_cost": 0.000535
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "LUPTA-SAMWATSAR AND ATICHAAR OF JUPITER",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Jupiter becoming Atichari (accelerated motion skipping a sign) and not returning to the former sign via retrogression, except when occurring in Taurus, Aries, Pisces, and Aquarius."
+        }
+      },
+      "exclusions": [
+        "Lupta-samvatsar",
+        "Atichaar of Jupiter",
+        "Atichaar of the Sun",
+        "Atichaar of the Moon"
+      ],
+      "notes": "Lupta-samvatsar caused by Jupiter's atichaar is rejected for auspicious deeds, except when it occurs in Taurus, Aries, Pisces, or Aquarius.",
+      "uncertain": false
+    }
+  ]
+}

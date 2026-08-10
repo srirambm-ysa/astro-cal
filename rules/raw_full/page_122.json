@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "pdf_page": 122,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2087,
+      "completion_tokens": 337,
+      "total_tokens": 2424,
+      "cost": 0.0014686,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0014686,
+        "upstream_inference_prompt_cost": 0.0006261,
+        "upstream_inference_completions_cost": 0.0008425
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE LORDS OF THE 10 MONTHS OF CONCEPTION AND THE DETERMINION OF THE STRENGTH OF THE MOON",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "marriage",
+        "conception",
+        "samskaras"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "The Lord of the first month of conception is Venus; of the 2nd, Mars; of the 3rd, Jupiter; of the 4th, the Sun; of the 5th, the Moon; of the 6th, Saturn; of the 7th, Mercury; of the 8th, the Ascendant Lord; of the 9th, the Moon; and of the 10th, the Sun. For marriage and conception, the Chandra Bala of the woman is considered; for other samskaras, that of the husband."
+        }
+      },
+      "exclusions": [],
+      "notes": "Details the ruling planets for each of the 10 months of gestation and specifies whose Chandra Bala (Moon strength) to consult for different samskaras.",
+      "uncertain": false
+    }
+  ]
+}

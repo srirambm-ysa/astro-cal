@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "pdf_page": 37,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2471,
+      "completion_tokens": 494,
+      "total_tokens": 2965,
+      "cost": 0.0019763,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0019763,
+        "upstream_inference_prompt_cost": 0.0007413,
+        "upstream_inference_completions_cost": 0.001235
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "DETERMINING THE MOUTH AND TAIL OF BHADRA; AND ITS EFFECTS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "- \"activities\"": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          4,
+          8,
+          11,
+          15,
+          3,
+          7,
+          10,
+          14
+        ],
+        "tithi_groups": [
+          "Bhadra"
+        ],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "5 Ghatis at the beginning of specified Prahara for the mouth of Bhadra"
+        }
+      },
+      "exclusions": [],
+      "notes": "The mouth of Bhadra occurs during specific praharas of Bhadra tithis in both bright and dark halves and is inauspicious.",
+      "uncertain": false
+    },
+    {
+      "heading": "DETERMINING THE MOUTH AND TAIL OF BHADRA; AND ITS EFFECTS",
+      "type": "general_rule",
+      "verdict": "auspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          4,
+          8,
+          11,
+          15,
+          3,
+          7,
+          10,
+          14
+        ],
+        "tithi_groups": [
+          "Bhadra"
+        ],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "3 ghatis at the beginning of specified Prahara for the tail of Bhadra, or when Bhadra of the last half is in the day and first half in the night"
+        }
+      },
+      "exclusions": [],
+      "notes": "The tail of Bhadra is auspicious, as well as when the last half of Bhadra is in the day and the first half is in the night.",
+      "uncertain": false
+    }
+  ]
+}

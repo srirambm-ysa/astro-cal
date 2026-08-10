@@ -1,5 +1,6 @@
 /* astro-cal app — UI + orchestration. Vanilla ESM, localStorage personal layer. */
-import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST } from "./engine.js";
+import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,
+         YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
 
 const LS = {
   birth: "astro-cal-birth",
@@ -38,11 +39,91 @@ const TAMIL_FESTIVALS = [
   { key: "aavaniavittam", name: "Aavani Avittam", tMonth: 4, kind: "nakshatra", val: 22 },
 ];
 
+/* ---------- phase 2: muhurta activity tables (starter set — validate against Drik) ---------- */
+// Each activity: { nakshatras: shubh list (0-26), vara: favourable weekdays (Sun=0) or null for
+//   "not filtered", paksha: "shukla" | "both", badTithis: tithis to avoid ([] = none),
+//   badYogas: inauspicious yogas, badKaranas: inauspicious karanas, note }.
+// These are the "impersonal" Drik-style filters; tara (personal) is layered on top.
+const RIKTA_TITHIS = [3, 8, 13, 18, 23, 28]; // Chathurthi, Navami, Chaturdashi (both pakshas)
+// NOTE: Marriage (Vivah) is deferred to a later phase — its tithi/paksha rules vary by tradition
+// (Krishna paksha is permitted) and Drik's window-based muhurats are higher-precision than this
+// day-granular table can reproduce. Until then the starter set is the three simpler activities below.
+const ACTIVITIES = {
+  grihapravesh: {
+    name: "Griha Pravesh (housewarming)",
+    nakshatras: [3, 11, 20, 25],           // fixed (Dhruva): Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada
+    vara: [2, 4],                          // Tue/Thu
+    paksha: "shukla",
+    badTithis: RIKTA_TITHIS,
+    badYogas: [],
+    badKaranas: [6],
+    note: "Fixed (Dhruva) nakshatras; Tue/Thu; Shukla paksha.",
+  },
+  vehicle: {
+    name: "Vehicle purchase",
+    nakshatras: [3, 7, 12, 13, 14, 16, 18, 26], // Rohini, Pushya, Hasta, Chitra, Swati, Anuradha, Mula, Revati
+    vara: [3, 4],                          // Wed/Thu
+    paksha: "shukla",
+    badTithis: RIKTA_TITHIS,
+    badYogas: [],
+    badKaranas: [6],
+    note: "Pushya/Rohini/Revati-family stars; Wed/Thu; Shukla paksha.",
+  },
+  travel: {
+    name: "Travel (Yatra)",
+    nakshatras: [6, 14, 21, 22, 23],       // movable (Chara): Punarvasu, Swati, Shravana, Dhanishta, Shatabhisha
+    vara: [1, 3, 4, 6],                    // Mon/Wed/Thu/Sat (direction-dependent in classical texts — simplified)
+    paksha: "both",
+    badTithis: RIKTA_TITHIS,
+    badYogas: [],
+    badKaranas: [6],
+    note: "Movable (Chara) nakshatras; Mon/Wed/Thu/Sat. Direction rules simplified for v1.",
+  },
+};
+
+/* combine personal (tara) + impersonal (activity) filters into a per-day verdict.
+   Shubh = tara not bad AND nakshatra in list AND vara fit (if filtered) AND tithi not bad AND
+   yoga not bad AND karana not bad.
+   Ashubh = tara bad OR nakshatra NOT in the activity list.
+   Else Neutral. Returns { verdict, reasons: [] }.
+
+   opts.allowKrishnaFallback: when true and the activity is Shukla-paksha, also allow a
+   Krishna-paksha day through the tithi/paksha gate (month-level fallback when Shukla yields
+   no valid days). Used with the month pre-scan in renderMuhurta. */
+function muhurtaVerdict(day, janmaNakshatra, act, opts = {}) {
+  const tara = day.tara; // { number, count } from computeDay
+  const taraGood = TARA_NATURE[tara.number - 1] === "good";
+  const taraBad = TARA_NATURE[tara.number - 1] === "bad";
+  const nakOK = act.nakshatras.length ? act.nakshatras.includes(day.moonNakshatra) : true;
+  const varaOK = !act.vara || act.vara.includes(day.vara);
+  const tithiBaseOK = !act.badTithis.includes(day.tithiIndex);
+  const krishnaAllowed = opts.allowKrishnaFallback && day.tithi.paksha === "Krishna";
+  const pakshaOK = act.paksha === "both" || day.tithi.paksha === "Shukla" || krishnaAllowed;
+  const tithiOK = tithiBaseOK && pakshaOK;
+  const yogaOK = !act.badYogas.includes(day.yoga.index);
+  const karanaOK = !act.badKaranas.includes(day.karana.index);
+  const impersonalPass = nakOK && varaOK && tithiBaseOK && yogaOK && karanaOK; // paksha-agnostic
+  const reasons = [];
+  reasons.push(taraGood ? `Tara ${TARA_NAMES[tara.number - 1]} ✓` : taraBad ? `Tara ${TARA_NAMES[tara.number - 1]} ✗` : `Tara ${TARA_NAMES[tara.number - 1]} ~`);
+  if (act.nakshatras.length) reasons.push(`${NAKSHATRA[day.moonNakshatra]} ${nakOK ? "✓" : "✗"}`);
+  if (act.vara) reasons.push(`Vara ${DOW[day.vara]} ${varaOK ? "✓" : "✗"}`);
+  const pakshaTag = krishnaAllowed ? `${day.tithi.paksha}${TITHI_NAMES[day.tithiIndex]} ✓ (Krishna fallback)` : `${day.tithi.paksha} ${TITHI_NAMES[day.tithiIndex]} ${pakshaOK ? "✓" : (day.tithi.paksha === "Krishna" ? "✗ (Shukla only)" : "✗")}`;
+  reasons.push(pakshaTag);
+  reasons.push(`Yoga ${YOGA_NAMES[day.yoga.index]} ${yogaOK ? "✓" : "✗"}`);
+  reasons.push(`Karana ${KARANA_NAMES[day.karana.index]} ${karanaOK ? "✓" : "✗"}`);
+  if (day.starEnd) reasons.push(`Star ${NAKSHATRA[day.moonNakshatra]} valid till ${day.starEnd.ist} then ${day.starEnd.endNakshatraName}`);
+  let verdict;
+  if (taraBad || !nakOK) verdict = "Ashubh";
+  else if (!taraBad && nakOK && varaOK && tithiOK && yogaOK && karanaOK) verdict = "Shubh"; // good OR neutral tara
+  else verdict = "Neutral";
+  return { verdict, reasons, tara, nakOK, varaOK, tithiOK, yogaOK, karanaOK, impersonalPass, krishnaAllowed };
+}
+
 /* ---------- state ---------- */
 let swe = null;
 let birth = null;      // { nakshatra:0-26, pada:1-4, rashi:0-11, place, lat, lon, tz }
 let events = [];       // [{id,type,name,date?,tMonth?,tKind?,tVal?}]
-let view = { range: "month", anchor: todayISO() }; // anchor = civil date (YYYY-MM-DD)
+let view = { range: "month", anchor: todayISO(), activity: "grihapravesh" }; // anchor = civil date (YYYY-MM-DD)
 
 const $ = (id) => document.getElementById(id);
 
@@ -147,7 +228,21 @@ async function computeDay(y, m, d, geo) {
   const tithiIndex = tt.index;
   const tDay = tm.tDay;
   const tMonth = tm.tMonth;
-  return { y, m, d, iso: ymdToISO(y, m, d), rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon };
+  const vara = new Date(y, m - 1, d).getDay();
+  const yoga = swe.yoga(atSunrise);
+  const karana = swe.karana(atSunrise);
+  const tara = birth ? swe.taraBala(birth.nakshatra, moonNakshatra) : null;
+  // sunrise-star window: does the sunrise nakshatra end before sunset (same civil day)?
+  // If so the day is only valid-till that time for star-based verdicts.
+  let starEnd = null;
+  if (rise) {
+    const nakEnd = swe.nakshatraEnd(atSunrise);
+    if (nakEnd && nakEnd < set) {
+      const endNak = swe.nakshatraOf(swe.siderealLon(nakEnd, swe.swe.SE_MOON));
+      starEnd = { jd: nakEnd, ist: fmtHHMM(nakEnd), endNakshatra: endNak, endNakshatraName: NAKSHATRA[endNak] };
+    }
+  }
+  return { y, m, d, iso: ymdToISO(y, m, d), rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd };
 }
 
 function dayLabelTamil(tMonth, tDay) { return `${TAMIL_MONTH[tMonth]} ${String(tDay).padStart(2, "0")}`; }
@@ -248,6 +343,7 @@ async function render() {
 
   renderMonthEvents(dayMap, flagMap, windowsByDay);
   renderLegend();
+  renderMuhurta(dayMap);
   $("monthEvTitle").textContent = `Key events — ${title}`;
 
   // day detail
@@ -305,6 +401,56 @@ function dayDots(day, iso, flagMap) {
 }
 
 const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival", personal: "Personal", shraddha: "Shraddha" };
+
+/* phase-2 muhurta table (right panel): cumulative across ALL activities.
+   A day is listed if it is Shubh or Neutral for at least one activity (Ashubh-only
+   days are hidden). Each row carries a per-activity verdict so one glance shows
+   which activity works on which day. The activity dropdown still sets the "focus"
+   activity whose tara+window note drives the day-detail panel. */
+function renderMuhurta(dayMap) {
+  const tbody = $("muhurtas");
+  const rows = [];
+  const days = [...dayMap.values()].sort((a, b) => (a.iso < b.iso ? -1 : 1));
+  const focusAct = ACTIVITIES[view.activity] || ACTIVITIES.grihapravesh;
+  // month-level fallback only for the focused activity's summary below
+  const shuklaFallback = focusAct.paksha === "shukla" && !days.some((d) => muhurtaVerdict(d, birth.nakshatra, focusAct).impersonalPass && d.tithi.paksha === "Shukla");
+  const actEntries = Object.entries(ACTIVITIES);
+  let shubhTotal = 0;
+  for (const day of days) {
+    if (!day.tara) continue; // without birth star, no personal verdict — skip from muhurta list
+    // per-activity verdicts (primary rule only; fallback only flags the focused activity)
+    const perAct = actEntries.map(([key, a]) => {
+      const v = muhurtaVerdict(day, birth.nakshatra, a);
+      return { key, name: a.name, verdict: v.verdict };
+    });
+    const shown = perAct.some((p) => p.verdict === "Shubh" || p.verdict === "Neutral");
+    if (!shown) continue;
+    if (perAct.some((p) => p.verdict === "Shubh")) shubhTotal++;
+
+    const dt = new Date(day.y, day.m - 1, day.d);
+    const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
+    const mn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][day.m - 1];
+    const dateStr = `${dayName} ${mn} ${String(day.d).padStart(2, "0")}`;
+    const sel = day.iso === view.selected ? " selected" : "";
+    const taraTxt = `${TARA_NAMES[day.tara.number - 1]} (${day.tara.number})`;
+    // focused verdict (for click → day detail) with active fallback
+    const fopts = shuklaFallback && day.tithi.paksha === "Krishna" ? { allowKrishnaFallback: true } : {};
+    const fv = muhurtaVerdict(day, birth.nakshatra, focusAct, fopts);
+    const title = fv.reasons.join(" · ");
+    const chips = actEntries.map(([key, a]) => {
+      const p = perAct.find((x) => x.key === key);
+      if (p.verdict === "Ashubh") return ""; // only surface Shubh / Neutral verdicts
+      const cls = p.verdict === "Shubh" ? "shubh" : "neutral";
+      return `${a.name.split(" ")[0]}:<span class="chip verdict ${p.verdict} ${cls}">${p.verdict}</span>`;
+    }).filter(Boolean).join(" ");
+    rows.push(`<tr class="muhrow${sel}" data-iso="${day.iso}" title="${title}"><td class="dt">${dateStr}</td><td class="tara">${taraTxt}</td><td class="nak">${NAKSHATRA[day.moonNakshatra]}</td><td class="acts">${chips}</td></tr>`);
+  }
+  tbody.innerHTML = rows.join("");
+  tbody.querySelectorAll(".muhrow").forEach((tr) => tr.addEventListener("click", () => { view.selected = tr.dataset.iso; save(LS.view, view); render(); }));
+  $("muhActName").textContent = `Activity focus: ${focusAct.name}`;
+  const fbNote = shuklaFallback ? " (Krishna-paksha days also shown — no Shukla days qualified this month)" : "";
+  $("muhSummary").textContent = `${shubhTotal} Shubh days this month for ${focusAct.name}${fbNote}. ${focusAct.note}`;
+}
 
 /* month key-events table (right panel): one row per flagged day */
 function renderMonthEvents(dayMap, flagMap, windowsByDay) {
@@ -393,6 +539,19 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
   $("rSunrise").textContent = day.rise ? fmtHHMM(day.rise) : "–";
   $("rSunset").textContent = day.set ? fmtHHMM(day.set) : "–";
   $("rTithi").textContent = `${day.tithi.paksha} ${day.tithi.name}`;
+  // phase-2: tara + per-activity verdict for the selected day
+  const act = ACTIVITIES[view.activity] || ACTIVITIES.grihapravesh;
+  const days = dayMap ? [...dayMap.values()] : [day];
+  const shuklaFallback = act.paksha === "shukla" && !days.some((d) => muhurtaVerdict(d, birth.nakshatra, act).impersonalPass && d.tithi.paksha === "Shukla");
+  const vopts = shuklaFallback && day.tithi.paksha === "Krishna" ? { allowKrishnaFallback: true } : {};
+  const v = day.tara ? muhurtaVerdict(day, birth.nakshatra, act, vopts) : null;
+  $("muhDetail").innerHTML = v ? `
+    <div class="muh-line"><span class="k">Tara</span><span class="v">${TARA_NAMES[v.tara.number - 1]} (${v.tara.number}) — ${TARA_NATURE[v.tara.number - 1] === "good" ? "favourable" : TARA_NATURE[v.tara.number - 1] === "bad" ? "unfavourable" : "neutral"}</span></div>
+    <div class="muh-line"><span class="k">${act.name}</span><span class="chip ${v.verdict}">${v.verdict}</span></div>
+    <div class="muh-line"><span class="k">Reasons</span><span class="v">${v.reasons.join(" · ")}</span></div>${v.krishnaAllowed ? `
+    <div class="muh-line note"><span class="k">Fallback</span><span class="v">No Shukla day qualified this month · Krishna paksha shown</span></div>` : ""}${day.starEnd ? `
+    <div class="muh-line"><span class="k">Window</span><span class="v">Sunrise star valid till ${day.starEnd.ist}, then ${day.starEnd.endNakshatraName}</span></div>` : ""}` : "";
+  $("muhDetailCard").hidden = !v;
 }
 
 function periodRow(icon, title, sub, tagCls, tagTxt) {
@@ -583,6 +742,17 @@ async function init() {
 
   // populate tamil month select
   TAMIL_MONTH.forEach((name, i) => $("evTMonth").insertAdjacentHTML("beforeend", `<option value="${i}">${name}</option>`));
+
+  // populate muhurta activity select
+  const muhSel = $("muhAct");
+  Object.entries(ACTIVITIES).forEach(([key, a]) => {
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = a.name;
+    if (key === view.activity) opt.selected = true;
+    muhSel.appendChild(opt);
+  });
+  muhSel.addEventListener("change", () => { view.activity = muhSel.value; save(LS.view, view); if (birth) render(); });
 
   // populate janma nakshatra dropdown (flat 27 list) + rashi select (editable, auto-filled)
   const nakSel = $("bNakshatra");

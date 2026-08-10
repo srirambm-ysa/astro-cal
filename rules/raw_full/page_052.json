@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "pdf_page": 52,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1999,
+      "completion_tokens": 204,
+      "total_tokens": 2203,
+      "cost": 0.0011097,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0011097,
+        "upstream_inference_prompt_cost": 0.0005997,
+        "upstream_inference_completions_cost": 0.00051
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHTRAS, STHIR OR DHRUWA (FIXED) AND THE THINGS WHICH SHOULD BE DONE IN THEM",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "things of fixed and permanent nature",
+        "things concerning one's house",
+        "sowing of seeds",
+        "rites done for getting peace",
+        "planting of small garden"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini"
+        ],
+        "weekdays": [
+          "Sunday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Fixed and permanent activities, house-related works, seed sowing, peace-seeking rites, and garden planting are auspicious when performed in Sthir/Dhruwa nakshatras and on Sunday.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "pdf_page": 53,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2194,
+      "completion_tokens": 814,
+      "total_tokens": 3008,
+      "cost": 0.0026932,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026932,
+        "upstream_inference_prompt_cost": 0.0006582,
+        "upstream_inference_completions_cost": 0.002035
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE NAKSHATRAS CHARA (MOVABLE) ETC. AND THE THINGS WHICH SHOULD BE DONE IN THEM",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "riding an elephant",
+        "walking in a garden",
+        "things to be done in laghu nakshatras"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [
+          "Monday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Chara nakshatras combined with Monday are suitable for movable and light activities such as riding and garden walks.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHATRAS UGRA-KRUR (CRUEL) ETC. AND THE THINGS WHICH SHOULD BE PERFORMED IN THEM",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "ambush",
+        "burning",
+        "deception",
+        "poisoning",
+        "using weapons",
+        "making weapons",
+        "things to be performed in darana nakshatras"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Poorva Phalguni",
+          "Poorvashadha",
+          "Poorva Bhadrapada",
+          "Bharani",
+          "Magha"
+        ],
+        "weekdays": [
+          "Tuesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Ugra and Krur nakshatras combined with Tuesday are suitable for fierce, destructive, or martial actions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE NAKSHATRAS MISHRA (MIXED) AND SADHARANA (ORDINARY) ETC. AND THE THINGS WHICH SHOULD BE PERFORMED IN THEM",
+      "type": "nakshatra_classification",
+      "verdict": "auspicious",
+      "activities": [
+        "agnihotra",
+        "deeds of adulteration",
+        "vrashotsarga",
+        "things to be done in ugra nakshatras"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Vishakha",
+          "Krittika"
+        ],
+        "weekdays": [
+          "Wednesday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": null
+        }
+      },
+      "exclusions": [],
+      "notes": "Mishra nakshatras combined with Wednesday are auspicious for ritual fire sacrifices, mixing deeds, and ox donation rituals.",
+      "uncertain": false
+    }
+  ]
+}

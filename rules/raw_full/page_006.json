@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "pdf_page": 6,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2187,
+      "completion_tokens": 288,
+      "total_tokens": 2475,
+      "cost": 0.0013761,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0013761,
+        "upstream_inference_prompt_cost": 0.0006561,
+        "upstream_inference_completions_cost": 0.00072
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "LORDS OF THE TITHIS",
+      "type": "general_rule",
+      "verdict": "neutral",
+      "activities": [
+        "general calculation"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lords of the tithis respectively are Agni, Brahma, Gauri, Ganesha, Sarpa, Kartikeya, Surya, Shiva, Durga, Yamaraja, Vishwe Deva, Vishnu, Kamadeva, Shiva, and Chandrama."
+        }
+      },
+      "exclusions": [],
+      "notes": "The text lists the presiding deities or lords for each of the fifteen tithis of both bright and dark fortnights.",
+      "uncertain": false
+    }
+  ]
+}

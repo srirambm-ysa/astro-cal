@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "pdf_page": 63,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2027,
+      "completion_tokens": 949,
+      "total_tokens": 2976,
+      "cost": 0.0029806,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0029806,
+        "upstream_inference_prompt_cost": 0.0006081,
+        "upstream_inference_completions_cost": 0.0023725
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "MUHURTA FOR GETTING CLOTHES WASHED",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "getting clothes washed"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [
+          "Saturday",
+          "Wednesday"
+        ],
+        "tithis": [
+          6,
+          15,
+          12
+        ],
+        "tithi_groups": [
+          "Rikta"
+        ],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Avoid on Parva tithis, Shashthi tithi, shradhdha tithis of father and mother, Saturday and Wednesday (and per notes: Tuesday, Sunday, Sankranti day, Pauranmasi 15th, and Dwadashi 12th)."
+        }
+      },
+      "exclusions": [
+        "Rikta tithis",
+        "Shashthi tithi",
+        "Parva tithis",
+        "Shradhdha tithis",
+        "Saturday",
+        "Wednesday"
+      ],
+      "notes": "Certain tithis and weekdays are rejected for getting clothes washed.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO BEARING WEAPONS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "bearing weapons",
+        "wearing shoes",
+        "wearing sandals"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Anuradha",
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Punarvasu",
+          "Jyeshtha",
+          "Vishakha"
+        ],
+        "weekdays": [
+          "Friday",
+          "Thursday",
+          "Sunday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {}
+      },
+      "exclusions": [
+        "Rikta tithis"
+      ],
+      "notes": "Weapons can be borne and shoes/sandals worn on specified days, tithis, nakshatras, and fixed lagnas with benefic influences.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTAS WITH REGARD TO USING BED ETC.",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "using bed",
+        "using a mat",
+        "ascending on a bed"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Rohini",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Shravana",
+          "Bharani",
+          "Punarvasu"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": ""
+        }
+      },
+      "exclusions": [],
+      "notes": "Ascending on a bed or a mat for the first time is auspicious in Dhruwa, Mridu, Laghu nakshatras, and Shravana, Bharani, Punarvasu.",
+      "uncertain": false
+    }
+  ]
+}

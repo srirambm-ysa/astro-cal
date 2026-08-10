@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "pdf_page": 137,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1931,
+      "completion_tokens": 680,
+      "total_tokens": 2611,
+      "cost": 0.0022793,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0022793,
+        "upstream_inference_prompt_cost": 0.0005793,
+        "upstream_inference_completions_cost": 0.0017
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "RESTRICTIONS FOR A MAN WHOSE WIFE IS PREGNANT",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "carrying of a dead body",
+        "travelling to a place of pilgrimage",
+        "travelling to a foreign country",
+        "bathing in the sea",
+        "kshora-karma"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Man whose wife is pregnant"
+        }
+      },
+      "exclusions": [],
+      "notes": "A man with a pregnant wife must avoid carrying corpses, pilgrimages, foreign travel, sea bathing, and shaving.",
+      "uncertain": false
+    },
+    {
+      "heading": "PROHIBITED NAKSHATRAS FOR REPEATED KSHORA-KARMA",
+      "type": "activity_muhurta",
+      "verdict": "inauspicious",
+      "activities": [
+        "kshora-karma"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Krittika",
+          "Anuradha",
+          "Rohini",
+          "Magha",
+          "Uttara Phalguni"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Repeated shaving within a year in specific counts"
+        }
+      },
+      "exclusions": [],
+      "notes": "Repeated shaving in Krittika, Anuradha, Rohini, Magha, and Uttara Phalguni leads to adverse results.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE BEGINNING OF LEARNING LETTERS BY CHILDREN",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "beginning of learning letters by children",
+        "writing"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "In the 5th year from birth after worshipping deities"
+        }
+      },
+      "exclusions": [],
+      "notes": "A child should begin learning letters in the 5th year after worshipping Ganesha, Vishnu, Saraswati, and Lakshmi.",
+      "uncertain": false
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "pdf_page": 123,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2339,
+      "completion_tokens": 744,
+      "total_tokens": 3083,
+      "cost": 0.0025617,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0025617,
+        "upstream_inference_prompt_cost": 0.0007017,
+        "upstream_inference_completions_cost": 0.00186
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR THE PUNSAVANA SAMSKARA AND VISHNU POOJA",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "punsavana samskara",
+        "vishnu pooja"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Shravana",
+          "Rohini",
+          "Pushya"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "In the 8th month, in auspicious Laganas or Ascendants or when there is a benefic planet in auspicious Ascendants, and when the 8th House from the Natal Ascendant is auspicious and is without any Malefic Planet"
+        }
+      },
+      "exclusions": [
+        "malefic planets in the 8th house from the natal ascendant"
+      ],
+      "notes": "Punsavana samskara is performed in the 3rd month on tithis, days, and nakshatras auspicious for Simanta samskara, while Vishnu worship for protection of conception is done in the 8th month under specific favorable astral and planetary conditions.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR THE JAATAKARMA AND THE NAAMA KARANA SAMSKARAS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "jaata karma",
+        "naama karana"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [
+          11,
+          12
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "On the 11th or 12th day from the birth, on an auspicious day"
+        }
+      },
+      "exclusions": [
+        "Parva or festival tithis",
+        "Rikta tithis (4, 9, 14)"
+      ],
+      "notes": "Jaata Karma and Naama Karana samskaras for a newborn should be performed on the 11th or 12th day excluding Parva and Rikta tithis, using Mridu, Dhruwa, Kshipra, or Chara nakshatras.",
+      "uncertain": false
+    }
+  ]
+}

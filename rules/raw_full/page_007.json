@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "pdf_page": 7,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 1908,
+      "completion_tokens": 202,
+      "total_tokens": 2110,
+      "cost": 0.0010774,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0010774,
+        "upstream_inference_prompt_cost": 0.0005724,
+        "upstream_inference_completions_cost": 0.000505
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE LORDS OR DEITIES OF THE TITHIS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "worship",
+        "fast",
+        "establishing of the image with life",
+        "prana pratishtha"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          30
+        ],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Worship, fasts, and Prana Pratishtha of a specific deity should be performed on the tithi presided over by that respective deity."
+        }
+      },
+      "exclusions": [],
+      "notes": "Perform worship, fasts, and idol consecration (Prana Pratishtha) of specific deities on their corresponding presiding tithis.",
+      "uncertain": false
+    }
+  ]
+}

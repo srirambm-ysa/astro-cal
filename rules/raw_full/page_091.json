@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "pdf_page": 91,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2145,
+      "completion_tokens": 349,
+      "total_tokens": 2494,
+      "cost": 0.001516,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001516,
+        "upstream_inference_prompt_cost": 0.0006435,
+        "upstream_inference_completions_cost": 0.0008725
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR DIGGING AND BUILDING A TANK, FOR PLANTING A GARDEN OR AN ORCHARD AND ESTABLISHING AN IMAGE OF SOME GOD OR GODDESS",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "digging well",
+        "building a tank",
+        "planting a garden",
+        "planting an orchard",
+        "establishing an image of some god or goddess"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Swati",
+          "Punarvasu",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Uttara Phalguni",
+          "Uttarashadha",
+          "Uttara Bhadrapada",
+          "Rohini"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Shukla",
+        "yogas": [],
+        "planetary": {
+          "freeform": "in the Uttarayana of the Sun (January 14 to July 16, except in the month of Chaitra), at the rising of Venus"
+        }
+      },
+      "exclusions": [
+        "month of Chaitra",
+        "Krishna paksha"
+      ],
+      "notes": "Auspicious activities like digging tanks, planting gardens, or consecrating idols are best performed during the Sun's northern course, bright fortnight, and specific soft, swift, movable, or fixed nakshatras when Venus is visible.",
+      "uncertain": false
+    }
+  ]
+}

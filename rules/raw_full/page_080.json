@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "pdf_page": 80,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2070,
+      "completion_tokens": 495,
+      "total_tokens": 2565,
+      "cost": 0.0018585,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0018585,
+        "upstream_inference_prompt_cost": 0.000621,
+        "upstream_inference_completions_cost": 0.0012375
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR MAKING TREATY FOR FRIEND- SHIP",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "making treaty for friendship",
+        "making mutual friendship"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Mrigashira",
+          "Pushya",
+          "Anuradha",
+          "Poorva Phalguni"
+        ],
+        "weekdays": [],
+        "tithis": [
+          8,
+          12
+        ],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Ascendant aspected by Venus, during Taitil Karana"
+        }
+      },
+      "exclusions": [],
+      "notes": "Friendship treaties are auspicious in specific nakshatras, on the 8th or 12th tithi, during Taitil karana, and when Venus aspects the ascendant.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA FOR DIVINE TEST",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "divine test",
+        "test for guilt or theft"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Punarvasu",
+          "Shravana",
+          "Jyeshtha",
+          "Shatabhisha"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "Dual or Movable Ascendants and same Navamsha Lagnas, auspicious position of Moon, Jupiter and Tara"
+        }
+      },
+      "exclusions": [
+        "8th tithi",
+        "14th tithi",
+        "Saturday",
+        "Tuesday",
+        "Bhadra tithi",
+        "birth nakshatra",
+        "birth month",
+        "Sun or Moon in 8th house from natal ascendant",
+        "Nakshtras of the Nadi of the Person"
+      ],
+      "notes": "Administering divine or ordeals tests is auspicious under dual/movable signs and specific nakshatras, avoiding malefic tithis, weekdays, and natal afflictions.",
+      "uncertain": false
+    }
+  ]
+}

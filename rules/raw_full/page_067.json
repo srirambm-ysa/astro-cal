@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "pdf_page": 67,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2129,
+      "completion_tokens": 715,
+      "total_tokens": 2844,
+      "cost": 0.0024262,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024262,
+        "upstream_inference_prompt_cost": 0.0006387,
+        "upstream_inference_completions_cost": 0.0017875
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THE MUHURTA FOR JOINING SERVICE",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "joining service",
+        "serving masters"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Hasta",
+          "Ashwini",
+          "Pushya",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha"
+        ],
+        "weekdays": [
+          "Wednesday",
+          "Friday",
+          "Sunday",
+          "Thursday"
+        ],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "benefic planets in the Ascendant and the Sun or Mars in the 10th or in the 11th House"
+        }
+      },
+      "exclusions": [],
+      "notes": "Joining service is auspicious under specified kshipra and maitra nakshatras on certain weekdays with benefics in the ascendant and Sun or Mars in the 10th or 11th house.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE MUHURTA OF LENDING AND BORROWING MONEY",
+      "type": "activity_muhurta",
+      "verdict": "auspicious",
+      "activities": [
+        "lending money",
+        "borrowing money",
+        "exchange of money",
+        "depositing money in the bank",
+        "taking lic policy",
+        "collection of money"
+      ],
+      "conditions": {
+        "nakshatras": [
+          "Swati",
+          "Punarvasu",
+          "Mrigashira",
+          "Revati",
+          "Chitra",
+          "Anuradha",
+          "Vishakha",
+          "Pushya",
+          "Shravana",
+          "Dhanishtha",
+          "Shatabhisha",
+          "Ashwini"
+        ],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Movable ascendants (1, 4, 7, 10) and no planet in the 9th, 5th, and 8th houses from the Ascendant"
+        }
+      },
+      "exclusions": [
+        "borrowing on Tuesday",
+        "borrowing on the day of Sankranti of the Sun in the Vridhi yoga",
+        "borrowing in Hasta nakshatra",
+        "borrowing on Sunday",
+        "lending on Wednesday"
+      ],
+      "notes": "Money transactions are favorable in specific nakshatras and movable ascendants while avoiding designated days and planetary placements that lead to perpetual debt.",
+      "uncertain": false
+    }
+  ]
+}

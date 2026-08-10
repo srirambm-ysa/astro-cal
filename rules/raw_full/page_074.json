@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "pdf_page": 74,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2244,
+      "completion_tokens": 510,
+      "total_tokens": 2754,
+      "cost": 0.0019482,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0019482,
+        "upstream_inference_prompt_cost": 0.0006732,
+        "upstream_inference_completions_cost": 0.001275
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "EFFECTS OF THE AHUTI IN THE MOUTH OF PLANETS IN HAVANA",
+      "type": "activity_muhurta",
+      "verdict": "neutral",
+      "activities": [
+        "havana",
+        "yajna"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Sun receives Ahuti: destruction of auspicious effects; Moon receives Ahuti: crops inundated; Mars receives Ahuti: fear of fire; Mercury receives Ahuti: increase in intellectual powers; Jupiter receives Ahuti: fulfilment of desired objective; Venus receives Ahuti: profit of worldly and otherworldly property or wealth; Saturn receives Ahuti: destruction of wealth and loss of kingdom; Rahu receives Ahuti: loss of every kind; Ketu receives Ahuti: famine, death and loss of kingdom."
+        }
+      },
+      "exclusions": [],
+      "notes": "Describes the auspicious and inauspicious results depending on which planet receives the Ahuti during a Havana or Yajna.",
+      "uncertain": false
+    },
+    {
+      "heading": "THE ABODE OF LIVING OF FIRE IN THE HAVANA AND THE AUSPICIOUS AND INAUSPICIOUS EFFECTS OF IT",
+      "type": "activity_muhurta",
+      "verdict": "neutral",
+      "activities": [
+        "havana"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": "Both",
+        "yogas": [],
+        "planetary": {
+          "freeform": "(Tithi + 1 + weekday number) divided by 4. Remainder 3 or 0: Fire is on Earth (auspicious/happiness); Remainder 1: Fire is in Heaven (loss of life); Remainder 2: Fire is in Paatal/Underworld (loss of wealth)."
+        }
+      },
+      "exclusions": [],
+      "notes": "Calculates the elemental placement of fire for a Havana based on the desired tithi and weekday, determining happiness, loss of life, or loss of wealth.",
+      "uncertain": false
+    }
+  ]
+}

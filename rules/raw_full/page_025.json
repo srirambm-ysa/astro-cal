@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "pdf_page": 25,
+    "model": "google/gemini-3.5-flash-lite",
+    "image_input": false,
+    "usage": {
+      "prompt_tokens": 2145,
+      "completion_tokens": 377,
+      "total_tokens": 2522,
+      "cost": 0.001586,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.001586,
+        "upstream_inference_prompt_cost": 0.0006435,
+        "upstream_inference_completions_cost": 0.0009425
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "rules": [
+    {
+      "heading": "THINGS TO BE REJECTED IN DOING ALL THE AUSPICIOUS DEEDS",
+      "type": "general_rule",
+      "verdict": "inauspicious",
+      "activities": [
+        "all auspicious deeds"
+      ],
+      "conditions": {
+        "nakshatras": [],
+        "weekdays": [],
+        "tithis": [],
+        "tithi_groups": [],
+        "paksha": null,
+        "yogas": [],
+        "planetary": {
+          "freeform": "Lagna or Ascendant and Navamsha occupied by the Moon and malefic planets (emaciated Moon, Sun, Mars, Saturn), third part of a Ghati or 20 Palas before and after mid day and mid night, Navamsha of a malefic planet, three days before an eclipse, seven days after a portent, an eclipse, the whole day of an auspicious portent, nakshatras cleaved by planets, nakshatras in planetary war, or nakshatras with an utpaata or portent (rejected for six months)"
+        }
+      },
+      "exclusions": [
+        "Lagna occupied by Moon and malefics",
+        "Navamsha occupied by Moon and malefics",
+        "mid day and mid night central ghati period",
+        "eclipse periods",
+        "portent periods",
+        "nakshatras with planetary war, cleavage, or portents"
+      ],
+      "notes": "Lists general astrological conditions, times, and celestial afflictions that must be avoided for all auspicious activities.",
+      "uncertain": false
+    }
+  ]
+}
