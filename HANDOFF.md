@@ -6,57 +6,55 @@
 
 Last updated: 2026-08-10
 
-**Session token count (2026-08-10 session):** REAL billed 3,080,942 (RAW 23,447,150 · 86.9% cache efficiency)
+**Session token count (2026-08-10 · this session):** REAL billed 2,984,271 (RAW 18,511,618 · 83.9% cache efficiency)
 
-## Goal Accomplished (2026-08-10 · this session)
-- **Birth input reworked to nakshatra dropdown (UNCOMMITTED):** birth date/time/coords-arithmetic
-  replaced with a single **Janma Nakshatra** dropdown (27 nakshatras × 4 padas, grouped with
-  `<optgroup>`, each option showing the derived rashi). `janma.rashi` now derived from
-  `nakshatra*4 + (pada-1)` (9 padas/rashi) — `swe.birthChart()` no longer used by app.js. Location
-  fields (place/lat/lon/tz) kept for sunrise/sunset/kalam only. Old saved birth without `nakshatra`
-  falls back to the form. **Changes in `app.js` + `index.html`, `node --check` passes, NOT committed.**
-- **Review note for owner:** per user, "will review everything in next session" — the dropdown change
-  needs a visual review + localStorage migration check (old saved birth shows the form again).
-
-## Goal Accomplished (through 2026-08-08)
-- **PRD + research COMPLETE** — `D:\astro-cal\PRD.md` exists; all 5 PRD open items resolved
-  (chandrashtama two-tier correction: Drik computes by sign, not nakshatra; Rahu/Yama/Gulika tables;
-  shraddha tithi practice; `swisseph-wasm` package confirmed; ICS spec).
-- **UI/UX COMPLETE — winner APPROVED:** **04 Sacred Ornament (day + night)** from the uiskills experiment
-  (`D:\uiskills\experiments\astro-cal\muhurta-calendar\04-sacred-ornament.html`). Warm ledger + gold rekha
-  frame + researched SVG icon set; night = deep indigo via `body.night` toggle (localStorage-persisted).
-  Ganesha watermark + kolam dot border PARKED — owner to drop in assets manually (ISSUE-0009).
+## Goal Accomplished (this session)
+- **Muhurta Chintamani rules extraction — PILOT + FULL scan done, committed `54d1beb`.**
+  - Engine-facing `rules/muhurta_rules.json`: **250 rules** (Ch1 general muhurtas 73, Ch2 nakshatras
+    106, Ch5 samskaras 71), all nakshatra names canonical, per-rule id/source/type/verdict/conditions.
+  - Pipeline in `tools/`: `extract_pages.py` → `gemini_extract.py` (OpenRouter Flash Lite, concurrent)
+    → `validate_rules.py` → `merge_rules.py`. Run: 122 pages, 6 workers, **$0.25**, 0 failures.
+  - Key finding: source PDF has **no Devanagari in its OCR text layer** (scan + `InvisibleOCR` text),
+    so extraction is **English-text-only** (image path cost ~35% more, no quality gain → dropped).
+  - One prompt guard added after a real bug: model silently dropped a nakshatra (p66) and a whole
+    medium tier (p125). "Do NOT drop any listed nakshatra; set uncertain=true; extract every tier."
+- **Earlier-session nakshatra-dropdown birth input change is now COMMITTED** (was UNCOMMITTED in the
+  prior digest — folded into `54d1beb`; still pending the visual/localStorage review below).
 
 ## Architectural Decisions
-- Engine = Swiss Ephemeris WASM (`swisseph-wasm` v0.1.0, Lahiri ayanamsa) — not hand-rolled astronomy.
-- Avoidance-first v1: chandrashtama (rashi coarse + nakshatra peak) + moon phases + eclipses +
-  Rahu/Yama/Gulika + personal days. Good-muhurta rules deferred to phase 2.
-- Calculator model, no auth: birth details in → calendar out; personal layer in browser localStorage;
-  static server (no backend). Default range = current month.
-- UI source = 04 Sacred Ornament (day+night), per above.
-- **Tamil calendar layer (added 2026-08-10):** tithi label + Tamil month/day per cell + Tamil year in
-  header, sankranti day highlighted; built-in Tamil festivals (Thai Poosam, Karthigai Deepam, Panguni
-  Uthiram, Aadi Perukku, Aavani Avittam …) + custom Tamil-month events. All derivable from Sun/Moon
-  longitude via swisseph — no external calendar data. Festivals validated against Drik's festival
-  calendar.
+- Engine = Swiss Ephemeris WASM (`swisseph-wasm`, Lahiri ayanamsa); calculator model, no auth,
+  localStorage personal layer, static server.
+- **Rules corpus = local JSON** (`rules/muhurta_rules.json`), NOT a DB — matches local-first; DB per
+  `Technical_Approach.md` only if/when a microservice is adopted.
+- Extraction: **English-text-only** via OpenRouter `google/gemini-3.5-flash-lite`; schema = per-rule
+  {heading, type, verdict, activities, conditions{nakshatras,weekdays,tithis,tithi_groups,paksha,
+  yogas,planetary}, exclusions, notes, uncertain} + source provenance.
+- Reference tables for validation transcribed from `classical_rule_architecture_mc.md` §1–§3.
 
 ## Immediate Next Steps
-- **REVIEW the uncommitted nakshatra-dropdown change** (app.js + index.html): confirm the grouped
-  dropdown UX, verify rashi derivation on the calendar, and test the old-localStorage fallback. Then
-  commit. This was the "birth input" simplification requested this session.
+- **WIRE the corpus into the engine:** derive the app's ACTIVITIES/muhurta tables from
+  `rules/muhurta_rules.json` (or load it dynamically) — the personalization layer depends on this.
+  This was the stated reason for building the rules corpus.
+- **Review the 3 new docs** (owner): `muhurtha_PRD.md`, `classical_rule_architecture_mc.md`,
+  `Technical_Approach.md` — decide scope/architecture before the engine wiring.
+- **Optional extra validation:** cross-check a few high-value activities (e.g. griha pravesh, travel)
+  in the corpus against Drik Panchang for extra confidence (accuracy bar = match Drik).
+- **REVIEW the committed nakshatra-dropdown change** (app.js + index.html): grouped dropdown UX +
+  rashi derivation + old-localStorage fallback.
 - **AC-TSK-0001 (high, in_progress):** build astro-cal v1 from `PRD.md` using 04 Sacred Ornament
-  (day+night) as the UI source. Includes the **Tamil calendar layer** (tithi label, Tamil month/day +
-  year, sankranti highlight) and **Tamil festivals** (built-in + custom Tamil-month events).
-  Self-host fonts; ship with `serve.js`. Ganesha/kolam assets parked (ISSUE-0009).
-  See the wiki task board: `node D:\knowledge-base\tools\task.js list` (project=astro-cal).
+  (day+night) UI. Includes phase-2 muhurta table + Tamil calendar layer + festivals. Self-host fonts.
+  Board: `node D:\knowledge-base\tools\task.js list` (project=astro-cal).
 
 ## Watch Outs
-- PENDING — only the PRD exists; scaffold + engine research not started (that is now the v1 build work).
-- Accuracy bar = match Drik Panchang exactly (validated against Drik + a second source).
-- Ganesha/kolam: own-drawn SVG failed (dot-matrix bleed); scraping returned wrong/bot-blocked files —
-  owner supplies assets manually.
+- Page-level recall validation over-reports prose mentions (Hindu month names Jyeshtha/Magha/Shravana
+  collide with nakshatra names; weekday tables). Screening signal — trust reference-diff +
+  canonicalization, review recall flags manually.
+- "Abhijit" is a 28th nakshatra in the book; engine has 27 — handle in matching.
+- Accuracy bar = match Drik Panchang exactly.
+- Ganesha/kolam assets still PARKED (ISSUE-0009) — owner supplies manually.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
 - Project card: `D:\knowledge-base\projects\apps\astro-cal.md`
 - Task board: `node D:\knowledge-base\tools\task.js list` · PRD: [`D:\astro-cal\PRD.md`](file:///D:/astro-cal/PRD.md)
+- Rules corpus: `rules/muhurta_rules.json` · Tools: `tools/`
