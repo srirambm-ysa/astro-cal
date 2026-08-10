@@ -54,7 +54,6 @@ function todayISO() {
 }
 function isoToYMD(iso) { const [y, m, d] = iso.split("-").map(Number); return { y, m, d }; }
 function ymdToISO(y, m, d) { const p = (n) => String(n).padStart(2, "0"); return `${y}-${p(m)}-${p(d)}`; }
-function parseLocal(iso) { const { y, m, d } = isoToYMD(iso); return new Date(y, m - 1, d); }
 function dayLabel(iso) {
   const { y, m, d } = isoToYMD(iso);
   const dt = new Date(y, m - 1, d);
@@ -164,16 +163,6 @@ function buildMonthDays(y, m, geo) {
   while (cells.length % 7 !== 0) cells.push(null);
   return cells;
 }
-function buildYearMonths(y, geo) { return Array.from({ length: 12 }, (_, i) => buildMonthDays(y, i + 1, geo)); }
-function buildCustomDays(startISO, endISO) {
-  const { y: sy, m: sm, d: sd } = isoToYMD(startISO);
-  const { y: ey, m: em, d: ed } = isoToYMD(endISO);
-  const cells = [];
-  const s = new Date(sy, sm - 1, sd);
-  const e = new Date(ey, em - 1, ed);
-  for (const dt = new Date(s); dt <= e; dt.setDate(dt.getDate() + 1)) cells.push({ y: dt.getFullYear(), m: dt.getMonth() + 1, d: dt.getDate() });
-  return cells;
-}
 
 /* ---------- render ---------- */
 async function render() {
@@ -183,34 +172,11 @@ async function render() {
   const anchor = new Date(ay, am - 1, ad);
   $("app").hidden = false;
   renderProfile();
-  renderRangeInputs();
 
-  const rangeStart = { y: 0, m: 0, d: 0 };
-  const rangeEnd = { y: 0, m: 0, d: 0 };
-  let grids = [];
-  let title = "";
-
-  if (view.range === "month") {
-    const y0 = anchor.getFullYear(), m0 = anchor.getMonth() + 1;
-    rangeStart.y = rangeEnd.y = y0; rangeStart.m = rangeEnd.m = m0;
-    rangeStart.d = 1; rangeEnd.d = new Date(y0, m0, 0).getDate();
-    grids = [{ y0, m0, cells: buildMonthDays(y0, m0, geo), title: monthTitle(y0, m0) }];
-    title = monthTitle(y0, m0);
-  } else if (view.range === "year") {
-    const y0 = anchor.getFullYear();
-    rangeStart.y = y0; rangeStart.m = 1; rangeStart.d = 1;
-    rangeEnd.y = y0; rangeEnd.m = 12; rangeEnd.d = 31;
-    grids = buildYearMonths(y0, geo).map((cells, i) => ({ y0, m0: i + 1, cells, title: monthTitle(y0, i + 1) }));
-    title = `Year ${y0}`;
-  } else {
-    const s = parseLocal(view.customStart || todayISO());
-    const e = parseLocal(view.customEnd || todayISO());
-    const y0 = s.getFullYear(), m0 = s.getMonth() + 1;
-    rangeStart.y = y0; rangeStart.m = m0; rangeStart.d = s.getDate();
-    rangeEnd.y = e.getFullYear(); rangeEnd.m = e.getMonth() + 1; rangeEnd.d = e.getDate();
-    grids = [{ y0, m0, cells: buildCustomDays(view.customStart, view.customEnd), title: "Custom range" }];
-    title = `Custom ${view.customStart} → ${view.customEnd}`;
-  }
+  const y0 = anchor.getFullYear(), m0 = anchor.getMonth() + 1;
+  const rangeStart = { y: y0, m: m0, d: 1 };
+  const rangeEnd = { y: y0, m: m0, d: new Date(y0, m0, 0).getDate() };
+  const title = monthTitle(y0, m0);
 
   const tStart = swe.julday(rangeStart.y, rangeStart.m, rangeStart.d, 0);
   const tEnd = swe.julday(rangeEnd.y, rangeEnd.m, rangeEnd.d, 24 - TZ_IST) + 0.5;
@@ -269,24 +235,16 @@ async function render() {
     }
   }
 
-  // render grids
+  // render grid
   $("cal").innerHTML = "";
-  grids.forEach((g, gi) => {
-    const wrap = document.createElement("div");
-    if (grids.length > 1) {
-      wrap.style.cssText = "margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line-faint)";
-      wrap.innerHTML = `<div style="font-family:'Rozha One',serif;font-size:16px;color:var(--vermilion);margin-bottom:6px">${g.title}</div>`;
-    }
-    const grid = document.createElement("div");
-    grid.className = "calendar";
-    grid.innerHTML = DOW.map((x) => `<div class="dow">${x}</div>`).join("");
-    for (const cell of g.cells) {
-      if (!cell) { grid.insertAdjacentHTML("beforeend", '<div class="cell other"></div>'); continue; }
-      grid.appendChild(renderCell(cell, dayMap, flagMap, windowsByDay));
-    }
-    wrap.appendChild(grid);
-    $("cal").appendChild(wrap);
-  });
+  const grid = document.createElement("div");
+  grid.className = "calendar";
+  grid.innerHTML = DOW.map((x) => `<div class="dow">${x}</div>`).join("");
+  for (const cell of buildMonthDays(y0, m0, geo)) {
+    if (!cell) { grid.insertAdjacentHTML("beforeend", '<div class="cell other"></div>'); continue; }
+    grid.appendChild(renderCell(cell, dayMap, flagMap, windowsByDay));
+  }
+  $("cal").appendChild(grid);
 
   renderMonthEvents(dayMap, flagMap, windowsByDay);
   renderLegend();
@@ -568,25 +526,27 @@ function toggleTheme() {
 function nav(delta) {
   const { y, m, d } = isoToYMD(view.anchor);
   const dt = new Date(y, m - 1, d);
-  if (view.range === "month") dt.setMonth(dt.getMonth() + delta);
-  else if (view.range === "year") dt.setFullYear(dt.getFullYear() + delta);
+  dt.setMonth(dt.getMonth() + delta);
   view.anchor = ymdToISO(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
   save(LS.view, view);
   render();
 }
-function setRange(r) {
-  view.range = r;
-  if (r === "custom" && !view.customStart) { view.customStart = view.anchor; const { y, m, d } = isoToYMD(view.anchor); const dt = new Date(y, m - 1, d); dt.setDate(dt.getDate() + 30); view.customEnd = ymdToISO(dt.getFullYear(), dt.getMonth() + 1, dt.getDate()); }
-  save(LS.view, view);
-  document.querySelectorAll(".range button[data-range]").forEach((b) => b.classList.toggle("active", b.dataset.range === r));
-  $("customRange").hidden = r !== "custom";
-  render();
-}
-function renderRangeInputs() {
-  document.querySelectorAll(".range button[data-range]").forEach((b) => b.classList.toggle("active", b.dataset.range === view.range));
-  $("customRange").hidden = view.range !== "custom";
-  if (view.customStart) $("cStart").value = view.customStart;
-  if (view.customEnd) $("cEnd").value = view.customEnd;
+
+/* ---------- print / copy ---------- */
+function printView() { window.print(); }
+function copyDayEvents() {
+  const iso = view.selected;
+  const txt = document.getElementById("detail").innerText;
+  if (!iso || !txt) { alert("Select a day first."); return; }
+  const { y, m, d } = isoToYMD(iso);
+  const dt = new Date(y, m - 1, d);
+  const label = `${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()]}, ${dayLabel(iso)}`;
+  const copyText = `${label}\n${txt}`;
+  navigator.clipboard.writeText(copyText).then(() => {
+    const b = $("copyBtn");
+    b.textContent = "Copied";
+    setTimeout(() => (b.textContent = "Copy events"), 1200);
+  }).catch(() => alert("Copy failed."));
 }
 
 /* ---------- birth form ---------- */
@@ -640,8 +600,8 @@ async function init() {
   evFormToggle();
   $("navPrev").addEventListener("click", () => nav(-1));
   $("navNext").addEventListener("click", () => nav(1));
-  document.querySelectorAll(".range button[data-range]").forEach((b) => b.addEventListener("click", () => setRange(b.dataset.range)));
-  $("cGo").addEventListener("click", () => { view.customStart = $("cStart").value || view.customStart; view.customEnd = $("cEnd").value || view.customEnd; view.anchor = view.customStart; save(LS.view, view); render(); });
+  $("printBtn").addEventListener("click", printView);
+  $("copyBtn").addEventListener("click", copyDayEvents);
   $("evType").addEventListener("change", evFormToggle);
   $("evAdd").addEventListener("click", () => {
     const name = $("evName").value.trim();
@@ -658,8 +618,9 @@ async function init() {
   });
   $("icsBtn").addEventListener("click", () => {
     if (!birth) { alert("Compute a calendar first."); return; }
-    const start = view.range === "custom" ? (view.customStart || view.anchor) : view.range === "year" ? `${new Date(isoToYMD(view.anchor).y, 0, 1).getFullYear()}-01-01` : `${isoToYMD(view.anchor).y}-${String(isoToYMD(view.anchor).m).padStart(2, "0")}-01`;
-    const end = view.range === "custom" ? (view.customEnd || start) : view.range === "year" ? `${new Date(isoToYMD(view.anchor).y, 0, 1).getFullYear()}-12-31` : `${isoToYMD(view.anchor).y}-${String(isoToYMD(view.anchor).m).padStart(2, "0")}-${new Date(isoToYMD(view.anchor).y, isoToYMD(view.anchor).m, 0).getDate()}`;
+    const { y: yy, m: mm } = isoToYMD(view.anchor);
+    const start = `${yy}-${String(mm).padStart(2, "0")}-01`;
+    const end = `${yy}-${String(mm).padStart(2, "0")}-${new Date(yy, mm, 0).getDate()}`;
     buildICS(start, end).then((ics) => {
       const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
       const a = document.createElement("a");

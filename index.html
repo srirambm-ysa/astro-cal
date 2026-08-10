@@ -113,8 +113,6 @@
   .ev .t{font-weight:600;font-size:14px}
   .ev .tt{font-size:12px;color:var(--ink-soft)}
   .ev .rm{cursor:pointer;color:var(--vermilion);font-family:"Eczar",serif;font-size:13px;border:1px solid var(--line-faint);background:transparent;padding:2px 8px}
-  .range-inputs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .range-inputs input{font-family:"Eczar",serif;font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:4px 6px}
   #landing{text-align:center}
   #landing h2{margin-bottom:6px;font-size:19px;text-transform:none;color:var(--ink);border:0;display:block}
   #landing p{color:var(--ink-soft);margin-bottom:14px;font-size:13px}
@@ -139,7 +137,7 @@
   body.night .swatch.two{background:repeating-linear-gradient(45deg,#3A2F1B 0 5px,#463A22 5px 10px)}
   body.night .tag.per{background:#3D4678;color:var(--ink)}
   body.night .dow{color:var(--gold-bright)}
-  body.night .field input,body.night .field select,body.night .range-inputs input{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
   body.night .frame svg [fill="#3D2412"]{fill:var(--ink)}
   body.night .frame svg [stroke="#B13B2B"]{stroke:var(--vermilion)}
@@ -164,6 +162,26 @@
   body.night .chip.moon{background:#3D4678}
   body.night .chip.personal{background:var(--teal)}
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr}}
+  /* ---------- PRINT / PDF ---------- */
+  @media print{
+    @page{margin:12mm}
+    body{background:#fff;color:#000;font-size:11px}
+    .frame{border:1px solid #999;background:#fff;box-shadow:none;padding:10px}
+    .frame::before,.frame::after{display:none}
+    .controls,#landing,#app,.legend,.note{display:none !important}
+    .card{border:1px solid #999;background:#fff;break-inside:avoid;padding:10px}
+    .layout{grid-template-columns:1fr;gap:10px}
+    .cell{min-height:48px;background:#fff;border:1px solid #aaa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .cell .num.today{background:#B13B2B;color:#fff}
+    .bar.coarse,.dot,.swatch,.chip,.swatch.two{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+    #dayDetailCard{display:none !important}
+    .dow{color:#000;border-color:#999}
+    .cell .tm,.cell .tithi{color:#444}
+    .evtab{font-size:10px}
+    .evtab th{color:#000}
+    .evtab td,.evtab th{border-color:#999}
+    .evtab tr.selected td{background:#eee}
+  }
 </style>
 </head>
 <body>
@@ -176,12 +194,11 @@
       <div class="range">
         <button class="nav" id="navPrev" title="Previous">‹</button>
         <button data-range="month" class="active">Month</button>
-        <button data-range="year">Year</button>
-        <button data-range="custom">Custom</button>
         <button class="nav" id="navNext" title="Next">›</button>
       </div>
       <button class="btn ghost" id="editBirth">Edit nakshatra / location</button>
       <button class="btn ghost" id="themeBtn">Night mode</button>
+      <button class="btn" id="printBtn">Print / PDF</button>
       <button class="btn" id="icsBtn">Download ICS</button>
     </div>
   </header>
@@ -209,10 +226,6 @@
     <section class="card">
       <div class="cal-head">
         <div><span class="title" id="calTitle"></span><br><span class="tamil-year" id="calTamilYear"></span></div>
-        <div class="range-inputs" id="customRange" hidden>
-          <input type="date" id="cStart"><input type="date" id="cEnd">
-          <button class="btn small ghost" id="cGo">Apply</button>
-        </div>
       </div>
       <div class="calendar" id="cal"></div>
       <div class="note">Dots mark days with flagged events (chandrashtama = hatched bar). Select a day for its detail. Legend below.</div>
@@ -228,7 +241,9 @@
   </div>
 
   <section class="card" id="dayDetailCard" hidden>
-    <h2 id="detailTitle">Select a day</h2>
+    <h2 id="detailTitle" style="display:flex;justify-content:space-between;align-items:center">
+      <span>Select a day</span><button class="btn small ghost" id="copyBtn" type="button" title="Copy this day's events">Copy events</button>
+    </h2>
     <div class="sunset" id="rhythm" style="margin-bottom:10px">
       <div class="kv"><div class="k">Sunrise</div><div class="v" id="rSunrise">–</div></div>
       <div class="kv"><div class="k">Sunset</div><div class="v" id="rSunset">–</div></div>
