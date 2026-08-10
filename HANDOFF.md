@@ -6,6 +6,18 @@
 
 Last updated: 2026-08-10
 
+**Session token count (2026-08-10 session):** REAL billed 3,080,942 (RAW 23,447,150 · 86.9% cache efficiency)
+
+## Goal Accomplished (2026-08-10 · this session)
+- **Birth input reworked to nakshatra dropdown (UNCOMMITTED):** birth date/time/coords-arithmetic
+  replaced with a single **Janma Nakshatra** dropdown (27 nakshatras × 4 padas, grouped with
+  `<optgroup>`, each option showing the derived rashi). `janma.rashi` now derived from
+  `nakshatra*4 + (pada-1)` (9 padas/rashi) — `swe.birthChart()` no longer used by app.js. Location
+  fields (place/lat/lon/tz) kept for sunrise/sunset/kalam only. Old saved birth without `nakshatra`
+  falls back to the form. **Changes in `app.js` + `index.html`, `node --check` passes, NOT committed.**
+- **Review note for owner:** per user, "will review everything in next session" — the dropdown change
+  needs a visual review + localStorage migration check (old saved birth shows the form again).
+
 ## Goal Accomplished (through 2026-08-08)
 - **PRD + research COMPLETE** — `D:\astro-cal\PRD.md` exists; all 5 PRD open items resolved
   (chandrashtama two-tier correction: Drik computes by sign, not nakshatra; Rahu/Yama/Gulika tables;
@@ -29,6 +41,9 @@ Last updated: 2026-08-10
   calendar.
 
 ## Immediate Next Steps
+- **REVIEW the uncommitted nakshatra-dropdown change** (app.js + index.html): confirm the grouped
+  dropdown UX, verify rashi derivation on the calendar, and test the old-localStorage fallback. Then
+  commit. This was the "birth input" simplification requested this session.
 - **AC-TSK-0001 (high, in_progress):** build astro-cal v1 from `PRD.md` using 04 Sacred Ornament
   (day+night) as the UI source. Includes the **Tamil calendar layer** (tithi label, Tamil month/day +
   year, sankranti highlight) and **Tamil festivals** (built-in + custom Tamil-month events).

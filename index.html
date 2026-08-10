@@ -45,25 +45,29 @@
   .kv .v em{font-style:normal;color:var(--vermilion)}
   .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
   .dow{text-align:center;font-size:12px;font-weight:600;color:var(--vermilion);letter-spacing:.08em;padding:5px 0;border-bottom:1px solid var(--line-faint)}
-  .cell{min-height:86px;background:rgba(255,251,240,.9);border:1px solid var(--line-faint);padding:4px;position:relative;cursor:pointer}
+  .cell{min-height:60px;background:rgba(255,251,240,.9);border:1px solid var(--line-faint);padding:3px;position:relative;cursor:pointer}
   .cell:hover{border-color:var(--gold)}
   .cell.selected{border-color:var(--vermilion);outline:1px solid var(--vermilion)}
   .cell.today{border-color:var(--vermilion)}
   .cell .num{font-size:14px;color:var(--ink)}
   .cell .num.today{background:var(--vermilion);color:var(--paper);padding:1px 6px}
   .cell.other{opacity:.4}
-  .cell .tm{font-size:11px;color:var(--ink-soft);font-weight:600}
-  .cell .tithi{font-size:10px;color:var(--gold)}
-  .cell .icons{display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
-  .cell .icons svg{width:14px;height:14px}
-  .cell .tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
-  .cell .tags span{font-size:9px;padding:0 4px;color:var(--paper);background:var(--saffron);border-radius:2px}
-  .cell .tags span.bad{background:var(--vermilion)}
-  .bar{position:absolute;left:4px;right:4px;bottom:5px;height:13px;overflow:hidden}
+  .cell .tm{font-size:10px;color:var(--ink-soft);font-weight:600}
+  .cell .tithi{font-size:9px;color:var(--gold);line-height:1.2}
+  .cell .dots{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;border:1px solid rgba(61,36,18,.35)}
+  .dot.chandra{background:repeating-linear-gradient(45deg,#E9CFA8 0 3px,#F0DCB8 3px 6px)}
+  .dot.moon{background:#262A4A}
+  .dot.eclipse{background:var(--saffron)}
+  .dot.festival{background:var(--gold-bright)}
+  .dot.personal{background:var(--teal)}
+  .dot.shraddha{background:var(--vermilion)}
+  .bar{position:absolute;left:3px;right:3px;bottom:3px;height:12px;overflow:hidden}
   .bar.coarse{background:repeating-linear-gradient(45deg,#E9CFA8 0 6px,#F0DCB8 6px 12px);border:1px solid rgba(61,36,18,.25)}
   .bar .peak{position:absolute;top:0;bottom:0;background:var(--vermilion)}
-  .layout{display:grid;grid-template-columns:1fr;gap:0}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:15px;align-items:start}
   .detail{display:grid;gap:6px}
+  .sd-label{font-size:13px;font-weight:600;color:var(--vermilion);margin-bottom:6px}
   .period{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-left:3px solid var(--gold);background:rgba(255,251,240,.85)}
   .period .l{display:flex;align-items:center;gap:9px;min-width:0}
   .period .l svg{width:20px;height:20px;flex:none}
@@ -75,10 +79,29 @@
   .sunset{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .legend{display:flex;flex-wrap:wrap;gap:14px}
   .legend .item{display:flex;align-items:center;gap:7px;font-size:13px}
-  .legend .item svg{width:17px;height:17px;flex:none}
   .swatch{width:18px;height:10px;display:inline-block;border:1px solid var(--line)}
   .swatch.two{width:24px;background:repeating-linear-gradient(45deg,#E9CFA8 0 5px,#F0DCB8 5px 10px);position:relative;overflow:hidden}
   .swatch.two::after{content:"";position:absolute;top:0;bottom:0;right:0;width:45%;background:var(--vermilion)}
+  .swatch.moon{background:#262A4A}
+  .swatch.eclipse{background:var(--saffron)}
+  .swatch.festival{background:var(--gold-bright)}
+  .swatch.personal{background:var(--teal)}
+  .swatch.shraddha{background:var(--vermilion)}
+  .evtab{width:100%;border-collapse:collapse;font-size:13px}
+  .evtab th,.evtab td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
+  .evtab th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .evtab tr.selected td{background:rgba(217,116,39,.12)}
+  .evtab td.dt{white-space:nowrap;color:var(--vermilion);font-weight:600}
+  .evtab td.cat{white-space:nowrap}
+  .evtab td .ev-name{font-weight:600}
+  .evtab td .ev-sub{font-size:11px;color:var(--ink-soft)}
+  .chip{display:inline-block;font-size:9px;padding:1px 6px;border-radius:2px;color:var(--paper);letter-spacing:.05em;text-transform:uppercase}
+  .chip.chandra{background:var(--saffron)}
+  .chip.moon{background:#262A4A}
+  .chip.eclipse{background:var(--saffron)}
+  .chip.festival{background:var(--gold)}
+  .chip.personal{background:var(--teal)}
+  .chip.shraddha{background:var(--vermilion)}
   .note{font-size:11px;color:var(--ink-soft);margin-top:6px;font-style:italic}
   /* forms */
   .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
@@ -133,7 +156,14 @@
   body.night .frame svg [fill="#F8F0DE"]{fill:var(--ink)}
   body.night .frame svg [stroke="#EFE4CC"]{stroke:var(--ink)}
   body.night .frame svg [fill="#EFE4CC"]{fill:var(--ink)}
-  @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}}
+  body.night .dot.chandra{background:repeating-linear-gradient(45deg,#3A2F1B 0 3px,#463A22 3px 6px)}
+  body.night .swatch.two{background:repeating-linear-gradient(45deg,#3A2F1B 0 5px,#463A22 5px 10px)}
+  body.night .evtab td{border-color:#37305A}
+  body.night .evtab tr.selected td{background:rgba(232,121,43,.14)}
+  body.night .chip.festival{background:var(--gold-bright);color:#141835}
+  body.night .chip.moon{background:#3D4678}
+  body.night .chip.personal{background:var(--teal)}
+  @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -150,7 +180,7 @@
         <button data-range="custom">Custom</button>
         <button class="nav" id="navNext" title="Next">›</button>
       </div>
-      <button class="btn ghost" id="editBirth">Edit birth details</button>
+      <button class="btn ghost" id="editBirth">Edit nakshatra / location</button>
       <button class="btn ghost" id="themeBtn">Night mode</button>
       <button class="btn" id="icsBtn">Download ICS</button>
     </div>
@@ -158,10 +188,10 @@
 
   <section class="card" id="landing">
     <h2>॥ श्री ॥</h2>
-    <p>Enter birth details to generate your Vedic muhurta calendar — chandrashtama, moon phases, eclipses, and daily inauspicious windows. All computation is local and private.</p>
+    <p>Pick your janma nakshatra (birth star) to generate your Vedic muhurta calendar — chandrashtama, moon phases, eclipses, and daily inauspicious windows. Rashi is filled from the nakshatra and can be corrected for stars that span two rashis. Location is used only for sunrise/sunset timings. All computation is local and private.</p>
     <div class="form" id="birthForm">
-      <div class="field"><div class="k">Birth date</div><input type="date" id="bDate" required></div>
-      <div class="field"><div class="k">Birth time</div><input type="time" id="bTime" value="06:42"></div>
+      <div class="field"><div class="k">Janma Nakshatra</div><select id="bNakshatra"></select></div>
+      <div class="field"><div class="k">Janma Rashi</div><select id="bRashi"></select></div>
       <div class="field"><div class="k">Place</div><input type="text" id="bPlace" value="Chennai" placeholder="Place name"></div>
       <div class="field"><div class="k">Latitude</div><input type="number" id="bLat" step="0.0001" value="13.0827"></div>
       <div class="field"><div class="k">Longitude</div><input type="number" id="bLon" step="0.0001" value="80.2707"></div>
@@ -185,16 +215,27 @@
         </div>
       </div>
       <div class="calendar" id="cal"></div>
-      <div class="note">Two-tone bar = chandrashtama (coarse rashi window light · peak star dark). Icons = amavasya, purnima, eclipse, personal, festival, shraddha.</div>
+      <div class="note">Dots mark days with flagged events (chandrashtama = hatched bar). Select a day for its detail. Legend below.</div>
     </section>
 
     <section class="card">
-      <h2 id="detailTitle">Select a day</h2>
-      <div class="detail" id="detail"></div>
-      <h2 style="margin-top:14px">Day rhythm</h2>
-      <div class="sunset" id="rhythm"><div class="kv"><div class="k">Sunrise</div><div class="v" id="rSunrise">–</div></div><div class="kv"><div class="k">Sunset</div><div class="v" id="rSunset">–</div></div><div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div></div>
+      <h2 id="monthEvTitle">Key events</h2>
+      <table class="evtab">
+        <thead><tr><th>Date</th><th>Event</th><th>Type</th></tr></thead>
+        <tbody id="monthEvents"></tbody>
+      </table>
     </section>
   </div>
+
+  <section class="card" id="dayDetailCard" hidden>
+    <h2 id="detailTitle">Select a day</h2>
+    <div class="sunset" id="rhythm" style="margin-bottom:10px">
+      <div class="kv"><div class="k">Sunrise</div><div class="v" id="rSunrise">–</div></div>
+      <div class="kv"><div class="k">Sunset</div><div class="v" id="rSunset">–</div></div>
+      <div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div>
+    </div>
+    <div class="detail" id="detail"></div>
+  </section>
 
   <section class="card">
     <h2>Personal events <span id="evCount" style="font-weight:400;color:var(--ink-soft)"></span></h2>
@@ -223,7 +264,7 @@
   <section class="card">
     <h2>Legend</h2>
     <div class="legend" id="legend"></div>
-    <div class="note">Moon-phase discs for amavasya/purnima · Rahu = dragon's severed head (Brihat Samhita) · Yama = noose/pasha · Gulika = dark serpent head (son of Shani) · shraddha = diya · personal = birth star. Two-tone bar: coarse chandrashtama (light) + peak (dark).</div>
+    <div class="note">Chandrashtama (hatched bar): coarse rashi window light · peak star dark. Dots: moon phases · eclipse · festival · personal · shraddha.</div>
   </section>
 
 </div>
