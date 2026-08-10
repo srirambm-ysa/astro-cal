@@ -349,7 +349,7 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
 /* legend swatches (chandrashtama bar + category dots) */
 function renderLegend() {
   $("legend").innerHTML = `
-    <div class="item"><span class="swatch two"></span>Chandrashtama (coarse + peak)</div>
+    <div class="item"><span class="swatch two"></span>Chandrashtama (orange coarse · red peak)</div>
     <div class="item"><span class="swatch moon"></span>Moon phase</div>
     <div class="item"><span class="swatch eclipse"></span>Eclipse</div>
     <div class="item"><span class="swatch festival"></span>Festival</div>
@@ -516,11 +516,15 @@ function evFormToggle() {
 }
 
 /* ---------- theme ---------- */
-function toggleTheme() {
-  const n = document.body.classList.toggle("night");
-  $("themeBtn").textContent = n ? "Day mode" : "Night mode";
-  save(LS.theme, n ? "night" : "day");
+const ICON_MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+const ICON_SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+function setTheme(night) {
+  document.body.classList.toggle("night", night);
+  $("themeIcon").innerHTML = night ? ICON_SUN : ICON_MOON;
+  $("themeLabel").textContent = night ? "Day mode" : "Night mode";
+  save(LS.theme, night ? "night" : "day");
 }
+function toggleTheme() { setTheme(!document.body.classList.contains("night")); }
 
 /* ---------- range nav ---------- */
 function nav(delta) {
@@ -571,7 +575,7 @@ function computeBirth() {
 /* ---------- init ---------- */
 async function init() {
   const t = load(LS.theme, "day");
-  if (t === "night") { document.body.classList.add("night"); $("themeBtn").textContent = "Day mode"; }
+  setTheme(t === "night");
   const ev = load(LS.events, []);
   events = Array.isArray(ev) ? ev : [];
   view = { ...view, ...load(LS.view, {}) };

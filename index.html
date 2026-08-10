@@ -11,6 +11,7 @@
     --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
     --night:#262A4A; --teal:#2F7E7E;
     --line:#C8A86E; --line-faint:#E2D3AE;
+    --chandra-coarse:#F78C1B; --chandra-peak:#E62E2E;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
@@ -33,7 +34,7 @@
   .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink)}
   .range button.active{background:var(--saffron);color:#2b1505;font-weight:600}
   .range .nav{color:var(--vermilion);font-weight:600}
-  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center}
   .btn.ghost{background:transparent;color:var(--ink)}
   .btn.small{padding:4px 10px;font-size:13px}
   .card{border:1px solid var(--line-faint);background:rgba(255,251,240,.72);padding:15px;margin-bottom:15px}
@@ -56,15 +57,15 @@
   .cell .tithi{font-size:9px;color:var(--gold);line-height:1.2}
   .cell .dots{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap}
   .dot{width:8px;height:8px;border-radius:50%;display:inline-block;border:1px solid rgba(61,36,18,.35)}
-  .dot.chandra{background:repeating-linear-gradient(45deg,#E9CFA8 0 3px,#F0DCB8 3px 6px)}
+  .dot.chandra{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 3px,#FBB65C 3px 6px)}
   .dot.moon{background:#262A4A}
   .dot.eclipse{background:var(--saffron)}
   .dot.festival{background:var(--gold-bright)}
   .dot.personal{background:var(--teal)}
   .dot.shraddha{background:var(--vermilion)}
   .bar{position:absolute;left:3px;right:3px;bottom:3px;height:12px;overflow:hidden}
-  .bar.coarse{background:repeating-linear-gradient(45deg,#E9CFA8 0 6px,#F0DCB8 6px 12px);border:1px solid rgba(61,36,18,.25)}
-  .bar .peak{position:absolute;top:0;bottom:0;background:var(--vermilion)}
+  .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border:1px solid rgba(230,46,46,.45)}
+  .bar .peak{position:absolute;top:0;bottom:0;background:var(--chandra-peak)}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:15px;align-items:start}
   .detail{display:grid;gap:6px}
   .sd-label{font-size:13px;font-weight:600;color:var(--vermilion);margin-bottom:6px}
@@ -74,14 +75,14 @@
   .period .t{font-weight:600}
   .period .tt{font-size:12px;color:var(--ink-soft)}
   .period .tag{font-family:"Rozha One",serif;font-size:11px;padding:2px 8px;color:var(--paper);flex:none}
-  .tag.bad{background:var(--vermilion)} .tag.mid{background:var(--saffron)}
+  .tag.bad{background:var(--chandra-peak);color:#fff} .tag.mid{background:var(--saffron)}
   .tag.mut{background:var(--gold)} .tag.per{background:var(--night)}
   .sunset{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .legend{display:flex;flex-wrap:wrap;gap:14px}
   .legend .item{display:flex;align-items:center;gap:7px;font-size:13px}
   .swatch{width:18px;height:10px;display:inline-block;border:1px solid var(--line)}
-  .swatch.two{width:24px;background:repeating-linear-gradient(45deg,#E9CFA8 0 5px,#F0DCB8 5px 10px);position:relative;overflow:hidden}
-  .swatch.two::after{content:"";position:absolute;top:0;bottom:0;right:0;width:45%;background:var(--vermilion)}
+  .swatch.two{width:24px;background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 5px,#FBB65C 5px 10px);position:relative;overflow:hidden}
+  .swatch.two::after{content:"";position:absolute;top:0;bottom:0;right:0;width:45%;background:var(--chandra-peak)}
   .swatch.moon{background:#262A4A}
   .swatch.eclipse{background:var(--saffron)}
   .swatch.festival{background:var(--gold-bright)}
@@ -96,7 +97,7 @@
   .evtab td .ev-name{font-weight:600}
   .evtab td .ev-sub{font-size:11px;color:var(--ink-soft)}
   .chip{display:inline-block;font-size:9px;padding:1px 6px;border-radius:2px;color:var(--paper);letter-spacing:.05em;text-transform:uppercase}
-  .chip.chandra{background:var(--saffron)}
+  .chip.chandra{background:var(--chandra-coarse);color:#2b1505}
   .chip.moon{background:#262A4A}
   .chip.eclipse{background:var(--saffron)}
   .chip.festival{background:var(--gold)}
@@ -132,12 +133,14 @@
   body.night .range{background:rgba(29,34,66,.85)}
   body.night .cell{background:rgba(29,34,66,.9);border-color:var(--line-faint)}
   body.night .cell .tm{color:#c6bfa8}
-  body.night .bar.coarse{background:repeating-linear-gradient(45deg,#3A2F1B 0 6px,#463A22 6px 12px);border-color:rgba(239,228,204,.25)}
+  body.night .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border-color:rgba(230,46,46,.5)}
   body.night .period{background:rgba(29,34,66,.85)}
-  body.night .swatch.two{background:repeating-linear-gradient(45deg,#3A2F1B 0 5px,#463A22 5px 10px)}
   body.night .tag.per{background:#3D4678;color:var(--ink)}
   body.night .dow{color:var(--gold-bright)}
   body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .ev{background:rgba(29,34,66,.85);border-color:var(--line-faint)}
+  body.night .ev .tt{color:#c6bfa8}
+  body.night .ev .rm{color:var(--vermilion);border-color:var(--line-faint)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
   body.night .frame svg [fill="#3D2412"]{fill:var(--ink)}
   body.night .frame svg [stroke="#B13B2B"]{stroke:var(--vermilion)}
@@ -154,8 +157,8 @@
   body.night .frame svg [fill="#F8F0DE"]{fill:var(--ink)}
   body.night .frame svg [stroke="#EFE4CC"]{stroke:var(--ink)}
   body.night .frame svg [fill="#EFE4CC"]{fill:var(--ink)}
-  body.night .dot.chandra{background:repeating-linear-gradient(45deg,#3A2F1B 0 3px,#463A22 3px 6px)}
-  body.night .swatch.two{background:repeating-linear-gradient(45deg,#3A2F1B 0 5px,#463A22 5px 10px)}
+  body.night .dot.chandra{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 3px,#FBB65C 3px 6px)}
+  body.night .swatch.two{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 5px,#FBB65C 5px 10px)}
   body.night .evtab td{border-color:#37305A}
   body.night .evtab tr.selected td{background:rgba(232,121,43,.14)}
   body.night .chip.festival{background:var(--gold-bright);color:#141835}
@@ -197,7 +200,10 @@
         <button class="nav" id="navNext" title="Next">›</button>
       </div>
       <button class="btn ghost" id="editBirth">Edit nakshatra / location</button>
-      <button class="btn ghost" id="themeBtn">Night mode</button>
+      <button class="btn ghost" id="themeBtn" title="Toggle day / night mode">
+        <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span id="themeLabel">Night mode</span>
+      </button>
       <button class="btn" id="printBtn">Print / PDF</button>
       <button class="btn" id="icsBtn">Download ICS</button>
     </div>
@@ -228,7 +234,7 @@
         <div><span class="title" id="calTitle"></span><br><span class="tamil-year" id="calTamilYear"></span></div>
       </div>
       <div class="calendar" id="cal"></div>
-      <div class="note">Dots mark days with flagged events (chandrashtama = hatched bar). Select a day for its detail. Legend below.</div>
+      <div class="note">Orange/red bar = chandrashtama (coarse + peak). Dots mark days with flagged events. Select a day for its detail. Legend below.</div>
     </section>
 
     <section class="card">
@@ -279,7 +285,7 @@
   <section class="card">
     <h2>Legend</h2>
     <div class="legend" id="legend"></div>
-    <div class="note">Chandrashtama (hatched bar): coarse rashi window light · peak star dark. Dots: moon phases · eclipse · festival · personal · shraddha.</div>
+    <div class="note">Chandrashtama (bar): orange coarse rashi window · red peak star window. Dots: moon phases · eclipse · festival · personal · shraddha.</div>
   </section>
 
 </div>
