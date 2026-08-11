@@ -32,13 +32,19 @@ Last updated: 2026-08-11
 - **Full mode:** all days show as **Shubh** (GOOD/EXCELLENT) — nothing surfaces as Ashubh/REJECTED.
 - **Soft mode:** all days show **Neutral** with only 2 Shubh days.
 - **Personal mode:** all days show **Neutral**.
-- Suspects (not yet verified): (1) the "✓"-based pass/hit classification inflates scores — base 60 +
-  many T2_PASS/T3_PASS tokens never drop below the GOOD/EXCELLENT boundary; (2) T1 hard-reject only
-  zeroes when `hits.t1.length>0` in full mode but calendar-field hits rarely fire; (3) shukla-fallback
-  (`allowKrishnaFallback`) may make every day pass the tithi gate in sparse months; (4) personal mode
-  collapses everything to tara-only, which rarely rejects. Debug plan: Node smoke test over
-  `scoreMuhurta` for a full month → inspect score/verdict distribution per mode. The "infinite loop"
-  was in a temp debug script (`C:\Users\Sony\AppData\Local\Temp\opencode\dbg_*.js`), NOT app.js.
+- **CONFIRMED BUG (mem_1786465456203_369tw):** `engine.js:619` `isInsideAbhijit` is **always true** —
+  the "window overlaps daylight" check is tautological (Abhijit centered on solar noon, always between
+  rise/set). taxonomy.js:44 wires `ABHIJIT_MUHURTA → ABHIJIT_WINDOW`; if any corpus activity gains that
+  override, `applyOverrides` downgrades the worst hit EVERY day → nothing rejects → all-Shubh. Owner
+  hypothesis confirmed. Currently NO corpus entry carries `cancellation_overrides` (empty), so this is
+  NOT today's cause — but fix the flag (should test a concrete time inside the window, or carry the
+  per-day window and let the evaluator decide) before populating overrides.
+- Likely current cause (unverified): scoring bands + ✓-accounting inflate — base 60 + T2_PASS/T3_PASS
+  rarely drop below GOOD; only T1 hits hard-reject and calendar-field T1 hits rarely fire; shukla
+  fallback (`allowKrishnaFallback`) may also loosen the tithi gate in sparse months.
+- Debug plan: Node smoke test over `scoreMuhurta` for a full month → inspect score/verdict distribution
+  per mode (use the now-working Playwright path too). The "infinite loop" was in a temp debug script
+  (`C:\Users\Sony\AppData\Local\Temp\opencode\dbg_*.js`), NOT app.js.
 
 ## Architectural Decisions
 - **Corpus source = 17 domain files** (`domains/*.md`) + `domains/why_this_works.md`, NOT the old
