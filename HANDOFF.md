@@ -28,6 +28,12 @@ Last updated: 2026-08-11
   day-detail panel shows score/verdict + tier breakdown + overrides + window. `node --check` passes
   on app.js / taxonomy.js / engine.js / ephemeris.worker.js.
 
+## ACCEPTANCE CRITERION (owner) — mem_1786465597914_18jf1
+- Muhurta table shows **only Shubh days** — no Neutral/Ashubh rows.
+- Per activity: **at most 3-5 Shubh days per month**, across every mode (full/soft/personal).
+  Anything beyond (e.g. today's full-mode = all 29 days Shubh) is a red flag → scoring too liberal.
+  This is the north-star the debug must hit.
+
 ## OPEN BUG — semantic scoring, DEBUG NEXT SESSION (mem_1786464631841_uobbm)
 - **Full mode:** all days show as **Shubh** (GOOD/EXCELLENT) — nothing surfaces as Ashubh/REJECTED.
 - **Soft mode:** all days show **Neutral** with only 2 Shubh days.
@@ -43,7 +49,8 @@ Last updated: 2026-08-11
   rarely drop below GOOD; only T1 hits hard-reject and calendar-field T1 hits rarely fire; shukla
   fallback (`allowKrishnaFallback`) may also loosen the tithi gate in sparse months.
 - Debug plan: Node smoke test over `scoreMuhurta` for a full month → inspect score/verdict distribution
-  per mode (use the now-working Playwright path too). The "infinite loop" was in a temp debug script
+  per mode (use the now-working Playwright path too). Target: **only Shubh rows shown; 3-5 Shubh
+  days/month/activity/mode** (mem_1786465597914_18jf1). The "infinite loop" was in a temp debug script
   (`C:\Users\Sony\AppData\Local\Temp\opencode\dbg_*.js`), NOT app.js.
 
 ## Architectural Decisions
