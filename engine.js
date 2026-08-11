@@ -450,6 +450,180 @@ export class Engine {
     }
     return out;
   }
+
+  /* ===== CALENDAR-FIELD PUSHDOWN (PRD §2.6.3) ===== */
+
+  /* Is jd in an Adhik Maas (intercalary lunar month)?
+     A lunar month [Amavasya₁ → Amavasya₂) is intercalary iff both bounding
+     Amavasyas fall in the same Sun-sign bucket ⌊λ_sun/30°⌋ (no Sankranti). */
+  isAdhikMaas(jd) {
+    const nm1 = this.prevNewMoon(jd);
+    if (!nm1) return false;
+    const nm2 = this.nextNewMoon(nm1 + 0.1);
+    if (!nm2) return false;
+    const b1 = Math.floor(((this.siderealLon(nm1, this.swe.SE_SUN) % 360) + 360) % 360 / 30);
+    const b2 = Math.floor(((this.siderealLon(nm2, this.swe.SE_SUN) % 360) + 360) % 360 / 30);
+    return b1 === b2;
+  }
+
+  /* Kharmas: Sun in Dhanus (Sagittarius, [240°,270°)) or Meena (Pisces, [330°,360°)) bucket. */
+  isKharmas(jd) {
+    const s = ((this.siderealLon(jd, this.swe.SE_SUN) % 360) + 360) % 360;
+    return (s >= 240 && s < 270) || (s >= 330 && s < 360);
+  }
+
+  /* Pitru Paksha: the Krishna Paksha of Bhadrapada/Ashwina ending at Sarva Pitru Amavasya
+     (the new moon that STARTS the Amanta Ashwina cycle — full moon with Sun in Tula).
+     Returns true if jd falls in the 15-day waning moon before Sarva Pitru Amavasya. */
+  isPitruPaksha(jd) {
+    const spa = this.sarvaPitruAmavasya(jd);
+    if (!spa) return false;
+    const nm = this.prevNewMoon(spa + 0.1); // the new moon that STARTS Pitru Paksha's krishna paksha
+    // Pitru Paksha = (spa - 15 days, spa] approximately; more precisely the krishna paksha
+    // of the month ending at spa. Use the full moon before spa.
+    const fm = this.fullMoonOf(this.prevNewMoon(spa) + 0.1);
+    if (!fm) return false;
+    return jd > fm && jd <= spa;
+  }
+
+  /* ===== BHADRA (VISHTI KARANA) MATRIX (PRD §2.6.5) ===== */
+
+  /* Vishti Karana window active at jd, or null. Returns proportional Mukha/Puchha split.
+     Mukha (malefic) = first 5/30 = 1/6 of the karana span.
+     Puchha (usable) = final 3/30 = 1/10 of the karana span. */
+  vishtiKaranaAt(jd) {
+    const k = this.karana(jd);
+    if (k.index !== 6) return null; // Vishti = index 6
+    const e = this.elongation(jd);
+    const h = Math.floor(e / 6) % 60;
+    const karanaStart = this.crossingElongation(jd - 0.6, h * 6);
+    const karanaEnd = this.crossingElongation(jd + 0.1, (h + 1) * 6);
+    if (!karanaStart || !karanaEnd) return null;
+    const duration = karanaEnd - karanaStart;
+    return {
+      start: karanaStart, end: karanaEnd, duration,
+      mukhaEnd: karanaStart + (5 / 30) * duration,
+      puchhaStart: karanaEnd - (3 / 30) * duration,
+    };
+  }
+
+  /* Bhadra Loka (residence) by Moon rashi — PRD §2.6.5 + classical_rule_architecture_mc.md §5.
+     Mrityu Loka (Aquarius=10, Pisces=11, Cancer=2, Leo=4) = severe.
+     Swarga (Aries=0, Taurus=1, Gemini=3, Scorpio=7) and
+     Patala (Virgo=5, Sagittarius=8, Libra=6, Capricorn=9) = harmless. */
+  bhadraLoka(jd) {
+    const moonRashi = this.rashiOf(this.siderealLon(jd, this.swe.SE_MOON));
+    if ([10, 11, 2, 4].includes(moonRashi)) return "mrityu";
+    return "harmless";
+  }
+
+  /* ===== NITYA YOGA PARTIAL GHTI BANS (PRD §2.6.6) ===== */
+
+  /* Per-yoga prohibited-ghati lengths (ghatis counted from yoga start).
+     Vyatipata(22) + Vaidhriti(26) banned outright (length = full yoga span).
+     Others banned only in initial ghatis. */
+  static YOGA_GHATI_BAN = {
+    0: 5,   // Vishkambha
+    5: 5,   // Atiganda
+    8: 5,   // Shula
+    9: 5,   // Ganda
+    12: 5,  // Vyaghata
+    14: 5,  // Vajra
+    18: 5,  // Parigha
+    22: 60, // Vyatipata — full ban
+    26: 60, // Vaidhriti — full ban
+  };
+
+  /* Is the Nitya Yoga at jd within its banned initial ghati window?
+     Returns { banned, yogaIndex, reason } — banned=false means yoga is clean or past ban window. */
+  nityaYogaBan(jd) {
+    const y = this.yoga(jd);
+    const banLen = Engine.YOGA_GHATI_BAN[y.index];
+    if (banLen === undefined) return { banned: false, yogaIndex: y.index, name: y.name };
+    // Find when this yoga started (last crossing into this yoga's 13.333° bucket)
+    const s = this.siderealLon(jd, this.swe.SE_SUN);
+    const m = this.siderealLon(jd, this.swe.SE_MOON);
+    const sum = (((s + m) % 360) + 360) % 360;
+    const yogaStart = this.crossingValue(
+      jd - 1,
+      (t) => {
+        const ss = this.siderealLon(t, this.swe.SE_SUN);
+        const mm = this.siderealLon(t, this.swe.SE_MOON);
+        return (((ss + mm) % 360) + 360) % 360;
+      },
+      y.index * (360 / 27), 0.05, 400
+    );
+    if (!yogaStart) return { banned: false, yogaIndex: y.index, name: y.name };
+    // Yoga duration ≈ 13.333° / (moon_speed + sun_speed) ≈ ~1 day. 1 ghati = 1/60 sidereal day.
+    const yogaDuration = 360 / 27 / (13.2 + 0.985); // rough: moon ~13.2°/d, sun ~0.985°/d
+    const banDays = (banLen / 60) * (yogaDuration * 60 / 60); // banLen ghatis as fraction of yoga
+    // Simpler: 1 ghati = 1/60 day. banLen ghatis = banLen/60 days from yoga start.
+    const banWindow = banLen / 60; // in days
+    const elapsed = jd - yogaStart;
+    const banned = elapsed < banWindow;
+    return {
+      banned,
+      yogaIndex: y.index,
+      name: y.name,
+      reason: banned ? `${y.name} in initial ${banLen}-ghati ban window` : null,
+    };
+  }
+
+  /* ===== DAY COMPUTATION (shared by main thread + worker) ===== */
+
+  /* Compute all astronomical + phase-2 fields for one civil day.
+     tz = timezone offset in hours (default 5.5 for IST).
+     Returns a plain object (serializable for worker postMessage). */
+  computeDay(y, m, d, geo, janmaNakshatra, tz = 5.5) {
+    const jdNoon = this.julday(y, m, d, 12 - tz);
+    const { rise, set } = this.sunriseSunset(y, m, d, geo);
+    const atSunrise = rise || jdNoon;
+    const tt = this.tithi(atSunrise);
+    const tm = this.tamilDate(atSunrise, y, m, d);
+    const ty = this.tamilYear(y, m, d);
+    const kw = this.kalamWindows(y, m, d, geo);
+    const moonLon = this.siderealLon(atSunrise, this.swe.SE_MOON);
+    const moonNakshatra = this.nakshatraOf(moonLon);
+    const tithiIndex = tt.index;
+    const tDay = tm.tDay;
+    const tMonth = tm.tMonth;
+    const vara = new Date(y, m - 1, d).getDay();
+    const yoga = this.yoga(atSunrise);
+    const karana = this.karana(atSunrise);
+    const tara = janmaNakshatra != null ? this.taraBala(janmaNakshatra, moonNakshatra) : null;
+    let starEnd = null;
+    if (rise) {
+      const nakEnd = this.nakshatraEnd(atSunrise);
+      if (nakEnd && nakEnd < set) {
+        const endNak = this.nakshatraOf(this.siderealLon(nakEnd, this.swe.SE_MOON));
+        starEnd = { jd: nakEnd, ist: timeIST(nakEnd).hhmm, endNakshatra: endNak, endNakshatraName: NAKSHATRA[endNak] };
+      }
+    }
+    // Bhadra matrix
+    let bhadra = null;
+    const vk = this.vishtiKaranaAt(atSunrise);
+    if (vk) {
+      const loka = this.bhadraLoka(atSunrise);
+      bhadra = { ...vk, loka, inMukha: atSunrise < vk.mukhaEnd, inPuchha: atSunrise >= vk.puchhaStart };
+    }
+    // Nitya Yoga ban
+    const yb = this.nityaYogaBan(atSunrise);
+    const yogaBan = yb.banned ? { ...yb, fullBan: yb.yogaIndex === 22 || yb.yogaIndex === 26 } : null;
+    // Abhijit window: 48 min centred on local solar noon (T1 fallback).
+    // Check if the window overlaps the civil day (rise→set), not just at sunrise.
+    let isInsideAbhijit = false;
+    if (rise && set) {
+      const noon = (rise + set) / 2;
+      const abhijitStart = noon - 0.01667; // ~24 min before noon
+      const abhijitEnd = noon + 0.01667;   // ~24 min after noon
+      isInsideAbhijit = abhijitEnd > rise && abhijitStart < set; // window overlaps daylight
+    }
+    // Calendar-field pushdown
+    const adhikMaas = this.isAdhikMaas(atSunrise);
+    const kharmas = this.isKharmas(atSunrise);
+    const pitruPaksha = this.isPitruPaksha(atSunrise);
+    return { y, m, d, iso: `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd, bhadra, yogaBan, isInsideAbhijit, adhikMaas, kharmas, pitruPaksha };
+  }
 }
 
 export function timeIST(jd) {

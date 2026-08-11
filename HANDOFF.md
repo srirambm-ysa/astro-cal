@@ -4,57 +4,75 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-10
+Last updated: 2026-08-11
 
-**Session token count (2026-08-10 · this session):** REAL billed 2,984,271 (RAW 18,511,618 · 83.9% cache efficiency)
+**Session token count (2026-08-11 · this session):** REAL billed 1,447,301 (RAW 10,410,207 · 86.1% cache efficiency)
 
-## Goal Accomplished (this session)
-- **Muhurta Chintamani rules extraction — PILOT + FULL scan done, committed `54d1beb`.**
-  - Engine-facing `rules/muhurta_rules.json`: **250 rules** (Ch1 general muhurtas 73, Ch2 nakshatras
-    106, Ch5 samskaras 71), all nakshatra names canonical, per-rule id/source/type/verdict/conditions.
-  - Pipeline in `tools/`: `extract_pages.py` → `gemini_extract.py` (OpenRouter Flash Lite, concurrent)
-    → `validate_rules.py` → `merge_rules.py`. Run: 122 pages, 6 workers, **$0.25**, 0 failures.
-  - Key finding: source PDF has **no Devanagari in its OCR text layer** (scan + `InvisibleOCR` text),
-    so extraction is **English-text-only** (image path cost ~35% more, no quality gain → dropped).
-  - One prompt guard added after a real bug: model silently dropped a nakshatra (p66) and a whole
-    medium tier (p125). "Do NOT drop any listed nakshatra; set uncertain=true; extract every tier."
-- **Earlier-session nakshatra-dropdown birth input change is now COMMITTED** (was UNCOMMITTED in the
-  prior digest — folded into `54d1beb`; still pending the visual/localStorage review below).
+## Goal Accomplished (this session — 2026-08-11 · scoring engine + restructure)
+- **Corpus pivot: 250-rule engine → 17-domain file corpus** (prior session): old corpus archived to
+  `reference/archive/250_rule_muhurta_engine/`; `tools/build_corpus.js` generates
+  `rules/activity_corpus.json` (**140 activities, 18 domains**, 3 tiers: 52 JSON / 73 prose / 15 summary).
+- **Built `taxonomy.js`** resolver + `toMuhurta(activity)` adapter (pure ESM, browser + Node);
+  validated in Node (18 domains; `ACT_REAL_GRIHA_PRAVESHA_NEW` → DOM_REAL_ESTATE_CONSTRUCTION).
+- **Built the §2.6 v1.0 scoring engine in `app.js`**: `scoreMuhurta()` (T1/T2/T3 tier hits, weights,
+  verdict buckets REJECTED…EXCELLENT, chip mapping), `OVERRIDE_EVALUATORS` registry
+  (SARVARTTHA_SIDDHI / SIDDHA_YOGA / ABHIJIT_WINDOW / BHADRA_TAIL / BENEFIC_RESCUE), `applyOverrides`
+  (downgrade worst hit), **selection modes full/soft/personal** (`SELECTION_MODES`, `view.mode`),
+  calendar-field pushdown (adhikMaas/kharmas/pitruPaksha/eclipse), time-bounded windows via
+  `day.starEnd`. Old `muhurtaVerdict` kept as a thin wrapper.
+- **Web Worker offload**: `ephemeris.worker.js` runs swisseph range scans off the UI thread
+  (`computeRangeViaWorker`, main-thread fallback); `engine.js` grew `Engine.computeDay` (single
+  source of truth incl. bhadra/yogaBan/tara/starEnd/calendar fields).
+- **UI restructure**: muhurta card moved ABOVE the calendar; 3-level cascade **Domain → Sub-domain →
+  Task** backed by the corpus; `view.activity` stores `ACT_*` ids with `LEGACY_ACTIVITY` migration;
+  day-detail panel shows score/verdict + tier breakdown + overrides + window. `node --check` passes
+  on app.js / taxonomy.js / engine.js / ephemeris.worker.js.
+
+## OPEN BUG — semantic scoring, DEBUG NEXT SESSION (mem_1786464631841_uobbm)
+- **Full mode:** all days show as **Shubh** (GOOD/EXCELLENT) — nothing surfaces as Ashubh/REJECTED.
+- **Soft mode:** all days show **Neutral** with only 2 Shubh days.
+- **Personal mode:** all days show **Neutral**.
+- Suspects (not yet verified): (1) the "✓"-based pass/hit classification inflates scores — base 60 +
+  many T2_PASS/T3_PASS tokens never drop below the GOOD/EXCELLENT boundary; (2) T1 hard-reject only
+  zeroes when `hits.t1.length>0` in full mode but calendar-field hits rarely fire; (3) shukla-fallback
+  (`allowKrishnaFallback`) may make every day pass the tithi gate in sparse months; (4) personal mode
+  collapses everything to tara-only, which rarely rejects. Debug plan: Node smoke test over
+  `scoreMuhurta` for a full month → inspect score/verdict distribution per mode. The "infinite loop"
+  was in a temp debug script (`C:\Users\Sony\AppData\Local\Temp\opencode\dbg_*.js`), NOT app.js.
 
 ## Architectural Decisions
-- Engine = Swiss Ephemeris WASM (`swisseph-wasm`, Lahiri ayanamsa); calculator model, no auth,
-  localStorage personal layer, static server.
-- **Rules corpus = local JSON** (`rules/muhurta_rules.json`), NOT a DB — matches local-first; DB per
-  `Technical_Approach.md` only if/when a microservice is adopted.
-- Extraction: **English-text-only** via OpenRouter `google/gemini-3.5-flash-lite`; schema = per-rule
-  {heading, type, verdict, activities, conditions{nakshatras,weekdays,tithis,tithi_groups,paksha,
-  yogas,planetary}, exclusions, notes, uncertain} + source provenance.
-- Reference tables for validation transcribed from `classical_rule_architecture_mc.md` §1–§3.
+- **Corpus source = 17 domain files** (`domains/*.md`) + `domains/why_this_works.md`, NOT the old
+  250-rule PDF extraction.
+- **Engine is data-source swap, not rewrite**: `scoreMuhurta` consumes corpus activities via
+  `TAX.toMuhurta(act)`; `TAX` loaded in `init()` before first render.
+- **3-level cascade selection**: Domain (DOM_*) → Sub-domain (SUB_*) → Task (ACT_*); `view.activity`
+  = task id; saved to LS + restored on init with legacy migration.
+- **Scoring modes (§2.6.7)**: full = T1/T2/T3 + calendar-field + personal; soft = T1-windows only,
+  prefer vara; personal = tara + janma-nakshatra return rhythm only.
+- **Summary enrichment scoped per-file** + **provenance tags** on every corpus entry.
 
 ## Immediate Next Steps
-- **WIRE the corpus into the engine:** derive the app's ACTIVITIES/muhurta tables from
-  `rules/muhurta_rules.json` (or load it dynamically) — the personalization layer depends on this.
-  This was the stated reason for building the rules corpus.
-- **Review the 3 new docs** (owner): `muhurtha_PRD.md`, `classical_rule_architecture_mc.md`,
-  `Technical_Approach.md` — decide scope/architecture before the engine wiring.
-- **Optional extra validation:** cross-check a few high-value activities (e.g. griha pravesh, travel)
-  in the corpus against Drik Panchang for extra confidence (accuracy bar = match Drik).
-- **REVIEW the committed nakshatra-dropdown change** (app.js + index.html): grouped dropdown UX +
-  rashi derivation + old-localStorage fallback.
-- **AC-TSK-0001 (high, in_progress):** build astro-cal v1 from `PRD.md` using 04 Sacred Ornament
-  (day+night) UI. Includes phase-2 muhurta table + Tamil calendar layer + festivals. Self-host fonts.
-  Board: `node D:\knowledge-base\tools\task.js list` (project=astro-cal).
+1. **Debug the semantic scoring bug** (mem_1786464631841_uobbm) — node smoke test score distribution
+   per mode; fix the pass/hit accounting and mode gating so verdicts spread correctly.
+2. **Browser-verify** (`serve.bat`): muhurta table above calendar, cascade re-population, saved
+   selection restore, day-detail panel.
+3. **Update `PRD.md`** to reflect corpus pivot + scoring engine (still references old 250-rule
+   corpus / `ACTIVITIES`).
+4. Commit was made this session — verify `git log`.
 
 ## Watch Outs
-- Page-level recall validation over-reports prose mentions (Hindu month names Jyeshtha/Magha/Shravana
-  collide with nakshatra names; weekday tables). Screening signal — trust reference-diff +
-  canonicalization, review recall flags manually.
-- "Abhijit" is a 28th nakshatra in the book; engine has 27 — handle in matching.
-- Accuracy bar = match Drik Panchang exactly.
-- Ganesha/kolam assets still PARKED (ISSUE-0009) — owner supplies manually.
+- **Abhijit (28th nakshatra)** not representable in engine's 27-list — dropped with a warning in
+  `build_corpus.js` (ACT_LEGAL_FILE_PLAINT, ACT_GOV_TAKING_OATH).
+- `modern_finance.md` has no `DOM_` header — folded into `DOM_CORPORATE_FINANCE`.
+- `ACT_SAM_PU MSAVANA_SEEMANTA` has a space in the source ID — parser joins to
+  `ACT_SAM_PUMSAVANA_SEEMANTA`.
+- No headless browser available — UI verified via `node --check` + Node smoke tests only.
+- Accuracy bar = match Drik Panchang exactly (still applies).
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
 - Project card: `D:\knowledge-base\projects\apps\astro-cal.md`
 - Task board: `node D:\knowledge-base\tools\task.js list` · PRD: [`D:\astro-cal\PRD.md`](file:///D:/astro-cal/PRD.md)
-- Rules corpus: `rules/muhurta_rules.json` · Tools: `tools/`
+- New corpus: `rules/activity_corpus.json` · Resolver: `taxonomy.js` · Build tool: `tools/build_corpus.js`
+- Domain source files: `domains/` (17 files + why_this_works.md)
+- Old corpus archive: `reference/archive/250_rule_muhurta_engine/`

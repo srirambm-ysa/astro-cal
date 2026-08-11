@@ -2,9 +2,36 @@
 title: Astro-Cal — Vedic Muhurta Calendar
 type: plan
 status: draft
+version: v1.0
 last_updated: 2026-08-11
+reviewed_by: prd_gemini_review.md (Gemini Flash 3.6, 2026-08-11)
 related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.md]
 ---
+
+# Astro-Cal — PRD v1.0
+
+> **Version / change history — v1.0 (2026-08-11):** adopted as the plan of record after the
+> independent Gemini Flash 3.6 architectural review (`prd_gemini_review.md`). Prior grey-label
+> canon is the git history. v1.0 deltas:
+>
+> - **§2.6.3 (calendar-field pushdown):** locked the **Adhik Maas** (`Adhika`) and **Kharmas**
+>   detection as a pure-**sankranti solar-longitude** check — a lunar month (Amavasya→Amavasya) is
+>   intercalary **iff** both bounding Amavasyas fall in the same Sun-sign bucket
+>   `⌊λ_sun/30°⌋` (no Sankranti in between); Kharmas = Sun-in-Dhanus/Meena bucket at the hour
+>   of evaluation. This overrides the earlier "poll solar longitude and guess" language.
+> - **§2.6.5 (Bhadra):** replaced the fixed "5 ghatis mouth / 3 ghatis tail" timing statement with
+>   the **proportional-time** split — mouth = first `5/30` (`1/6`) of the active Vishti-Karana, tail
+>   = final `3/30` (`1/10`) — because a Karana's true duration varies with lunar motion velocity
+>   (~11.8–15.2°/day), so fixed ghati-length clocks introduce cumulative drift.
+> - **§2.6.4 / 2.6.8 (overrides):** added the **evaluator-registry contract** — `overrides` JSON
+>   tokens are *keys* into a deterministic `OVERRIDE_EVALUATORS` registry in `engine.js`; tokens
+>   without a registry entry are inert (schema-driven, never magic strings).
+> - **§2.5 / Engine:** added **`ephemeris.worker.js`** (Web Worker) + coarse-to-fine scan model as
+>   the offload strategy so multi-month scans never block the UI thread on mobile.
+> - **§2.7 (UI):** verdict lines now carry **time-bounded validity** (`Shubh 06:14–12:27`) instead of
+>   implying an all-day `Shubh` when the anchor nakshatra transitions mid-day. Rejected from review:
+>   full micro-segment day decomposition — conflicts with the accepted day-granular, cumulative
+>   table scope (§2.8).
 
 # Astro-Cal — PRD
 
@@ -167,6 +194,9 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 
 - HTML / JS / CSS standalone; vendored swisseph WASM; Node one-file **static** server
   (`serve.js` + `serve.bat`). Personal data in browser localStorage.
+- **Worker asset (locked v1.0):** `ephemeris.worker.js` — Web Worker running swisseph loops +
+  coarse-to-fine evaluation, `postMessage` results back to UI; no build step, static file served
+  alongside app.
 
 ## Open items — RESEARCH COMPLETE (2026-08-08)
 
@@ -365,6 +395,7 @@ consistent rule set below.
 | Nakshatra group (fixed/movable/etc.) | ❌ | ✅ static 27-row table `NAKSHATRA_GROUP` |
 | Per-activity Shubh lists (nakshatra/vara/tithi/yoga) | ❌ | ✅ static per-activity tables (see app.js `ACTIVITIES`) |
 | Abhijit / Durmuhurta | ❌ | **deferred — not in phase-2 v1** |
+| Long-range scans (month/year full range) | ties main thread | **`ephemeris.worker.js`** — run swisseph loops + coarse-to-fine evaluation off the UI thread: Pass 1 (calendar-field + sunrise panchang) across the whole range, Pass 2 (intra-day transitions, Bhadra windows) only on candidate days (locked v1.0) |
 
 Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lookup tables.
 
@@ -396,6 +427,12 @@ the *calendar field* narrows the range, exactly as the Paramarsh guide lays out:
 1. **Month-level:** reject Adhik Maas (intercalary lunar month); reject Kharmas (Sun in
    Sagittarius/Pisces); reject Pitru Paksha (Krishna Bhadrapada/Ashwina before Sharad Navratri)
    for weddings/housewarmings/launches.
+   - **Adhik Maas detection (locked v1.0):** a lunar month = `[Amavasya₁ → Amavasya₂)`. It is
+     intercalary iff **no Sankranti** (Sun crossing a 30° rashi boundary) occurs between the two:
+     `⌊λsun(Amavasya₁)/30°⌋ = ⌊λsun(Amavasya₂)/30°⌋`. Reuse the same solar-bucket computation the
+     Tamil calendar already needs (`PRD §Engine` → Tamil month = rashi of the Sun) — no new
+     astronomy; *poll* boundaries, never *guess*. **Kharmas** = Sun in the Dhanus (Sagittarius)
+     bucket `[240°,270°)` or Meena (Pisces) bucket `[330°,360°)` at evaluation time.
 2. **Day-level:** eclipse start–end hours (solar/lunar, native to swisseph).
 3. **Hour-level:** Rahu / Yamaganda / Gulika windows (already in v1) + Bhadra windows.
    Abhijit Muhurta is the **T1 fallback window** — 48 min centred on local solar noon — that
@@ -419,13 +456,23 @@ Evaluation contract: a matched override lowers the offending factor's tier by on
 high→soft, soft→0) rather than hard-rejecting. The reason line must name the override: e.g.
 "Rahu in slot ✗ → *Sarvartha Siddhi* → ACCEPTABLE".
 
+**Evaluator-registry contract (locked v1.0).** `overrides` tokens in the corpus are **not** magic
+strings the engine string-matches; every token is a **key into a deterministic, hand-written
+registry** in `engine.js` (`OVERRIDE_EVALUATORS`, e.g. `SARVARTTHA_SIDDHI: (ctx) => …`). A rule may
+only reference tokens present in the registry; a token with no entry is inert and logged in
+validation. Corpus data therefore never encodes evaluation logic — the Parāśara-style Vara×Nakshatra
+sidereal combos stay in Chintamani-derived code/data as at §2.8, and the registry is unit-checked.
+
 **2.6.5 Bhadra (Vishti) is not a blanket ban.** Implement the classical matrix from
 `reference/classical_rule_architecture_mc.md` §5:
 - **Residence (Loka) by Moon rashi:** Mrityu Loka (Aquarius, Pisces, Cancer, Leo) = severe;
   Swarga (Aries, Taurus, Gemini, Scorpio) and Patala (Virgo, Sagittarius, Libra, Capricorn) =
   harmless on Earth.
-- **Parts:** first **5 ghatis = Mouth (Mukha, malefic)**; final **3 ghatis = Tail (Puchha =
-  usable for initiation)**.
+- **Parts (proportional, locked v1.0):** mouth (**Mukha**, malefic = first `5/30 = 1/6`) and tail
+  (**Puchha**, usable for initiation = final `3/30 = 1/10`) are defined as *fractions of the full
+  active Vishti-Karana span* `[t_start, t_end]`, not as fixed ghati-length clocks — Karana duration
+  varies with lunar velocity (~11.8–15.2°/day), so fixed 24-min ghatis drift. Mukha duration
+  `= 5/30 × (t_end − t_start)`; Puchha duration `= 3/30 × (t_end − t_start)`.
 - **Exceptions:** not adverse after midday; reduced when benefics in angles; the 8-row
   tithi+half+prahara schedule applies when reading exact prahara.
 
@@ -447,7 +494,7 @@ compatible; absent = neutral/0 override):
 ```js
 {
   "tiers":          { "t1": ["..."], "t2": ["..."], "t3": ["..."] }, // optional severity tags
-  "overrides":      ["SARVARTTHA_SIDDHI", "ABHIJIT", "BHADRA_TAIL"],
+  "overrides":      ["SARVARTTHA_SIDDHI", "ABHIJIT", "BHADRA_TAIL"], // tokens MUST exist in OVERRIDE_EVALUATORS registry
   "calendar_field": { "blocked_months": ["ADHIKA", "KHARMAS"], "blocked_periods": ["PITRU_PAKSHA"] },
   "yoga_ghati_ban": { "VISHKAMBHA": 5, "ATIGANDA": 5, "SHULA": 5, "GANDA": 5, "VYAGHATA": 5, "VAJRA": 5, "PARIGHA": 5 }
 }
@@ -465,7 +512,10 @@ compatible; absent = neutral/0 override):
   columns date · tara (personal) · nakshatra · vara · tithi · yoga/karana · **score (0–100)** ·
   verdict (Shubh/Neutral/Ashubh **+ rejection reason or override note**) + reason line.
   Colour-coded chips consistent with the approved ledger theme. Days whose sunrise star ends
-  before sunset carry a "valid till HH:MM → next-nakshatra" note.
+  before sunset carry a **time-bounded verdict**: the cell shows `Shubh 06:14–12:27` (verdict valid
+  only until the star transition, then `→ next-nakshatra`), never an all-day `Shubh` — this
+  preserves a 250-rule *day-granular cumulative* table (§2.8) while never implying a good day is a
+  good *whole* day.
 - **Mode selector** for `selection_mode` (2.6.7): **Full / Soft / Personal days** — drives which
   tier set is evaluated and how the calendar surface behaves (Full = scored table; Soft = only T1
   window flags; Personal = janma-nakshatra transit rhythm).
@@ -483,6 +533,9 @@ compatible; absent = neutral/0 override):
   Punarvasu→Parama Mitra good, Hasta→Vipat bad.)
 - **Day-star window:** confirmed `nakshatraEnd` fires on Aug 10 (Ardra transitions 12:27 IST, before
   sunset) and surfaces the "valid till HH:MM" note.
+- **Time-bounded verdicts (locked v1.0):** spot-check the muhurta table — cells with intra-day
+  star transitions must display `Shubh HH:MM–HH:MM` (or Neutral/Ashubh with bounds), never an
+  unbounded day-wide chip.
 - **Per-activity parity vs Drik:** the sunrise-star day verdict matches Drik's *impersonal* Shubh
   days only where the muhurat window coincides with the sunrise nakshatra. Drik itself reports
   window-precision muhurats (e.g. Feb 9 Anuradha at 8:25 PM while sunrise nakshatra is Vishakha),
@@ -494,9 +547,11 @@ compatible; absent = neutral/0 override):
 - **Overrides (2.6.4):** unit-check each override — e.g. a day carrying Dagdha *and* Sarvartha
   Siddhi must resolve to the repaired tier, and the reason line must name the override. The
   var↔nakshatra Sidereal combos tie to `reference/classical_rule_architecture_mc.md` §2.
-- **Bhadra matrix (2.6.5):** residence-Loka, mouth(5 ghati)/tail(3 ghati), and the 8-row
+- **Bhadra matrix (2.6.5):** residence-Loka, proportional mouth/tail, and the 8-row
   tithi+half+prahara schedule validated against the §5 table in
   `reference/classical_rule_architecture_mc.md`.
+- **Worker offload (locked v1.0):** verify multi-month scans (e.g. full 2026 year) complete without
+  main-thread jank — the worker + coarse-to-fine model must keep UI responsive on mobile.
 
 ## Build order (proposed)
 
@@ -516,8 +571,9 @@ compatible; absent = neutral/0 override):
 
 ### Build order — phase 2 (muhurta table; after v1 ships)
 
-1. **Engine** — ✅ `yoga(jd)` + `karana(kd)` added; ✅ static `NAKSHATRA_GROUP` table; ✅
-   `nakshatraEnd(jd)` for the day-star window.
+1. **Engine** — ✅ `yoga(jd)` + `karana(jd)` added; ✅ static `NAKSHATRA_GROUP` table; ✅
+   `nakshatraEnd(jd)` for the day-star window; ✅ `ephemeris.worker.js` (coarse-to-fine
+   offload).
 2. **Personalization** — ✅ tara bala (arithmetic on `birth.nakshatra` + day nakshatra); verified
    against a tara-bala calculator.
 3. **Activity tables** — starter set (**griha pravesh / vehicle / travel**; Marriage deferred);

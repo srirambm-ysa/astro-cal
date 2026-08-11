@@ -108,6 +108,17 @@
   .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
   .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
   .muh-act{font-size:11px;text-transform:none;letter-spacing:.03em;color:var(--ink-soft);font-family:"Eczar",serif}
+  .tbwnd{font-size:9px;color:var(--vermilion);font-weight:600;white-space:nowrap}
+  .muh-line.t1 .v{color:var(--chandra-peak)}
+  .muh-line.t2 .v{color:var(--saffron)}
+  .muh-line.t3 .v{color:var(--ink-soft)}
+  .muh-line.good .v{color:var(--teal)}
+  .muh-line.ovr .v{color:var(--gold-bright);font-weight:600}
+  .muh-line strong{color:var(--vermilion);font-size:15px}
+  .chip.verdict{font-size:9px;padding:1px 5px}
+  .chip.verdict.Shubh{background:var(--teal)}
+  .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
+  .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
   .evtab tr.muhrow{cursor:pointer}
   .evtab td.tara{white-space:nowrap}
   .muh-detail{border-top:1px solid var(--line-faint);margin-top:12px;padding-top:10px}
@@ -242,6 +253,21 @@
     <div class="profile" id="profile"></div>
   </section>
 
+  <section class="card" id="muhCard">
+    <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span></span></h2>
+    <div class="form" style="margin-bottom:8px">
+      <div class="field"><div class="k">Domain</div><select id="muhDomain"></select></div>
+      <div class="field"><div class="k">Activity</div><select id="muhSub"></select></div>
+      <div class="field"><div class="k">Sub-activity / Task</div><select id="muhTask"></select></div>
+      <div class="field"><div class="k">Mode</div><select id="muhMode"></select></div>
+    </div>
+    <table class="evtab">
+       <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Verdict</th></tr></thead>
+      <tbody id="muhurtas"></tbody>
+    </table>
+    <div class="note" id="muhSummary"></div>
+  </section>
+
   <div class="layout">
     <section class="card">
       <div class="cal-head">
@@ -249,18 +275,6 @@
       </div>
       <div class="calendar" id="cal"></div>
       <div class="note">Orange/red bar = chandrashtama (coarse + peak). Dots mark days with flagged events. Select a day for its detail. Legend below.</div>
-    </section>
-
-    <section class="card">
-      <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span></span></h2>
-      <div class="form" style="margin-bottom:8px">
-        <div class="field"><div class="k">Activity</div><select id="muhAct"></select></div>
-      </div>
-      <table class="evtab">
-         <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Per-activity verdict</th></tr></thead>
-        <tbody id="muhurtas"></tbody>
-      </table>
-      <div class="note" id="muhSummary"></div>
     </section>
 
     <section class="card">

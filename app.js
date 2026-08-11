@@ -1,6 +1,7 @@
 /* astro-cal app — UI + orchestration. Vanilla ESM, localStorage personal layer. */
 import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,
          YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
+import { loadTaxonomy } from "./taxonomy.js";
 
 const LS = {
   birth: "astro-cal-birth",
@@ -39,91 +40,280 @@ const TAMIL_FESTIVALS = [
   { key: "aavaniavittam", name: "Aavani Avittam", tMonth: 4, kind: "nakshatra", val: 22 },
 ];
 
-/* ---------- phase 2: muhurta activity tables (starter set — validate against Drik) ---------- */
-// Each activity: { nakshatras: shubh list (0-26), vara: favourable weekdays (Sun=0) or null for
-//   "not filtered", paksha: "shukla" | "both", badTithis: tithis to avoid ([] = none),
-//   badYogas: inauspicious yogas, badKaranas: inauspicious karanas, note }.
-// These are the "impersonal" Drik-style filters; tara (personal) is layered on top.
-const RIKTA_TITHIS = [3, 8, 13, 18, 23, 28]; // Chathurthi, Navami, Chaturdashi (both pakshas)
-// NOTE: Marriage (Vivah) is deferred to a later phase — its tithi/paksha rules vary by tradition
-// (Krishna paksha is permitted) and Drik's window-based muhurats are higher-precision than this
-// day-granular table can reproduce. Until then the starter set is the three simpler activities below.
-const ACTIVITIES = {
-  grihapravesh: {
-    name: "Griha Pravesh (housewarming)",
-    nakshatras: [3, 11, 20, 25],           // fixed (Dhruva): Rohini, Uttara Phalguni, Uttara Ashadha, Uttara Bhadrapada
-    vara: [2, 4],                          // Tue/Thu
-    paksha: "shukla",
-    badTithis: RIKTA_TITHIS,
-    badYogas: [],
-    badKaranas: [6],
-    note: "Fixed (Dhruva) nakshatras; Tue/Thu; Shukla paksha.",
-  },
-  vehicle: {
-    name: "Vehicle purchase",
-    nakshatras: [3, 7, 12, 13, 14, 16, 18, 26], // Rohini, Pushya, Hasta, Chitra, Swati, Anuradha, Mula, Revati
-    vara: [3, 4],                          // Wed/Thu
-    paksha: "shukla",
-    badTithis: RIKTA_TITHIS,
-    badYogas: [],
-    badKaranas: [6],
-    note: "Pushya/Rohini/Revati-family stars; Wed/Thu; Shukla paksha.",
-  },
-  travel: {
-    name: "Travel (Yatra)",
-    nakshatras: [6, 14, 21, 22, 23],       // movable (Chara): Punarvasu, Swati, Shravana, Dhanishta, Shatabhisha
-    vara: [1, 3, 4, 6],                    // Mon/Wed/Thu/Sat (direction-dependent in classical texts — simplified)
-    paksha: "both",
-    badTithis: RIKTA_TITHIS,
-    badYogas: [],
-    badKaranas: [6],
-    note: "Movable (Chara) nakshatras; Mon/Wed/Thu/Sat. Direction rules simplified for v1.",
-  },
+/* ---------- phase 2: muhurta activity selection (rules/activity_corpus.json) ---------- */
+// The 3-level cascade (Domain → Activity → Sub-activity/Task) is driven by the taxonomy
+// resolver (taxonomy.js). `view.activity` stores a corpus activity_id (ACT_*). Pre-corpus
+// selections ("grihapravesh", "vehicle", "travel") are migrated to their corpus equivalents.
+const LEGACY_ACTIVITY = {
+  grihapravesh: "ACT_REAL_GRIHA_PRAVESHA_NEW",
+  vehicle: "ACT_TRV_VEHICLE_PURCHASE",
+  travel: "ACT_TRV_PILGRIMAGE_YATRA",
+};
+let TAX = null;
+
+/* Focused activity for scoring: current selection (with legacy migration), else Griha Pravesha. */
+function currentAct() {
+  const id = LEGACY_ACTIVITY[view.activity] || view.activity;
+  const act = id && TAX ? TAX.getActivity(id) : null;
+  return act ? TAX.toMuhurta(act) : TAX.toMuhurta(TAX.getActivity("ACT_REAL_GRIHA_PRAVESHA_NEW"));
+}
+
+// Selection modes (PRD §2.6.7).
+const SELECTION_MODES = {
+  full: { label: "Full muhurta", desc: "T1/T2/T3 + calendar-field + personal" },
+  soft: { label: "Soft", desc: "Avoid only T1 windows, prefer vara" },
+  personal: { label: "Personal days", desc: "Janma-nakshatra return rhythm" },
 };
 
-/* combine personal (tara) + impersonal (activity) filters into a per-day verdict.
-   Shubh = tara not bad AND nakshatra in list AND vara fit (if filtered) AND tithi not bad AND
-   yoga not bad AND karana not bad.
-   Ashubh = tara bad OR nakshatra NOT in the activity list.
-   Else Neutral. Returns { verdict, reasons: [] }.
+/* ===== PHASE-2 MUHURTA SCORING ENGINE (PRD §2.6 v1.0) ===== */
 
-   opts.allowKrishnaFallback: when true and the activity is Shukla-paksha, also allow a
-   Krishna-paksha day through the tithi/paksha gate (month-level fallback when Shukla yields
-   no valid days). Used with the month pre-scan in renderMuhurta. */
-function muhurtaVerdict(day, janmaNakshatra, act, opts = {}) {
-  const tara = day.tara; // { number, count } from computeDay
-  const taraGood = TARA_NATURE[tara.number - 1] === "good";
-  const taraBad = TARA_NATURE[tara.number - 1] === "bad";
-  const nakOK = act.nakshatras.length ? act.nakshatras.includes(day.moonNakshatra) : true;
+// Scoring weights — T1 hard blockers reject; T2 primary; T3 secondary.
+const SCORE_W = {
+  BASE: 60,
+  T1_HARD: -100,   // → reject (0)
+  T1_SOFT: -35,    // overridden T1 → heavy penalty
+  T2_HIT: -20,     // primary misalignment
+  T2_PASS: 12,     // primary alignment
+  T3_HIT: -6,      // secondary misalignment
+  T3_PASS: 4,      // secondary preference
+};
+
+// Verdict buckets (PRD §2.6.2).
+function scoreToVerdict(score) {
+  if (score <= 0) return "REJECTED";
+  if (score < 35) return "UNFAVORABLE";
+  if (score < 55) return "NEUTRAL";
+  if (score < 70) return "ACCEPTABLE";
+  if (score < 85) return "GOOD";
+  return "EXCELLENT";
+}
+
+// Map score verdict → UI chip.
+function verdictToChip(v) {
+  return (v === "EXCELLENT" || v === "GOOD") ? "Shubh"
+    : (v === "ACCEPTABLE" || v === "NEUTRAL") ? "Neutral"
+    : "Ashubh";
+}
+
+/* Override evaluator registry (PRD §2.6.4 evaluator-registry contract).
+   Each token maps to a deterministic predicate over the evaluation context.
+   Tokens without a registry entry are inert (validated at corpus load). */
+const OVERRIDE_EVALUATORS = {
+  SARVARTTHA_SIDDHI: (ctx) => {
+    // var↔nakshatra sidereal combos — classical_rule_architecture_mc.md §2
+    const combos = {
+      0: [12, 18, 11, 20, 25, 7, 0],
+      1: [21, 3, 4, 7, 16],
+      2: [0, 25, 2, 8],
+      3: [3, 16, 12, 2, 4],
+      4: [26, 16, 0, 6, 7],
+      5: [26, 16, 0, 6, 21],
+      6: [21, 3, 14],
+    };
+    return (combos[ctx.vara] || []).includes(ctx.nakshatra);
+  },
+  SIDDHA_YOGA: (ctx) => {
+    // tithi group ↔ vara: Nanda/Fri, Bhadra/Wed, Jaya/Tue, Rikta/Sat, Poorna/Thu
+    const g = Math.floor((ctx.tithiIndex % 15) / 3); // 0..4
+    const combos = { 0: [5], 1: [3], 2: [2], 3: [6], 4: [4] };
+    return (combos[g] || []).includes(ctx.vara);
+  },
+  ABHIJIT_WINDOW: (ctx) => ctx.isInsideAbhijit === true,
+  BHADRA_TAIL: (ctx) => ctx.bhadraTail === true,
+  BENEFIC_RESCUE: (ctx) => ctx.beneficsInAngles === true,
+};
+
+/* Build the evaluation context for override evaluators + scoring.
+   Stubs beneficsInAngles (needs full chart) — returns false for v1. */
+function buildMuhurtaContext(day, janmaNakshatra, act, swe) {
+  const tara = day.tara;
+  const bhadra = day.bhadra; // set by computeDay
+  return {
+    vara: day.vara,
+    nakshatra: day.moonNakshatra,
+    tithiIndex: day.tithiIndex,
+    yogaIndex: day.yoga.index,
+    karanaIndex: day.karana.index,
+    isInsideAbhijit: day.isInsideAbhijit || false,
+    bhadraTail: bhadra ? bhadra.inPuchha : false,
+    beneficsInAngles: false, // v1 stub — requires full chart computation
+    taraNumber: tara ? tara.number : null,
+  };
+}
+
+/* Apply overrides: each matched override downgrades the worst remaining hit
+   by one tier (T1→T2, T2→T3, T3→cleared). Returns downgraded hits + named overrides. */
+function applyOverrides(hits, ctx, overrideTokens) {
+  const matched = [];
+  for (const token of overrideTokens || []) {
+    const fn = OVERRIDE_EVALUATORS[token];
+    if (!fn) continue; // inert token (not in registry)
+    if (!fn(ctx)) continue;
+    matched.push(token);
+    // downgrade worst hit
+    if (hits.t1.length) { hits.t2.push(hits.t1.pop()); }
+    else if (hits.t2.length) { hits.t3.push(hits.t2.pop()); }
+    else if (hits.t3.length) { hits.t3.pop(); }
+  }
+  return matched;
+}
+
+/* Core scoring function — PRD §2.6.1/2.6.2.
+   mode: "full" | "soft" | "personal" (§2.6.7).
+   calendarField: { adhikMaas, kharmas, pitruPaksha } precomputed per day.
+   Returns { score, verdict, chip, reasons, tierHits, overrides, timeBounded, ctx }. */
+function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
+  const mode = opts.mode || "full";
+  const cf = opts.calendarField || {};
+  const hits = { t1: [], t2: [], t3: [] };
+  const ctx = buildMuhurtaContext(day, janmaNakshatra, act, opts._swe);
+
+  // --- Calendar-field pushdown (T1) ---
+  if (cf.adhikMaas) hits.t1.push("Adhik Maas");
+  if (cf.kharmas) hits.t1.push("Kharmas");
+  if (cf.pitruPaksha) hits.t1.push("Pitru Paksha");
+  if (cf.eclipse) hits.t1.push("Eclipse hours");
+
+  // --- Bhadra matrix (T1/T2/T3) ---
+  if (day.bhadra) {
+    const b = day.bhadra;
+    if (b.loka === "mrityu" && b.inMukha) hits.t1.push("Bhadra Mukha · Mrityu Loka");
+    else if (b.loka === "mrityu") hits.t2.push("Bhadra · Mrityu Loka");
+    else if (b.inPuchha) hits.t3.push("Bhadra Puchha (usable)");
+    else hits.t3.push("Bhadra · harmless Loka");
+  }
+
+  // --- Nitya Yoga partial ghati ban ---
+  if (day.yogaBan && day.yogaBan.banned) {
+    if (day.yogaBan.fullBan) hits.t1.push(day.yogaBan.reason);
+    else hits.t2.push(day.yogaBan.reason);
+  }
+
+  // --- Personal: tara (T2) ---
+  const taraBad = day.tara && TARA_NATURE[day.tara.number - 1] === "bad";
+  const taraGood = day.tara && TARA_NATURE[day.tara.number - 1] === "good";
+  if (taraBad) hits.t2.push(`Tara ${TARA_NAMES[day.tara.number - 1]} ✗`);
+  else if (taraGood) hits.t2.push(`Tara ${TARA_NAMES[day.tara.number - 1]} ✓`);
+
+  // --- Impersonal panchanga fit ---
+  const nakOK = !act.nakshatras.length || act.nakshatras.includes(day.moonNakshatra);
   const varaOK = !act.vara || act.vara.includes(day.vara);
   const tithiBaseOK = !act.badTithis.includes(day.tithiIndex);
   const krishnaAllowed = opts.allowKrishnaFallback && day.tithi.paksha === "Krishna";
   const pakshaOK = act.paksha === "both" || day.tithi.paksha === "Shukla" || krishnaAllowed;
   const tithiOK = tithiBaseOK && pakshaOK;
-  const yogaOK = !act.badYogas.includes(day.yoga.index);
   const karanaOK = !act.badKaranas.includes(day.karana.index);
-  const impersonalPass = nakOK && varaOK && tithiBaseOK && yogaOK && karanaOK; // paksha-agnostic
-  const reasons = [];
-  reasons.push(taraGood ? `Tara ${TARA_NAMES[tara.number - 1]} ✓` : taraBad ? `Tara ${TARA_NAMES[tara.number - 1]} ✗` : `Tara ${TARA_NAMES[tara.number - 1]} ~`);
-  if (act.nakshatras.length) reasons.push(`${NAKSHATRA[day.moonNakshatra]} ${nakOK ? "✓" : "✗"}`);
-  if (act.vara) reasons.push(`Vara ${DOW[day.vara]} ${varaOK ? "✓" : "✗"}`);
-  const pakshaTag = krishnaAllowed ? `${day.tithi.paksha}${TITHI_NAMES[day.tithiIndex]} ✓ (Krishna fallback)` : `${day.tithi.paksha} ${TITHI_NAMES[day.tithiIndex]} ${pakshaOK ? "✓" : (day.tithi.paksha === "Krishna" ? "✗ (Shukla only)" : "✗")}`;
-  reasons.push(pakshaTag);
-  reasons.push(`Yoga ${YOGA_NAMES[day.yoga.index]} ${yogaOK ? "✓" : "✗"}`);
-  reasons.push(`Karana ${KARANA_NAMES[day.karana.index]} ${karanaOK ? "✓" : "✗"}`);
-  if (day.starEnd) reasons.push(`Star ${NAKSHATRA[day.moonNakshatra]} valid till ${day.starEnd.ist} then ${day.starEnd.endNakshatraName}`);
-  let verdict;
-  if (taraBad || !nakOK) verdict = "Ashubh";
-  else if (!taraBad && nakOK && varaOK && tithiOK && yogaOK && karanaOK) verdict = "Shubh"; // good OR neutral tara
-  else verdict = "Neutral";
-  return { verdict, reasons, tara, nakOK, varaOK, tithiOK, yogaOK, karanaOK, impersonalPass, krishnaAllowed };
+
+  if (!nakOK) hits.t2.push(`${NAKSHATRA[day.moonNakshatra]} ✗`);
+  else hits.t2.push(`${NAKSHATRA[day.moonNakshatra]} ✓`);
+  if (!varaOK) hits.t3.push(`Vara ${DOW[day.vara]}`);
+  else hits.t3.push(`Vara ${DOW[day.vara]} ✓`);
+  if (!tithiOK) hits.t2.push(`${day.tithi.paksha} ${TITHI_NAMES[day.tithiIndex]} ✗`);
+  else hits.t2.push(`${day.tithi.paksha} ${TITHI_NAMES[day.tithiIndex]} ✓`);
+  if (!karanaOK) hits.t2.push(`Karana ${KARANA_NAMES[day.karana.index]} ✗`);
+  else hits.t3.push(`Karana ${KARANA_NAMES[day.karana.index]} ✓`);
+
+  // --- Selection-mode gating (§2.6.7) ---
+  // Soft mode: ignore T2/T3, only flag T1 windows.
+  if (mode === "soft") {
+    const t1 = hits.t1;
+    hits.t1 = t1; hits.t2 = []; hits.t3 = [];
+  }
+  // Personal mode: only tara + janma-nakshatra return; skip impersonal table.
+  if (mode === "personal") {
+    const taraHit = hits.t2.find(h => h.startsWith("Tara"));
+    hits.t1 = []; hits.t2 = taraHit ? [taraHit] : []; hits.t3 = [];
+  }
+
+  // --- Apply overrides (downgrade worst hits) ---
+  const overrides = applyOverrides(hits, ctx, act.overrides);
+
+  // --- Compute score ---
+  let score = SCORE_W.BASE;
+  score += hits.t1.length * (mode === "soft" ? SCORE_W.T1_HARD : SCORE_W.T1_SOFT);
+  score += hits.t2.filter(h => h.includes("✓")).length * SCORE_W.T2_PASS;
+  score -= hits.t2.filter(h => !h.includes("✓")).length * SCORE_W.T2_HIT;
+  score += hits.t3.filter(h => h.includes("✓")).length * SCORE_W.T3_PASS;
+  score -= hits.t3.filter(h => !h.includes("✓")).length * SCORE_W.T3_HIT;
+
+  // Hard T1 reject (soft mode penalizes but doesn't zero)
+  const hasHardT1 = hits.t1.length > 0;
+  if (hasHardT1 && mode !== "soft") score = 0;
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+  const verdict = scoreToVerdict(score);
+
+  // --- Time-bounded window (§2.7) ---
+  const timeBounded = day.starEnd ? { validTill: day.starEnd.ist, nextStar: day.starEnd.endNakshatraName } : null;
+
+  // --- Reasons line ---
+  const reasons = [
+    ...hits.t1.map(h => `${h} [T1]`),
+    ...hits.t2.filter(h => !h.includes("✓")),
+    ...hits.t3.filter(h => !h.includes("✓")),
+  ];
+  if (overrides.length) reasons.push(`Override: ${overrides.join(", ")}`);
+  if (timeBounded) reasons.push(`Valid till ${timeBounded.validTill} → ${timeBounded.nextStar}`);
+
+  return {
+    score, verdict, chip: verdictToChip(verdict),
+    reasons, tierHits: hits, overrides, timeBounded, ctx,
+    // legacy compat
+    nakOK, varaOK, tithiOK, karanaOK,
+    impersonalPass: nakOK && varaOK && tithiBaseOK && karanaOK,
+    krishnaAllowed,
+  };
+}
+
+/* Legacy wrapper — keeps old call sites working while UI migrates to scoreMuhurta. */
+function muhurtaVerdict(day, janmaNakshatra, act, opts = {}) {
+  return scoreMuhurta(day, janmaNakshatra, act, opts);
 }
 
 /* ---------- state ---------- */
 let swe = null;
 let birth = null;      // { nakshatra:0-26, pada:1-4, rashi:0-11, place, lat, lon, tz }
 let events = [];       // [{id,type,name,date?,tMonth?,tKind?,tVal?}]
-let view = { range: "month", anchor: todayISO(), activity: "grihapravesh" }; // anchor = civil date (YYYY-MM-DD)
+let view = { range: "month", anchor: todayISO(), activity: "ACT_REAL_GRIHA_PRAVESHA_NEW", mode: "full" }; // anchor = civil date (YYYY-MM-DD); mode = selection_mode (§2.6.7)
+
+/* ---------- Web Worker client (PRD §2.5 v1.0) ---------- */
+// Offloads swisseph computation to ephemeris.worker.js so multi-month scans
+// never block the UI thread. Falls back to main-thread computeDay if workers
+// are unavailable (e.g. file:// in some browsers).
+let worker = null;
+let workerReqId = 0;
+const workerPending = new Map();
+
+function ensureWorker() {
+  if (worker || typeof Worker === "undefined") return worker;
+  try { worker = new Worker("./ephemeris.worker.js", { type: "module" }); } catch (e) { worker = null; return null; }
+  worker.onmessage = (e) => {
+    const { type, reqId, ok, days, error } = e.data;
+    if (type !== "computeRangeResult") return;
+    const pending = workerPending.get(reqId);
+    if (!pending) return;
+    workerPending.delete(reqId);
+    if (ok) pending.resolve(new Map(days));
+    else pending.reject(new Error(error));
+  };
+  worker.onerror = (e) => {
+    // reject all pending; future calls fall back to main thread
+    for (const [, p] of workerPending) p.reject(new Error(e.message));
+    workerPending.clear();
+    worker = null;
+  };
+  return worker;
+}
+
+function computeRangeViaWorker(rangeStart, rangeEnd, geo, janmaNakshatra, tz) {
+  const w = ensureWorker();
+  if (!w) return null; // signal to fall back
+  const reqId = ++workerReqId;
+  return new Promise((resolve, reject) => {
+    workerPending.set(reqId, { resolve, reject });
+    w.postMessage({ type: "computeRange", reqId, payload: { rangeStart, rangeEnd, geo, janmaNakshatra, tz } });
+  });
+}
 
 const $ = (id) => document.getElementById(id);
 
@@ -215,34 +405,10 @@ function computeShraddha(ev, y, swe) {
 }
 
 /* ---------- day computation ---------- */
-async function computeDay(y, m, d, geo) {
-  const jdNoon = swe.julday(y, m, d, 12 - TZ_IST);
-  const { rise, set } = swe.sunriseSunset(y, m, d, geo);
-  const atSunrise = rise || jdNoon;
-  const tt = swe.tithi(atSunrise);
-  const tm = swe.tamilDate(atSunrise, y, m, d);
-  const ty = swe.tamilYear(y, m, d);
-  const kw = swe.kalamWindows(y, m, d, geo);
-  const moonLon = swe.siderealLon(atSunrise, swe.swe.SE_MOON);
-  const moonNakshatra = swe.nakshatraOf(moonLon);
-  const tithiIndex = tt.index;
-  const tDay = tm.tDay;
-  const tMonth = tm.tMonth;
-  const vara = new Date(y, m - 1, d).getDay();
-  const yoga = swe.yoga(atSunrise);
-  const karana = swe.karana(atSunrise);
-  const tara = birth ? swe.taraBala(birth.nakshatra, moonNakshatra) : null;
-  // sunrise-star window: does the sunrise nakshatra end before sunset (same civil day)?
-  // If so the day is only valid-till that time for star-based verdicts.
-  let starEnd = null;
-  if (rise) {
-    const nakEnd = swe.nakshatraEnd(atSunrise);
-    if (nakEnd && nakEnd < set) {
-      const endNak = swe.nakshatraOf(swe.siderealLon(nakEnd, swe.swe.SE_MOON));
-      starEnd = { jd: nakEnd, ist: fmtHHMM(nakEnd), endNakshatra: endNak, endNakshatraName: NAKSHATRA[endNak] };
-    }
-  }
-  return { y, m, d, iso: ymdToISO(y, m, d), rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd };
+// Delegates to Engine.computeDay (single source of truth for astronomical +
+// phase-2 fields). TZ offset is taken from birth.tz when available.
+async function computeDay(y, m, d, geo, tz = TZ_IST) {
+  return swe.computeDay(y, m, d, geo, birth ? birth.nakshatra : null, tz);
 }
 
 function dayLabelTamil(tMonth, tDay) { return `${TAMIL_MONTH[tMonth]} ${String(tDay).padStart(2, "0")}`; }
@@ -257,6 +423,28 @@ function buildMonthDays(y, m, geo) {
   for (let d = 1; d <= dim; d++) cells.push({ y, m, d });
   while (cells.length % 7 !== 0) cells.push(null);
   return cells;
+}
+
+/* Build the day map for [rangeStart, rangeEnd] — uses the worker if available,
+   falls back to main-thread computeDay. Returns a Map<iso, day>. */
+async function buildDayMap(rangeStart, rangeEnd, geo, janmaNakshatra, tz) {
+  // Try worker first
+  const result = await computeRangeViaWorker(rangeStart, rangeEnd, geo, janmaNakshatra, tz).catch(() => null);
+  if (result) return result;
+  // Fallback: main thread
+  const dayMap = new Map();
+  for (let yy = rangeStart.y; yy <= rangeEnd.y; yy++) {
+    const mStart = yy === rangeStart.y ? rangeStart.m : 1;
+    const mEnd = yy === rangeEnd.y ? rangeEnd.m : 12;
+    for (let mm = mStart; mm <= mEnd; mm++) {
+      const dStart = yy === rangeStart.y && mm === rangeStart.m ? rangeStart.d : 1;
+      const dEnd = yy === rangeEnd.y && mm === rangeEnd.m ? rangeEnd.d : new Date(yy, mm, 0).getDate();
+      for (let dd = dStart; dd <= dEnd; dd++) {
+        dayMap.set(ymdToISO(yy, mm, dd), await computeDay(yy, mm, dd, geo, tz));
+      }
+    }
+  }
+  return dayMap;
 }
 
 /* ---------- render ---------- */
@@ -286,19 +474,9 @@ async function render() {
   const tamilYearName = swe.tamilYear(rangeStart.y, rangeStart.m, rangeStart.d);
   $("calTamilYear").textContent = `${TAMIL_MONTH[tmOf(swe, rangeStart.y, rangeStart.m, rangeStart.d, geo)]} · Tamil ${tamilYearName.name} (${tamilYearName.index})`;
 
-  // build day cache
-  const dayMap = new Map();
-  for (let yy = rangeStart.y; yy <= rangeEnd.y; yy++) {
-    const mStart = yy === rangeStart.y ? rangeStart.m : 1;
-    const mEnd = yy === rangeEnd.y ? rangeEnd.m : 12;
-    for (let mm = mStart; mm <= mEnd; mm++) {
-      const dStart = yy === rangeStart.y && mm === rangeStart.m ? rangeStart.d : 1;
-      const dEnd = yy === rangeEnd.y && mm === rangeEnd.m ? rangeEnd.d : new Date(yy, mm, 0).getDate();
-      for (let dd = dStart; dd <= dEnd; dd++) {
-        dayMap.set(ymdToISO(yy, mm, dd), await computeDay(yy, mm, dd, geo));
-      }
-    }
-  }
+  // build day cache (offloaded to worker when available — PRD §2.5 v1.0)
+  const tz = birth.tz || TZ_IST;
+  const dayMap = await buildDayMap(rangeStart, rangeEnd, geo, birth.nakshatra, tz);
 
   // overlay per-day flags (chandrashtama, eclipses, festivals, personal)
   const flagMap = new Map();
@@ -402,30 +580,27 @@ function dayDots(day, iso, flagMap) {
 
 const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival", personal: "Personal", shraddha: "Shraddha" };
 
-/* phase-2 muhurta table (right panel): cumulative across ALL activities.
-   A day is listed if it is Shubh or Neutral for at least one activity (Ashubh-only
-   days are hidden). Each row carries a per-activity verdict so one glance shows
-   which activity works on which day. The activity dropdown still sets the "focus"
-   activity whose tara+window note drives the day-detail panel. */
+/* phase-2 muhurta table (above calendar): first auspicious muhurtas for the focused
+   sub-activity/task. A day is listed when the personal verdict for that task is not
+   REJECTED (Shubh / Good / Excellent or Neutral / Acceptable chips). Uses the §2.6 v1.0
+   scoring engine with calendar-field pushdown + time-bounded verdicts. */
 function renderMuhurta(dayMap) {
   const tbody = $("muhurtas");
   const rows = [];
   const days = [...dayMap.values()].sort((a, b) => (a.iso < b.iso ? -1 : 1));
-  const focusAct = ACTIVITIES[view.activity] || ACTIVITIES.grihapravesh;
+  const focusAct = currentAct();
+  const mode = view.mode || "full";
   // month-level fallback only for the focused activity's summary below
-  const shuklaFallback = focusAct.paksha === "shukla" && !days.some((d) => muhurtaVerdict(d, birth.nakshatra, focusAct).impersonalPass && d.tithi.paksha === "Shukla");
-  const actEntries = Object.entries(ACTIVITIES);
+  const shuklaFallback = focusAct.paksha === "shukla" && !days.some((d) => scoreMuhurta(d, birth.nakshatra, focusAct, { mode }).impersonalPass && d.tithi.paksha === "Shukla");
   let shubhTotal = 0;
   for (const day of days) {
     if (!day.tara) continue; // without birth star, no personal verdict — skip from muhurta list
-    // per-activity verdicts (primary rule only; fallback only flags the focused activity)
-    const perAct = actEntries.map(([key, a]) => {
-      const v = muhurtaVerdict(day, birth.nakshatra, a);
-      return { key, name: a.name, verdict: v.verdict };
-    });
-    const shown = perAct.some((p) => p.verdict === "Shubh" || p.verdict === "Neutral");
-    if (!shown) continue;
-    if (perAct.some((p) => p.verdict === "Shubh")) shubhTotal++;
+    const cf = { adhikMaas: day.adhikMaas, kharmas: day.kharmas, pitruPaksha: day.pitruPaksha };
+    const opts = { mode, calendarField: cf };
+    if (shuklaFallback && day.tithi.paksha === "Krishna") opts.allowKrishnaFallback = true;
+    const v = scoreMuhurta(day, birth.nakshatra, focusAct, opts);
+    if (v.verdict === "REJECTED") continue;
+    if (v.chip === "Shubh") shubhTotal++;
 
     const dt = new Date(day.y, day.m - 1, day.d);
     const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
@@ -433,21 +608,19 @@ function renderMuhurta(dayMap) {
     const dateStr = `${dayName} ${mn} ${String(day.d).padStart(2, "0")}`;
     const sel = day.iso === view.selected ? " selected" : "";
     const taraTxt = `${TARA_NAMES[day.tara.number - 1]} (${day.tara.number})`;
-    // focused verdict (for click → day detail) with active fallback
-    const fopts = shuklaFallback && day.tithi.paksha === "Krishna" ? { allowKrishnaFallback: true } : {};
-    const fv = muhurtaVerdict(day, birth.nakshatra, focusAct, fopts);
-    const title = fv.reasons.join(" · ");
-    const chips = actEntries.map(([key, a]) => {
-      const p = perAct.find((x) => x.key === key);
-      if (p.verdict === "Ashubh") return ""; // only surface Shubh / Neutral verdicts
-      const cls = p.verdict === "Shubh" ? "shubh" : "neutral";
-      return `${a.name.split(" ")[0]}:<span class="chip verdict ${p.verdict} ${cls}">${p.verdict}</span>`;
-    }).filter(Boolean).join(" ");
-    rows.push(`<tr class="muhrow${sel}" data-iso="${day.iso}" title="${title}"><td class="dt">${dateStr}</td><td class="tara">${taraTxt}</td><td class="nak">${NAKSHATRA[day.moonNakshatra]}</td><td class="acts">${chips}</td></tr>`);
+    const title = v.reasons.join(" · ");
+    // time-bounded window tag (§2.7)
+    const tb = v.timeBounded;
+    const tbTag = tb ? ` <span class="tbwnd">(${tb.validTill}→${tb.nextStar})</span>` : "";
+    rows.push(`<tr class="muhrow${sel}" data-iso="${day.iso}" title="${title}"><td class="dt">${dateStr}${tbTag}</td><td class="tara">${taraTxt}</td><td class="nak">${NAKSHATRA[day.moonNakshatra]}</td><td class="acts"><span class="chip verdict ${v.chip}">${v.chip} ${v.score}</span></td></tr>`);
   }
-  tbody.innerHTML = rows.join("");
-  tbody.querySelectorAll(".muhrow").forEach((tr) => tr.addEventListener("click", () => { view.selected = tr.dataset.iso; save(LS.view, view); render(); }));
-  $("muhActName").textContent = `Activity focus: ${focusAct.name}`;
+  if (rows.length) {
+    tbody.innerHTML = rows.join("");
+    tbody.querySelectorAll(".muhrow").forEach((tr) => tr.addEventListener("click", () => { view.selected = tr.dataset.iso; save(LS.view, view); render(); }));
+  } else {
+    tbody.innerHTML = `<tr><td colspan="4" class="note">No Shubh / Neutral days this month for ${focusAct.name}. Try another activity or a softer mode.</td></tr>`;
+  }
+  $("muhActName").textContent = `${focusAct.name} · ${SELECTION_MODES[mode].label}`;
   const fbNote = shuklaFallback ? " (Krishna-paksha days also shown — no Shukla days qualified this month)" : "";
   $("muhSummary").textContent = `${shubhTotal} Shubh days this month for ${focusAct.name}${fbNote}. ${focusAct.note}`;
 }
@@ -539,18 +712,37 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
   $("rSunrise").textContent = day.rise ? fmtHHMM(day.rise) : "–";
   $("rSunset").textContent = day.set ? fmtHHMM(day.set) : "–";
   $("rTithi").textContent = `${day.tithi.paksha} ${day.tithi.name}`;
-  // phase-2: tara + per-activity verdict for the selected day
-  const act = ACTIVITIES[view.activity] || ACTIVITIES.grihapravesh;
+  // phase-2: tara + per-activity verdict for the selected day (§2.6 v1.0 scoring engine)
+  const act = currentAct();
   const days = dayMap ? [...dayMap.values()] : [day];
-  const shuklaFallback = act.paksha === "shukla" && !days.some((d) => muhurtaVerdict(d, birth.nakshatra, act).impersonalPass && d.tithi.paksha === "Shukla");
-  const vopts = shuklaFallback && day.tithi.paksha === "Krishna" ? { allowKrishnaFallback: true } : {};
-  const v = day.tara ? muhurtaVerdict(day, birth.nakshatra, act, vopts) : null;
-  $("muhDetail").innerHTML = v ? `
-    <div class="muh-line"><span class="k">Tara</span><span class="v">${TARA_NAMES[v.tara.number - 1]} (${v.tara.number}) — ${TARA_NATURE[v.tara.number - 1] === "good" ? "favourable" : TARA_NATURE[v.tara.number - 1] === "bad" ? "unfavourable" : "neutral"}</span></div>
-    <div class="muh-line"><span class="k">${act.name}</span><span class="chip ${v.verdict}">${v.verdict}</span></div>
-    <div class="muh-line"><span class="k">Reasons</span><span class="v">${v.reasons.join(" · ")}</span></div>${v.krishnaAllowed ? `
-    <div class="muh-line note"><span class="k">Fallback</span><span class="v">No Shukla day qualified this month · Krishna paksha shown</span></div>` : ""}${day.starEnd ? `
-    <div class="muh-line"><span class="k">Window</span><span class="v">Sunrise star valid till ${day.starEnd.ist}, then ${day.starEnd.endNakshatraName}</span></div>` : ""}` : "";
+  const mode = view.mode || "full";
+  const shuklaFallback = act.paksha === "shukla" && !days.some((d) => scoreMuhurta(d, birth.nakshatra, act, { mode }).impersonalPass && d.tithi.paksha === "Shukla");
+  const cf = { adhikMaas: day.adhikMaas, kharmas: day.kharmas, pitruPaksha: day.pitruPaksha };
+  const vopts = { mode, calendarField: cf };
+  if (shuklaFallback && day.tithi.paksha === "Krishna") vopts.allowKrishnaFallback = true;
+  const v = day.tara ? scoreMuhurta(day, birth.nakshatra, act, vopts) : null;
+  if (v) {
+    // score breakdown by tier
+    const tierLines = [];
+    if (v.tierHits.t1.length) tierLines.push(`<div class="muh-line t1"><span class="k">T1 blockers</span><span class="v">${v.tierHits.t1.join(", ")}</span></div>`);
+    const t2bad = v.tierHits.t2.filter(h => !h.includes("✓"));
+    const t3bad = v.tierHits.t3.filter(h => !h.includes("✓"));
+    if (t2bad.length) tierLines.push(`<div class="muh-line t2"><span class="k">T2 primary</span><span class="v">${t2bad.join(", ")}</span></div>`);
+    if (t3bad.length) tierLines.push(`<div class="muh-line t3"><span class="k">T3 secondary</span><span class="v">${t3bad.join(", ")}</span></div>`);
+    const t2good = v.tierHits.t2.filter(h => h.includes("✓"));
+    const t3good = v.tierHits.t3.filter(h => h.includes("✓"));
+    if (t2good.length || t3good.length) tierLines.push(`<div class="muh-line good"><span class="k">Passing</span><span class="v">${[...t2good, ...t3good].join(", ")}</span></div>`);
+    $("muhDetail").innerHTML = `
+      <div class="muh-line"><span class="k">Score</span><span class="v"><strong>${v.score}/100</strong> · ${v.verdict}</span></div>
+      <div class="muh-line"><span class="k">Tara</span><span class="v">${TARA_NAMES[v.tara.number - 1]} (${v.tara.number}) — ${TARA_NATURE[v.tara.number - 1] === "good" ? "favourable" : TARA_NATURE[v.tara.number - 1] === "bad" ? "unfavourable" : "neutral"}</span></div>
+      <div class="muh-line"><span class="k">${act.name}</span><span class="chip ${v.chip}">${v.chip}</span></div>
+      ${tierLines.join("")}
+      ${v.overrides.length ? `<div class="muh-line ovr"><span class="k">Override</span><span class="v">${v.overrides.join(", ")}</span></div>` : ""}
+      ${v.krishnaAllowed ? `<div class="muh-line note"><span class="k">Fallback</span><span class="v">No Shukla day qualified this month · Krishna paksha shown</span></div>` : ""}${v.timeBounded ? `
+      <div class="muh-line"><span class="k">Window</span><span class="v">${v.timeBounded.validTill} → ${v.timeBounded.nextStar}</span></div>` : ""}`;
+  } else {
+    $("muhDetail").innerHTML = "";
+  }
   $("muhDetailCard").hidden = !v;
 }
 
@@ -620,16 +812,8 @@ async function buildICS(startISO, endISO) {
   for (const e of swe.lunarEclipses(tStart, tEnd)) event(`Lunar eclipse${e.total ? " (total)" : ""}`, tzDT(e.begin), { dend: tzDT(e.end) });
 
   // per-day all-day items (amavasya/purnima/festivals/personal)
-  const dayMap = new Map();
-  for (let yy = sy; yy <= ey; yy++) {
-    const mStart = yy === sy ? sm : 1;
-    const mEnd = yy === ey ? em : 12;
-    for (let mm = mStart; mm <= mEnd; mm++) {
-      const dStart = yy === sy && mm === sm ? sd : 1;
-      const dEnd = yy === ey && mm === em ? ed : new Date(yy, mm, 0).getDate();
-      for (let dd = dStart; dd <= dEnd; dd++) dayMap.set(ymdToISO(yy, mm, dd), await computeDay(yy, mm, dd, geo));
-    }
-  }
+  const icsTz = birth.tz || TZ_IST;
+  const dayMap = await buildDayMap({ y: sy, m: sm, d: sd }, { y: ey, m: em, d: ed }, geo, birth.nakshatra, icsTz);
   for (const [iso, day] of dayMap) {
     const dateStr = iso.replace(/-/g, "");
     if (day.tithi.amavasya) event("Amavasya (new moon)", dateStr, { allday: true });
@@ -743,16 +927,52 @@ async function init() {
   // populate tamil month select
   TAMIL_MONTH.forEach((name, i) => $("evTMonth").insertAdjacentHTML("beforeend", `<option value="${i}">${name}</option>`));
 
-  // populate muhurta activity select
-  const muhSel = $("muhAct");
-  Object.entries(ACTIVITIES).forEach(([key, a]) => {
+  // populate muhurta selection cascade: domain → activity (sub-domain) → sub-activity/task
+  TAX = await loadTaxonomy();
+  const muhDomain = $("muhDomain");
+  const muhSub = $("muhSub");
+  const muhTask = $("muhTask");
+  const fillSubs = () => {
+    const subs = TAX.subDomains(muhDomain.value);
+    muhSub.innerHTML = "";
+    subs.forEach((s) => muhSub.insertAdjacentHTML("beforeend", `<option value="${s.code}">${s.name}</option>`));
+  };
+  const fillTasks = () => {
+    const tasks = TAX.activities(muhDomain.value, muhSub.value);
+    muhTask.innerHTML = "";
+    tasks.forEach((t) => muhTask.insertAdjacentHTML("beforeend", `<option value="${t.activity_id}">${t.activity_name}</option>`));
+  };
+  TAX.domains().forEach((d) => muhDomain.insertAdjacentHTML("beforeend", `<option value="${d.code}">${d.name}</option>`));
+  muhDomain.addEventListener("change", () => { fillSubs(); fillTasks(); view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
+  muhSub.addEventListener("change", () => { fillTasks(); view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
+  muhTask.addEventListener("change", () => { view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
+
+  // restore saved selection (with legacy migration), else default to first task
+  const savedAct = LEGACY_ACTIVITY[view.activity] || view.activity;
+  const saved = savedAct && TAX.getActivity(savedAct);
+  if (saved) {
+    muhDomain.value = saved.domain;
+    fillSubs();
+    muhSub.value = saved.sub_domain;
+    fillTasks();
+    muhTask.value = saved.activity_id;
+    view.activity = saved.activity_id;
+  } else {
+    fillSubs(); fillTasks();
+    view.activity = muhTask.value;
+  }
+  save(LS.view, view);
+
+  // populate selection mode selector (§2.6.7)
+  const muhModeSel = $("muhMode");
+  Object.entries(SELECTION_MODES).forEach(([key, m]) => {
     const opt = document.createElement("option");
     opt.value = key;
-    opt.textContent = a.name;
-    if (key === view.activity) opt.selected = true;
-    muhSel.appendChild(opt);
+    opt.textContent = m.label;
+    if (key === view.mode) opt.selected = true;
+    muhModeSel.appendChild(opt);
   });
-  muhSel.addEventListener("change", () => { view.activity = muhSel.value; save(LS.view, view); if (birth) render(); });
+  muhModeSel.addEventListener("change", () => { view.mode = muhModeSel.value; save(LS.view, view); if (birth) render(); });
 
   // populate janma nakshatra dropdown (flat 27 list) + rashi select (editable, auto-filled)
   const nakSel = $("bNakshatra");
