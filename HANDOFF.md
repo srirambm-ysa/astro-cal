@@ -6,7 +6,7 @@
 
 Last updated: 2026-08-11
 
-**Session token count (2026-08-11 · this session):** REAL billed 1,447,301 (RAW 10,410,207 · 86.1% cache efficiency)
+**Session token count (2026-08-11 · wrap-up session):** REAL billed 161,066 (RAW 1,144,183 · 85.9% cache efficiency)
 
 ## Goal Accomplished (this session — 2026-08-11 · scoring engine + restructure)
 - **Corpus pivot: 250-rule engine → 17-domain file corpus** (prior session): old corpus archived to
