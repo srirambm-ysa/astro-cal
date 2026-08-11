@@ -2,11 +2,23 @@
 title: Astro-Cal — Vedic Muhurta Calendar
 type: plan
 status: draft
-last_updated: 2026-08-10
+last_updated: 2026-08-11
 related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.md]
 ---
 
-# Astro-Cal — PRD (first cut)
+# Astro-Cal — PRD
+
+> **SINGLE SOURCE OF TRUTH.** This document is the one authoritative baseline for the
+> astro-cal build. Supporting documents are archived under [`reference/`](reference/) and are
+> consulted for detail, never edited as plan of record. See
+> [Source documents & provenance](#source-documents--provenance).
+>
+> **Scope of the engine.** Astro-cal is a *calculator-first, avoidance-focused* Vedic calendar
+> (v1) with a *good-muhurta* layer (phase 2). A parallel *rules-engine* concept (VMRE —
+> microservice/db flavor) was researched and is **archived** in `reference/muhurtha_PRD.md`; its
+> still-valid scoring/override ideas are folded into §Phase 2 of this PRD and reconciled to the
+> **local-first, JSON-corpus** architecture (never a database/microservice unless explicitly
+> reopened).
 
 > Personal Vedic-astrology calendar that surfaces **inauspicious and important periods** so
 > appointments are never booked on a bad day or an important family day. Avoidance-focused for v1;
@@ -14,6 +26,30 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 > details, sees a month/year/custom-range calendar of transit flags, and downloads ICS. Personal
 > layer (birthdays, blocked days, shraddha tithis) is **browser-local (localStorage)** — no auth,
 > no server state, private per browser. Local-first, offline-capable.
+
+## Source documents & provenance
+
+| Doc | Location | Role |
+| --- | --- | --- |
+| **This PRD** | `./PRD.md` | **Single source of truth** — build baseline |
+| Rules corpus | `rules/muhurta_rules.json` (250 rules) | Engine-facing classical rule data |
+| Classical rule tables | `reference/classical_rule_architecture_mc.md` | Transcribed reference tables from *Muhurta Chintamani* (used to validate the corpus) |
+| Technical approach (older) | `reference/Technical_Approach.md` | Superseded DB-backed schema + parser pipeline; informative only |
+| VMRE spec (older) | `reference/muhurtha_PRD.md` | Superseded microservice/db PRD; scoring/override ideas folded in here |
+| Limitations analysis | `reference/limitations.md` | Why strict rule adherence fails (weighted-scoring rationale) |
+| Hybrid-sourcing note | `reference/muhurtha_addendum.md` | PDF-as-scaffold + Chintamani-as-data proposal |
+| Modern survey | `reference/vedic_panchang.pdf` | **AI-generated research outline** (25→28-nakshatra, tables) — a requirements *sanity list*, not authoritative source data |
+| Primary classical source | `reference/muhurtha-chinthamani.pdf` | Source text for the rules corpus |
+
+**Provenance caution (owners decided 2026-08-11):**
+- `vedic_panchang.pdf` is an AI-assembled research prompt/outline with "Primary, Variations"
+  tables whose values genuinely conflict across texts. Use it for **structure and the list of
+  doshas/windows to implement**; never hardcode its tables into the corpus without a
+  cross-check against `reference/muhurtha-chinthamani.pdf`. The corpus is the authoritative
+  activity→rules store.
+- The Paramarsh [muhurta guide](https://paramarsh.app/patrika/muhurta-timing/muhurta-complete-guide)
+  is a marketing/education piece: use it for **activity taxonomy naming** and the layered
+  pushdown (calendar-field → daily panchang → personal) it describes, *not* for per-rule data.
 
 ## Concepts covered (Vedic)
 
@@ -332,7 +368,92 @@ consistent rule set below.
 
 Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lookup tables.
 
-### 2.6 UI / product shape (proposal for owner review)
+### 2.6 Rule-engine model — tiered scoring, calendar-field pushdown, cancellations (owners decided 2026-08-11)
+
+> Source docs reconciled here: `reference/limitations.md` (why strict binary fails),
+> `reference/muhurtha_addendum.md` (hybrid sourcing), the Paramarsh guide (layered
+> pushdown + taxonomy), and the classical tables in `reference/classical_rule_architecture_mc.md`.
+> No database/microservice is introduced — everything below is expressed against the **local JSON
+> corpus** (`rules/muhurta_rules.json`) and the existing verdict machinery.
+
+**2.6.1 Three-tier severity (replaces a flat Shubh/Neutral/Ashubh for scored verdicts).**
+Conditions on a slot are tagged by severity; the tier drives both scoring and behaviour:
+
+| Tier | Class | Examples | Behaviour |
+|---|---|---|---|
+| T1 | **Hard blocker** | Active Bhadra in *Mrityu Loka* (Earth); Yama Ghanta; Rahu Kalam (for the booked moment); eclipse hours; Adhik Maas / Kharmas / Pitru Paksha for the event class; Ashtama Chandra peak | Slot **rejected** or heavily penalised *unless* a T1 override applies (2.6.4) |
+| T2 | **Primary alignment** | Nakshatra group fit (Sthira for property, Chara for travel…); severe Tara fail / bad pada; strong malefic Nitya Yoga (Vyatipata, Vaidhriti) or their prohibited initial ghatis | High weight in the score |
+| T3 | **Secondary preference** | Preferred vara, facing/mukha, minor doshas | Small deltas; slot stays usable |
+
+**2.6.2 Scoring verbs.** A slot is evaluated as a weighted suit index (0–100) plus a verdict
+bucket. Hard filters short-circuit to 0% with a rejection reason; otherwise the score is
+`Σ(weights of matching T2/T3 factors) − Σ(active T1-soft penalties)` normalised to 0–100,
+bucketed `EXCELLENT ≥85 / GOOD ≥70 / ACCEPTABLE ≥55 / NEUTRAL / UNFAVORABLE / REJECTED (0)`,
+mirroring the (archived) VMRE scoring pipeline but computed locally.
+
+**2.6.3 Calendar-field pushdown (outer boundary — new).** Before daily panchanga evaluation,
+the *calendar field* narrows the range, exactly as the Paramarsh guide lays out:
+1. **Month-level:** reject Adhik Maas (intercalary lunar month); reject Kharmas (Sun in
+   Sagittarius/Pisces); reject Pitru Paksha (Krishna Bhadrapada/Ashwina before Sharad Navratri)
+   for weddings/housewarmings/launches.
+2. **Day-level:** eclipse start–end hours (solar/lunar, native to swisseph).
+3. **Hour-level:** Rahu / Yamaganda / Gulika windows (already in v1) + Bhadra windows.
+   Abhijit Muhurta is the **T1 fallback window** — 48 min centred on local solar noon — that
+   *reduces* (never fully erases) event-specific T1/T2 penalties (classical: "Abhijit does not
+   make an unsuitable ceremony suitable").
+
+**2.6.4 Cancellation / override table (`overrides`) — the key new structure.**
+Classical texts explicitly provide *parihara* that cancel minor–major doshas. Instead of a flat
+"blocker → 0%", an override stack computes a **repaired** tier. Corpus rows gain an optional
+`overrides` block; evaluation applies the listed overrides top-down until one matches:
+
+| Override | Matches | Effect |
+|---|---|---|
+| `Sarvartha Siddhi` / `Amrita Siddhi` / `Ravi Yoga` (day) | var↔nakshatra sidereal combo (see `reference/classical_rule_architecture_mc.md` §2 table) | Destroys co-existing Dagdha/Visha/Krakacha/Yama-Ghanta-type yogas |
+| `Siddha Yoga` (tithi↔vara) | Nanda/Friday, Bhadra/Wed, Jaya/Tue, Rikta/Sat, Poorna/Thu combos | Neutralizes Masa-Shunya / Masa-Dagdha; Rikta+Sat is productive despite the malefic pair |
+| `Abhijit` | slot inside Abhijit window | T1/T2 penalty → reduced (one grade) |
+| `Bhadra*` | Vishti active but | see 2.6.5 |
+| `Benefic rescue` | Jup/Venus in kendra/trikona, or benefics in angles | reduces Bhadra/soft doshas after midday |
+
+Evaluation contract: a matched override lowers the offending factor's tier by one (hard→high,
+high→soft, soft→0) rather than hard-rejecting. The reason line must name the override: e.g.
+"Rahu in slot ✗ → *Sarvartha Siddhi* → ACCEPTABLE".
+
+**2.6.5 Bhadra (Vishti) is not a blanket ban.** Implement the classical matrix from
+`reference/classical_rule_architecture_mc.md` §5:
+- **Residence (Loka) by Moon rashi:** Mrityu Loka (Aquarius, Pisces, Cancer, Leo) = severe;
+  Swarga (Aries, Taurus, Gemini, Scorpio) and Patala (Virgo, Sagittarius, Libra, Capricorn) =
+  harmless on Earth.
+- **Parts:** first **5 ghatis = Mouth (Mukha, malefic)**; final **3 ghatis = Tail (Puchha =
+  usable for initiation)**.
+- **Exceptions:** not adverse after midday; reduced when benefics in angles; the 8-row
+  tithi+half+prahara schedule applies when reading exact prahara.
+
+**2.6.6 Nitya Yoga partial windows.** Only Vyatipata/Vaidhriti are banned outright; the malefic
+yogas Vishkambha, Atiganda, Shula, Ganda, Vyaghata, Vajra, Parigha are banned only in their
+**initial ghatis** (project: encode per-yoga prohibited-ghati lengths as data, not code).
+
+**2.6.7 Selection modes (three applications of the same engine).**
+1. **Full muhurta** — genuine inflection points (marriage, griha pravesh, launch, namakarana):
+   T1/T2/T3 + calendar-field pushdown + personal chart cross-ref (tara/chandra bala as T2, not veto).
+2. **Soft mode** — recurring decisions (contracts, project starts): avoid only T1 windows
+   (Rahu/Bhadra/eclipse), prefer a suitable vara, T3 weighted lightly, no full T2 table.
+3. **Personal auspicious days** — Moon returns to janma nakshatra (tara = Janma/1): surfaced as a
+   lighter personal rhythm, independent of activity rules.
+   API/product exposes a `selection_mode` parameter (default `full`).
+
+**2.6.8 Corpus schema delta.** `rules/muhurta_rules.json` rules gain optional fields (backward
+compatible; absent = neutral/0 override):
+```js
+{
+  "tiers":          { "t1": ["..."], "t2": ["..."], "t3": ["..."] }, // optional severity tags
+  "overrides":      ["SARVARTTHA_SIDDHI", "ABHIJIT", "BHADRA_TAIL"],
+  "calendar_field": { "blocked_months": ["ADHIKA", "KHARMAS"], "blocked_periods": ["PITRU_PAKSHA"] },
+  "yoga_ghati_ban": { "VISHKAMBHA": 5, "ATIGANDA": 5, "SHULA": 5, "GANDA": 5, "VYAGHATA": 5, "VAJRA": 5, "PARIGHA": 5 }
+}
+```
+
+### 2.7 UI / product shape (proposal for owner review)
 
 - **Activity selector** on the calendar (phase 2): pick a *focus* activity from the starter set
    (**Griha Pravesh / Vehicle / Travel**; Marriage deferred). The table itself is **cumulative**:
@@ -341,13 +462,19 @@ Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lo
    days that are Ashubh across all activities hidden entirely). The dropdown sets which activity's
    tara + day-star-window drives the day-detail panel.
 - Right-panel **muhurta table** (replaces/extents the "Key events" table for the chosen activity):
-  columns date · tara (personal) · nakshatra · vara · tithi · yoga/karana · verdict (Shubh/Neutral/
-   Ashubh) + reason line. Colour-coded chips consistent with the approved ledger theme. Days whose
-   sunrise star ends before sunset carry a "valid till HH:MM → next-nakshatra" note.
-- Day-detail panel gains a tara + per-activity verdict section, with the day-star window note.
-- **ICS:** optionally export only Shubh days for the chosen activity (unchanged).
+  columns date · tara (personal) · nakshatra · vara · tithi · yoga/karana · **score (0–100)** ·
+  verdict (Shubh/Neutral/Ashubh **+ rejection reason or override note**) + reason line.
+  Colour-coded chips consistent with the approved ledger theme. Days whose sunrise star ends
+  before sunset carry a "valid till HH:MM → next-nakshatra" note.
+- **Mode selector** for `selection_mode` (2.6.7): **Full / Soft / Personal days** — drives which
+  tier set is evaluated and how the calendar surface behaves (Full = scored table; Soft = only T1
+  window flags; Personal = janma-nakshatra transit rhythm).
+- Day-detail panel gains a tara + per-activity verdict section with a **score breakdown**, the
+  day-star window note, and — when an override matched — a line naming it
+  (e.g. "*Sarvartha Siddhi* overrides Dagdha today").
+- **ICS:** optionally export only Shubh (score ≥ threshold) days for the chosen activity (unchanged).
 
-### 2.7 Validation (accuracy bar, phase 2)
+### 2.8 Validation (accuracy bar, phase 2)
 
 - **Panchang parity (regression):** Aug-10-2026 sunrise IST 05:55 → Krishna Dwadashi · Ardra · Vajra ·
   Taitila — verifies exact against vedpanchang.com (unchanged by phase-2 additions).
@@ -361,6 +488,15 @@ Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lo
   window-precision muhurats (e.g. Feb 9 Anuradha at 8:25 PM while sunrise nakshatra is Vishakha),
   which a day-granular table cannot reproduce — this is accepted, not pursued as scope creep.
 - Marriage (Vivah) validation is deferred with the activity (see 2.4).
+- **Calendar-field pushdown (2.6.3):** Adhik Maas / Kharmas / Pitru Paksha / eclipse blocks
+  verified against a 2026–2027 panchang (Drik); blocked ranges must match Drik's own
+  inauspicious-period listings.
+- **Overrides (2.6.4):** unit-check each override — e.g. a day carrying Dagdha *and* Sarvartha
+  Siddhi must resolve to the repaired tier, and the reason line must name the override. The
+  var↔nakshatra Sidereal combos tie to `reference/classical_rule_architecture_mc.md` §2.
+- **Bhadra matrix (2.6.5):** residence-Loka, mouth(5 ghati)/tail(3 ghati), and the 8-row
+  tithi+half+prahara schedule validated against the §5 table in
+  `reference/classical_rule_architecture_mc.md`.
 
 ## Build order (proposed)
 
@@ -385,8 +521,15 @@ Only **yoga + karana** are new astronomy; tara is arithmetic and the rest are lo
 2. **Personalization** — ✅ tara bala (arithmetic on `birth.nakshatra` + day nakshatra); verified
    against a tara-bala calculator.
 3. **Activity tables** — starter set (**griha pravesh / vehicle / travel**; Marriage deferred);
-  per-activity nakshatra/vara/tithi/yoga/karana lookup tables.
+   per-activity nakshatra/vara/tithi/yoga/karana lookup tables. Later expand the archetype
+   taxonomy (spiritual: DIKSHA/VRATA/YAGNA/ABHISHEK · education: VIDYARAMBHA/AKSHARABHYASA/
+   UPANAYANA/NAUKARI · property: BHUMI_PUJAN/VASTU_SHANTI/SHILANYAS/KUWA_KHANAN · body:
+   MUNDAN/KARNA_VEDHA/ANNAPRASHANA · travel: YATRA/VIDESHA_YATRA/TIRTHA_YATRA · financial:
+   VYAPAR_ARAMBHA/LAKSHMI_PUJAN/KRISHI_KARYA) as DB rows in the corpus, per activity nomenclature
+   from the Paramarsh guide (taxonomy names only — rule data must come from Chintamani).
 4. **Verdict + UI** — ✅ per-activity score (`Shubh/Neutral/Ashubh`), ✅ muhurta table in the right
    panel, ✅ tara + day-star-window section in day detail, ✅ activity selector.
-5. **Validate** — ✅ Aug-10 panchang regression vs vedpanchang.com; ✅ tara spot-checks; day-star
+5. **Engine model (2.6)** — tier tags + override stack + calendar-field pushdown + Bhadra matrix
+   + Nitya-Yoga ghati bans + selection modes; validate against 2.8 addenda.
+6. **Validate** — ✅ Aug-10 panchang regression vs vedpanchang.com; ✅ tara spot-checks; day-star
    window fires correctly. Drik day-list parity is intentionally approximate (day-granularity).
