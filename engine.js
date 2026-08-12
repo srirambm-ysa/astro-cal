@@ -508,13 +508,30 @@ export class Engine {
   }
 
   /* Bhadra Loka (residence) by Moon rashi — PRD §2.6.5 + classical_rule_architecture_mc.md §5.
-     Mrityu Loka (Aquarius=10, Pisces=11, Cancer=2, Leo=4) = severe.
-     Swarga (Aries=0, Taurus=1, Gemini=3, Scorpio=7) and
-     Patala (Virgo=5, Sagittarius=8, Libra=6, Capricorn=9) = harmless. */
+     Mrityu Loka (Cancer=3, Leo=4, Libra=6, Pisces=11) = severe; all other rashis
+     (Swarga / Patala) are harmless on Earth.
+     AUTHORITATIVE: Muhurta Chintamani, Ch.1 (Subhashubha Prakarana), Sloka 46:
+       कर्किसिंहतुलामीने मृत्युलोके तु भद्रिका॥
+       (Karka=Cancer, Simha=Leo, Tula=Libra, Meena=Pisces → Mrityu Loka.)
+     VARIANT: some printed English editions (and the OCR archive) print
+       "Aquarius, Pisces, Cancer, Leo" — an Aquarius↔Libra translation swap.
+       We follow the Sanskrit sloka per provenance_registry. */
   bhadraLoka(jd) {
     const moonRashi = this.rashiOf(this.siderealLon(jd, this.swe.SE_MOON));
-    if ([10, 11, 2, 4].includes(moonRashi)) return "mrityu";
+    if ([3, 4, 6, 11].includes(moonRashi)) return "mrityu";
     return "harmless";
+  }
+
+  /* Planetary combustion (Asta) by solar elongation: Guru ≤ 11°, Shukra ≤ 8°.
+     Returns { guru: bool, shukra: bool } at jd. */
+  combustion(jd) {
+    const sun = this.siderealLon(jd, this.swe.SE_SUN);
+    const de = (p) => {
+      let d = ((this.siderealLon(jd, p) - sun) % 360 + 360) % 360;
+      if (d > 180) d = 360 - d;
+      return d;
+    };
+    return { guru: de(this.swe.SE_JUPITER) <= 11, shukra: de(this.swe.SE_VENUS) <= 8 };
   }
 
   /* ===== NITYA YOGA PARTIAL GHTI BANS (PRD §2.6.6) ===== */
@@ -530,7 +547,7 @@ export class Engine {
     12: 5,  // Vyaghata
     14: 5,  // Vajra
     18: 5,  // Parigha
-    22: 60, // Vyatipata — full ban
+    16: 60, // Vyatipata — full ban
     26: 60, // Vaidhriti — full ban
   };
 
@@ -599,16 +616,23 @@ export class Engine {
         starEnd = { jd: nakEnd, ist: timeIST(nakEnd).hhmm, endNakshatra: endNak, endNakshatraName: NAKSHATRA[endNak] };
       }
     }
-    // Bhadra matrix
+    // Bhadra matrix. Evaluate Vishti at sunrise AND at solar noon so a karana
+    // that only becomes active midday (Test B) still flags the day. Prefer the
+    // first probe that finds Vishti in Mrityu Loka (most severe).
     let bhadra = null;
-    const vk = this.vishtiKaranaAt(atSunrise);
-    if (vk) {
-      const loka = this.bhadraLoka(atSunrise);
-      bhadra = { ...vk, loka, inMukha: atSunrise < vk.mukhaEnd, inPuchha: atSunrise >= vk.puchhaStart };
+    const probes = [atSunrise];
+    if (rise && set) probes.push((rise + set) / 2);
+    for (const t of probes) {
+      const vk = this.vishtiKaranaAt(t);
+      if (!vk) continue;
+      const loka = this.bhadraLoka(t);
+      bhadra = { ...vk, loka, inMukha: t < vk.mukhaEnd, inPuchha: t >= vk.puchhaStart };
+      if (loka === "mrityu") break; // strictest found
     }
     // Nitya Yoga ban
     const yb = this.nityaYogaBan(atSunrise);
-    const yogaBan = yb.banned ? { ...yb, fullBan: yb.yogaIndex === 22 || yb.yogaIndex === 26 } : null;
+    const fullBanYogas = [16, 26]; // Vyatipata, Vaidhriti — banned for their whole span
+    const yogaBan = yb.banned ? { ...yb, fullBan: fullBanYogas.includes(yb.yogaIndex) } : null;
     // Abhijit window: 48 min centred on local solar noon (T1 fallback).
     // Check if the window overlaps the civil day (rise→set), not just at sunrise.
     let isInsideAbhijit = false;
@@ -622,7 +646,9 @@ export class Engine {
     const adhikMaas = this.isAdhikMaas(atSunrise);
     const kharmas = this.isKharmas(atSunrise);
     const pitruPaksha = this.isPitruPaksha(atSunrise);
-    return { y, m, d, iso: `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd, bhadra, yogaBan, isInsideAbhijit, adhikMaas, kharmas, pitruPaksha };
+    const combust = this.combustion(atSunrise);
+    const sankranti = tDay === 1; // solar sankranti day (start of Tamil month)
+    return { y, m, d, iso: `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd, bhadra, yogaBan, isInsideAbhijit, adhikMaas, kharmas, pitruPaksha, combustion: combust, sankranti };
   }
 }
 

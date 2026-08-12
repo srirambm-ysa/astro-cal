@@ -1,0 +1,2068 @@
+{
+  "meta": {
+    "source": "Muhurta Chintamani",
+    "author": "Acharya Rama Daivagya",
+    "title": "Classical provenance registry for the astro-cal muhurta engine",
+    "schema": "provenance-registry-v1",
+    "generated": "2026-08-12",
+    "principle": "No fabricated citations. Every verse entry is either 'confirmed' (Sanskrit verified against Muhurta Chintamani text) or 'unverified' (classical concept whose exact sloka still needs verification against muhurtha-chinthamani.pdf) or 'formula' (pure panchanga arithmetic — cite vedic_panchang.pdf, no sloka).",
+    "variants": [
+      {
+        "rule": "BHADRA_EARTH_ACTIVE",
+        "issue": "Printed English editions (and the OCR archive in reference/archive/250_rule_muhurta_engine) read 'Aquarius, Pisces, Cancer, Leo' for Mrityu Loka, an Aquarius<->Libra translation swap.",
+        "resolved_as": "Cancer, Leo, Libra, Pisces (Sloka 46: karkisimhatulamine mrityuloke tu bhadrika). Engine uses [3,4,6,11] (engine.js:516)."
+      }
+    ]
+  },
+  "chapters": {
+    "ch1": {
+      "key": "ch1",
+      "name": "Subhashubha Prakarana",
+      "title": "Chapter 1 (Subhashubha)"
+    },
+    "ch2": {
+      "key": "ch2",
+      "name": "Nakshatra Prakarana",
+      "title": "Chapter 2 (Nakshatra)"
+    },
+    "ch4": {
+      "key": "ch4",
+      "name": "Gochara Prakarana",
+      "title": "Chapter 4 (Gochara)"
+    },
+    "ch6": {
+      "key": "ch6",
+      "name": "Griha / Vastu Prakarana",
+      "title": "Chapter 6 (Griha)"
+    },
+    "ch8": {
+      "key": "ch8",
+      "name": "Yatra Prakarana",
+      "title": "Chapter 8 (Yatra)"
+    },
+    "ch10": {
+      "key": "ch10",
+      "name": "Rajyabhisheka Prakarana",
+      "title": "Chapter 10 (Rajyabhisheka)"
+    },
+    "ch11": {
+      "key": "ch11",
+      "name": "Rina / Vyapara Prakarana",
+      "title": "Chapter 11 (Rina / Vyapara)"
+    },
+    "ch13": {
+      "key": "ch13",
+      "name": "Misra / Chikitsha Prakarana",
+      "title": "Chapter 13 (Misra)"
+    },
+    "ch_samskara": {
+      "key": "ch_samskara",
+      "name": "Samskara Prakaranas",
+      "title": "Samskara chapters (Vivaha, Upanayana, etc.)"
+    },
+    "panchanga": {
+      "key": "panchanga",
+      "name": "Panchanga Tables / Appendices",
+      "title": "Panchanga tables (Rahu Kalam, Yama Ghanta, Gulika, Sankranti)"
+    }
+  },
+  "verses": {
+    "BHADRA_EARTH_ACTIVE": {
+      "label": "Bhadra (Vishti) in Mrityu Loka",
+      "chapter": "ch1",
+      "verse": "Sloka 45-46",
+      "sanskrit_sloka": "संसर्पिणी तु सिंहस्थे मेषे गोयुग्मके स्थिता।\nमृत्युलोके यदा भद्रा तदा शुभविनाशिनी॥\n\nकर्किसिंहतुलामीने मृत्युलोके तु भद्रिका॥",
+      "english_translation": "When Bhadra resides in Mrityu Loka — Moon in Karka (Cancer), Simha (Leo), Tula (Libra), or Meena (Pisces) — she destroys all auspicious works. Puchha (tail) phases are exempt.",
+      "applied_rule_logic": "Hard T1 block when active Vishti Karana with Moon in a Mrityu Loka rashi [3,4,6,11], bypassed only in Puchha (Sloka 47).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "SARVARTHA_SIDDHI_YOGA": {
+      "label": "Sarvartha Siddhi Yoga neutralizer",
+      "chapter": "ch1",
+      "verse": "Sloka 52",
+      "sanskrit_sloka": "सिद्धियोगेषु सर्वेषु दुष्टा अपि गुणावहाः।\nकुयोगान्नाशयन्त्याशु सूर्यस्येव तमोगणाः॥",
+      "english_translation": "Among all Siddhi yogas even malefic combinations become favorable; like the sun dispelling darkness, they instantly neutralize the inauspicious yogas.",
+      "applied_rule_logic": "Active Sarvartha Siddhi cancels T2/T3 penalities (Dagdha/Masa Shunya) and may add bonus; never rescues a T1 hard blocker.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "ASTA_GURU_ACTIVE": {
+      "label": "Jupiter combust (Asta Guru)",
+      "chapter": "ch6",
+      "verse": "Sloka 18",
+      "sanskrit_sloka": "शुक्रास्तगुरुमौढ्येषु बाल्यवार्धकयोस्तथा।\nन कुर्याद् गृहप्रवेशं च सर्वमङ्गलकर्मसु॥",
+      "english_translation": "New residential entry (Griha Pravesha) and all auspicious works must not be undertaken during the combustion (Asta), infancy (Balya), or senility (Vardhakya) of Venus or Jupiter.",
+      "applied_rule_logic": "Hard T1 blocker for Griha Pravesha-class activities when Jupiter's solar elongation <= 11 deg.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "ASTA_SHUKRA_ACTIVE": {
+      "label": "Venus combust (Asta Shukra)",
+      "chapter": "ch6",
+      "verse": "Sloka 18",
+      "sanskrit_sloka": "शुक्रास्तगुरुमौढ्येषु बाल्यवार्धकयोस्तथा।\nन कुर्याद् गृहप्रवेशं च सर्वमङ्गलकर्मसु॥",
+      "english_translation": "New residential entry (Griha Pravesha) and all auspicious works must not be undertaken during the combustion (Asta), infancy (Balya), or senility (Vardhakya) of Venus or Jupiter.",
+      "applied_rule_logic": "Hard T1 blocker for Griha Pravesha-class activities when Venus's solar elongation <= 8 deg.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "TUESDAY_ACTIVE": {
+      "label": "Tuesday borrow ban (Bhauma Vara)",
+      "chapter": "ch11",
+      "verse": "Sloka 4",
+      "sanskrit_sloka": "भौमवारे ऋणं दद्यान्न तु ग्राह्यं कदाचन।\nग्राह्यं यदा तदा वृद्धिर्दाता मुच्येत नान्यथा॥",
+      "english_translation": "Repay debt on Tuesday to be freed; never borrow on Tuesday, for the debt then multiplies (and only the creditor is released).",
+      "applied_rule_logic": "Hard T1 block on Tuesday (vara 2) for loan/mortgage-class activities; repay-debt activities use Tuesday as a preference.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "MARS_HORA_ACTIVE": {
+      "label": "Mars Hora (hostile terms window)",
+      "chapter": "ch10",
+      "verse": "Sloka 12",
+      "sanskrit_sloka": "मित्रमृदुक्षिप्रभैश्च नृपाणां सन्धिकल्पसम्।\nकुर्यात् संग्रामकार्याणि क्रूरोग्रैस्तु विचारयेत्॥",
+      "english_translation": "Treaties, alliances, and commercial accords must be concluded under Mridu and Kshipra nakshatras; aggressive/conflict operations are reserved for the Ugra class.",
+      "applied_rule_logic": "Mars Hora is blocked for contract/alliance-class activities; exact Mars-Hora sloka to be verified against muhurtha-chinthamani.pdf.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "DISHA_SHOOLA_ACTIVE": {
+      "label": "Disha Shoola (directional prohibition)",
+      "chapter": "ch8",
+      "verse": "Sloka 14",
+      "sanskrit_sloka": "इन्दुअर्कयोः प्राचीं न यायात् शुक्रेऽर्के पश्चिमां तथा।\nभौमज्ञयोरुदीचीं च गुरौ याम्यां विवर्जयेत्॥",
+      "english_translation": "Do not travel east on Moon/Sun days, west on Venus/Sun days, north on Mars/Mercury days, or south on Jupiter days.",
+      "applied_rule_logic": "Hard T1 block when the activity's required direction conflicts with the travel-day ruler (Disha Shoola matrix).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "EIGHTH_HOUSE_OCCUPIED": {
+      "label": "8th house (Randhra) occupied by malefics",
+      "chapter": "ch13",
+      "verse": "Sloka 9",
+      "sanskrit_sloka": "उग्रैस्तीक्ष्णैश्च नक्षत्रैः शस्त्रघातप्रणाशनम्।\nछिन्दन्त्याशु व्यथां नृणां रन्ध्रहीने च लग्नके॥",
+      "english_translation": "Surgical excision is accomplished quickly under Ugra/Tikshna nakshatras when the 8th house (Randhra) from the muhurta lagna is unoccupied.",
+      "applied_rule_logic": "Hard T1 blocker for surgical-class activities when the 8th house from the muhurta chart carries a malefic. Requires full chart (v1: transit signal).",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "TITHI_GROUP": {
+      "label": "Tithi group / Rikta avoidance",
+      "chapter": "ch6",
+      "verse": "Sloka 1-2",
+      "sanskrit_sloka": "स्थिरमृदुक्षिप्रचरेषु वास्तुपूजां समाचरेत्।\nरिक्तां पञ्चदशीं हित्वा शुभाः स्युः सर्वतिथयः॥",
+      "english_translation": "Perform Vastu Puja under Sthira, Mridu, or Kshipra nakshatras, avoiding Rikta tithis and the fifteenth (Amavasya); all other tithis are auspicious.",
+      "applied_rule_logic": "Basis for tithi-group fit (Nanda/Bhadra/Jaya/Rikta/Poorna) and the bad-tithi Rikta blocker. Group deity taxonomy per Chapter 1, Slokas 3-5 (unverified).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "NAKSHATRA_GROUP": {
+      "label": "Sevenfold nakshatra functional classification",
+      "chapter": "ch2",
+      "verse": "Sloka 2-8",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Basis for Sthira/Chara/Mridu/Kshipra/Tikshna functional-group mapping of every corpus activity. Exact sloka verses to be verified against muhurtha-chinthamani.pdf.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "VISHTI_KARANA": {
+      "label": "Vishti Karana schedule",
+      "chapter": "ch1",
+      "verse": "Sloka 43-45",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Basis for the Vishti/Bhadra active-tithi and half schedule (badKaranas=[6]); derived from the Bhadra matrix in classical_rule_architecture_mc.md §5.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "VYATIPATA_YOGA_ACTIVE": {
+      "label": "Vyatipata Nitya Yoga (full ghati ban)",
+      "chapter": "ch1",
+      "verse": "Sloka 28-29",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Full-span prohibition when Nitya Yoga = Vyatipata (index 16). Yoga enumeration per Chapter 1, Slokas 28-29 (unverified).",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "VAIDHRITI_YOGA_ACTIVE": {
+      "label": "Vaidhriti Nitya Yoga (full ghati ban)",
+      "chapter": "ch1",
+      "verse": "Sloka 28-29",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Full-span prohibition when Nitya Yoga = Vaidhriti (index 26). Yoga enumeration per Chapter 1, Slokas 28-29 (unverified).",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "RAHU_KALAM_ACTIVE": {
+      "label": "Rahu Kalam",
+      "chapter": "panchanga",
+      "verse": "Panchanga table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Sub-day inauspicious period of the ascendant/constellation ruler; used for booked-moment T1 (PRD §2.5). Table-based, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "YAMA_GHANTA_ACTIVE": {
+      "label": "Yama Ghanta",
+      "chapter": "panchanga",
+      "verse": "Panchanga table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Sub-day inauspicious window; day-granular engine cannot score it (dropped at corpus load). Table-based, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "GULIKA_KALAM_ACTIVE": {
+      "label": "Gulika Kalam",
+      "chapter": "panchanga",
+      "verse": "Panchanga table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Sub-day inauspicious period of the malefic fraction; used as an override neutralizer. Table-based, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "SANKRANTI_DAY_ACTIVE": {
+      "label": "Sankranti day",
+      "chapter": "panchanga",
+      "verse": "Solar ingress table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Hard T1 block on solar-ingress day (tDay===1) for auspicious starts. Table-based, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "ABHIJIT_MUHURTA": {
+      "label": "Abhijit Muhurta override",
+      "chapter": "panchanga",
+      "verse": "Abhijit window",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "48-min window about solar noon rescues only weak daily temporal afflictions (weak Vara/Rahu/Gulika); never T1 hard blockers (debugging-tips §1/§2).",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "AMRITA_SIDDHI_YOGA": {
+      "label": "Amrita Siddhi Yoga neutralizer",
+      "chapter": "ch1",
+      "verse": "Sloka 52 (class)",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Siddhi-yoga family neutralizer (same classical class as Sarvartha); exact Amrita sloka to be verified.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "RAVI_YOGA": {
+      "label": "Ravi (Sun) Yoga neutralizer",
+      "chapter": "ch1",
+      "verse": "Slokas 5, 8-9",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Sun-derived auspicious yoga used as an override neutralizer. Verse reference to be verified.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "MARS_EXALTED_OR_IN_OWN_SIGN": {
+      "label": "Mars exalted / own-sign overrides",
+      "chapter": "ch2",
+      "verse": "Sloka 2-9",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Planetary-functional-strength neutralizer; derives from the nakshatra/planet chapter. Verse reference to be verified.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "KSHAYA_TITHI_ACTIVE": {
+      "label": "Kshaya Tithi",
+      "chapter": "panchanga",
+      "verse": "Panchanga table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Dropped tithi due to lunar-velocity compression on the day; treated as an affliction. Table-based.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "WANING_MOON_EXTREME": {
+      "label": "Extreme waning moon",
+      "chapter": "panchanga",
+      "verse": "Moon phase table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Amavasya/krishna-paksha floor for growth activities. Moon-phase arithmetic, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "AFFLICTED_MOON_WATER_SIGN": {
+      "label": "Moon afflicted in a water sign",
+      "chapter": "panchanga",
+      "verse": "Moon transit table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Moon-in-water-sign affliction flag for liquid/flow activities; transit signal, no classical sloka.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "MOON_TRANSIT_BODY_PART_SIGN": {
+      "label": "Moon transit through body-part sign",
+      "chapter": "panchanga",
+      "verse": "Moon transit table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Body-part corpus concept (e.g., head/limb rashi) used for medical topicality; modern mapping, no classical sloka.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "LATTA_DOSHA_ACTIVE": {
+      "label": "Latta Dosha",
+      "chapter": "ch1",
+      "verse": "Sloka 8-9",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Couple-compatibility dosha for samskara/union activities. Verse reference to be verified.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "VASTU_SUAPTA_PERIOD": {
+      "label": "Vastu Suapta (Vastu sleeps) period",
+      "chapter": "ch6",
+      "verse": "Griha Prakarana",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Periods when the site/Vastu is considered dormant; prohibited for groundbreaking-class activities. Verse reference to be verified.",
+      "basis": "classical",
+      "proof": "unverified"
+    },
+    "TARA": {
+      "label": "Tara Bala (janma-nakshatra compatibility)",
+      "chapter": "panchanga",
+      "verse": "Tara table",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Personal-mode pierce: tara number/nature vs the native's janma nakshatra. Table-based, cite vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    },
+    "FORMULA_PANCHANGA": {
+      "label": "Panchanga arithmetic (tithi/nakshatra/karana/yoga/vara)",
+      "chapter": "panchanga",
+      "verse": "Panchanga tables",
+      "sanskrit_sloka": null,
+      "english_translation": null,
+      "applied_rule_logic": "Base scoring terms and panchanga fit derived from sidereal-last equations; formulas per vedic_panchang.pdf.",
+      "basis": "formula",
+      "proof": "formula"
+    }
+  },
+  "activities": {
+    "ACT_AGRI_SEED_SOWING": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "WANING_MOON_EXTREME",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Seed Sowing & Nursery Germination (Beeja Vapa) · Group: Mridu / Maitra (Gentle) & Urdhvamukhi (Upward-facing) · High germination rate, strong root establishment, pest resistance, bountiful crop yield"
+    },
+    "ACT_AGRI_GRAIN_SILO_STORAGE": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Granary Ingestion & Cold Storage Inflow (Dhanya Sangrahana) · Group: Sthira (Fixed) & Adhomukhi (Downward-facing) · Protection against pests/fungus, weight retention, long shelf-life, market price stability"
+    },
+    "ACT_AGRI_CROP_HARVESTING": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Field Crop Harvesting & Fruit Picking (Dhanya Chhedana) · Group: Kshipra / Laghu & Chara / Movable · Efficient crop gathering, low harvesting losses, optimal grain moisture, fast transit"
+    },
+    "ACT_AGRI_TILLAGE_PLOWING": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First seasonal plowing, soil turning, or mechanized tilling (Sthira / Downward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AGRI_IRRIGATION_DRONE_SETUP": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commissioning drip irrigation systems, automated pumps, or agrotech sensor grids (Jala Signs / Kshipra). · Group: Kshipra / Laghu (Swift)"
+    },
+    "ACT_AGRI_TREE_PLANTATION": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Planting fruit orchards, timber trees, or perennial cash crops (Sthira / Upward). · Group: Kshipra / Laghu (Swift)"
+    },
+    "ACT_AGRI_BIOTECH_GRAFTING": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Plant tissue culture, grafting, or bio-fertilizer application (Mridu / Kshipra). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AGRI_THRESHING_PROCESSING": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Grain threshing, milling, or agro-processing plant operation (Tikshna / Sharp). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AGRI_COMMODITY_DISPATCH": {
+      "domain": "DOM_AGRICULTURE_AGROTECH",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Bulk dispatch of produce to agricultural markets (Mandi) or export terminals (Chara / Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MFG_PLANT_COMMISSIONING": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Industrial Manufacturing Plant & Assembly Line Inauguration · Group: Sthira (Fixed) & Purna (Fullness) · Operational uptime, high production yield, worker safety, equipment longevity"
+    },
+    "ACT_AERO_FLIGHT_MAIDEN_TEST": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VAIDHRITI_YOGA_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Maiden Test Flight / Aerospace Engine Static Fire · Group: Chara / Movable & Urdhvamukhi (Upward-facing) · Aerodynamic stability, zero avionics failure, engine reliability, flight crew safety"
+    },
+    "ACT_AUTO_MODEL_MASS_PRODUCTION": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commercial Assembly Line Rollout for Vehicle Model · Group: Chara (Movable) & Kshipra (Swift) · High manufacturing throughput, minimal recall rate, market demand, supply chain flow"
+    },
+    "ACT_MFG_TOOLING_MACHINERY_INSTALL": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Installing heavy CNC machines, stamping presses, or automated assembly robots (Sthira / Downward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AUTO_COMMERCIAL_VEHICLE_LAUNCH": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Public reveal, dealership dispatch, or fleet launch of a new automotive line (Chara / Sideways). · Group: Chara / Chala (Movable) & Kshipra / Laghu (Swift)"
+    },
+    "ACT_MFG_FORGING_CASTING_START": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Firing industrial blast furnaces, foundry casting, or heavy metal forging (Agni Tattva / Tikshna). · Group: Tikshna / Ugra (Sharp)"
+    },
+    "ACT_MFG_PRECISION_MACHINING": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commencing high-precision lathe work, laser cutting, or engine block machining (Kshipra / Swift). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AERO_AIRCRAFT_ASSEMBLY_INIT": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Keel/airframe assembly start for commercial or military aircraft (Chara / Upward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_AERO_SATELLITE_LAUNCH": {
+      "domain": "DOM_AUTOMOTIVE_MANUFACTURING",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Rocket launch, satellite payload integration, or orbital deployment (Upward / Kshipra). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_EDU_VIDYARAMBHA": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initiation of Learning / First Schooling (Vidyarambha) · Group: Mridu / Maitra (Gentle) & Kshipra / Laghu (Swift) · Cognitive development, retention, academic success, Saraswati grace"
+    },
+    "ACT_EDU_STEM_TECHNICAL": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "STEM, Software Coding & Engineering Skill Acquisition · Group: Kshipra / Laghu (Swift) & Chara / Movable (Dynamic) · Analytical logic, technical proficiency, problem-solving, system mastery"
+    },
+    "ACT_EDU_FINE_ARTS_MUSIC": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initiation in Fine Arts, Vocal/Instrumental Music & Dance · Group: Mridu / Maitra (Gentle / Soft) · Aesthetic mastery, creative expression, vocal/rhythmic fluency"
+    },
+    "ACT_EDU_AKSHARAMBHA": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Teaching letters, reading, and writing (Aksharambha). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_EDU_HIGHER_STUDIES": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Enrolling in universities, master's/doctoral programs, or research degrees. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_EDU_COMPETITIVE_EXAM": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Appearing for competitive entrance exams, board certifications, or bar exams (Kshipra/Jaya). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_EDU_VOCATIONAL_CRAFTS": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Learning technical crafts, architecture, sculpting, or manufacturing (Shilpa). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_EDU_DEBUT_PERFORMANCE": {
+      "domain": "DOM_EDUCATION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First public performance, recital, or art exhibition (Arangetram). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_STARTUP_INCORPORATION": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Entity Incorporation / Company Founding · Group: Sthira (Fixed) & Kshipra (Swift) · Corporate permanence, brand integrity, legal entity longevity, equity protection"
+    },
+    "ACT_STARTUP_PUBLIC_LAUNCH": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "RAHU_KALAM_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Public Product Go-To-Market / Commercial Launch · Group: Chara / Movable & Kshipra / Laghu · Virality, rapid user adoption, global reach, market disruption"
+    },
+    "ACT_STARTUP_PITCH_TERM_SHEET": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "MARS_HORA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "VC Pitching & Signing Term Sheets / Investment Deals · Group: Jaya (Victory) & Mridu (Tender Alliances) · Securing favorable valuation, institutional backing, fast closing, mutual profit"
+    },
+    "ACT_STARTUP_EQUITY_CAPTABLE": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Executing founder vesting agreements, cap table allocations, or partner agreements (Mridu/Purna). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_STARTUP_BETA_LAUNCH": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Releasing early-access / private beta software to users (Kshipra/Laghu). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_STARTUP_BANK_CAPITAL_DEPOSIT": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Opening corporate treasury accounts or depositing major seed/venture funds (Sthira/Fixed). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_STARTUP_OFFICE_OPENING": {
+      "domain": "DOM_STARTUPS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commercial office inauguration, ribbon cutting, or factory setup (Sthira/Urdhvamukhi). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_HOSP_RESTAURANT_OPENING": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Restaurant, Cafe or Bar Grand Opening · Group: Chara / Movable (Customer circulation) & Mridu (Hospitality & Taste) · High customer footfall, popular acclaim, repeat patronage, financial profitability"
+    },
+    "ACT_HOSP_HOTEL_INAUGURATION": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Hotel, Resort or Lodging Facility Inauguration · Group: Sthira / Fixed (Infrastructure stability) & Purna (Fullness) · Asset longevity, high occupancy rates, guest safety, commercial reputation"
+    },
+    "ACT_HOSP_KITCHEN_IGNITION": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First Commercial Kitchen Stoves / Hearth Lighting · Group: Agni Tattva (Fire Element) & Kshipra / Laghu · Fire safety, food quality, efficient kitchen operations, team harmony"
+    },
+    "ACT_HOSP_BANQUET_EVENT_LAUNCH": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Launching a dedicated event hall, convention center, or wedding venue (Purna / Fullness). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_HOSP_BEVERAGE_BREWERY_START": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Bottling, brewing, or commercial production of beverages (Jala Tattva / Water Signs). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_HOSP_FOOD_PACKAGED_LAUNCH": {
+      "domain": "DOM_HOSPITALITY",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Launching packaged consumer food products (FMCG) or food delivery brands (Kshipra / Swift). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_LEGAL_FILE_PLAINT": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Filing Civil / Commercial Lawsuit · Group: Jaya (Victory) & Kshipra (Swift) · Overcoming opposition, securing legal victory, establishing claim"
+    },
+    "ACT_LEGAL_SETTLEMENT_SIGNING": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "MARS_HORA_ACTIVE",
+        "RAVI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Signing Out-of-Court Settlement / Peace Accord · Group: Mridu / Maitra (Gentle/Tender) · Harmonization, pacification, ending hostility, long-term peace"
+    },
+    "ACT_LEGAL_BAIL_APPLICATION": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Applying for Bail / Release from Custody · Group: Chara / Chala (Movable) · Movement, swift liberation, escaping confinement"
+    },
+    "ACT_LEGAL_CRIMINAL_COMPLAINT": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Filing criminal charges, FIR, or regulatory complaints (Ugra/Tikshna). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_LEGAL_INJUNCTION_STAY": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Applying for urgent stay orders, interim relief, or injunctions (Kshipra/Swift). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_LEGAL_WRITTEN_STATEMENT": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Filing defense statements, counter-affidavits, or appeals. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_LEGAL_ARBITRATION_START": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initiating arbitration or mediation proceedings (Mridu/Gentle). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_LEGAL_EXECUTION_DECREE": {
+      "domain": "DOM_LEGAL",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Executing court decrees, asset attachments, or eviction orders (Ugra/Cruel). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MAR_KEEL_LAYING": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Keel Laying / Structural Hull Fabrication · Group: Sthira (Fixed) & Adhomukhi (Downward-facing) · Structural integrity, prevention of hull breach, vessel stability, long operational life"
+    },
+    "ACT_MAR_SHIP_LAUNCHING": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "AFFLICTED_MOON_WATER_SIGN",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Vessel Launching / Entering Water (Naukarambha) · Group: Chara / Movable & Jala Tattva (Water Signs: Cancer, Scorpio, Pisces) · Safe buoyancy, protection from storms/reefs, smooth voyages, commercial profitability"
+    },
+    "ACT_MAR_DOCK_PORT_INAUGURATION": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Port Terminal, Dry Dock or Marina Inauguration · Group: Sthira / Fixed & Purna (Fullness) · High cargo volume, harbor safety, asset longevity, trade connectivity"
+    },
+    "ACT_MAR_SHIP_BUILDING_COMPLETE": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Completing structural assembly, fitting machinery, or retrofitting. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MAR_SEA_TRIALS": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commencing inaugural sea trials or engine tests (Kshipra / Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MAR_OFFSHORE_RIG_DEPLOYMENT": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Towing and positioning offshore drilling rigs or wind turbines (Sthira / Water). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MAR_CARGO_FLEET_DISPATCH": {
+      "domain": "DOM_MARINE_MARITIME",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Inaugurating commercial shipping lines or oceanic cargo dispatches (Chara / Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MEDIA_FILM_THEATRICAL_RELEASE": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Theatrical Movie Premiere / Major OTT Release · Group: Chara / Movable (Broad reach) & Mridu / Maitra (Aesthetics) · Box office success, widespread public adoption, critical acclaim, media virality"
+    },
+    "ACT_MEDIA_PODCAST_YOUTUBE_LAUNCH": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Digital Series / Podcast / YouTube Channel Launch · Group: Kshipra / Laghu (Swift execution) & Chara (Network expansion) · Audience engagement, high subscriber conversion, viral reach, clear communication"
+    },
+    "ACT_MEDIA_BOOK_PUBLISHING": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Book Publication / Manuscript Release · Group: Mridu (Tender) & Sthira (Longevity) · Literary impact, critical acclaim, commercial success, long-term readership"
+    },
+    "ACT_MEDIA_FILM_SHOOT_START": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Principal photography / film shoot commencement (Sthira/Chara). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MEDIA_STREAMING_RELEASE": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "OTT platform release, web series launch, or digital premiere (Kshipra/Chara). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MEDIA_SCRIPT_SUBMISSION": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Submitting screenplays, manuscripts, or creative pitches to agencies (Kshipra/Swift). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MEDIA_ALBUM_RELEASE": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Music album / single drop (Mridu/Tender). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MEDIA_FASHION_SHOW": {
+      "domain": "DOM_MEDIA_CREATIVE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Fashion show, design launch, or brand exhibition (Mridu/Venus). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_IP_PATENT_FILING": {
+      "domain": "DOM_IP_COMPLIANCE",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "RAHU_KALAM_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Patent Application Filing / Priority Claim · Group: Kshipra / Laghu (Swift execution) & Sthira (Asset locking) · Establishing immediate legal priority, claim defense, long-term technological monopoly"
+    },
+    "ACT_IP_TRADEMARK_REGISTRATION": {
+      "domain": "DOM_IP_COMPLIANCE",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Trademark / Brand Registration & Publishing · Group: Mridu / Maitra (Gentle) & Chara (Public Reach) · Commercial identity, public notice, trade goodwill, brand longevity"
+    },
+    "ACT_COMP_REGULATORY_SUBMISSION": {
+      "domain": "DOM_IP_COMPLIANCE",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Regulatory Compliance Filing (SEC, ROC, Tax, Audit) · Group: Kshipra / Laghu (Swift & Precise) · Avoiding state penalty, smooth legal scrutiny, error-free validation"
+    },
+    "ACT_MED_ELECTIVE_SURGERY": {
+      "domain": "DOM_HEALTHCARE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "MOON_TRANSIT_BODY_PART_SIGN",
+        "EIGHTH_HOUSE_OCCUPIED",
+        "MARS_EXALTED_OR_IN_OWN_SIGN",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Elective Surgical Operation (Shalya Kriya) · Group: Tikshna / Ugra (Sharp/Cruel) · Excision of diseased tissue, incision, overcoming bodily affliction"
+    },
+    "ACT_MED_START_TREATMENT": {
+      "domain": "DOM_HEALTHCARE",
+      "chapter_key": "ch13",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "KSHAYA_TITHI_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commencing Long-term Therapy / Chronic Medication (Aushadha) · Group: Kshipra / Laghu & Mridu / Maitra · Nourishment, systemic healing, vitality recovery, drug absorption"
+    },
+    "ACT_MED_PHARMA_COMPOUNDING": {
+      "domain": "DOM_HEALTHCARE",
+      "chapter_key": "ch13",
+      "basis": "classical",
+      "verse_keys": [
+        "VYATIPATA_YOGA_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Pharmaceutical Formulations / Ayurvedic Alchemy · Group: Sthira (Fixed) & Chara (Dynamic mixing) · Potency creation, stability of compounds, long shelf-life"
+    },
+    "ACT_MINE_SHAFT_OPENING": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Mine Shaft Sinking / Open-Cast Excavation · Group: Sthira (Fixed) & Adhomukhi (Downward-facing) · Mine safety, structural stability, rich mineral yield, disaster prevention"
+    },
+    "ACT_MINE_SMELTER_FURNACE_IGNITION": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VAIDHRITI_YOGA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Smelter Furnace Lighting & Metallurgical Refining · Group: Agni Tattva (Fire Element) & Tikshna / Ugra · High metal purity, fire safety, energy efficiency, furnace lining longevity"
+    },
+    "ACT_MINE_RARE_EARTH_REFINING": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Rare Earth & Strategic Mineral Processing (Lithium, Silicon, Cobalt) · Group: Kshipra / Laghu & Sthira · High technical precision, yield optimization, chemical safety, commercial supply stability"
+    },
+    "ACT_MINE_GEOLOGICAL_DRILLING": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commencing test drilling, seismic surveys, or exploratory core sampling (Adhomukhi / Downward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MINE_LEASE_CLAIM_FILING": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Filing mineral rights claims, government mining leases, or concession rights (Sthira / Fixed). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MINE_HEAVY_MACHINERY_DEPLOY": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Deploying excavators, tunneling machines, or heavy mining equipment (Tikshna / Sharp). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_MINE_BULLION_MINERAL_AUCTION": {
+      "domain": "DOM_MINING_METALS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Executing bulk mineral sales, raw ore auctions, or precious metal dispatches (Purna / Fullness). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_CORP_MA_CLOSING": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Mergers & Acquisitions (M&A) Closing · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_CORP_IPO_LAUNCH": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initial Public Offering (IPO) / Token Generation Event · Group: Chara / Chala (Movable)"
+    },
+    "ACT_CORP_DEBT_RESTRUCT": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Debt Restructuring & Bond Issuance · Group: Mridu / Maitra (Tender)"
+    },
+    "ACT_CORP_DEAL_SIGNING": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Signing Major Commercial Contracts & Deals · Group: Kshipra / Laghu (Swift)"
+    },
+    "ACT_CORP_ARBITRATION": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Out-of-Court Settlement & Arbitration · Group: Mridu / Maitra (Tender)"
+    },
+    "ACT_CORP_IP_FILING": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Filing High-Stakes Patent / Intellectual Property · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_QUANT_ALGO_DEPLOY": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Deployment of Algorithmic Trading Systems · Group: Kshipra / Laghu (Swift)"
+    },
+    "ACT_CORP_TREASURY_EXEC": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Executing Strategic Equity Buybacks / Treasury Operations · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_PORTFOLIO_REBAL": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Major Portfolio Rebalancing / Fund Capital Call · Group: Chara / Chala (Movable)"
+    },
+    "ACT_CORP_EXEC_ONBOARDING": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Executive Onboarding & C-Suite Appointment · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_CORP_RESTRUCTURE": {
+      "domain": "DOM_CORPORATE_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Corporate Reorganization & Layoff Announcement · Group: Tikshna / Ugra (Sharp)"
+    },
+    "ACT_SAM_VIVAHA_MARRIAGE": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch_samskara",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "LATTA_DOSHA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Sacramental Marriage Ceremony (Vivaha) · Group: Mridu / Maitra (Gentle), Sthira (Fixed) & Purna (Fullness) · Conjugal harmony, marital longevity, mutual prosperity, health of offspring, lineage dignity"
+    },
+    "ACT_SAM_UPANAYANA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch_samskara",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Sacred Thread Ceremony & Spiritual Initiation (Upanayana) · Group: Kshipra / Laghu (Swift) & Mridu / Maitra (Gentle) · Intellectual illumination, scriptural retention, moral discipline, spiritual protection"
+    },
+    "ACT_SAM_ANNAPRASHANA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch_samskara",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First Solid Food Feeding Ceremony (Annaprashana) · Group: Mridu / Maitra & Kshipra / Laghu · Digestive health, physical immunity, longevity, graceful speech development"
+    },
+    "ACT_SAM_GARBHADHANA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Conception / Sacramental union for progeny (Garbhadhana). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_SAM_PUMSAVANA_SEEMANTA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Protection of the fetus and baby shower rites (Pumsavana & Seemantonnayana). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_SAM_NAMAKARANA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Naming ceremony for the newborn (Namakarana). · Group: Sthira / Dhruva (Fixed) & Mridu / Maitra (Tender)"
+    },
+    "ACT_SAM_KARNAVEDHA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Ear piercing sacrament for health and subtle energy channels (Karnavedha). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_SAM_CHUDAKARANA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First haircut / Tonsure ceremony (Chudakarana / Chaula). · Group: Mridu / Maitra (Tender) & Kshipra / Laghu (Swift)"
+    },
+    "ACT_SAM_VEDARAMBHA": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commencement of sacred study, scriptural learning, or mantle assumption. · Group: Mridu / Maitra (Tender) & Kshipra / Laghu (Swift)"
+    },
+    "ACT_SAM_ENGAGEMENT_VALAYAPATTI": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Formal betrothal, ring exchange, or alliance confirmation. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_SAM_AGNIHOTRA_HAVAN": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Consecrating family sacred fires, major home Havans, or Pujas. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_SAM_VRATA_INITIATION": {
+      "domain": "DOM_SAMSKARAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initiating long-term spiritual vows, pilgrimages, or disciplined fasts. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_STOCK_LONG_TERM": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch11",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Long-Term Equity Investment / Portfolio Buying · Group: Sthira (Fixed) & Kshipra (Swift) · Capital appreciation, portfolio stability, long-term wealth compounding"
+    },
+    "ACT_FIN_BUY_GOLD_SILVER": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch11",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "GULIKA_KALAM_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Purchasing Physical Gold, Bullion & Precious Assets · Group: Sthira (Fixed) & Mridu (Tender) · Asset retention, inflation hedge, generational wealth, physical security"
+    },
+    "ACT_FIN_TAKE_MORTGAGE": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch11",
+      "basis": "classical",
+      "verse_keys": [
+        "TUESDAY_ACTIVE",
+        "SANKRANTI_DAY_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Applying for Loan / Executing Debt Mortgage · Group: Chara (Movable) & Kshipra (Swift) · Accessing capital without falling into perpetual debt trap"
+    },
+    "ACT_FIN_REPAY_LOAN": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Repaying Debt / Final Loan Discharge · Group: Kshipra / Laghu (Swift) & Tikshna (Sharp) · Permanent freedom from liability, clearing financial encumbrances"
+    },
+    "ACT_FIN_TRADING_ACCOUNT": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Opening brokerage accounts or deploying liquid capital (Kshipra/Swift). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_SIP_MUTUAL_FUND": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Starting recurring investments (SIPs) or index funds (Chara/Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_SAFE_DEPOSIT": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Opening bank lockers or physical safe vaults (Sthira/Upward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_FIXED_DEPOSIT": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Opening long-term fixed deposits or government bonds (Sthira/Fixed). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_FIN_RECURRING_SAVINGS": {
+      "domain": "DOM_PERSONAL_FINANCE",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Setting up automated high-yield savings plans (Sthira/Purna). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_PETRO_EXPLORATION_RIG_SPUD": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Oil & Gas Well Drilling / Rig Spudding · Group: Sthira (Fixed) & Adhomukhi (Downward-facing) · High hydrocarbon strike rate, blow-out prevention, drilling rig safety, high reservoir pressure"
+    },
+    "ACT_PETRO_REFINERY_CRACKING_START": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "VAIDHRITI_YOGA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Refinery Catalytic Cracking & High-Pressure Unit Commissioning · Group: Agni Tattva (Fire Element) & Tikshna / Ugra · Optimal distillate yield, thermal safety, zero explosion risk, equipment longevity"
+    },
+    "ACT_PETRO_PIPELINE_FIRST_PUMP": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch1",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Oil & Gas Pipeline Commissioning / Tank Farm Operation · Group: Chara / Movable (Continuous flow) & Sthira · Uninterrupted throughput flow, zero pressure drop, corrosion resistance, leak prevention"
+    },
+    "ACT_PETRO_RESERVE_CONCESSION": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Signing exploration block concessions, production sharing contracts (PSCs), or drilling rights (Sthira / Fixed). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_PETRO_DERIVATIVE_POLYMER_PLANT": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Initiating petrochemical synthesis, plastic resin manufacturing, or synthetic polymer production (Rahu / Kshipra). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_PETRO_LNG_TERMINAL_COMMISSION": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commissioning LNG regasification terminals, cryogenic storage, or LPG bottling facilities (Jala Tattva / Fixed). · Group: Chara / Chala (Movable)"
+    },
+    "ACT_PETRO_FUEL_STATION_OPENING": {
+      "domain": "DOM_PETROLEUM_GAS",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Grand opening of commercial gas stations, EV charging hubs, or bulk fuel depots (Chara / Sideways). · Group: Chara / Chala (Movable) & Kshipra / Laghu (Swift)"
+    },
+    "ACT_GOV_TAKING_OATH": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "EIGHTH_HOUSE_OCCUPIED",
+        "VYATIPATA_YOGA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Assuming Public Office / Swearing-in Ceremony (Rajyabhisheka) · Group: Sthira (Fixed) & Purna (Fullness) · Political stability, executive authority, public trust, long tenure, state protection"
+    },
+    "ACT_GOV_POLICY_GAZETTE_RELEASE": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Promulgating Laws / Gazette Notifications / Executive Orders · Group: Sthira / Fixed & Kshipra / Swift · Legal permanence, public compliance, smooth implementation, policy longevity"
+    },
+    "ACT_GOV_CIVIL_SERVICE_JOINING": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch10",
+      "basis": "classical",
+      "verse_keys": [
+        "YAMA_GHANTA_ACTIVE",
+        "RAHU_KALAM_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Onboarding into Civil Services / Public Sector Duty (Raja Seva) · Group: Kshipra / Laghu (Swift execution) & Sthira (Stability) · Career longevity, administrative efficiency, promotion prospects, public welfare"
+    },
+    "ACT_GOV_DIPLOMATIC_MISSION": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Appointing ambassadors, diplomatic envoys, or international bilateral summits (Mridu / Chara). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_GOV_TENDER_INFRA_LAUNCH": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Floating major government tenders, public infrastructure projects, or civic works (Sthira / Downward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_GOV_TAX_REGULATORY_SCHEME": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Launching national tax schemes, public welfare programs, or amnesty drives (Purna / Fullness). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_GOV_DEFENSE_DEPLOYMENT": {
+      "domain": "DOM_GOVERNMENT_PUBLIC",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Commissioning defense hardware, military deployments, or law enforcement drives (Tikshna / Ugra). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_BHOOMI_PUJAN": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "SANKRANTI_DAY_ACTIVE",
+        "VASTU_SUAPTA_PERIOD",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Groundbreaking & Earth Sanctification (Bhoomi Pujan) · Group: Sthira (Fixed) & Adhomukhi (Downward-facing) · Vastu harmony, structural safety, worker protection, completion without cost overruns"
+    },
+    "ACT_REAL_GRIHA_PRAVESHA_NEW": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "ASTA_SHUKRA_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "New Housewarming & First Residential Occupancy (Griha Pravesha) · Group: Sthira (Fixed) & Purna (Fullness) · Family harmony, physical health, prosperity, permanent residency peace"
+    },
+    "ACT_REAL_ROOF_SLAB_CASTING": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch6",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Casting Roof Slabs / Structural Beam Placement · Group: Sthira (Fixed) & Urdhvamukhi (Upward-facing) · Structural safety, leak prevention, resistance to seismic forces, long ceiling life"
+    },
+    "ACT_REAL_LAND_PURCHASE": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Buying land, plots, or commercial real estate titles (Sthira / Fixed). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_VASTU_SURVEY": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Site orientation mapping, soil testing, Vastu layout finalizing, and boundary marking (Kshipra / Sideways). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_FOUNDATION_PILLAR": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Excavation, laying foundation stones, or driving structural piles (Sthira / Downward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_WELL_BOREWELL_DIG": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Digging borewells, underground water tanks, or basements (Jala Signs / Downward). · Group: Mridu / Maitra (Tender)"
+    },
+    "ACT_REAL_DOORFRAME_PLACEMENT": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Setting main doorframes (Dwara Sthapana) and structural archways (Sthira / Upward). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_DEMOLITION_REMOVAL": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Tearing down old structures, clearing debris, or site clearance (Tikshna / Ugra). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_GRIHA_PRAVESHA_OLD": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Re-entering a renovated or rented home after travel or repair (Chara / Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_REAL_LEASE_AGREEMENT_SIGN": {
+      "domain": "DOM_REAL_ESTATE_CONSTRUCTION",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Signing commercial leases, tenant agreements, or rental deeds (Kshipra / Laghu). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_TRV_INTERNATIONAL_RELOCATION": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "DISHA_SHOOLA_ACTIVE",
+        "RAHU_KALAM_ACTIVE",
+        "ABHIJIT_MUHURTA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "International Travel / Permanent Relocation · Group: Chara / Chala (Movable) · Safe transit, hassle-free immigration, smooth settling, long-term prosperity abroad"
+    },
+    "ACT_TRV_VEHICLE_PURCHASE": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "YAMA_GHANTA_ACTIVE",
+        "SARVARTHA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Purchasing Personal or Commercial Vehicle · Group: Chara (Movable) & Kshipra (Swift) · Accident-free driving, mechanical longevity, smooth mobility, asset protection"
+    },
+    "ACT_TRV_PILGRIMAGE_YATRA": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch8",
+      "basis": "classical",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "ASTA_GURU_ACTIVE",
+        "AMRITA_SIDDHI_YOGA",
+        "NAKSHATRA_GROUP",
+        "TITHI_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Pilgrimage / Sacred Temple Yatra · Group: Mridu / Maitra (Gentle) & Sthira (Spiritual Foundation) · Spiritual fulfillment, obstacle-free journey, divine grace, safe return"
+    },
+    "ACT_TRV_SHORT_BUSINESS": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Domestic flights, inter-city train travel, and corporate business trips (Chara/Movable). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_TRV_COMMUTING_LOGISTICS": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Transporting commercial goods, courier dispatch, or logistics routing. · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_TRV_CRUISE_OCEAN": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Maritime travel, cruises, and transoceanic voyages (Jala Tattva / Water Signs). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_TRV_LEISURE_VACATION": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "Family holidays, adventure tourism, and recreational travel (Mridu/Chara). · Group: Sthira / Dhruva (Fixed)"
+    },
+    "ACT_TRV_INAUGURAL_DRIVE": {
+      "domain": "DOM_TRAVEL_TOURISM",
+      "chapter_key": "ch2",
+      "basis": "functional_group",
+      "verse_keys": [
+        "BHADRA_EARTH_ACTIVE",
+        "NAKSHATRA_GROUP",
+        "FORMULA_PANCHANGA"
+      ],
+      "rationale": "First driving session of a new vehicle or road trip deployment. · Group: Sthira / Dhruva (Fixed)"
+    }
+  },
+  "_counts": {
+    "activities": 140,
+    "by_basis": {
+      "classical": 48,
+      "functional_group": 92,
+      "formula": 0
+    },
+    "verse_entries": 29
+  }
+}

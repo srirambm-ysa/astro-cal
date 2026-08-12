@@ -465,9 +465,14 @@ sidereal combos stay in Chintamani-derived code/data as at §2.8, and the regist
 
 **2.6.5 Bhadra (Vishti) is not a blanket ban.** Implement the classical matrix from
 `reference/classical_rule_architecture_mc.md` §5:
-- **Residence (Loka) by Moon rashi:** Mrityu Loka (Aquarius, Pisces, Cancer, Leo) = severe;
-  Swarga (Aries, Taurus, Gemini, Scorpio) and Patala (Virgo, Sagittarius, Libra, Capricorn) =
+- **Residence (Loka) by Moon rashi:** Mrityu Loka (**Cancer, Leo, Libra, Pisces**) = severe;
+  Swarga (Aries, Taurus, Gemini, Scorpio) and Patala (Virgo, Sagittarius, Capricorn, Aquarius) =
   harmless on Earth.
+  - **AUTHORITATIVE:** *Muhurta Chintamani* Ch.1 (*Subhashubha Prakarana*) **Sloka 46** —
+    **कर्किसिंहतुलामीने मृत्युलोके तु भद्रिका॥** (Karka=Cancer, Simha=Leo, Tula=Libra, Meena=Pisces).
+  - **VARIANT NOTE:** an older drafting of this PRD and the OCR archive in `reference/archive/250_rule_muhurta_engine`
+    printed *"Aquarius, Pisces, Cancer, Leo"* for Mrityu Loka — an Aquarius↔Libra translation swap.
+    The engine (`engine.js:516`) and `reference/provenance_registry.json` follow the Sanskrit sloka `[3,4,6,11]`.
 - **Parts (proportional, locked v1.0):** mouth (**Mukha**, malefic = first `5/30 = 1/6`) and tail
   (**Puchha**, usable for initiation = final `3/30 = 1/10`) are defined as *fractions of the full
   active Vishti-Karana span* `[t_start, t_end]`, not as fixed ghati-length clocks — Karana duration

@@ -96,11 +96,17 @@ Bhadra is an inauspicious half-tithi period (*Karana*) whose malefic impact depe
 
 #### B. Location & Impact (*Loka*)
 
+> **VARIANT NOTE:** this table previously read "Aquarius, Pisces, Cancer, Leo" for Mrityu Loka.
+> The Sanskrit of *Muhurta Chintamani* Ch.1 (*Subhashubha Prakarana*) **Sloka 46** is
+> **कर्किसिंहतुलामीने मृत्युलोके तु भद्रिका॥** — Karka (Cancer), Simha (Leo), Tula (Libra),
+> Meena (Pisces). The older reading was an Aquarius↔Libra translation swap adopted from a
+> printed English edition; the engine follows the sloka (`[3,4,6,11]`, see `engine.js:516`).
+
 | Active Moon Sign (*Chandra Rashi*) | Active World (*Loka*) | Practical Impact on Earth |
 | --- | --- | --- |
-| Aquarius, Pisces, Cancer, Leo | **Mrityu Loka** (Earth) [source: 1] | **Severe Malefic:** Avoid all auspicious ventures [source: 1]. |
+| Cancer, Leo, Libra, Pisces | **Mrityu Loka** (Earth) [source: 1] | **Severe Malefic:** Avoid all auspicious ventures [source: 1]. |
 | Aries, Taurus, Gemini, Scorpio | **Swarga Loka** (Heaven) [source: 1] | **Neutral / Harmless** on Earth [source: 1]. |
-| Virgo, Sagittarius, Libra, Capricorn | **Patala Loka** (Underworld) [source: 1] | **Neutral / Harmless** on Earth [source: 1]. |
+| Virgo, Sagittarius, Capricorn, Aquarius | **Patala Loka** (Underworld) [source: 1] | **Neutral / Harmless** on Earth [source: 1]. |
 
 * **Segmentation Rule:** The first **5 Ghatis** of Bhadra represent the **Mouth** (*Mukha*, extremely malefic) [source: 1]. The final **3 Ghatis** represent the **Tail** (*Puchha*, auspicious and usable for initiation) [source: 1].
 

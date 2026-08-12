@@ -6,6 +6,7 @@
      - toMuhurta(activity)  →  scoreMuhurta config shape (data-source swap for app.js)
    Pure ESM — works in the browser and in Node. */
 const CORPUS_URL = "rules/activity_corpus.json";
+const PROVENANCE_URL = "reference/provenance_registry.json";
 
 /* Classical functional groups -> nakshatras / weekdays (source of truth for
    functional-group inheritance). Mirrors tools/build_corpus.js GROUPS. */
@@ -61,6 +62,23 @@ function friendlyName(code) {
 /* Corpus loading (browser fetch / Node fs)                            */
 /* ------------------------------------------------------------------ */
 let corpusPromise = null;
+let provenancePromise = null;
+export function loadProvenance() {
+  if (provenancePromise) return provenancePromise;
+  provenancePromise = (async () => {
+    if (typeof window !== "undefined" && typeof fetch === "function") {
+      const res = await fetch(PROVENANCE_URL);
+      if (!res.ok) throw new Error("Failed to load " + PROVENANCE_URL + " (" + res.status + ")");
+      return res.json();
+    }
+    const fs = await import("fs");
+    const path = await import("path");
+    const { fileURLToPath } = await import("url");
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    return JSON.parse(fs.readFileSync(path.join(here, PROVENANCE_URL), "utf8"));
+  })();
+  return provenancePromise;
+}
 export function loadCorpus() {
   if (corpusPromise) return corpusPromise;
   corpusPromise = (async () => {
@@ -82,8 +100,9 @@ export function loadCorpus() {
 /* Taxonomy (index + queries + adapter)                                */
 /* ------------------------------------------------------------------ */
 export class Taxonomy {
-  constructor(corpus) {
+  constructor(corpus, provenance) {
     this.corpus = corpus;
+    this.provenance = provenance || null;
     this.byId = new Map();
     for (const a of corpus.activities) this.byId.set(a.activity_id, a);
     this.weekdayIndex = new Map(corpus.canonical_vocab.weekdays.map((w, i) => [w, i]));
@@ -172,6 +191,32 @@ export class Taxonomy {
       }
     }
 
+    // Corpus hard-blocker codes → engine evaluator tokens (app.js HARD_BLOCKER_EVALUATORS).
+    // Codes with no day-granularity evaluator are dropped here so they never silently
+    // short-circuit a Reject — unlike a missing rule lookup that would default to PASS.
+    const HARD_TO_TOKEN = {
+      ASTA_GURU_ACTIVE: "ASTA_GURU",
+      ASTA_SHUKRA_ACTIVE: "ASTA_SHUKRA",
+      TUESDAY_ACTIVE: "TUESDAY",
+      SANKRANTI_DAY_ACTIVE: "SANKRANTI",
+      VYATIPATA_YOGA_ACTIVE: "VYATIPATA",
+      VAIDHRITI_YOGA_ACTIVE: "VAIDHRITI",
+    };
+    // Codes intentionally without a day-level token (never warn):
+    //   BHADRA_EARTH_ACTIVE — enforced universally by engine's Bhadra matrix
+    //     (Mrityu Loka → strict T1 unless Puchha), so it needs no per-activity wiring.
+    //   YAMA_GHANTA_ACTIVE — sub-day inauspicious window, not day-granular.
+    const INTENTIONALLY_UNMAPPED = ["BHADRA_EARTH_ACTIVE", "YAMA_GHANTA_ACTIVE"];
+    const hardBlockers = [];
+    for (const hb of activity.hard_blockers || []) {
+      const t = HARD_TO_TOKEN[hb.code];
+      if (t && !hardBlockers.includes(t)) hardBlockers.push(t);
+    }
+    if (activity.hard_blockers && activity.hard_blockers.some((hb) => !HARD_TO_TOKEN[hb.code] && !INTENTIONALLY_UNMAPPED.includes(hb.code))) {
+      const dropped = activity.hard_blockers.map((hb) => hb.code).filter((c) => !HARD_TO_TOKEN[c] && !INTENTIONALLY_UNMAPPED.includes(c)).join(", ");
+      console.warn(`toMuhurta: hard_blocker codes dropped (no day evaluator): ${dropped} on ${activity.activity_id}`);
+    }
+
     return {
       id: activity.activity_id,
       name: activity.activity_name,
@@ -181,13 +226,41 @@ export class Taxonomy {
       badTithis: this.badTithis(bc),
       badYogas: [],
       badKaranas: [6],                       // classical Vishti avoidance (corpus has no karana data)
+      hardBlockers,
       overrides,
       note: this.activityNote(activity, groups),
       source: activity.source,
       domain: activity.domain,
       sub_domain: activity.sub_domain,
       intent: activity.intent,
+      classical: this.classicalProvenance(activity),
       _activity: activity,
+    };
+  }
+
+  /* Classical provenance for an activity, resolved from provenance_registry.json.
+     Returns null when the registry is absent (graceful degradation). */
+  classicalProvenance(activity) {
+    if (!this.provenance || !this.provenance.activities) return null;
+    const meta = this.provenance.activities[activity.activity_id];
+    if (!meta) return null;
+    const chapter = this.provenance.chapters[meta.chapter_key];
+    const verses = [];
+    for (const key of meta.verse_keys || []) {
+      const v = this.provenance.verses[key];
+      if (v && v.basis === "classical" && v.proof === "confirmed") {
+        verses.push({ key, ...v });
+      }
+    }
+    return {
+      source: this.provenance.meta.source,
+      author: this.provenance.meta.author,
+      basis: meta.basis,
+      chapter: chapter ? chapter.name : meta.chapter_key,
+      chapter_key: meta.chapter_key,
+      verse_keys: meta.verse_keys || [],
+      verses, // confirmed classical citations only — no fabricated slokas
+      rationale: meta.rationale || null,
     };
   }
 
@@ -214,5 +287,6 @@ export class Taxonomy {
 }
 
 export async function loadTaxonomy() {
-  return new Taxonomy(await loadCorpus());
+  const [corpus, provenance] = await Promise.all([loadCorpus(), loadProvenance()]);
+  return new Taxonomy(corpus, provenance);
 }

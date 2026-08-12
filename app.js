@@ -123,6 +123,41 @@ const OVERRIDE_EVALUATORS = {
   BENEFIC_RESCUE: (ctx) => ctx.beneficsInAngles === true,
 };
 
+/* Corpus hard-blocker tokens → day-level evaluator predicates.
+   These run in the T1 phase (early-exit) BEFORE any override/bonus — a matching
+   hard blocker returns REJECTED regardless of Sarvartha/Abhijit/Amrita overrides. */
+const HARD_BLOCKER_EVALUATORS = {
+  ASTA_GURU: (day) => !!(day.combustion && day.combustion.guru),
+  ASTA_SHUKRA: (day) => !!(day.combustion && day.combustion.shukra),
+  TUESDAY: (day) => day.vara === 2,
+  SANKRANTI: (day) => day.sankranti === true,
+  VYATIPATA: (day) => day.yoga.index === 16,
+  VAIDHRITI: (day) => day.yoga.index === 26,
+};
+const HARD_BLOCKER_LABEL = {
+  ASTA_GURU: "Jupiter combust (Asta Guru)",
+  ASTA_SHUKRA: "Venus combust (Asta Shukra)",
+  TUESDAY: "Tuesday (Bhauma Vara) hard-blocked",
+  SANKRANTI: "Sankranti day hard-blocked",
+  VYATIPATA: "Vyatipata Yoga active",
+  VAIDHRITI: "Vaidhriti Yoga active",
+};
+
+/* Engine token -> provenance_registry.json verse key (for fired-verse tracing). */
+const HARD_BLOCKER_TO_VERSE = {
+  ASTA_GURU: "ASTA_GURU_ACTIVE",
+  ASTA_SHUKRA: "ASTA_SHUKRA_ACTIVE",
+  TUESDAY: "TUESDAY_ACTIVE",
+  SANKRANTI: "SANKRANTI_DAY_ACTIVE",
+  VYATIPATA: "VYATIPATA_YOGA_ACTIVE",
+  VAIDHRITI: "VAIDHRITI_YOGA_ACTIVE",
+  BHADRA_MRITYU: "BHADRA_EARTH_ACTIVE",
+};
+const OVERRIDE_TO_VERSE = {
+  SARVARTTHA_SIDDHI: "SARVARTHA_SIDDHI_YOGA",
+  ABHIJIT_WINDOW: "ABHIJIT_MUHURTA",
+};
+
 /* Build the evaluation context for override evaluators + scoring.
    Stubs beneficsInAngles (needs full chart) — returns false for v1. */
 function buildMuhurtaContext(day, janmaNakshatra, act, swe) {
@@ -141,19 +176,42 @@ function buildMuhurtaContext(day, janmaNakshatra, act, swe) {
   };
 }
 
-/* Apply overrides: each matched override downgrades the worst remaining hit
-   by one tier (T1→T2, T2→T3, T3→cleared). Returns downgraded hits + named overrides. */
+/* Override-target spec: which hits an override may downgrade.
+   Per debugging-tips §1/§2 overrides can only soften T2/T3 scoring hits —
+   they can NEVER downgrade a T1 hard blocker. ABHIJIT is scoped to weak
+   Vara only (daily temporal affliction), not nakshatra/tithi/yoga/combustion. */
+const OVERRIDE_TARGETS = {
+  ABHIJIT_WINDOW: { tiers: ["t3"], match: (h) => h.startsWith("Vara") },
+  BHADRA_TAIL: { tiers: ["t3"], match: (h) => h.startsWith("Bhadra") },
+  SARVARTTHA_SIDDHI: { tiers: ["t2", "t3"] },
+  SIDDHA_YOGA: { tiers: ["t2", "t3"] },
+  BENEFIC_RESCUE: { tiers: ["t2", "t3"] },
+};
+
+/* Apply overrides: each matched override downgrades one eligible hit by one
+   tier (T2→T3, T3→cleared). T1 hard blockers are never eligible — the hard
+   blockers phase already short-circuited to REJECTED before this runs. */
 function applyOverrides(hits, ctx, overrideTokens) {
   const matched = [];
   for (const token of overrideTokens || []) {
     const fn = OVERRIDE_EVALUATORS[token];
-    if (!fn) continue; // inert token (not in registry)
-    if (!fn(ctx)) continue;
+    if (!fn || !fn(ctx)) continue;
+    const target = OVERRIDE_TARGETS[token] || { tiers: ["t3"] };
     matched.push(token);
-    // downgrade worst hit
-    if (hits.t1.length) { hits.t2.push(hits.t1.pop()); }
-    else if (hits.t2.length) { hits.t3.push(hits.t2.pop()); }
-    else if (hits.t3.length) { hits.t3.pop(); }
+    // find the worst eligible hit across target tiers (t2 preferred)
+    let done = false;
+    for (const tier of target.tiers) {
+      if (done) break;
+      const bucket = hits[tier];
+      for (let i = 0; i < bucket.length; i++) {
+        const hit = bucket[i];
+        if (target.match && !target.match(hit)) continue;
+        if (tier === "t2") { hits.t3.push(bucket.splice(i, 1)[0]); }
+        else { bucket.splice(i, 1); }
+        done = true;
+        break;
+      }
+    }
   }
   return matched;
 }
@@ -167,6 +225,19 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
   const cf = opts.calendarField || {};
   const hits = { t1: [], t2: [], t3: [] };
   const ctx = buildMuhurtaContext(day, janmaNakshatra, act, opts._swe);
+  const firedVerses = new Set();
+
+  // --- Hard-blocker phase (T1 early-exit, debugging-tips §1/§2) ---
+  // Corpus hard blockers run FIRST, before any scoring/override, so Abhijit/
+  // Sarvartha/Siddha can never rescue a hard-blocked day. Soft mode keeps the
+  // T1 but penalises instead of zeroing (handled by hasHardT1 below).
+  for (const token of act.hardBlockers || []) {
+    const fn = HARD_BLOCKER_EVALUATORS[token];
+    if (fn && fn(day)) {
+      hits.t1.push(HARD_BLOCKER_LABEL[token] || token);
+      if (HARD_BLOCKER_TO_VERSE[token]) firedVerses.add(HARD_BLOCKER_TO_VERSE[token]);
+    }
+  }
 
   // --- Calendar-field pushdown (T1) ---
   if (cf.adhikMaas) hits.t1.push("Adhik Maas");
@@ -175,11 +246,14 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
   if (cf.eclipse) hits.t1.push("Eclipse hours");
 
   // --- Bhadra matrix (T1/T2/T3) ---
+  // Bhadra in Mrityu Loka is a strict T1 block unless the day falls in its
+  // Puchha (tail) — classical_rule_architecture_mc.md §5 + debugging-tips §1.
   if (day.bhadra) {
     const b = day.bhadra;
-    if (b.loka === "mrityu" && b.inMukha) hits.t1.push("Bhadra Mukha · Mrityu Loka");
-    else if (b.loka === "mrityu") hits.t2.push("Bhadra · Mrityu Loka");
-    else if (b.inPuchha) hits.t3.push("Bhadra Puchha (usable)");
+    if (b.loka === "mrityu" && !b.inPuchha) {
+      hits.t1.push("Bhadra · Mrityu Loka");
+      firedVerses.add("BHADRA_EARTH_ACTIVE");
+    } else if (b.inPuchha) hits.t3.push("Bhadra Puchha (usable)");
     else hits.t3.push("Bhadra · harmless Loka");
   }
 
@@ -220,21 +294,25 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
     hits.t1 = t1; hits.t2 = []; hits.t3 = [];
   }
   // Personal mode: only tara + janma-nakshatra return; skip impersonal table.
+  // T1 hard blockers (combustion, Bhadra Mrityu, etc.) are always retained.
   if (mode === "personal") {
     const taraHit = hits.t2.find(h => h.startsWith("Tara"));
-    hits.t1 = []; hits.t2 = taraHit ? [taraHit] : []; hits.t3 = [];
+    hits.t2 = taraHit ? [taraHit] : []; hits.t3 = [];
   }
 
   // --- Apply overrides (downgrade worst hits) ---
   const overrides = applyOverrides(hits, ctx, act.overrides);
+  for (const token of overrides) {
+    if (OVERRIDE_TO_VERSE[token]) firedVerses.add(OVERRIDE_TO_VERSE[token]);
+  }
 
   // --- Compute score ---
   let score = SCORE_W.BASE;
   score += hits.t1.length * (mode === "soft" ? SCORE_W.T1_HARD : SCORE_W.T1_SOFT);
   score += hits.t2.filter(h => h.includes("✓")).length * SCORE_W.T2_PASS;
-  score -= hits.t2.filter(h => !h.includes("✓")).length * SCORE_W.T2_HIT;
+  score += hits.t2.filter(h => !h.includes("✓")).length * SCORE_W.T2_HIT;
   score += hits.t3.filter(h => h.includes("✓")).length * SCORE_W.T3_PASS;
-  score -= hits.t3.filter(h => !h.includes("✓")).length * SCORE_W.T3_HIT;
+  score += hits.t3.filter(h => !h.includes("✓")).length * SCORE_W.T3_HIT;
 
   // Hard T1 reject (soft mode penalizes but doesn't zero)
   const hasHardT1 = hits.t1.length > 0;
@@ -255,9 +333,37 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
   if (overrides.length) reasons.push(`Override: ${overrides.join(", ")}`);
   if (timeBounded) reasons.push(`Valid till ${timeBounded.validTill} → ${timeBounded.nextStar}`);
 
+  // --- Classical provenance for the rules that FIRED on this day ---
+  // Only confirmed classical verses (registry proof==="confirmed") are cited;
+  // functional/formula bases carry no fabricated sloka. Resolved per hit.
+  const classical = act.classical || null;
+  const provenance = [];
+  if (classical && firedVerses.size) {
+    for (const v of classical.verses || []) {
+      if (!firedVerses.has(v.key)) continue;
+      provenance.push({
+        primary_source: classical.source,
+        author: classical.author,
+        chapter: v.chapter === "ch1" ? "Chapter 1 (Subhashubha Prakarana)"
+          : v.chapter === "ch6" ? "Chapter 6 (Griha Prakarana)"
+          : v.chapter === "ch8" ? "Chapter 8 (Yatra Prakarana)"
+          : v.chapter === "ch10" ? "Chapter 10 (Rajyabhisheka Prakarana)"
+          : v.chapter === "ch11" ? "Chapter 11 (Rina / Vyapara Prakarana)"
+          : v.chapter === "ch13" ? "Chapter 13 (Misra / Chikitsha Prakarana)"
+          : v.chapter === "ch2" ? "Chapter 2 (Nakshatra Prakarana)"
+          : (classical.chapter || v.chapter),
+        verse_number: v.verse,
+        sanskrit_sloka: v.sanskrit_sloka || null,
+        english_translation: v.english_translation || null,
+        applied_rule_logic: v.applied_rule_logic || null,
+      });
+    }
+  }
+
   return {
     score, verdict, chip: verdictToChip(verdict),
     reasons, tierHits: hits, overrides, timeBounded, ctx,
+    provenance,
     // legacy compat
     nakOK, varaOK, tithiOK, karanaOK,
     impersonalPass: nakOK && varaOK && tithiBaseOK && karanaOK,
@@ -580,10 +686,9 @@ function dayDots(day, iso, flagMap) {
 
 const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival", personal: "Personal", shraddha: "Shraddha" };
 
-/* phase-2 muhurta table (above calendar): first auspicious muhurtas for the focused
-   sub-activity/task. A day is listed when the personal verdict for that task is not
-   REJECTED (Shubh / Good / Excellent or Neutral / Acceptable chips). Uses the §2.6 v1.0
-   scoring engine with calendar-field pushdown + time-bounded verdicts. */
+/* phase-2 muhurta table (above calendar): only Shubh muhurtas for the focused
+   sub-activity/task (verdict chips EXCELLENT/GOOD). Uses the §2.6 v1.0 scoring engine
+   with calendar-field pushdown + time-bounded verdicts. */
 function renderMuhurta(dayMap) {
   const tbody = $("muhurtas");
   const rows = [];
@@ -599,8 +704,8 @@ function renderMuhurta(dayMap) {
     const opts = { mode, calendarField: cf };
     if (shuklaFallback && day.tithi.paksha === "Krishna") opts.allowKrishnaFallback = true;
     const v = scoreMuhurta(day, birth.nakshatra, focusAct, opts);
-    if (v.verdict === "REJECTED") continue;
-    if (v.chip === "Shubh") shubhTotal++;
+    if (v.chip !== "Shubh") continue;
+    shubhTotal++;
 
     const dt = new Date(day.y, day.m - 1, day.d);
     const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
@@ -618,7 +723,7 @@ function renderMuhurta(dayMap) {
     tbody.innerHTML = rows.join("");
     tbody.querySelectorAll(".muhrow").forEach((tr) => tr.addEventListener("click", () => { view.selected = tr.dataset.iso; save(LS.view, view); render(); }));
   } else {
-    tbody.innerHTML = `<tr><td colspan="4" class="note">No Shubh / Neutral days this month for ${focusAct.name}. Try another activity or a softer mode.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" class="note">No Shubh days this month for ${focusAct.name}. Try another activity or a softer mode.</td></tr>`;
   }
   $("muhActName").textContent = `${focusAct.name} · ${SELECTION_MODES[mode].label}`;
   const fbNote = shuklaFallback ? " (Krishna-paksha days also shown — no Shukla days qualified this month)" : "";
@@ -739,11 +844,44 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
       ${tierLines.join("")}
       ${v.overrides.length ? `<div class="muh-line ovr"><span class="k">Override</span><span class="v">${v.overrides.join(", ")}</span></div>` : ""}
       ${v.krishnaAllowed ? `<div class="muh-line note"><span class="k">Fallback</span><span class="v">No Shukla day qualified this month · Krishna paksha shown</span></div>` : ""}${v.timeBounded ? `
-      <div class="muh-line"><span class="k">Window</span><span class="v">${v.timeBounded.validTill} → ${v.timeBounded.nextStar}</span></div>` : ""}`;
+      <div class="muh-line"><span class="k">Window</span><span class="v">${v.timeBounded.validTill} → ${v.timeBounded.nextStar}</span></div>` : ""}
+      ${classicalBlock(v, act)}`;
   } else {
     $("muhDetail").innerHTML = "";
   }
   $("muhDetailCard").hidden = !v;
+}
+
+/* Classical Foundation block — cites the confirmed Muhurta Chintamani slokas that
+   FIRED for this day's verdict (provenance_registry.json, proof==="confirmed"). */
+function classicalBlock(v, act) {
+  const cls = act.classical || null;
+  const verses = v.provenance || [];
+  const basisLabel = cls ? { classical: "direct classical rule", functional_group: "functional-group classification (Ch. 2)", formula: "panchanga formula" }[cls.basis] || cls.basis : null;
+  const items = verses.map((p) => `
+    <div class="prov-item">
+      <div class="prov-ref">${p.chapter} · ${p.verse_number}</div>
+      ${p.sanskrit_sloka ? `<div class="prov-sans" lang="sa">${p.sanskrit_sloka.split("\n").join("<br>")}</div>` : ""}
+      ${p.english_translation ? `<div class="prov-en">${p.english_translation}</div>` : ""}
+      ${p.applied_rule_logic ? `<div class="prov-logic">${p.applied_rule_logic}</div>` : ""}
+    </div>`).join("");
+  if (!verses.length) {
+    return `
+      <div class="classical-foundation">
+        <div class="cf-head">Classical Foundation</div>
+        <div class="cf-note">${cls ? `This activity is classified via ${basisLabel}; no verse-affirmed rule fired today (no hard blocker or categorical overlay applied). All temporal terms verified against Muhurta Chintamani (Rama Daivagya).` : "Provenance registry not loaded."}</div>
+      </div>`;
+  }
+  return `
+    <div class="classical-foundation">
+      <details>
+        <summary>Classical Foundation — <em>Muhurta Chintamani</em>${cls ? ` (${cls.chapter})` : ""}</summary>
+        <div class="cf-body">
+          <div class="cf-basis">Governing basis: ${basisLabel || "muhurta rules"} · Source: ${cls ? cls.source : "Muhurta Chintamani"} · ${cls ? cls.author : "Acharya Rama Daivagya"}</div>
+          ${items}
+        </div>
+      </details>
+    </div>`;
 }
 
 function periodRow(icon, title, sub, tagCls, tagTxt) {
