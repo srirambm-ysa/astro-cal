@@ -4,10 +4,29 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-13
+Last updated: 2026-08-13 (evening)
 
-**Session token count (2026-08-12 · mode-pipeline testing session):** REAL billed 6,121,684
-(RAW 15,181,386 · 59.7% cache efficiency, 66.9% cache-hit share; 109 requests).
+**Session token count (2026-08-13 · UI polish + lay why-rejected session):** REAL billed 5,826,211
+(RAW 30,776,688 · 81.1% cache efficiency, 90.7% cache-hit share; 324 requests).
+
+## Goal Accomplished (this session — 2026-08-13 · calendar/UI polish + lay "why rejected" · committed `61b336d`)
+- **Calendar cells** enlarged to square (60→84px min-height, `aspect-ratio:1/1`, print `auto`), full
+  Devanagari tithi names (`.slice(0,6)` removed), weekend shading `.cell.weekend` (day saffron / night gold tint).
+- **Dual-color scheme**: CSS vars `--panel-a/--panel-b` (day `#FFFFFF`/`#F1EEE5`, night `#2C3365`/`#232A55`);
+  `applyCardShades()` alternates panels in page order starting light at `#app`; cream literals → `var(--paper)`/`var(--panel-a)`.
+- **Header**: month/year now in cal-head (`#calTitle` Rozha One vermilion) above Tamil year; persona chip
+  `#persona` (`★ Ashwini · Mesha`); edit moved into Birth profile (`#editBirthBtn`).
+- **Muhurta dropdowns**: `Please select` placeholder + compute validation + clear reset.
+- **Classical Foundation**: governing verses in `<details open>` (chapter·verse, `.prov-sans` Devanagari via
+  **Eczar** — "Noto Sans Devanagari" was never loaded — English, applied logic, caveat). 139/140 activities have verses.
+- **Source modal** (`#srcBtn`, disabled till all 3 selects set): provenance body (basis badge, chapter +
+  rationale, all confirmed verses, integrity note) + copyable citation; close ×/Esc/backdrop; hidden in print.
+- **Lay "why rejected"**: `rejectedReasons()` + `REJ_LABEL`/`REJ_ORDER` bucket every non-Shubh day
+  (nakshatra/tithi/krishna/karana/bhadra/hard/vara/tara/chandra/score) into a `rejCounts` Map; ONE `.muhwhy`
+  footer row after the table (or after the "No Shubh days" note). Verified via real `scoreMuhurta` in node
+  (Higher Studies / Krittika / Aug 2026 → clean lay sentence). `node --check` + `npm test` (151/9/143/7) green.
+- **Committed everything accumulated** (15 files, +1794/−180): includes prior sessions' engine tweak,
+  `serve.js→serve.cjs`, `tests/` + docs, `package.json`.
 
 ## Goal Accomplished (2026-08-13 · personal-mode supersession per `what-is-personal-mode.md`)
 - **`what-is-personal-mode.md` is the authoritative spec** for Personal-mode data generation;
@@ -66,6 +85,10 @@ Last updated: 2026-08-13
   structural defect — all mode invariants pass.
 
 ## Immediate Next Steps
+0. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
+   likely SIMPLIFY** — this session added many constructs (aspect-ratio override, muhwhy footer, modal hidden,
+   cal-head title, panel vars) that must be re-verified against the printed output; (b) **ICS export discussion**
+   needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
 1. **Mode-pipeline testing (DONE 2026-08-13)** — `what-is-personal-mode.md` superseded the old
    Soft⊆Personal design: Personal is now Option A (⊆ Full) with Tara **and** Chandra Bala,
    universal base is impersonal, thresholds FULL=80/SOFT=60/PERSONAL=75. `tests/tests-suite.mjs`
@@ -78,7 +101,7 @@ Last updated: 2026-08-13
 4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
    If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
    preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
-5. **COMMIT this session's work** (still uncommitted — see git section below).
+5. **COMMIT this session's work** — DONE 2026-08-13 (`61b336d`).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
@@ -104,8 +127,7 @@ Last updated: 2026-08-13
 - Harness scripts now live in **repo** `tests/` (`tests-suite.mjs`, `mode-summary.mjs`; `package.json`
   `npm test` / `npm run modes`). Older leaked harness copies remain in `C:\Users\Sony\AppData\Local\Temp\opencode\`
   (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
-- **Drive backup NOT completed 2026-08-12 close-work**: `ocmem-sync.ps1` failed with rclone
-  `invalid_grant` (token expired). Fix with `rclone config reconnect gdrive:` before next backup.
+- **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #0.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
