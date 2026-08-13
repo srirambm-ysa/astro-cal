@@ -648,7 +648,7 @@ export class Engine {
     const pitruPaksha = this.isPitruPaksha(atSunrise);
     const combust = this.combustion(atSunrise);
     const sankranti = tDay === 1; // solar sankranti day (start of Tamil month)
-    return { y, m, d, iso: `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd, bhadra, yogaBan, isInsideAbhijit, adhikMaas, kharmas, pitruPaksha, combustion: combust, sankranti };
+    return { y, m, d, iso: `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`, rise, set, tithi: tt, tMonth, tDay, tithiIndex, moonNakshatra, moonRashi: this.rashiOf(moonLon), tamilYear: ty, kalam: kw, jdNoon, moonLon, vara, yoga, karana, tara, starEnd, bhadra, yogaBan, isInsideAbhijit, adhikMaas, kharmas, pitruPaksha, combustion: combust, sankranti };
   }
 }
 

@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="fonts.css">
 <style>
   :root{
-    --canvas:#F2EECB; --paper:#F8F0DE; --ink:#3D2412; --ink-soft:#7a5a44;
+    --canvas:#EFEBE0; --paper:#FFFFFF; --ink:#3D2412; --ink-soft:#7a5a44;
+    --panel-a:#FFFFFF; --panel-b:#F1EEE5;
     --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
     --night:#262A4A; --teal:#2F7E7E;
     --line:#C8A86E; --line-faint:#E2D3AE;
@@ -19,9 +20,9 @@
     font-size:15px;line-height:1.55;
   }
   h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
-  .page{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:24px 26px 30px}
-  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(248,240,222,.92);
-    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(248,240,222,.5)}
+  .page{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:24px 26px 30px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);
+    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(255,255,255,.5)}
   .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
   .frame::after{content:"";position:absolute;inset:9px;border:1px solid var(--line-faint);pointer-events:none}
   header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
@@ -34,42 +35,47 @@
   .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink)}
   .range button.active{background:var(--saffron);color:#2b1505;font-weight:600}
   .range .nav{color:var(--vermilion);font-weight:600}
+  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:3px 12px;white-space:nowrap;letter-spacing:.02em}
+  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 11px;font-weight:600;font-size:13px;white-space:nowrap}
+  .persona .pers-star{color:var(--saffron);font-size:12px;line-height:1}
   .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center}
   .btn.ghost{background:transparent;color:var(--ink)}
   .btn.small{padding:4px 10px;font-size:13px}
-  .card{border:1px solid var(--line-faint);background:rgba(255,251,240,.72);padding:15px;margin-bottom:15px}
+  .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
+  .card.panel-b{background:var(--panel-b)}
   .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
   .card h2 svg{width:15px;height:15px}
   .profile{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
   .kv .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft)}
   .kv .v{font-weight:600}
   .kv .v em{font-style:normal;color:var(--vermilion)}
-  .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-  .dow{text-align:center;font-size:12px;font-weight:600;color:var(--vermilion);letter-spacing:.08em;padding:5px 0;border-bottom:1px solid var(--line-faint)}
-  .cell{min-height:60px;background:rgba(255,251,240,.9);border:1px solid var(--line-faint);padding:3px;position:relative;cursor:pointer}
+  .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .dow{text-align:center;font-size:13px;font-weight:600;color:var(--vermilion);letter-spacing:.08em;padding:6px 0;border-bottom:1px solid var(--line-faint)}
+  .cell{min-height:84px;aspect-ratio:1 / 1;background:var(--paper);border:1px solid var(--line-faint);padding:6px;position:relative;cursor:pointer}
   .cell:hover{border-color:var(--gold)}
   .cell.selected{border-color:var(--vermilion);outline:1px solid var(--vermilion)}
   .cell.today{border-color:var(--vermilion)}
-  .cell .num{font-size:14px;color:var(--ink)}
+  .cell.weekend{background:rgba(233,164,51,.12)}
+  .cell .num{font-size:16px;color:var(--ink)}
   .cell .num.today{background:var(--vermilion);color:var(--paper);padding:1px 6px}
   .cell.other{opacity:.4}
-  .cell .tm{font-size:10px;color:var(--ink-soft);font-weight:600}
-  .cell .tithi{font-size:9px;color:var(--gold);line-height:1.2}
-  .cell .dots{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap}
-  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;border:1px solid rgba(61,36,18,.35)}
+  .cell .tm{font-size:11px;color:var(--ink-soft);font-weight:600}
+  .cell .tithi{font-size:11px;color:var(--gold);line-height:1.2}
+  .cell .dots{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(61,36,18,.35)}
   .dot.chandra{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 3px,#FBB65C 3px 6px)}
   .dot.moon{background:#262A4A}
   .dot.eclipse{background:var(--saffron)}
   .dot.festival{background:var(--gold-bright)}
   .dot.personal{background:var(--teal)}
   .dot.shraddha{background:var(--vermilion)}
-  .bar{position:absolute;left:3px;right:3px;bottom:3px;height:12px;overflow:hidden}
+  .bar{position:absolute;left:3px;right:3px;bottom:3px;height:15px;overflow:hidden}
   .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border:1px solid rgba(230,46,46,.45)}
   .bar .peak{position:absolute;top:0;bottom:0;background:var(--chandra-peak)}
-  .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:15px;align-items:start}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:15px;align-items:start}
   .detail{display:grid;gap:6px}
   .sd-label{font-size:13px;font-weight:600;color:var(--vermilion);margin-bottom:6px}
-  .period{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-left:3px solid var(--gold);background:rgba(255,251,240,.85)}
+  .period{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-left:3px solid var(--gold);background:var(--paper)}
   .period .l{display:flex;align-items:center;gap:9px;min-width:0}
   .period .l svg{width:20px;height:20px;flex:none}
   .period .t{font-weight:600}
@@ -120,21 +126,41 @@
   .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
   .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
   .evtab tr.muhrow{cursor:pointer}
+  .evtab .muhwhy td{font-size:11px;color:var(--ink-soft);font-style:italic;padding:2px 8px 10px 12px;border-bottom:1px solid var(--line-faint)}
   .evtab td.tara{white-space:nowrap}
   .muh-detail{border-top:1px solid var(--line-faint);margin-top:12px;padding-top:10px}
   .muh-line{display:flex;gap:8px;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px}
   .muh-line .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;flex:none}
   .muh-line .v{text-align:right;color:var(--ink)}
   .classical-foundation{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px}
+  .muh-acc{margin-top:10px;border-top:1px solid var(--line-faint)}
+  .muh-acc summary{cursor:pointer;font-size:11px;letter-spacing:.05em;color:var(--gold-bright);text-transform:uppercase;font-weight:600;padding:8px 2px}
+  .muh-acc summary span.star-label{text-transform:none;font-weight:400;color:var(--ink-soft)}
   .classical-foundation summary{cursor:pointer;font-size:11px;letter-spacing:.05em;color:var(--gold-bright);text-transform:uppercase;font-weight:600}
   .classical-foundation summary em{font-style:italic;font-weight:400;color:var(--ink-soft);text-transform:none}
   .classical-foundation .cf-basis{font-size:11px;color:var(--ink-soft);margin:6px 0}
-  .prov-item{border-left:2px solid var(--line-faint);padding:6px 10px;margin:6px 0;background:rgba(255,251,240,.5)}
+  .prov-item{border-left:2px solid var(--line-faint);padding:6px 10px;margin:6px 0;background:var(--panel-a)}
   .prov-item .prov-ref{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--saffron);text-transform:uppercase}
-  .prov-item .prov-sans{font-family:"Noto Sans Devanagari",serif;font-size:14px;line-height:1.5;color:var(--ink);margin:4px 0}
+  .prov-item .prov-sans{font-family:"Eczar",serif;font-size:15px;line-height:1.7;color:var(--ink);margin:4px 0}
+  .prov-item .prov-label{font-size:11px;font-weight:600;color:var(--teal);margin:2px 0}
   .prov-item .prov-en{font-size:12px;color:var(--ink);line-height:1.4}
   .prov-item .prov-logic{font-size:11px;color:var(--ink-soft);font-style:italic;margin-top:3px}
   .classical-foundation .cf-note{font-size:11px;color:var(--ink-soft);font-style:italic}
+  .classical-foundation .cf-logic{font-size:11px;color:var(--ink-soft);font-style:italic;margin:8px 0 4px}
+  /* classical source modal */
+  #srcBtn[disabled]{opacity:.45;cursor:not-allowed}
+  .modal-ovl{position:fixed;inset:0;background:rgba(18,14,8,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal-ovl[hidden]{display:none}
+  .modal-panel{background:var(--panel-a);border:1.5px solid var(--gold);box-shadow:0 12px 40px rgba(0,0,0,.35);width:min(720px,100%);max-height:82vh;display:flex;flex-direction:column}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line-faint)}
+  .modal-head h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border:0;padding:0;margin:0}
+  .modal-body{overflow:auto;padding:14px 16px}
+  .modal-foot{padding:10px 16px;border-top:1px solid var(--line-faint);display:flex;justify-content:flex-end;gap:8px}
+  .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .badge.classical{background:var(--teal);color:#fff}
+  .badge.functional_group{background:var(--gold);color:#2b1505}
+  .badge.formula{background:var(--ink-soft);color:#fff}
+  .pf-label{font-size:13px;font-weight:600;color:var(--ink)}
   .note{font-size:11px;color:var(--ink-soft);margin-top:6px;font-style:italic}
   /* forms */
   .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
@@ -142,7 +168,7 @@
   .field input,.field select{width:100%;font-family:"Eczar",serif;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:6px 8px}
   .field input:focus,.field select:focus{outline:none;border-color:var(--gold)}
   .events{display:grid;gap:6px}
-  .ev{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--line-faint);background:rgba(255,251,240,.85)}
+  .ev{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--line-faint);background:var(--paper)}
   .ev .t{font-weight:600;font-size:14px}
   .ev .tt{font-size:12px;color:var(--ink-soft)}
   .ev .rm{cursor:pointer;color:var(--vermilion);font-family:"Eczar",serif;font-size:13px;border:1px solid var(--line-faint);background:transparent;padding:2px 8px}
@@ -150,27 +176,24 @@
   #landing h2{margin-bottom:6px;font-size:19px;text-transform:none;color:var(--ink);border:0;display:block}
   #landing p{color:var(--ink-soft);margin-bottom:14px;font-size:13px}
   .cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-  .cal-head .title{font-size:18px}
+  .cal-head .title{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion)}
   .cal-head .tamil-year{font-size:12px;color:var(--ink-soft)}
   /* ---------- NIGHT MODE ---------- */
   body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
     --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
+    --panel-a:#2C3365; --panel-b:#232A55;
     --saffron:#E8792B; --vermilion:#E25B4A; --gold:#C9A227; --gold-bright:#E4C45A;
     --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
   body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
     box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
   body.night .frame::before{border-color:var(--line)}
   body.night .frame::after{border-color:var(--line-faint)}
-  body.night .card{background:rgba(29,34,66,.72);border-color:var(--line-faint)}
-  body.night .range{background:rgba(29,34,66,.85)}
-  body.night .cell{background:rgba(29,34,66,.9);border-color:var(--line-faint)}
+  body.night .cell.weekend{background:rgba(201,162,39,.14)}
   body.night .cell .tm{color:#c6bfa8}
   body.night .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border-color:rgba(230,46,46,.5)}
-  body.night .period{background:rgba(29,34,66,.85)}
   body.night .tag.per{background:#3D4678;color:var(--ink)}
   body.night .dow{color:var(--gold-bright)}
   body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
-  body.night .ev{background:rgba(29,34,66,.85);border-color:var(--line-faint)}
   body.night .ev .tt{color:#c6bfa8}
   body.night .ev .rm{color:var(--vermilion);border-color:var(--line-faint)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
@@ -200,16 +223,17 @@
   body.night .muh-act{color:#c6bfa8}
   body.night .chip.verdict.Neutral{color:#141835}
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr}}
+  @media(max-width:560px){.cell{min-height:60px}.cell .num{font-size:14px}.cell .tm{font-size:9px}.cell .tithi{font-size:8px}}
   /* ---------- PRINT / PDF ---------- */
   @media print{
     @page{margin:12mm}
     body{background:#fff;color:#000;font-size:11px}
     .frame{border:1px solid #999;background:#fff;box-shadow:none;padding:10px}
     .frame::before,.frame::after{display:none}
-    .controls,#landing,#app,.legend,.note{display:none !important}
+    .controls,#landing,#app,.legend,.note,.modal-ovl{display:none !important}
     .card{border:1px solid #999;background:#fff;break-inside:avoid;padding:10px}
     .layout{grid-template-columns:1fr;gap:10px}
-    .cell{min-height:48px;background:#fff;border:1px solid #aaa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .cell{min-height:48px;aspect-ratio:auto;background:#fff;border:1px solid #aaa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .cell .num.today{background:#B13B2B;color:#fff}
     .bar.coarse,.dot,.swatch,.chip,.swatch.two{print-color-adjust:exact;-webkit-print-color-adjust:exact}
     #dayDetailCard{display:none !important}
@@ -230,11 +254,11 @@
     <div class="logo"><span class="mark">॥ श्री ॥</span><h1>Muhurta Calendar</h1><span class="sub">Vedic Panchang Ledger</span></div>
     <div class="controls">
       <div class="range">
-        <button class="nav" id="navPrev" title="Previous">‹</button>
-        <button data-range="month" class="active">Month</button>
-        <button class="nav" id="navNext" title="Next">›</button>
+        <button class="nav" id="navPrev" title="Previous month">‹</button>
+        <span class="cur-month" id="curMonth">Month</span>
+        <button class="nav" id="navNext" title="Next month">›</button>
       </div>
-      <button class="btn ghost" id="editBirth">Edit nakshatra / location</button>
+      <div class="persona" id="persona" title="Janma nakshatra & location"><span class="pers-star">★</span><span id="personaText">Set birth star</span></div>
       <button class="btn ghost" id="themeBtn" title="Toggle day / night mode">
         <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <span id="themeLabel">Night mode</span>
@@ -259,23 +283,35 @@
   </section>
 
   <section class="card" id="app" hidden>
-    <h2>Birth profile</h2>
+    <h2 style="display:flex;justify-content:space-between;align-items:center">Birth profile
+      <button class="btn small ghost" id="editBirthBtn" type="button" title="Edit nakshatra & location">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Edit
+      </button>
+    </h2>
     <div class="profile" id="profile"></div>
   </section>
 
   <section class="card" id="muhCard">
-    <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span></span></h2>
+    <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span><button class="btn small ghost" id="srcBtn" type="button" disabled title="Select a domain, activity and sub-activity first"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Source</button></span></h2>
     <div class="form" style="margin-bottom:8px">
       <div class="field"><div class="k">Domain</div><select id="muhDomain"></select></div>
       <div class="field"><div class="k">Activity</div><select id="muhSub"></select></div>
       <div class="field"><div class="k">Sub-activity / Task</div><select id="muhTask"></select></div>
       <div class="field"><div class="k">Mode</div><select id="muhMode"></select></div>
+      <div class="field"><button class="btn" id="muhCompute" type="button">Compute Muhurta</button></div>
+      <div class="field"><button class="btn ghost" id="muhClear" type="button">Clear</button></div>
     </div>
+    <div class="note" id="muhHint" hidden>Select activity + mode, then press <strong>Compute Muhurta</strong>.</div>
     <table class="evtab">
        <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Verdict</th></tr></thead>
       <tbody id="muhurtas"></tbody>
     </table>
     <div class="note" id="muhSummary"></div>
+    <details class="muh-acc" id="muhAcc">
+      <summary id="muhAccHead">Muhurta details — click a Shubh day row</summary>
+      <div class="muh-detail" id="muhAccBody"></div>
+    </details>
   </section>
 
   <div class="layout">
@@ -306,10 +342,6 @@
       <div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div>
     </div>
     <div class="detail" id="detail"></div>
-    <div class="muh-detail" id="muhDetailCard" hidden>
-      <div class="sd-label">Muhurta — <span id="muhDetailAct"></span></div>
-      <div id="muhDetail"></div>
-    </div>
   </section>
 
   <section class="card">
@@ -343,6 +375,18 @@
   </section>
 
 </div>
+</div>
+<div class="modal-ovl" id="srcModal" hidden>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="srcTitle">
+    <div class="modal-head">
+      <h2 id="srcTitle">Classical source</h2>
+      <button class="btn small ghost" id="srcClose" type="button" title="Close">×</button>
+    </div>
+    <div class="modal-body" id="srcBody"></div>
+    <div class="modal-foot">
+      <button class="btn small" id="srcCopy" type="button">Copy citation</button>
+    </div>
+  </div>
 </div>
 <script type="module" src="app.js"></script>
 </body>

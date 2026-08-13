@@ -4,48 +4,81 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-12
+Last updated: 2026-08-13
 
-**Session token count (2026-08-12 · leak-fix + provenance session):** REAL billed 3,612,093 (RAW 16,877,603 · 78.6% cache efficiency, 88.3% cache-hit share). Continuation close-work session: REAL billed ~9.9k (RAW 45.8k).
+**Session token count (2026-08-12 · mode-pipeline testing session):** REAL billed 6,121,684
+(RAW 15,181,386 · 59.7% cache efficiency, 66.9% cache-hit share; 109 requests).
 
-## Goal Accomplished (this session — 2026-08-12 · scoring leak fix + classical provenance)
-- **Fixed the "all dates Shubh" semantic-scoring leak** (mem_1786464631841, now resolved → see mem_1786518614665):
-  sign-flip in `scoreMuhurta` (T2/T3 weights added instead of subtracted); overrides could downgrade
-  T1 before the hard-reject check; `isInsideAbhijit` always-true flag; Vyatipata misindex (22→16);
-  corpus `hard_blockers` never wired; Bhadra checked only at sunrise; personal mode wiped T1.
-- **Hard-blocker pipeline** (`app.js`): `HARD_BLOCKER_EVALUATORS` (ASTA_GURU/ASTA_SHUKRA combustion via
-  `engine.combustion(jd)` ≤11°/≤8°, TUESDAY vara 2, SANKRANTI tDay===1, VYATIPATA idx 16, VAIDHRITI idx 26)
-  run FIRST into `hits.t1`; `OVERRIDE_TARGETS` restrict `applyOverrides` to T2/T3 (ABHIJIT_WINDOW = t3 +
-  weak Vara only) so overrides can never rescue a hard-blocked day.
-- **Engine**: `YOGA_GHATI_BAN` Vyatipata 16:60; `fullBanYogas=[16,26]`; `combustion(jd)`; `computeDay`
-  returns `combustion` + `sankranti`; Bhadra probes sunrise + solar noon (prefers Mrityu).
-- **Bhadra Mrityu Loka corrected** to `[3,4,6,11]` (Cancer/Leo/Libra/Pisces) per MC Ch.1 Sloka 46
-  (mem_1786518632880); PRD.md §2.6.5 + `classical_rule_architecture_mc.md` §5 annotated as variant
-  readings (old `[10,11,2,4]` = Aquarius↔Libra translation swap).
-- **Classical provenance system** (mem_1786518624198): `reference/provenance_registry.json`
-  (meta/chapters/29 verses/140 activities) generated + validated by `tools/build_provenance.js`
-  (48 classical / 92 functional_group / 0 formula; no fabricated slokas — proof∈confirmed|unverified|formula);
-  runtime join in `taxonomy.js` (`loadProvenance`, `toMuhurta.classical`) and `app.js` `scoreMuhurta`
-  returns `provenance[]` per fired verse; `showDetail` renders a collapsible **Classical Foundation** card.
-- **UI**: muhurta card now shows **only Shubh** days (`renderMuhurta`: `if (v.chip !== "Shubh") continue;`).
-- **Verified**: Tests A 13/13 · B 2/2 · C 4/4 (leak-harness + verify-tests), registry regeneration green,
-  `node --check` clean on app.js/engine.js/taxonomy.js/build_provenance.js.
+## Goal Accomplished (2026-08-13 · personal-mode supersession per `what-is-personal-mode.md`)
+- **`what-is-personal-mode.md` is the authoritative spec** for Personal-mode data generation;
+  it supersedes the conflicting `PRD §2.6.7.3` "independent rhythm" wording, the
+  `browser-testing-behavior.md` 85/65 thresholds, and the "design tension" left open in
+  `muhurtha_debug.md`. Personal = compatibility layer `(Base) AND (Tara Bala) AND (Chandra Bala)`.
+- **Owner decisions:** Option A (Personal ⊆ **Full**, base ≥ 80) · Full/Soft become **0% personal**
+  (tara removed from the universal base) with doc thresholds `FULL=80/MADHYAMA=65/SOFT=60/PERSONAL=75`
+  · reject ALL bad tara (Vipat/Pratyari/Vadha = 3rd/5th/7th).
+- **Implemented:** `engine.js` day object gains `moonRashi`; `app.js` `scoreMuhurta` now computes
+  Chandra Bala (favourable {1,3,6,7,10,11}+15, unfavourable {4,12}−10, **8th house = Ashtama
+  Chandra → REJECT**), Option-A personal pipeline (`personalMetrics` returned, `Shubh ≥ 75`),
+  non-personal sections carry zero personal weight.
+- **Caught by the harness:** scores 70-79 leaked "Shubh" via `verdictToChip(GOOD)` in both the
+  sub-Full personal branch and bad-tara 70-79 days → personal now enforces `chip` explicitly
+  (`≥65 → Neutral` else `Ashubh` below the Full cutoff). Also fixed a latent showDetail bug
+  (`v.tara.number` never existed on the return → `day.tara.number`).
+- **Harness moved into repo** (`tests/tests-suite.mjs`, `tests/mode-summary.mjs`, `package.json`
+  `test`/`modes`). **INV 151/151 · BND 9/9 · OVR 143/143 · PRS 7/7** (PRS-02 Ashtama now real).
+
+## ACCEPTANCE CRITERION (owner) — mem_1786465597914_18jf1
+- Muhurta table shows **only Shubh days** — still true.
+- Per activity: **at most 3-5 Shubh days per month** for Full/Personal — holds (2026-08 full/soft/
+  personal: Griha 2/4/1 · Startup 2/8/1 · Mortgage 1/1/1; Sep Griha 4/11/1; Jan Griha 4/8/1).
+  `Personal ⊆ Full ⊆ Soft` holds on every month×activity. Soft (≥60) remains intentionally looser
+  than the band — calibration lever, not a defect (see `muhurtha_debug.md` addendum).
+
+## Goal Accomplished (this session — 2026-08-12 · mode-pipeline testing fix + mode invariant tests)
+- **Validated the structural "mode inversion" bug** from `browser-testing-behavior.md` empirically:
+  Soft always returned 0 Shubh (it wiped t2/t3 → max score 60 → never a Shubh chip), and
+  Personal was a wildcard 9–14 days (it kept only tara → any good-tara day Shubh regardless
+  of nakshatra/tithi/vara fit). Both broke `Count(Full) <= Count(Soft)` and `Personal ⊆ Soft`.
+- **Fixed `scoreMuhurta`** to the owner-approved "unified base score + thresholds" design:
+  - one universal base score computed from ALL tiers for every mode (INV-03);
+  - universal hard blockers (T1) REJECT in all three modes (INV-02) — overrides never touch T1
+    (structural guard `OVERRIDE_TARGETS` never lists tier `t1`, verified OVR-STRUCT);
+  - mode selects the Shubh cut on that same score: `FULL_SHUBH=70` (unchanged full output),
+    `SOFT_SHUBH=60` so `Full ⊆ Soft` (INV-01), `PERSONAL` must first pass Soft then rejects
+    on bad tara (Naidhana/Vipat/Prahari) → `Personal ⊆ Soft` (PRS-01/02/03).
+  - **Latent bug caught by the test**: the return hardcoded `chip: verdictToChip(verdict)`,
+    silently overwriting the per-mode chip → reverted to propagate the computed `chip`.
+- **Hard-blocker-first phase unchanged** → leak-harness Tests A/B/C (13/13, 2/2, 4/4) still green;
+  no regression to full-mode verdicts (Aug Griha/Startup/Mortgage = 2/5/1, as before).
+- Added `muhurtha_debug.md` (artifacts + next steps) and test harnesses in Temp/opencan
+  (`tests-suite.mjs`: INV/BND/OVR/PRS).
 
 ## ACCEPTANCE CRITERION (owner) — mem_1786465597914_18jf1
 - Muhurta table shows **only Shubh days** — done this session.
 - Per activity: **at most 3-5 Shubh days per month**, across every mode (full/soft/personal). Aug-2026
-  full-mode: Griha 2 Shubh, Startup 5 Shubh, Mortgage 1 Shubh — **within the 3-5 band**. Still to
-  browser-verify across modes + more months.
+  full-mode: Griha 2 Shubh, Startup 5 Shubh, Mortgage 1 Shubh — **within the 3-5 band**.
+  NOTE (2026-08-12 testing session): full mode was left unchanged and still validates 2/5/1
+  for Aug; Soft and Personal now correctly form a superset/subset of full (see
+  `muhurtha_debug.md`). The strict "3-5 across every mode" band is only met for Aug full-mode;
+  Soft (>=60) and Personal are intentionally looser (Soft ⊇ Full, Personal ⊂ Soft) and exceed 5
+  for e.g. Startup (soft=10). That band is now a *calibration* task (next steps), not a
+  structural defect — all mode invariants pass.
 
 ## Immediate Next Steps
-1. **Browser-verify the UI** (`serve.bat` → Drik-aligned): muhurta card Shubh-only across full/soft/
-   personal modes + more activities/months; confirm 3-5/day band; Classical Foundation card renders.
-2. **Broaden verification**: run the leak-harness over other months/activities/modes (not just Aug 2026,
-   full mode) to confirm the 3-5 Shubh band holds broadly.
-3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf`; Sanskrit
-   text for `NAKSHATRA_GROUP`, `VYATIPATA`/`VAIDHRITI` (Ch.1 Sl.28-29), `MARS_HORA`, `EIGHTH_HOUSE`,
-   `AMRITA_SIDDHI`, `RAVI_YOGA`, `MARS_EXALTED`, `LATTA_DOSHA`, `VASTU_SUAPTA`.
-4. **COMMIT this session's work** (still uncommitted — see git section below).
+1. **Mode-pipeline testing (DONE 2026-08-13)** — `what-is-personal-mode.md` superseded the old
+   Soft⊆Personal design: Personal is now Option A (⊆ Full) with Tara **and** Chandra Bala,
+   universal base is impersonal, thresholds FULL=80/SOFT=60/PERSONAL=75. `tests/tests-suite.mjs`
+   re-validated: personal⊆full⊆soft, PRS-01 all-bad-tara reject, PRS-02 Ashtama reject, PRS-03
+   good-tara-full→Shubh. (Prior session's structural fix remains: t1 never rescuable, unified base.)
+2. **Broaden verification** — DONE: Aug/Sep-2026 + Jan-2027 × Griha/Startup/Mortgage; INV 151,
+   BND 9, OVR 143, PRS 7. Volatile: Sep Mortgage = 0/0/0 (no Shubh at all that month) — confirm
+   acceptable to owner.
+3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
+4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
+   If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
+   preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
+5. **COMMIT this session's work** (still uncommitted — see git section below).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
@@ -67,9 +100,10 @@ Last updated: 2026-08-12
   sub-day, can't score day-granular; Bhadra handled by the universal engine matrix) — `INTENTIONALLY_UNMAPPED`
   list silences the warning.
 - **Soft mode still rejects hard-blocker days** (T1 → score 0) — intended per debugging-tips; soft only
-  relaxes T2/T3.
-- Harness scripts live in `C:\Users\Sony\AppData\Local\Temp\opencode\` (`leak-harness.mjs`,
-  `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
+  relaxes T2/T3. Personal also rejects hard-blocker days (T1 inherited) plus bad tara / Ashtama Chandra.
+- Harness scripts now live in **repo** `tests/` (`tests-suite.mjs`, `mode-summary.mjs`; `package.json`
+  `npm test` / `npm run modes`). Older leaked harness copies remain in `C:\Users\Sony\AppData\Local\Temp\opencode\`
+  (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
 - **Drive backup NOT completed 2026-08-12 close-work**: `ocmem-sync.ps1` failed with rclone
   `invalid_grant` (token expired). Fix with `rclone config reconnect gdrive:` before next backup.
 

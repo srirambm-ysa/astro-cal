@@ -58,11 +58,11 @@ function currentAct() {
   return act ? TAX.toMuhurta(act) : TAX.toMuhurta(TAX.getActivity("ACT_REAL_GRIHA_PRAVESHA_NEW"));
 }
 
-// Selection modes (PRD §2.6.7).
+// Selection modes (PRD §2.6.7, redefined by what-is-personal-mode.md).
 const SELECTION_MODES = {
-  full: { label: "Full muhurta", desc: "T1/T2/T3 + calendar-field + personal" },
-  soft: { label: "Soft", desc: "Avoid only T1 windows, prefer vara" },
-  personal: { label: "Personal days", desc: "Janma-nakshatra return rhythm" },
+  full: { label: "Full muhurta", desc: "Strict universal window (impersonal, score ≥ 80)" },
+  soft: { label: "Soft", desc: "Relaxed universal window (impersonal, score ≥ 60)" },
+  personal: { label: "Personal days", desc: "Compatibility layer on a Full slot — Tara + Chandra Bala" },
 };
 
 /* ===== PHASE-2 MUHURTA SCORING ENGINE (PRD §2.6 v1.0) ===== */
@@ -77,6 +77,33 @@ const SCORE_W = {
   T3_HIT: -6,      // secondary misalignment
   T3_PASS: 4,      // secondary preference
 };
+
+// Shubh score cutoffs per selection mode (PRD §2.6.7 + what-is-personal-mode.md, superseding).
+// A single universal base score is computed for every mode (INV-03); Full/Soft carry
+// ZERO personal weight (tara/chandra never touch the impersonal score). Mode thresholds
+// (doc): FULL ≥ 80 (MADHYAMA 65-79), SOFT ≥ 60, Personal final ≥ 75. Personal must first
+// qualify at the FULL level (Option A) => Personal ⊆ Full ⊆ Soft (INV-01).
+const FULL_SHUBH = 80;
+const FULL_MADHYAMA = 65;
+const SOFT_SHUBH = 60;
+const PERSONAL_SHUBH = 75;
+
+// Chandra Bala (Lunar transit strength vs birth rashi) — what-is-personal-mode.md.
+// Favorable houses {1,3,6,7,10,11} +15; unfavorable {4,12} −10; 8th = Ashtama Chandra
+// (severe personal hard blocker → reject). House is counted from birth rashi inclusive.
+const CHANDRA_FAVOURABLE = [1, 3, 6, 7, 10, 11];
+const CHANDRA_UNFAVOURABLE = [4, 12];
+function chandraBala(birthRashi, moonRashi) {
+  const house = (((moonRashi - birthRashi) % 12) + 12) % 12 + 1;
+  let bonus = 0;
+  if (CHANDRA_FAVOURABLE.includes(house)) bonus = 15;
+  else if (CHANDRA_UNFAVOURABLE.includes(house)) bonus = -10;
+  return { house, bonus, isAshtamaChandra: house === 8 };
+}
+
+// Tara Bala bonus (personal layer only, per what-is-personal-mode.md): auspicious tara
+// (2nd,4th,6th,8th,9th) +15; bad tara (3rd,5th,7th) reject outright (see scoreMuhurta).
+function taraBonus(taraNature) { return taraNature === "good" ? 15 : 0; }
 
 // Verdict buckets (PRD §2.6.2).
 function scoreToVerdict(score) {
@@ -263,11 +290,10 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
     else hits.t2.push(day.yogaBan.reason);
   }
 
-  // --- Personal: tara (T2) ---
-  const taraBad = day.tara && TARA_NATURE[day.tara.number - 1] === "bad";
-  const taraGood = day.tara && TARA_NATURE[day.tara.number - 1] === "good";
-  if (taraBad) hits.t2.push(`Tara ${TARA_NAMES[day.tara.number - 1]} ✗`);
-  else if (taraGood) hits.t2.push(`Tara ${TARA_NAMES[day.tara.number - 1]} ✓`);
+  // --- Personal: tara (T2, informational only — NOT part of the impersonal base) ---
+  // what-is-personal-mode.md: Full/Soft carry 0% personal weight. Tara participates in
+  // the score only inside the Personal layer (bonus/reject) below.
+  const taraNature = day.tara ? TARA_NATURE[day.tara.number - 1] : "neutral";
 
   // --- Impersonal panchanga fit ---
   const nakOK = !act.nakshatras.length || act.nakshatras.includes(day.moonNakshatra);
@@ -287,49 +313,90 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
   if (!karanaOK) hits.t2.push(`Karana ${KARANA_NAMES[day.karana.index]} ✗`);
   else hits.t3.push(`Karana ${KARANA_NAMES[day.karana.index]} ✓`);
 
-  // --- Selection-mode gating (§2.6.7) ---
-  // Soft mode: ignore T2/T3, only flag T1 windows.
-  if (mode === "soft") {
-    const t1 = hits.t1;
-    hits.t1 = t1; hits.t2 = []; hits.t3 = [];
-  }
-  // Personal mode: only tara + janma-nakshatra return; skip impersonal table.
-  // T1 hard blockers (combustion, Bhadra Mrityu, etc.) are always retained.
-  if (mode === "personal") {
-    const taraHit = hits.t2.find(h => h.startsWith("Tara"));
-    hits.t2 = taraHit ? [taraHit] : []; hits.t3 = [];
-  }
-
   // --- Apply overrides (downgrade worst hits) ---
   const overrides = applyOverrides(hits, ctx, act.overrides);
   for (const token of overrides) {
     if (OVERRIDE_TO_VERSE[token]) firedVerses.add(OVERRIDE_TO_VERSE[token]);
   }
 
-  // --- Compute score ---
+  // --- Universal base score (INV-03): identical for every mode ---
+  // A single raw PANCHANGA-FIT score (impersonal; tara/chandra excluded per the
+  // superseding what-is-personal-mode.md) is computed from all tiers regardless
+  // of mode. Only the Shubh threshold varies, and Personal adds its compatibility
+  // layer on top. This guarantees the subset hierarchy Personal ⊆ Full ⊆ Soft.
   let score = SCORE_W.BASE;
-  score += hits.t1.length * (mode === "soft" ? SCORE_W.T1_HARD : SCORE_W.T1_SOFT);
+  score += hits.t1.length * SCORE_W.T1_SOFT;   // heavy penalty per hard blocker
   score += hits.t2.filter(h => h.includes("✓")).length * SCORE_W.T2_PASS;
   score += hits.t2.filter(h => !h.includes("✓")).length * SCORE_W.T2_HIT;
   score += hits.t3.filter(h => h.includes("✓")).length * SCORE_W.T3_PASS;
   score += hits.t3.filter(h => !h.includes("✓")).length * SCORE_W.T3_HIT;
 
-  // Hard T1 reject (soft mode penalizes but doesn't zero)
+  // Universal hard blockers (T1) reject in EVERY mode (INV-02) — Abhijit /
+  // Sarvartha / Amrita overrides can never rescue a hard-blocked day.
   const hasHardT1 = hits.t1.length > 0;
-  if (hasHardT1 && mode !== "soft") score = 0;
+  if (hasHardT1) score = 0;
 
   score = Math.max(0, Math.min(100, Math.round(score)));
-  const verdict = scoreToVerdict(score);
 
-  // --- Time-bounded window (§2.7) ---
-  const timeBounded = day.starEnd ? { validTill: day.starEnd.ist, nextStar: day.starEnd.endNakshatraName } : null;
-
-  // --- Reasons line ---
+  // --- Reasons line (accumulated across tiers + mode-specific personal reasons) ---
   const reasons = [
     ...hits.t1.map(h => `${h} [T1]`),
     ...hits.t2.filter(h => !h.includes("✓")),
     ...hits.t3.filter(h => !h.includes("✓")),
   ];
+
+  // --- Mode Shubh classification (what-is-personal-mode.md thresholds) ---
+  // Full ≥ 80 (MADHYAMA 65-79) · Soft ≥ 60 => Soft ⊇ Full.
+  // Personal (Option A) must FIRST qualify as a valid Full slot (score ≥ 80),
+  // then applies the Tara + Chandra Bala compatibility layer: bad tara
+  // (Vipat/Pratyari/Vadha = 3rd/5th/7th) or Ashtama Chandra (8th house Moon)
+  // rejects even a Full-qualified day; final = base + tara bonus (+15 good) +
+  // chandra bonus (+15 favourable / −10 unfavourable), Shubh ≥ 75 (PRS-01..03).
+  let verdict, chip;
+  let personalMetrics = null;
+  if (hasHardT1) {
+    verdict = "REJECTED"; chip = "Ashubh";
+  } else if (mode === "soft") {
+    verdict = scoreToVerdict(score);
+    chip = score >= SOFT_SHUBH ? "Shubh" : verdictToChip(verdict);
+  } else if (mode === "personal") {
+    if (!day.tara || opts.birthRashi == null) {
+      verdict = "REJECTED"; chip = "Ashubh";
+      reasons.push("PERSONAL: birth star + birth rashi required");
+    } else if (score < FULL_SHUBH) {
+      // Option A: must first qualify at the FULL level (Personal ⊆ Full). Scores
+      // below 80 can never be Shubh in personal (70-79 would otherwise leak via
+      // verdictToChip's GOOD→Shubh mapping).
+      verdict = scoreToVerdict(score);
+      chip = score >= FULL_MADHYAMA ? "Neutral" : "Ashubh";
+      reasons.push("Fails Full (≥ 80) universal qualification — Personal requires a Full slot");
+    } else if (taraNature === "bad") {
+      verdict = "REJECTED"; chip = "Ashubh"; // PRS-01 Vipat/Pratyari/Vadha (3rd/5th/7th tara)
+      reasons.push(`Personal blocker: ${TARA_NAMES[day.tara.number - 1]} (${day.tara.number}th) tara — incompatible`);
+    } else {
+      const ch = chandraBala(opts.birthRashi, day.moonRashi);
+      if (ch.isAshtamaChandra) {
+        verdict = "REJECTED"; chip = "Ashubh"; // PRS-02 Ashtama Chandra (Moon 8th from birth rashi)
+        reasons.push("Personal blocker: Ashtama Chandra — Moon in 8th house from birth rashi");
+      } else {
+        const tBonus = taraBonus(taraNature);
+        const finalScore = Math.max(0, Math.min(100, Math.round(score + tBonus + ch.bonus)));
+        verdict = scoreToVerdict(finalScore);
+        chip = finalScore >= PERSONAL_SHUBH ? "Shubh" : "Neutral"; // < 75 → MADHYAMA
+        reasons.push(`Tara ${TARA_NAMES[day.tara.number - 1]} ${tBonus ? "+" + tBonus : "±0"} · Chandra house ${ch.house} ${ch.bonus ? (ch.bonus > 0 ? "+" + ch.bonus : ch.bonus) : "±0"}`);
+        personalMetrics = { taraName: TARA_NAMES[day.tara.number - 1], taraNumber: day.tara.number, taraNature, taraScoreBonus: tBonus, chandraHouse: ch.house, chandraScoreBonus: ch.bonus, isAshtamaChandra: false };
+      }
+    }
+  } else { // full
+    // Strict: ≥ 80 Shubh, 65-79 MADHYAMA (Neutral), < 65 Ashubh — do NOT use
+    // verdictToChip (GOOD 70-84 would leak "Shubh" past the 80 threshold).
+    verdict = scoreToVerdict(score);
+    chip = score >= FULL_SHUBH ? "Shubh" : score >= FULL_MADHYAMA ? "Neutral" : "Ashubh";
+  }
+
+  // --- Time-bounded window (§2.7) ---
+  const timeBounded = day.starEnd ? { validTill: day.starEnd.ist, nextStar: day.starEnd.endNakshatraName } : null;
+
   if (overrides.length) reasons.push(`Override: ${overrides.join(", ")}`);
   if (timeBounded) reasons.push(`Valid till ${timeBounded.validTill} → ${timeBounded.nextStar}`);
 
@@ -344,14 +411,7 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
       provenance.push({
         primary_source: classical.source,
         author: classical.author,
-        chapter: v.chapter === "ch1" ? "Chapter 1 (Subhashubha Prakarana)"
-          : v.chapter === "ch6" ? "Chapter 6 (Griha Prakarana)"
-          : v.chapter === "ch8" ? "Chapter 8 (Yatra Prakarana)"
-          : v.chapter === "ch10" ? "Chapter 10 (Rajyabhisheka Prakarana)"
-          : v.chapter === "ch11" ? "Chapter 11 (Rina / Vyapara Prakarana)"
-          : v.chapter === "ch13" ? "Chapter 13 (Misra / Chikitsha Prakarana)"
-          : v.chapter === "ch2" ? "Chapter 2 (Nakshatra Prakarana)"
-          : (classical.chapter || v.chapter),
+        chapter: chapterDisplay(v.chapter, classical.chapter),
         verse_number: v.verse,
         sanskrit_sloka: v.sanskrit_sloka || null,
         english_translation: v.english_translation || null,
@@ -361,9 +421,10 @@ function scoreMuhurta(day, janmaNakshatra, act, opts = {}) {
   }
 
   return {
-    score, verdict, chip: verdictToChip(verdict),
+    score, verdict, chip,
     reasons, tierHits: hits, overrides, timeBounded, ctx,
     provenance,
+    personalMetrics, // null unless mode === "personal" with a Full-qualified, unblocked slot
     // legacy compat
     nakOK, varaOK, tithiOK, karanaOK,
     impersonalPass: nakOK && varaOK && tithiBaseOK && karanaOK,
@@ -381,6 +442,10 @@ let swe = null;
 let birth = null;      // { nakshatra:0-26, pada:1-4, rashi:0-11, place, lat, lon, tz }
 let events = [];       // [{id,type,name,date?,tMonth?,tKind?,tVal?}]
 let view = { range: "month", anchor: todayISO(), activity: "ACT_REAL_GRIHA_PRAVESHA_NEW", mode: "full" }; // anchor = civil date (YYYY-MM-DD); mode = selection_mode (§2.6.7)
+// The muhurta table is computed ONLY via the "Compute Muhurta" button (owner request
+// 2026-08-13). render() skips renderMuhurta unless this is true, so browsing the
+// activity/mode dropdowns (which clear + show the hint) never triggers a recalculation.
+let muhComputed = false;
 
 /* ---------- Web Worker client (PRD §2.5 v1.0) ---------- */
 // Offloads swisseph computation to ephemeris.worker.js so multi-month scans
@@ -561,6 +626,7 @@ async function render() {
   const anchor = new Date(ay, am - 1, ad);
   $("app").hidden = false;
   renderProfile();
+  renderPersona();
 
   const y0 = anchor.getFullYear(), m0 = anchor.getMonth() + 1;
   const rangeStart = { y: y0, m: m0, d: 1 };
@@ -576,6 +642,7 @@ async function render() {
   const solarEcl = swe.solarEclipses(tStart, tEnd);
   const lunarEcl = swe.lunarEclipses(tStart, tEnd);
 
+  $("curMonth").textContent = title;
   $("calTitle").textContent = title;
   const tamilYearName = swe.tamilYear(rangeStart.y, rangeStart.m, rangeStart.d);
   $("calTamilYear").textContent = `${TAMIL_MONTH[tmOf(swe, rangeStart.y, rangeStart.m, rangeStart.d, geo)]} · Tamil ${tamilYearName.name} (${tamilYearName.index})`;
@@ -627,7 +694,7 @@ async function render() {
 
   renderMonthEvents(dayMap, flagMap, windowsByDay);
   renderLegend();
-  renderMuhurta(dayMap);
+  if (muhComputed) renderMuhurta(dayMap); // only via "Compute Muhurta" (owner request 2026-08-13)
   $("monthEvTitle").textContent = `Key events — ${title}`;
 
   // day detail
@@ -642,7 +709,7 @@ function renderCell(cell, dayMap, flagMap, windowsByDay) {
   const day = dayMap.get(iso);
   if (!day) return document.createElement("div");
   const el = document.createElement("div");
-  el.className = "cell" + (iso === todayISO() ? " today" : "");
+  el.className = "cell" + (iso === todayISO() ? " today" : "") + (day.vara === 0 || day.vara === 6 ? " weekend" : "");
   el.dataset.iso = iso;
   if (iso === view.selected) el.classList.add("selected");
 
@@ -665,7 +732,7 @@ function renderCell(cell, dayMap, flagMap, windowsByDay) {
   el.innerHTML = `
     <span class="num ${iso === todayISO() ? "today" : ""}">${d}</span>
     <div class="tm">${dayLabelTamil(day.tMonth, day.tDay)}</div>
-    <div class="tithi">${day.tithi.paksha === "Shukla" ? "Shu" : "Kr"} ${TITHI_NAMES[day.tithi.index].slice(0, 6)}</div>
+    <div class="tithi">${day.tithi.paksha === "Shukla" ? "Shu" : "Kr"} ${TITHI_NAMES[day.tithi.index]}</div>
     <div class="dots">${dots}</div>
     ${bar}`;
   el.addEventListener("click", () => { view.selected = iso; save(LS.view, view); render(); });
@@ -689,23 +756,61 @@ const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival", pers
 /* phase-2 muhurta table (above calendar): only Shubh muhurtas for the focused
    sub-activity/task (verdict chips EXCELLENT/GOOD). Uses the §2.6 v1.0 scoring engine
    with calendar-field pushdown + time-bounded verdicts. */
+/* Lay-language reason buckets for a rejected (non-Shubh) day — makes the "why"
+   traceable for non-astrologers. Keys are displayed via REJ_LABEL below. */
+const REJ_LABEL = {
+  bhadra: "Bhadra — the Vishti karana with the Moon in a harmful sign (Karka/Simha/Tula/Meena)",
+  nakshatra: "the Moon was in a nakshatra not ideal for this activity",
+  tithi: "an inauspicious tithi (Rikta, Dwitiya, etc.)",
+  krishna: "a Krishna-paksha (waning) day",
+  karana: "the Vishti (Bhadra) karana",
+  hard: "a hard blocker (Adhik Maas / Kharmas / Eclipse / Pitru Paksha)",
+  vara: "the weekday didn't suit this activity",
+  tara: "an unfavourable personal Tara (star count)",
+  chandra: "Ashtama Chandra — Moon in the 8th house from your rashi",
+  score: "it scored below the Shubh threshold",
+};
+const REJ_ORDER = ["nakshatra", "tithi", "krishna", "karana", "bhadra", "hard", "vara", "tara", "chandra", "score"];
+
+function rejectedReasons(v, day, act, mode) {
+  const out = new Set();
+  if (v.tierHits.t1.some((h) => h.startsWith("Bhadra"))) out.add("bhadra");
+  else if (v.tierHits.t1.length) out.add("hard");
+  if (v.nakOK === false) out.add("nakshatra");
+  if (v.tithiOK === false) out.add(act.badTithis.includes(day.tithiIndex) ? "tithi" : "krishna");
+  if (v.karanaOK === false) out.add("karana");
+  if (v.varaOK === false) out.add("vara");
+  if (mode === "personal") {
+    if (day.tara && TARA_NATURE[day.tara.number - 1] === "bad") out.add("tara");
+    if (v.personalMetrics && v.personalMetrics.isAshtamaChandra) out.add("chandra");
+  }
+  if (!out.size) out.add("score");
+  return out;
+}
+
 function renderMuhurta(dayMap) {
   const tbody = $("muhurtas");
-  const rows = [];
+  const detailByIso = new Map(); // iso -> { v, day } for Shubh rows (accordion detail)
   const days = [...dayMap.values()].sort((a, b) => (a.iso < b.iso ? -1 : 1));
   const focusAct = currentAct();
   const mode = view.mode || "full";
   // month-level fallback only for the focused activity's summary below
-  const shuklaFallback = focusAct.paksha === "shukla" && !days.some((d) => scoreMuhurta(d, birth.nakshatra, focusAct, { mode }).impersonalPass && d.tithi.paksha === "Shukla");
+  const shuklaFallback = focusAct.paksha === "shukla" && !days.some((d) => scoreMuhurta(d, birth.nakshatra, focusAct, { mode, birthRashi: birth.rashi }).impersonalPass && d.tithi.paksha === "Shukla");
   let shubhTotal = 0;
+  const rejCounts = new Map();
+  const rowHtmls = [];
   for (const day of days) {
     if (!day.tara) continue; // without birth star, no personal verdict — skip from muhurta list
     const cf = { adhikMaas: day.adhikMaas, kharmas: day.kharmas, pitruPaksha: day.pitruPaksha };
-    const opts = { mode, calendarField: cf };
+    const opts = { mode, calendarField: cf, birthRashi: birth.rashi };
     if (shuklaFallback && day.tithi.paksha === "Krishna") opts.allowKrishnaFallback = true;
     const v = scoreMuhurta(day, birth.nakshatra, focusAct, opts);
-    if (v.chip !== "Shubh") continue;
+    if (v.chip !== "Shubh") {
+      for (const k of rejectedReasons(v, day, focusAct, mode)) rejCounts.set(k, (rejCounts.get(k) || 0) + 1);
+      continue;
+    }
     shubhTotal++;
+    detailByIso.set(day.iso, { v, day });
 
     const dt = new Date(day.y, day.m - 1, day.d);
     const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
@@ -717,17 +822,51 @@ function renderMuhurta(dayMap) {
     // time-bounded window tag (§2.7)
     const tb = v.timeBounded;
     const tbTag = tb ? ` <span class="tbwnd">(${tb.validTill}→${tb.nextStar})</span>` : "";
-    rows.push(`<tr class="muhrow${sel}" data-iso="${day.iso}" title="${title}"><td class="dt">${dateStr}${tbTag}</td><td class="tara">${taraTxt}</td><td class="nak">${NAKSHATRA[day.moonNakshatra]}</td><td class="acts"><span class="chip verdict ${v.chip}">${v.chip} ${v.score}</span></td></tr>`);
+    rowHtmls.push(`<tr class="muhrow${sel}" data-iso="${day.iso}" title="${title}"><td class="dt">${dateStr}${tbTag}</td><td class="tara">${taraTxt}</td><td class="nak">${NAKSHATRA[day.moonNakshatra]}</td><td class="acts"><span class="chip verdict ${v.chip}">${v.chip} ${v.score}</span></td></tr>`);
   }
+  // lay-language "why were the other days rejected" line (owner request 2026-08-13)
+  let whyLine = "";
+  if (rejCounts.size) {
+    const parts = [];
+    for (const k of REJ_ORDER) {
+      const n = rejCounts.get(k);
+      if (!n) continue;
+      parts.push(`${REJ_LABEL[k]} — ${n} ${n === 1 ? "day" : "days"}`);
+    }
+    const rejectedCount = days.length - shubhTotal;
+    if (parts.length) whyLine = `Why the other ${rejectedCount} ${rejectedCount === 1 ? "day was" : "days were"} set aside: ${parts.join(" · ")}. A day can be set aside for more than one reason.`;
+  }
+  const rows = rowHtmls.length ? [...rowHtmls] : [];
+  if (rows.length && whyLine) rows.push(`<tr class="muhwhy"><td colspan="4">${whyLine}</td></tr>`);
   if (rows.length) {
     tbody.innerHTML = rows.join("");
     tbody.querySelectorAll(".muhrow").forEach((tr) => tr.addEventListener("click", () => { view.selected = tr.dataset.iso; save(LS.view, view); render(); }));
   } else {
-    tbody.innerHTML = `<tr><td colspan="4" class="note">No Shubh days this month for ${focusAct.name}. Try another activity or a softer mode.</td></tr>`;
+    const whyBlock = whyLine ? `<tr class="muhwhy"><td colspan="4">${whyLine}</td></tr>` : "";
+    tbody.innerHTML = `<tr><td colspan="4" class="note">No Shubh days this month for ${focusAct.name}. Try another activity or a softer mode.</td></tr>${whyBlock}`;
   }
   $("muhActName").textContent = `${focusAct.name} · ${SELECTION_MODES[mode].label}`;
   const fbNote = shuklaFallback ? " (Krishna-paksha days also shown — no Shukla days qualified this month)" : "";
   $("muhSummary").textContent = `${shubhTotal} Shubh days this month for ${focusAct.name}${fbNote}. ${focusAct.note}`;
+
+  // Accordion detail (below the table): populate for the selected Shubh day, else reset.
+  const acc = $("muhAcc");
+  const head = $("muhAccHead");
+  const body = $("muhAccBody");
+  const sel = detailByIso.get(view.selected);
+  if (sel) {
+    const { v, day } = sel;
+    body.innerHTML = muhurtaDetailHTML(v, day, focusAct);
+    const dt = new Date(day.y, day.m - 1, day.d);
+    const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
+    const dateStr = `${dayName} ${day.iso}`;
+    head.innerHTML = `Muhurta details — <span class="star-label">${dateStr} · ${focusAct.name} · ${v.chip} ${v.score}</span>`;
+    acc.open = true;
+  } else {
+    body.innerHTML = "";
+    head.textContent = "Muhurta details — click a Shubh day row";
+    acc.open = false;
+  }
 }
 
 /* month key-events table (right panel): one row per flagged day */
@@ -817,71 +956,133 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
   $("rSunrise").textContent = day.rise ? fmtHHMM(day.rise) : "–";
   $("rSunset").textContent = day.set ? fmtHHMM(day.set) : "–";
   $("rTithi").textContent = `${day.tithi.paksha} ${day.tithi.name}`;
-  // phase-2: tara + per-activity verdict for the selected day (§2.6 v1.0 scoring engine)
-  const act = currentAct();
-  const days = dayMap ? [...dayMap.values()] : [day];
-  const mode = view.mode || "full";
-  const shuklaFallback = act.paksha === "shukla" && !days.some((d) => scoreMuhurta(d, birth.nakshatra, act, { mode }).impersonalPass && d.tithi.paksha === "Shukla");
-  const cf = { adhikMaas: day.adhikMaas, kharmas: day.kharmas, pitruPaksha: day.pitruPaksha };
-  const vopts = { mode, calendarField: cf };
-  if (shuklaFallback && day.tithi.paksha === "Krishna") vopts.allowKrishnaFallback = true;
-  const v = day.tara ? scoreMuhurta(day, birth.nakshatra, act, vopts) : null;
-  if (v) {
-    // score breakdown by tier
-    const tierLines = [];
-    if (v.tierHits.t1.length) tierLines.push(`<div class="muh-line t1"><span class="k">T1 blockers</span><span class="v">${v.tierHits.t1.join(", ")}</span></div>`);
-    const t2bad = v.tierHits.t2.filter(h => !h.includes("✓"));
-    const t3bad = v.tierHits.t3.filter(h => !h.includes("✓"));
-    if (t2bad.length) tierLines.push(`<div class="muh-line t2"><span class="k">T2 primary</span><span class="v">${t2bad.join(", ")}</span></div>`);
-    if (t3bad.length) tierLines.push(`<div class="muh-line t3"><span class="k">T3 secondary</span><span class="v">${t3bad.join(", ")}</span></div>`);
-    const t2good = v.tierHits.t2.filter(h => h.includes("✓"));
-    const t3good = v.tierHits.t3.filter(h => h.includes("✓"));
-    if (t2good.length || t3good.length) tierLines.push(`<div class="muh-line good"><span class="k">Passing</span><span class="v">${[...t2good, ...t3good].join(", ")}</span></div>`);
-    $("muhDetail").innerHTML = `
+}
+
+/* Muhurta detail HTML for the accordion under the Muhurta table: score breakdown,
+   tara/chandra (personal), activity chip, overrides, time-bounded window, and the
+   Classical Foundation citations. Rendered ONLY from renderMuhurta (per-row, on the
+   explicitly Compute button) — never inside the day-detail card. */
+function muhurtaDetailHTML(v, day, act) {
+  const tierLines = [];
+  if (v.tierHits.t1.length) tierLines.push(`<div class="muh-line t1"><span class="k">T1 blockers</span><span class="v">${v.tierHits.t1.join(", ")}</span></div>`);
+  const t2bad = v.tierHits.t2.filter(h => !h.includes("✓"));
+  const t3bad = v.tierHits.t3.filter(h => !h.includes("✓"));
+  if (t2bad.length) tierLines.push(`<div class="muh-line t2"><span class="k">T2 primary</span><span class="v">${t2bad.join(", ")}</span></div>`);
+  if (t3bad.length) tierLines.push(`<div class="muh-line t3"><span class="k">T3 secondary</span><span class="v">${t3bad.join(", ")}</span></div>`);
+  const t2good = v.tierHits.t2.filter(h => h.includes("✓"));
+  const t3good = v.tierHits.t3.filter(h => h.includes("✓"));
+  if (t2good.length || t3good.length) tierLines.push(`<div class="muh-line good"><span class="k">Passing</span><span class="v">${[...t2good, ...t3good].join(", ")}</span></div>`);
+  return `
       <div class="muh-line"><span class="k">Score</span><span class="v"><strong>${v.score}/100</strong> · ${v.verdict}</span></div>
-      <div class="muh-line"><span class="k">Tara</span><span class="v">${TARA_NAMES[v.tara.number - 1]} (${v.tara.number}) — ${TARA_NATURE[v.tara.number - 1] === "good" ? "favourable" : TARA_NATURE[v.tara.number - 1] === "bad" ? "unfavourable" : "neutral"}</span></div>
+      <div class="muh-line"><span class="k">Tara</span><span class="v">${TARA_NAMES[day.tara.number - 1]} (${day.tara.number}) — ${TARA_NATURE[day.tara.number - 1] === "good" ? "favourable" : TARA_NATURE[day.tara.number - 1] === "bad" ? "unfavourable" : "neutral"}</span></div>
+      ${v.personalMetrics ? `<div class="muh-line"><span class="k">Chandra</span><span class="v">Moon transit ${v.personalMetrics.chandraHouse}th house from birth rashi — ${v.personalMetrics.isAshtamaChandra ? "Ashtama Chandra (blocked)" : v.personalMetrics.chandraScoreBonus > 0 ? `favourable (+${v.personalMetrics.chandraScoreBonus})` : v.personalMetrics.chandraScoreBonus < 0 ? `unfavourable (${v.personalMetrics.chandraScoreBonus})` : "neutral"}</span></div>` : ""}
       <div class="muh-line"><span class="k">${act.name}</span><span class="chip ${v.chip}">${v.chip}</span></div>
       ${tierLines.join("")}
       ${v.overrides.length ? `<div class="muh-line ovr"><span class="k">Override</span><span class="v">${v.overrides.join(", ")}</span></div>` : ""}
       ${v.krishnaAllowed ? `<div class="muh-line note"><span class="k">Fallback</span><span class="v">No Shukla day qualified this month · Krishna paksha shown</span></div>` : ""}${v.timeBounded ? `
       <div class="muh-line"><span class="k">Window</span><span class="v">${v.timeBounded.validTill} → ${v.timeBounded.nextStar}</span></div>` : ""}
       ${classicalBlock(v, act)}`;
-  } else {
-    $("muhDetail").innerHTML = "";
-  }
-  $("muhDetailCard").hidden = !v;
+}
+
+/* Chapter key -> display name (provenance_registry.json `chapters`). */
+function chapterDisplay(ch, fallback = null) {
+  const map = {
+    ch1: "Chapter 1 (Subhashubha Prakarana)",
+    ch2: "Chapter 2 (Nakshatra Prakarana)",
+    ch4: "Chapter 4 (Gochara Prakarana)",
+    ch6: "Chapter 6 (Griha Prakarana)",
+    ch8: "Chapter 8 (Yatra Prakarana)",
+    ch10: "Chapter 10 (Rajyabhisheka Prakarana)",
+    ch11: "Chapter 11 (Rina / Vyapara Prakarana)",
+    ch13: "Chapter 13 (Misra / Chikitsha Prakarana)",
+    ch_samskara: "Samskara Prakarana",
+    panchanga: "Panchanga tables",
+  };
+  return map[ch] || fallback || ch;
+}
+
+/* One provenance citation row: chapter·verse ref, optional rule label,
+   Devanagari sloka, English translation, applied rule logic. */
+function provItemHTML(ref, sanskrit, english, logic, label) {
+  return `
+    <div class="prov-item">
+      <div class="prov-ref">${ref}</div>
+      ${label ? `<div class="prov-label">${label}</div>` : ""}
+      ${sanskrit ? `<div class="prov-sans" lang="sa">${sanskrit.split("\n").join("<br>")}</div>` : ""}
+      ${english ? `<div class="prov-en">${english}</div>` : ""}
+      ${logic ? `<div class="prov-logic">${logic}</div>` : ""}
+    </div>`;
 }
 
 /* Classical Foundation block — cites the confirmed Muhurta Chintamani slokas that
-   FIRED for this day's verdict (provenance_registry.json, proof==="confirmed"). */
+   FIRED for this day's verdict (provenance_registry.json, proof==="confirmed").
+   When none fired, surfaces the activity's governing verses instead of a bare
+   disclaimer — the provenance USP (owner request 2026-08-13). */
 function classicalBlock(v, act) {
   const cls = act.classical || null;
   const verses = v.provenance || [];
   const basisLabel = cls ? { classical: "direct classical rule", functional_group: "functional-group classification (Ch. 2)", formula: "panchanga formula" }[cls.basis] || cls.basis : null;
-  const items = verses.map((p) => `
-    <div class="prov-item">
-      <div class="prov-ref">${p.chapter} · ${p.verse_number}</div>
-      ${p.sanskrit_sloka ? `<div class="prov-sans" lang="sa">${p.sanskrit_sloka.split("\n").join("<br>")}</div>` : ""}
-      ${p.english_translation ? `<div class="prov-en">${p.english_translation}</div>` : ""}
-      ${p.applied_rule_logic ? `<div class="prov-logic">${p.applied_rule_logic}</div>` : ""}
-    </div>`).join("");
-  if (!verses.length) {
+  const FIRED_CAPTION = "Classical Foundation — <em>Muhurta Chintamani</em>" + (cls ? ` (${cls.chapter})` : "");
+  if (verses.length) {
+    const items = verses.map((p) => provItemHTML(`${p.chapter} · ${p.verse_number}`, p.sanskrit_sloka, p.english_translation, p.applied_rule_logic)).join("");
     return `
       <div class="classical-foundation">
-        <div class="cf-head">Classical Foundation</div>
-        <div class="cf-note">${cls ? `This activity is classified via ${basisLabel}; no verse-affirmed rule fired today (no hard blocker or categorical overlay applied). All temporal terms verified against Muhurta Chintamani (Rama Daivagya).` : "Provenance registry not loaded."}</div>
+        <details>
+          <summary>${FIRED_CAPTION}</summary>
+          <div class="cf-body">
+            <div class="cf-basis">Governing basis: ${basisLabel || "muhurta rules"} · Source: ${cls ? cls.source : "Muhurta Chintamani"} · ${cls ? cls.author : "Acharya Rama Daivagya"}</div>
+            ${items}
+          </div>
+        </details>
+      </div>`;
+  }
+  // No verse-affirmed rule fired today → show the governing classical verses
+  // (confirmed slokas only — never fabricated citations).
+  const governing = (cls ? cls.verses : []).filter((p) => p.sanskrit_sloka);
+  if (governing.length) {
+    const items = governing.map((p) => provItemHTML(`${chapterDisplay(p.chapter, cls.chapter)} · ${p.verse}`, p.sanskrit_sloka, p.english_translation, p.applied_rule_logic, p.label)).join("");
+    return `
+      <div class="classical-foundation">
+        <details open>
+          <summary>${FIRED_CAPTION}</summary>
+          <div class="cf-body">
+            <div class="cf-basis">Governing basis: ${basisLabel} · Source: ${cls.source} · ${cls.author}</div>
+            ${items}
+            ${cls.rationale ? `<div class="cf-logic">${cls.rationale}</div>` : ""}
+            <div class="cf-note">No verse-affirmed rule fired today (no hard blocker or categorical overlay applied). The verses above govern this activity's classification; all temporal terms verified against Muhurta Chintamani (Rama Daivagya).</div>
+          </div>
+        </details>
       </div>`;
   }
   return `
     <div class="classical-foundation">
-      <details>
-        <summary>Classical Foundation — <em>Muhurta Chintamani</em>${cls ? ` (${cls.chapter})` : ""}</summary>
-        <div class="cf-body">
-          <div class="cf-basis">Governing basis: ${basisLabel || "muhurta rules"} · Source: ${cls ? cls.source : "Muhurta Chintamani"} · ${cls ? cls.author : "Acharya Rama Daivagya"}</div>
-          ${items}
-        </div>
-      </details>
+      <div class="cf-head">Classical Foundation</div>
+      <div class="cf-note">${cls ? `This activity is classified via ${basisLabel} (panchanga formula); no direct sloka applies. All temporal terms verified against Muhurta Chintamani (Rama Daivagya).` : "Provenance registry not loaded."}</div>
     </div>`;
+}
+
+/* ---------- classical source modal ---------- */
+function provenanceBodyHTML(act) {
+  const cls = TAX.toMuhurta(act).classical;
+  if (!cls) return `<div class="cf-note">Provenance registry not loaded for this activity.</div>`;
+  const items = (cls.verses || []).filter((p) => p.sanskrit_sloka)
+    .map((p) => provItemHTML(`${chapterDisplay(p.chapter, cls.chapter)} · ${p.verse}`, p.sanskrit_sloka, p.english_translation, p.applied_rule_logic, p.label)).join("");
+  const tier = { classical: "Direct classical rule", functional_group: "Functional-group (Ch. 2)", formula: "Panchanga formula" }[cls.basis] || cls.basis;
+  return `
+    <div class="pf-label">${act.activity_name}</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0">
+      <span class="badge ${cls.basis}">${tier}</span>
+      <span class="prov-ref" style="text-transform:none;letter-spacing:.02em">${cls.source} — ${cls.author}</span>
+    </div>
+    <div class="cf-basis">Governing chapter: ${cls.chapter}${cls.rationale ? ` · ${cls.rationale}` : ""}</div>
+    ${items}
+    <div class="cf-note">All verses cited carry proof==="confirmed" — verified against the Muhurta Chintamani text. No fabricated citations.</div>`;
+}
+
+function citationText(cls) {
+  const refs = (cls.verses || []).filter((v) => v.sanskrit_sloka)
+    .map((v) => `${v.verse} (${chapterDisplay(v.chapter, cls.chapter)})`);
+  return `${cls.source} — ${cls.author}${cls.chapter ? ", " + cls.chapter : ""}${refs.length ? ": " + refs.join("; ") : ""}`;
 }
 
 function periodRow(icon, title, sub, tagCls, tagTxt) {
@@ -900,6 +1101,17 @@ function renderProfile() {
     <div class="kv"><div class="k">Janma Rashi</div><div class="v">${RASHI[birth.rashi]}</div></div>
     <div class="kv"><div class="k">Panchang location</div><div class="v">${birth.place} · Lahiri</div></div>
     <div class="kv"><div class="k">Panchang day</div><div class="v">Sunrise → sunrise</div></div>`;
+}
+
+function renderPersona() {
+  const text = $("personaText");
+  if (birth) {
+    $("persona").title = `Janma nakshatra ${NAKSHATRA[birth.nakshatra]} · rashi ${RASHI[birth.rashi]} · ${birth.place}`;
+    text.textContent = `${NAKSHATRA[birth.nakshatra]} · ${RASHI[birth.rashi]}`;
+  } else {
+    $("persona").title = "Set your birth nakshatra & location";
+    text.textContent = "Set birth star";
+  }
 }
 
 /* ---------- ICS export ---------- */
@@ -1014,6 +1226,7 @@ function nav(delta) {
   dt.setMonth(dt.getMonth() + delta);
   view.anchor = ymdToISO(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
   save(LS.view, view);
+  muhComputed = true; // intent unchanged — muhurta table follows the navigated month
   render();
 }
 
@@ -1054,7 +1267,18 @@ function computeBirth() {
 }
 
 /* ---------- init ---------- */
+function applyCardShades() {
+  let light = true;
+  const cards = document.querySelectorAll(".card");
+  for (const el of cards) {
+    if (el.id === "landing") { el.classList.add("panel-a"); continue; }
+    el.classList.add(light ? "panel-a" : "panel-b");
+    light = !light;
+  }
+}
+
 async function init() {
+  applyCardShades();
   const t = load(LS.theme, "day");
   setTheme(t === "night");
   const ev = load(LS.events, []);
@@ -1070,20 +1294,102 @@ async function init() {
   const muhDomain = $("muhDomain");
   const muhSub = $("muhSub");
   const muhTask = $("muhTask");
+  const PH = '<option value="" disabled selected>Please select</option>';
   const fillSubs = () => {
     const subs = TAX.subDomains(muhDomain.value);
     muhSub.innerHTML = "";
+    muhSub.insertAdjacentHTML("beforeend", PH);
     subs.forEach((s) => muhSub.insertAdjacentHTML("beforeend", `<option value="${s.code}">${s.name}</option>`));
   };
   const fillTasks = () => {
-    const tasks = TAX.activities(muhDomain.value, muhSub.value);
+    const tasks = muhSub.value ? TAX.activities(muhDomain.value, muhSub.value) : [];
     muhTask.innerHTML = "";
+    muhTask.insertAdjacentHTML("beforeend", PH);
     tasks.forEach((t) => muhTask.insertAdjacentHTML("beforeend", `<option value="${t.activity_id}">${t.activity_name}</option>`));
   };
+  muhDomain.insertAdjacentHTML("beforeend", PH);
   TAX.domains().forEach((d) => muhDomain.insertAdjacentHTML("beforeend", `<option value="${d.code}">${d.name}</option>`));
-  muhDomain.addEventListener("change", () => { fillSubs(); fillTasks(); view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
-  muhSub.addEventListener("change", () => { fillTasks(); view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
-  muhTask.addEventListener("change", () => { view.activity = muhTask.value; save(LS.view, view); if (birth) render(); });
+  // Dropdown changes only update the INTENT (view) — no computation runs. The muhurta
+  // engine triggers ONLY via the Compute Muhurta button, so browsing the cascade to
+  // decide an activity never recalculates (owner request 2026-08-13).
+  const syncMuhFromDropdowns = () => {
+    view.activity = muhTask.value;
+    view.mode = muhModeSel.value;
+    save(LS.view, view);
+  };
+  const refreshSourceBtn = () => {
+    const on = !!(muhDomain.value && muhSub.value && muhTask.value);
+    $("srcBtn").disabled = !on;
+    $("srcBtn").title = on ? "Show classical source for this activity" : "Select a domain, activity and sub-activity first";
+  };
+  const clearMuhurta = () => {
+    muhComputed = false;
+    $("muhurtas").innerHTML = "";
+    $("muhSummary").textContent = "";
+    $("muhActName").textContent = "";
+    $("muhHint").innerHTML = "Select activity + mode, then press <strong>Compute Muhurta</strong>.";
+    $("muhHint").hidden = false;
+    $("muhAccBody").innerHTML = "";
+    $("muhAccHead").textContent = "Muhurta details — click a Shubh day row";
+    $("muhAcc").open = false;
+  };
+  // Selecting an activity/mode never computes — it only updates the intent and wipes
+  // any stale table. Computation happens exclusively via "Compute Muhurta".
+  muhDomain.addEventListener("change", () => { fillSubs(); fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+  muhSub.addEventListener("change", () => { fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+  muhTask.addEventListener("change", () => { syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+  $("muhCompute").addEventListener("click", () => {
+    syncMuhFromDropdowns();
+    if (!muhDomain.value || !muhSub.value || !muhTask.value) {
+      clearMuhurta();
+      $("muhHint").textContent = "Please select a domain, activity and sub-activity, then press Compute Muhurta.";
+      return;
+    }
+    if (!birth) {
+      clearMuhurta();
+      $("landing").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    muhComputed = true;
+    $("muhHint").hidden = true;
+    render();
+  });
+  $("muhClear").addEventListener("click", () => {
+    muhDomain.value = ""; muhSub.value = ""; muhTask.value = "";
+    view.activity = ""; save(LS.view, view);
+    clearMuhurta();
+    refreshSourceBtn();
+    $("muhCard").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+
+  /* Classical source modal (§ owner request 2026-08-13) — instant provenance for the
+     selected activity, no compute required. */
+  const closeSrcModal = () => { $("srcModal").hidden = true; document.body.style.overflow = ""; };
+  $("srcBtn").addEventListener("click", () => {
+    const act = TAX.getActivity(muhTask.value);
+    if (!act) return;
+    $("srcTitle").textContent = "Classical source — " + act.activity_name;
+    $("srcBody").innerHTML = provenanceBodyHTML(act);
+    $("srcModal").hidden = false;
+    document.body.style.overflow = "hidden";
+  });
+  $("srcClose").addEventListener("click", closeSrcModal);
+  $("srcModal").addEventListener("click", (e) => { if (e.target === $("srcModal")) closeSrcModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSrcModal(); });
+  $("srcCopy").addEventListener("click", () => {
+    const act = TAX.getActivity(muhTask.value);
+    const cls = act ? TAX.toMuhurta(act).classical : null;
+    if (!cls) return;
+    const txt = citationText(cls);
+    const done = () => { $("srcCopy").textContent = "Copied!"; setTimeout(() => { $("srcCopy").textContent = "Copy citation"; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done);
+    else {
+      const ta = document.createElement("textarea");
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch (e) { /* older browsers */ }
+      ta.remove(); done();
+    }
+  });
 
   // restore saved selection (with legacy migration), else default to first task
   const savedAct = LEGACY_ACTIVITY[view.activity] || view.activity;
@@ -1100,6 +1406,7 @@ async function init() {
     view.activity = muhTask.value;
   }
   save(LS.view, view);
+  refreshSourceBtn();
 
   // populate selection mode selector (§2.6.7)
   const muhModeSel = $("muhMode");
@@ -1110,7 +1417,10 @@ async function init() {
     if (key === view.mode) opt.selected = true;
     muhModeSel.appendChild(opt);
   });
-  muhModeSel.addEventListener("change", () => { view.mode = muhModeSel.value; save(LS.view, view); if (birth) render(); });
+  muhModeSel.addEventListener("change", () => { view.mode = muhModeSel.value; save(LS.view, view); clearMuhurta(); });
+
+  // initial muhurta state: nothing computed yet, show the compute hint
+  clearMuhurta();
 
   // populate janma nakshatra dropdown (flat 27 list) + rashi select (editable, auto-filled)
   const nakSel = $("bNakshatra");
@@ -1127,7 +1437,7 @@ async function init() {
   });
 
   $("computeBtn").addEventListener("click", computeBirth);
-  $("editBirth").addEventListener("click", () => { $("landing").hidden = false; openBirthForm(); });
+  $("editBirthBtn").addEventListener("click", () => { $("landing").hidden = false; openBirthForm(); });
   $("themeBtn").addEventListener("click", toggleTheme);
   evFormToggle();
   $("navPrev").addEventListener("click", () => nav(-1));

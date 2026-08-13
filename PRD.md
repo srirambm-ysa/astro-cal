@@ -193,7 +193,7 @@ related: [D:\knowledge-base\projects\apps\astro-cal.md, D:\knowledge-base\INDEX.
 ## Tech
 
 - HTML / JS / CSS standalone; vendored swisseph WASM; Node one-file **static** server
-  (`serve.js` + `serve.bat`). Personal data in browser localStorage.
+  (`serve.cjs` + `serve.bat`). Personal data in browser localStorage.
 - **Worker asset (locked v1.0):** `ephemeris.worker.js` — Web Worker running swisseph loops +
   coarse-to-fine evaluation, `postMessage` results back to UI; no build step, static file served
   alongside app.
@@ -490,8 +490,14 @@ yogas Vishkambha, Atiganda, Shula, Ganda, Vyaghata, Vajra, Parigha are banned on
    T1/T2/T3 + calendar-field pushdown + personal chart cross-ref (tara/chandra bala as T2, not veto).
 2. **Soft mode** — recurring decisions (contracts, project starts): avoid only T1 windows
    (Rahu/Bhadra/eclipse), prefer a suitable vara, T3 weighted lightly, no full T2 table.
-3. **Personal auspicious days** — Moon returns to janma nakshatra (tara = Janma/1): surfaced as a
-   lighter personal rhythm, independent of activity rules.
+3. **Personal days** — the same universal engine with a **personal compatibility layer**
+   (Tara Bala + Chandra Bala) on top of a qualifying **Full slot** (Option A): the day must
+   first be a valid Full muhurta, then bad tara (3rd/5th/7th) or Ashtama Chandra (Moon in
+   8th house from birth rashi) reject it, and favourable tara/chandra add score.
+   > **Superseded by `what-is-personal-mode.md` (2026-08-13).** Earlier wording here described
+   > Personal as "Moon returns to janma nakshatra — a lighter personal rhythm independent of
+   > activity rules." That independent-rhythm definition is obsolete; Personal is a strict
+   > post-filter on universal time, never a separate evaluation surface.
    API/product exposes a `selection_mode` parameter (default `full`).
 
 **2.6.8 Corpus schema delta.** `rules/muhurta_rules.json` rules gain optional fields (backward

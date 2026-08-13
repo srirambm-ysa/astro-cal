@@ -86,7 +86,7 @@ The overall architecture, data-flow model, and multi-tiered scoring methodology 
 | :--- | :--- | :--- |
 | **§Source Docs & Provenance** | **Excellent** | Correctly isolates AI-generated prompts (`vedic_panchang.pdf`) from classical ground truth (`muhurtha-chinthamani.pdf`). Prevents hallucinated data ingestion. |
 | **§Concepts Covered** | **Solid** | Covers essential limbs. Two-tone Chandrashtama (coarse Rashi + peak Nakshatra) matches Drik & Iyengar conventions perfectly. |
-| **§Requirements & Tech** | **Pass** | Local-first, `localStorage`, static Node server (`serve.js`), WASM ephemeris. Well-bounded for V1. |
+| **§Requirements & Tech** | **Pass** | Local-first, `localStorage`, static Node server (`serve.cjs`), WASM ephemeris. Well-bounded for V1. |
 | **§Open Items (1–5)** | **Resolved** | Corrected Ashtama Chandra (by Rashi) and Rahu/Yama/Gulika 8-part daytime split tables. |
 | **§Phase 2: Nava Tāra** | **Mathematically Sound** | Tara Bala arithmetic $((\text{MoonNak} - \text{JanmaNak} + 27) \bmod 27) + 1 \pmod 9$ is accurate. |
 | **§2.6 Rule-Engine Model** | **Architecturally Strong** | Introduces 3-tier severity ($T_1, T_2, T_3$), scoring verbs (0–100), and $Parihara$ cancellation stack. |

@@ -1,5 +1,6 @@
 /* Minimal static server for astro-cal (swisseph WASM needs HTTP; file:// is blocked by CORS).
-   Usage:  node serve.js   →  http://127.0.0.1:8124/ */
+   .cjs because package.json "type":"module" (server is CommonJS; engine.js needs ESM).
+   Usage:  node serve.cjs   →  http://127.0.0.1:8124/ */
 "use strict";
 const http = require("http");
 const fs = require("fs");
