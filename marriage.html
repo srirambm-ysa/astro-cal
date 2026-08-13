@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivaha Muhurta — Matchmaking & Shubh Wedding Dates</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --canvas:#EFEBE0; --paper:#FFFFFF; --ink:#3D2412; --ink-soft:#7a5a44;
+    --panel-a:#FFFFFF; --panel-b:#F1EEE5;
+    --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E; --good:#1E6E4F; --bad:#9A2B2B;
+    --line:#C8A86E; --line-faint:#E2D3AE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.55;
+  }
+  h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);
+    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+  .frame::after{content:"";position:absolute;inset:9px;border:1px solid var(--line-faint);pointer-events:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.two-col{grid-template-columns:1fr}}
+  .person{border:1px solid var(--line-faint);background:var(--panel-b);padding:12px}
+  .person h3{font-size:16px;color:var(--vermilion);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:9px}
+  .field label{font-size:13px;color:var(--ink-soft);letter-spacing:.03em}
+  select,.date{font-family:"Eczar",serif;font-size:14px;border:1px solid var(--gold);background:var(--paper);
+    color:var(--ink);padding:6px 8px;width:100%}
+  .hint{font-size:11.5px;color:var(--ink-soft);grid-column:2;margin-top:-4px}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);
+    padding:8px 16px;cursor:pointer;font-size:15px;display:inline-flex;align-items:center;gap:7px;justify-content:center}
+  .btn:hover{background:var(--saffron);color:#2b1505}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .range-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px}
+  @media(max-width:600px){.range-row{grid-template-columns:1fr 1fr}}
+  .range-row .field{grid-template-columns:1fr;gap:2px;margin:0}
+  .center{text-align:center}
+  .badge{display:inline-block;padding:3px 10px;font-size:13px;font-weight:600;letter-spacing:.04em;border-radius:2px}
+  .badge.ok{background:#1E6E4F;color:#fff}
+  .badge.no{background:#9A2B2B;color:#fff}
+  .badge.mid{background:var(--gold-bright);color:#2b1505}
+  .meter{height:14px;background:var(--panel-b);border:1px solid var(--line);position:relative;overflow:hidden}
+  .meter>div{height:100%;background:linear-gradient(90deg,var(--saffron),var(--vermilion));transition:width .6s}
+  .meter .cut{position:absolute;top:0;bottom:0;width:2px;background:var(--ink-soft);opacity:.7}
+  .koota-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:10px}
+  .koota{border:1px solid var(--line-faint);background:var(--panel-b);padding:8px 10px}
+  .koota .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .koota .name{font-size:13px;font-weight:600;color:var(--ink)}
+  .koota .pts{font-size:13px;color:var(--vermilion);font-weight:600;white-space:nowrap}
+  .koota .det{font-size:11.5px;color:var(--ink-soft)}
+  .pill{display:inline-block;border:1px solid var(--teal);color:var(--teal);background:rgba(47,126,126,.08);
+    padding:2px 9px;font-size:12px;margin:3px 4px 0 0}
+  .pill.warn{border-color:var(--bad);color:var(--bad);background:rgba(154,43,43,.06)}
+  .alert{border:1px solid var(--bad);background:rgba(177,59,43,.06);padding:14px 16px;color:#5e1f1f}
+  .alert h2{color:var(--bad)}
+  .date-table{width:100%;border-collapse:collapse;font-size:14px}
+  .date-table th{text-align:left;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+    border-bottom:1px solid var(--gold);padding:6px 8px}
+  .date-table td{border-bottom:1px solid var(--line-faint);padding:7px 8px;vertical-align:top}
+  details{background:var(--panel-b);border:1px solid var(--line-faint);margin:6px 0}
+  details summary{cursor:pointer;padding:8px 11px;font-size:13px;font-weight:600;color:var(--ink)}
+  details .body{padding:2px 11px 10px;font-size:12.5px;color:var(--ink-soft)}
+  .mono{font-family:Consolas,Menlo,monospace;font-size:11.5px;line-height:1.5}
+  .note{font-size:12px;color:var(--ink-soft);margin-top:8px}
+  .bar-row{display:flex;gap:8px;align-items:center}
+  .bar-row .grow{flex:1}
+  .stat{display:flex;gap:18px;margin:6px 0 10px;flex-wrap:wrap}
+  .stat .s .k{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+  .stat .s .v{font-size:18px;font-family:"Rozha One",serif;color:var(--vermilion)}
+  .hidden{display:none}
+  #progress{height:4px;background:var(--panel-b);border:1px solid var(--line);margin-bottom:14px;overflow:hidden}
+  #progress>div{height:100%;width:0;background:var(--saffron)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="frame">
+  <header class="top">
+    <div class="logo">
+      <span class="mark">💍</span>
+      <div><h1>Vivaha Muhurta</h1>
+        <div class="sub">Matchmaking & Shubh Wedding Dates — Muhurta Chintamani, Ch.6</div>
+      </div>
+    </div>
+    <a class="btn" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
+  </header>
+
+  <div id="progress"><div></div></div>
+
+  <div class="card" id="formCard">
+    <h2>Couple Details</h2>
+    <div class="two-col">
+      <div class="person">
+        <h3>👨 Groom</h3>
+        <div class="field"><label>Nakshatra</label>
+          <select id="gNak"></select></div>
+        <div class="field"><label>Rashi (Moon)</label>
+          <select id="gRashi"></select></div>
+        <div class="field"><label>Pada (1–4)</label>
+          <select id="gPada"></select></div>
+        <div class="field"><label class="hint" style="grid-column:2">Pada is only a tie-breaker for Nadi Pada Bheda.</label></div>
+      </div>
+      <div class="person">
+        <h3>👰 Bride</h3>
+        <div class="field"><label>Nakshatra</label>
+          <select id="bNak"></select></div>
+        <div class="field"><label>Rashi (Moon)</label>
+          <select id="bRashi"></select></div>
+        <div class="field"><label>Pada (1–4)</label>
+          <select id="bPada"></select></div>
+        <div class="field"><label class="hint" style="grid-column:2">Unknown Pada? Leave default (quarter 1).</label></div>
+      </div>
+    </div>
+    <h2 style="margin-top:14px">Target Wedding Window</h2>
+    <div class="range-row">
+      <div class="field"><label>From</label><input type="date" class="date" id="fromDate"></div>
+      <div class="field"><label>To</label><input type="date" class="date" id="toDate"></div>
+      <div></div>
+    </div>
+    <div class="center">
+      <button class="btn" id="calcBtn">Calculate Compatibility & Find Shubh Dates</button>
+    </div>
+    <div class="note">Stage 1 runs Ashtakoota (36-guna) matchmaking first. If the couple is ineligible (score &lt; 18 or uncanceled Nadi/Bhakoot Dosha), the search stops before scanning any dates.</div>
+  </div>
+
+  <div id="result"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { Engine, NAKSHATRA, RASHI } from "./engine.js";
+  import { calculateAshtakoota, scanWeddingWindow, loadRules } from "./marriage.mjs";
+
+  const $ = (id) => document.getElementById(id);
+  const NAK_1BASED = NAKSHATRA.map((n, i) => `${n} (${i + 1})`);
+  const RASHI_1BASED = RASHI.map((r, i) => `${r} (${i + 1})`);
+
+  function fillSel(el, arr) { el.innerHTML = arr.map((x, i) => `<option value="${i + 1}">${x}</option>`).join(""); }
+
+  fillSel($("gNak"), NAK_1BASED); fillSel($("bNak"), NAK_1BASED);
+  fillSel($("gRashi"), RASHI_1BASED); fillSel($("bRashi"), RASHI_1BASED);
+  $("gPada").innerHTML = [1, 2, 3, 4].map((p) => `<option>${p}</option>`).join("");
+  $("bPada").innerHTML = [1, 2, 3, 4].map((p) => `<option>${p}</option>`).join("");
+
+  const today = new Date();
+  const iso = (d) => d.toISOString().slice(0, 10);
+  $("fromDate").value = iso(new Date(today.getFullYear(), today.getMonth(), 1));
+  $("toDate").value = iso(new Date(today.getFullYear() + 1, today.getMonth(), 28));
+
+  const eng = await new Engine().init();
+  const rules = await loadRules();
+
+  function couple() {
+    return {
+      groom: { nakshatra: +$("gNak").value, rashi: +$("gRashi").value, pada: +$("gPada").value },
+      bride: { nakshatra: +$("bNak").value, rashi: +$("bRashi").value, pada: +$("bPada").value },
+    };
+  }
+
+  function kootaCard(short, entry) {
+    return `<div class="koota">
+      <div class="row"><span class="name">${short}</span>
+        <span class="pts">${entry.score}/${entry.maxScore}</span></div>
+      <div class="det">${entry.details}${entry.pariharaDetails ? `<br><span style="color:var(--teal)">✓ ${entry.pariharaDetails}</span>` : ""}</div>
+    </div>`;
+  }
+
+function tier1(m) {
+  const ok = m.isCompatible;
+  const kk = m.breakdown;
+  return `<div class="card">
+      <h2>Tier 1 · Matchmaking Result</h2>
+      <div class="bar-row">
+        <span class="badge ${ok ? "ok" : "no"}">${ok ? "ELIGIBLE" : "INCOMPATIBLE"} · ${m.totalScore} / ${m.maxScore} Gunas</span>
+        <div class="grow"><div class="meter">
+          <div style="width:${m.scorePercentage}%"></div>
+          <div class="cut" style="left:50%"></div>
+        </div></div>
+      </div>
+      <div class="note">Pass mark at 18 / 36. ${ok ? `Tier: ${m.tierLabel || "—"}.` : "Score below 18 or an uncanceled hard-blocker dosha is present."}</div>
+      <div style="margin-top:8px">
+        ${m.hasNadiDosha ? `<span class="pill warn">Nadi: ${m.isNadiCanceled ? "8/8 restored (Parihara)" : "0/8 — ACTIVE"}</span>` : `<span class="pill">Nadi: 8/8</span>`}
+        ${m.hasBhakootDosha ? `<span class="pill warn">Bhakoot: ${m.isBhakootCanceled ? "7/7 restored (Parihara)" : "0/7 — ACTIVE"}</span>` : `<span class="pill">Bhakoot: 7/7</span>`}
+        ${m.appliedPariharas.map((p) => `<span class="pill" title="${p.details}">✓ ${p.code}</span>`).join("")}
+      </div>
+      <div class="koota-grid">
+        ${kootaCard("Varna", kk.varna)}${kootaCard("Vashya", kk.vashya)}${kootaCard("Tara", kk.tara)}
+        ${kootaCard("Yoni", kk.yoni)}${kootaCard("Maitri", kk.maitri)}${kootaCard("Gana", kk.gana)}
+        ${kootaCard("Bhakoot", kk.bhakoot)}${kootaCard("Nadi", kk.nadi)}
+      </div>
+      <details><summary>Classical Provenance</summary>
+        <div class="body">${m.provenance.summary}<br><span class="mono">Source: ${m.provenance.source} · verses: ${m.provenance.verseKeys.join(", ")}</span></div>
+      </details>
+    </div>`;
+  }
+
+  function tier2(res) {
+    const match = res.matchResult;
+    if (res.skippedStage2) {
+      return `<div class="alert"><h2>Matchmaking Alert</h2>
+        <p>This pair scores <b>${match.totalScore}/36 Gunas</b> with an active, uncanceled ${[match.hasNadiDosha ? "Nadi Dosha" : "", match.hasBhakootDosha ? "Bhakoot Dosha" : ""].filter(Boolean).join(" and ")}. In accordance with classical guidelines (Muhurta Chintamani Ch.6), wedding dates cannot be generated for this combination without prior remedial consultation.</p>
+        <p class="note">${match.provenance.summary}</p></div>`;
+    }
+    const shubh = res.shubh, madhyama = res.madhyama;
+    const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const rows = (list) => list.map((r, i) => `<tr>
+      <td>${i + 1}</td>
+      <td>${r.iso}<br><span class="note">${dayName[new Date(r.iso).getDay()]}</span></td>
+      <td><span class="badge ${r.status === "SHUBH" ? "ok" : "mid"}">${r.status} (${r.score}/100)</span></td>
+      <td>${r.strengths ? r.strengths.join("<br>") : "—"}</td>
+      <td><details><summary>Vivaha Dosha audit</summary>
+        <div class="body mono">
+          ${r.doshas.activeDoshas.length ? r.doshas.activeDoshas.map((a) => `BLOCK: ${a.code} — ${a.details}`).join("<br>") : "No active Vivaha doshas."}
+          ${r.removals.length ? "<br>" + r.removals.map((x) => `REMOVED: ${x.code} — ${x.details}`).join("<br>") : ""}
+        </div></details></td>
+    </tr>`).join("");
+    return `<div class="card">
+      <h2>Tier 2 · Recommended Shubh Dates</h2>
+      <div class="stat">
+        <div class="s"><div class="k">Scanned</div><div class="v">${res.total}</div></div>
+        <div class="s"><div class="k">Shubh</div><div class="v">${shubh.length}</div></div>
+        <div class="s"><div class="k">Madhyama</div><div class="v">${madhyama.length}</div></div>
+        <div class="s"><div class="k">Rejected</div><div class="v">${res.rejected}</div></div>
+      </div>
+      <table class="date-table">
+        <tr><th>#</th><th>Date</th><th>Quality</th><th>Strengths</th><th>Dosha audit</th></tr>
+        ${rows([...shubh, ...madhyama].slice(0, 15))}
+      </table>
+      <div class="note">Couple score ${match.totalScore}/36 feeds the slot score (75 base + scaled bonus). Hard blockers (Bhadra-Earth, Sankranti, Jupiter/Venus combustion, Latta, Jamitra, Paata, Ekargala) reject the day outright; the Sun+Moon-in-Lagna removal rule clears afflictions when classical.</div>
+    </div>`;
+  }
+
+  $("calcBtn").addEventListener("click", async () => {
+    const btn = $("calcBtn"); btn.disabled = true;
+    const from = $("fromDate").value, to = $("toDate").value;
+    if (!from || !to || from > to) { btn.disabled = false; alert("Please pick a valid date window."); return; }
+    const bar = document.querySelector("#progress > div");
+    let count = 0;
+    try {
+      const c = couple();
+      const m = calculateAshtakoota(c.groom, c.bride, rules);
+      $("result").innerHTML = tier1(m) + `<div id="tier2wrap"></div>`;
+      if (!m.isCompatible) {
+        const res = { matchResult: m, skippedStage2: true };
+        document.getElementById("tier2wrap").innerHTML = tier2(res);
+        return;
+      }
+      bar.style.width = "2%";
+      const res = await scanWeddingWindow({
+        couple: c, startISO: from, endISO: to, geo: [80.27, 13.08, 0],
+        onProgress: (n, iso) => { count = n; },
+      }, eng, rules);
+      bar.style.width = "100%";
+      document.getElementById("tier2wrap").innerHTML = tier2(res);
+    } catch (err) {
+      $("result").innerHTML = `<div class="alert"><h2>Engine error</h2><p class="mono">${err.message}</p></div>`;
+    } finally { btn.disabled = false; setTimeout(() => bar.style.width = "0", 600); }
+  });
+</script>
+</body>
+</html>

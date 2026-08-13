@@ -55,6 +55,11 @@
       "name": "Misra / Chikitsha Prakarana",
       "title": "Chapter 13 (Misra)"
     },
+    "ch6_vivaha": {
+      "key": "ch6_vivaha",
+      "name": "Vivaha Prakarana (Marriage Sanskaras)",
+      "title": "Chapter 6 (Marriage), muhurtha-chinthamani.pdf pages 149-227"
+    },
     "ch_samskara": {
       "key": "ch_samskara",
       "name": "Samskara Prakaranas",
@@ -318,14 +323,14 @@
       "proof": "formula"
     },
     "LATTA_DOSHA_ACTIVE": {
-      "label": "Latta Dosha",
-      "chapter": "ch1",
-      "verse": "Sloka 8-9",
+      "label": "Latta Dosha (planetary kick on marriage nakshatra)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.199",
       "sanskrit_sloka": null,
-      "english_translation": null,
-      "applied_rule_logic": "Couple-compatibility dosha for samskara/union activities. Verse reference to be verified.",
+      "english_translation": "Mercury, Rahu, Full Moon and Venus hit (kick) the nakshatras that are respectively (counted backwards) the 7th, 9th, 22nd and 5th from the nakshatra in which these planets are situated. Sun, Saturn, Jupiter and Mars hit the nakshatras that are respectively (in regular order) the 12th, 8th, 6th and 3rd from their nakshatra. The nakshatra subjected to Latta Dosha is rejected for the marriage samskara. Effects: Sun-loss of money; Moon-total destruction; Mars-death; Mercury-destruction; Jupiter-destruction of relatives; Venus-loss of work; Saturn-destruction of the family; Rahu-death.",
+      "applied_rule_logic": "Hard marriage blocker when the proposed marriage nakshatra equals a transiting planet's kicked nakshatra (Rahu counts backward despite retrograde; the 9th nakshatra in regular order from Rahu's star is the Latta star).",
       "basis": "classical",
-      "proof": "unverified"
+      "proof": "confirmed"
     },
     "VASTU_SUAPTA_PERIOD": {
       "label": "Vastu Suapta (Vastu sleeps) period",
@@ -356,6 +361,176 @@
       "applied_rule_logic": "Base scoring terms and panchanga fit derived from sidereal-last equations; formulas per vedic_panchang.pdf.",
       "basis": "formula",
       "proof": "formula"
+    },
+    "VIVAHA_MELAPAKA_36_GUNA": {
+      "label": "Eight Kootas / 36 Guna Melapaka",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.159",
+      "sanskrit_sloka": null,
+      "english_translation": "The eight Kootas in the Melapaka of marriage: 1. Varna, 2. Vashya, 3. Tara, 4. Yoni, 5. Grahamaitri, 6. Ganamaitri, 7. Bhakoota, 8. Nadi. Each has one or more guna than the former: Varna 1, Vashya 2, Tara 3, Yoni 4, Grahamaitri 5, Ganamaitri 6, Bhakoota 7, Nadi 8. By the rule of 'Saika Padaghana Padardhama' the total is (8+1)x8/2 = 36 gunas.",
+      "applied_rule_logic": "Stage-1 matchmaking basis: compute all 8 kootas summing to 36; breakdown shape used by the Ashtakoota engine.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_THRESHOLD_18": {
+      "label": "Eligibility threshold (18/36) and quality tiers",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.160",
+      "sanskrit_sloka": null,
+      "english_translation": "If the total gunas of Melapaka of the bridegroom and the bride is 18 or more, the Nakshatra Melapaka is suitable for marriage. The greater the gunas than 18, the better. Per 'Jyotirnibandha': 16 gunas is not suitable; 17-20 medium; 21-31 excellent; 31-36 most excellent. But if there is the 'Dusta Bhakoota' (evil Bhakoota), it is inauspicious up to 20, medium 21-25, excellent 26-30, most excellent 30-36.",
+      "applied_rule_logic": "Stage-1 gate: isCompatible = totalScore >= 18 AND no uncanceled Nadi/Bhakoot dosha; tier labels derived from the Jyotirnibandha scale.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_VARNA_KOOTA": {
+      "label": "Varna Koota (1 point)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.161-162",
+      "sanskrit_sloka": null,
+      "english_translation": "Pisces, Scorpio and Cancer are Brahmin; Aries, Leo and Sagittarius are Kshatriya; Taurus, Virgo and Capricorn are Vaishya; Gemini, Aquarius and Libra are Shudra. A girl of higher Varna than the boy is not auspicious. If the bridegroom's Varna is higher than or different from the bride's, one guna is obtained; otherwise zero.",
+      "applied_rule_logic": "calcVarna: score = groomVarna >= brideVarna ? 1 : 0 using the RASHI_VARNA table.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_VASHYA_KOOTA": {
+      "label": "Vashya Koota (2 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.163-164",
+      "sanskrit_sloka": null,
+      "english_translation": "Vashya means attraction; there are three kinds of Vashya - Sakhya/Maitra (friendship), Bair (enmity) and Bhakshya (that which digests). If both have Maitri as Vashya there are 2 gunas; if Bair and Bhakshya, zero; if Vashya and Bair, 1; if Vashya and Bhakshya, 1/2. The four Vashyas: Chatushpada (quadruped), Nara (male), Jalachara (water), Banachara (forest), Keeta (insect).",
+      "applied_rule_logic": "calcVashya via the Vashya speculum of signs; friendship/enmity from the Vashya point table.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_TARA_KOOTA": {
+      "label": "Tara Koota (3 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.165",
+      "sanskrit_sloka": null,
+      "english_translation": "Count from the girl's nakshatra to the boy's, then from the boy's to the girl's. If dividing each count by 9 leaves remainder 3/5/7, that Tara is inauspicious; if remainder is 1/2/4/6/8/0, auspicious. If both Taras excellent, 3 points; if one auspicious and one inauspicious, 1.5; if both inauspicious, 0.",
+      "applied_rule_logic": "calcTara: count both directions mod 9; position 3/5/7 inauspicious (matches docs, plus remainder 0 = auspicious here).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_YONI_KOOTA": {
+      "label": "Yoni Koota (4 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.166-168",
+      "sanskrit_sloka": null,
+      "english_translation": "14 yonis across 28 nakshatras (Abhijita included): Horse (Ashwini/Shatabhisha), She-buffalo (Swati/Hasta), Lion (Dhanishtha/Poorvabhadrapada), Elephant (Bharani/Revati), Ram (Pushya/Krittika), Monkey (Shravana/Poorvashadha), Mongoose (Uttarashadha/Abhijita), Serpent (Mrigashira/Rohini), Deer (Jyeshtha/Anuradha), Dog (Moola/Ardra), Tom-cat (Punarvasu/Ashlesha), Rat (Magha/Poorvaphalguni), Leopard (Vishakha/Chitra), Cow (Uttaraphalguni/Uttarabhadrapada). Mahabair (extreme enmity) between Horse-Buffalo, Lion-Elephant, Ram-Monkey, Mongoose-Serpent, Deer-Dog, Cat-Mouse, Leopard-Cow. Gunas: Mahabair 0, Bair 1, neutrality 2, Mitrata 3, Ati-mitrata 4.",
+      "applied_rule_logic": "calcYoni via the 14x14 compatibility matrix keyed on nakshatra yoni pairs; marriage rejected on Mahabair pairs unless Vashya is friendly.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_GRAHA_MAITRI_KOOTA": {
+      "label": "Graha Maitri Koota (5 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.169-171",
+      "sanskrit_sloka": null,
+      "english_translation": "Natural (Naisargika) friendship of the planetary lords of the Janama Rashis. If the lords are the same or friends, 5 gunas; one friend and one neutral, 4; both neutral, 3; one friend and one enemy, 2; one neutral and one enemy, 0. Natural friendship matrix: Sun-Moon-Mars-Jupiter are mutual friends, etc.",
+      "applied_rule_logic": "calcMaitri from GRAHA_MAITRI_SCORES lookup on RASHI_LORDS of the two moon signs.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_GANA_KOOTA": {
+      "label": "Gana Koota (6 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.171-172",
+      "sanskrit_sloka": null,
+      "english_translation": "Rakshasa (demon) ganas: Magha, Ashlesha, Dhanishtha, Jyeshtha, Moola, Shatabhisha, Kritika, Chitra, Vishakha. Manushya (man) ganas: Poorvaphalguni, Poorvashadha, Poorvabhadrapada, Uttaraphalguni, Uttarashadha, Uttarabhadrapada, Rohini, Bharani, Ardra. Deva (god) ganas: Anuradha, Punarvasu, Mrigashira, Shravana, Revati, Swati, Hasta, Ashwini, Pushya. Same gana gives excessive love; Deva-Manushya gives average love; Rakshasa-Manushya gives death; Deva-Rakshasa gives quarrels. A Rakshasa native should be wedded to a Rakshasa native. 6 points allotted.",
+      "applied_rule_logic": "calcGana from NAKSHATRA_GANA: identical=6, Deva-Manushya=5 (groom Deva), Manushya-Deva=6 per one reading, Deva-Rakshasa=1, Manushya-Rakshasa=0.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_BHAKOOTA_KOOTA": {
+      "label": "Bhakoota Koota (7 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.172-175",
+      "sanskrit_sloka": null,
+      "english_translation": "If the Janama Rashis are mutually in the 6th and 8th house, it is the giver of death; if in the 9th and 5th, loss of progeny; if in the 2nd and 12th, poverty; happiness in other places. The 7th-house pair Capricorn-Cancer and Leo-Aquarius are mutual enemies. Five removals of Dusta Bhakoota: (1) same lord of the Janama Rashis; (2) friendship between the Rashi lords; (3) Navamsha lords friendly and strong; (4) excellent Tara of both; (5) bride's rashi is the Vashya of the groom's rashi - in all five, favorable Nadi is necessary. Shubha Bhakoota (3rd, 11th, 4th, 10th) destroys planet-enmity doshas.",
+      "applied_rule_logic": "calcBhakoot: score 7 for favorable offsets, 0 for 6/8, 5/9, 2/12 unless a classical parihara (Rashi-lord friendship/identity) cancels.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_NADI_KOOTA": {
+      "label": "Nadi Koota (8 points)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.176-177",
+      "sanskrit_sloka": null,
+      "english_translation": "Adi Nadi: Jyeshtha, Moola, Ardra, Punarvasu, Uttaraphalguni, Hasta, Shatabhisha, Poorvabhadrapada, Ashwini. Madhya Nadi: Pushya, Mrigashira, Chitra, Anuradha, Bharani, Dhanishtha, Poorvashadha, Poorvaphalguni, Uttarabhadrapada. Antya Nadi: Swati, Vishakha, Kritika, Rohini, Ashlesha, Magha, Uttarashadha, Shravana, Revati. Same-Nadi marriage is inauspicious; Madhya-Madhya is certainly death-giving. Nadi relates to health, longevity and happiness of issues. 8 points allotted. If there is Nadi Dosha, marriage should be altogether rejected.",
+      "applied_rule_logic": "calcNadi from NAKSHATRA_NADI: different nadi = 8 points; same nadi = 0 unless a classical parihara cancels.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_NADI_DOSHA_PARIHARA": {
+      "label": "Nadi Dosha removals (pariharas)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.179",
+      "sanskrit_sloka": null,
+      "english_translation": "If the Janama Rashis are the same and the nakshatras different, or the nakshatras are the same and the rashis different, there is no Nadi (or Gana) dosha. If the nakshatras are the same but the quarters different, it is also auspicious. The nakshatra of the bridegroom should be first in serial order; if the male's nakshatra is second to the female's it is not auspicious (Gargacharya).",
+      "applied_rule_logic": "Parihara cancellation for Nadi: same-rashi/diff-nakshatra, same-nakshatra/diff-rashi, same-nakshatra/diff-pada, or Rashi-lord friendship - all restore the 8 points.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_MARRIAGE_NAKSHATRAS": {
+      "label": "Marriage nakshatras, tithis, days and Abhijita",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.194",
+      "sanskrit_sloka": null,
+      "english_translation": "Marriage samskara is auspicious in the Vedha-rahita (without Vedha) nakshatras of Mrigashira, Hasta, Moola, Anuradha, Magha, Rohini, Revati, Uttaraphalguni, Uttarashadha, Uttarabhadrapada and Swati; on all tithis except the Rikta tithis and Amavasya; and on auspicious days (Monday, Wednesday, Thursday and Friday). The 4th quarter of Uttarashadha plus the first 1/15th part of Shravana is the Abhijita nakshatra (not a separate one).",
+      "applied_rule_logic": "Day-scan filters: allowedNakshatras (11 stars incl. Moola - note corpus copy omits Moola, verified source includes it), allowedTithis excluding Rikta/Amavasya, allowedVaras Mon/Wed/Thu/Fri.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "JAMITRA_DOSHA_ACTIVE": {
+      "label": "Jamitra Dosha (7th sign / 55th navamsha affliction)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.204-205",
+      "sanskrit_sloka": null,
+      "english_translation": "If any planet is situated in the 7th sign from the Ascendant or from the Moon, it causes the dosha named Jamitra; the marriage samskara is not auspicious. It is also caused by a planet situated in the 55th navamsha from the Ascendant or Moon (extremely inauspicious). Removal: if the planet in the 7th sign receives benefic aspect; or if the Moon is exalted, own sign, friend's sign, or in benefic shadvarga; per Martanda Vallabha no Jamitra if Sun occupies 3/6/11. Per Sheeghrabodha, Jamitra by Moon/Mercury/Jupiter/Venus is auspicious, by Sun/Mars/Saturn/Rahu inauspicious.",
+      "applied_rule_logic": "Hard marriage blocker when a malefic (or any planet per the primary reading) sits in the 7th rashi from muhurta lagna or Moon; removal via benefic aspect / strong Moon / Sun in 3-6-11.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "PATA_DOSHA_ACTIVE": {
+      "label": "Paata Dosha (Mahapata / severe Nitya Yoga)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.200",
+      "sanskrit_sloka": null,
+      "english_translation": "The nakshatra (at the time of marriage) which is at the end of the yogas of Harshana, Vaidhriti, Sadhya, Vyatipaata, Ganda and Shoola is affected by Paata Dosha and rejected as inauspicious for marriage. Narada and Vashishtha: counting from the Sun's nakshatra to Ashlesha, Magha, Anuradha, Chitra, Shravana and Revati, the nakshatras at those numbers from Ashwini are affected (e.g., Sun in Hasta gives Bharani, Mrigashira, Magha, Swati, Shatabhisha, Poorvabhadrapada).",
+      "applied_rule_logic": "Hard marriage blocker when the day's Nitya Yoga is one of the six Paata yogas (Harshana, Vaidhriti, Sadhya, Vyatipata, Ganda, Shoola), plus the Narada/Vashishtha nakshatra-counting variant.",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "EKARGALA_DOSHA_ACTIVE": {
+      "label": "Ekargala (Khaijoor) Dosha",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.202",
+      "sanskrit_sloka": null,
+      "english_translation": "On a day with an inauspicious yoga (Vyaghaata, Ganda, Vyatipaata, Shoola, Vishakambha, Vaidhriti, Vajra, Parigha or Atiganda), if the Moon is situated in an odd-numbered nakshatra from the Sun's nakshatra, the dosha named 'Khaijoor' occurs, unacceptable for the marriage samskara (all 28 nakshatras counted incl. Abhijita; per Narada, Abhijita is not counted - Naradiya Samhita ch.7 sl.5-7). Khaijoor = Ekargala. Also Upagraha Dosha: Moon in nakshatras numbered 5/8/10/14/7/19/15/18/21/22/23/24/25 from the Sun's star.",
+      "applied_rule_logic": "Hard marriage blocker when the Moon occupies an odd-count nakshatra from the Sun's nakshatra on a bad-yoga day (docs' (Sun+Moon)%27 formula is WRONG; use Sun->Moon nakshatra count parity).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_DOSHA_REMOVAL_SUN_MOON_LAGNA": {
+      "label": "Removal of Ekargala/Upagraha/Paata/Latta/Jamitra/Kartari/Udaya/Asta",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.206",
+      "sanskrit_sloka": null,
+      "english_translation": "If the Sun and the Moon, being endowed with strength, are posited in the Lagna (Ascendant) of the auspicious deed, then the doshas of Ekargala, Upagraha, Paata, Latta, Jamitra, Kartari, Udaya (rising) and Asta (combustion) are destroyed just as darkness is destroyed by the rising of the Sun.",
+      "applied_rule_logic": "Universal marriage removal: strong Sun + Moon in the muhurta lagna cancels the four major doshas (Ekargala, Upagraha, Paata, Latta, Jamitra).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
+    "VIVAHA_DOSHA_MASTER_21": {
+      "label": "Master list of marriage doshas to avoid",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.227",
+      "sanskrit_sloka": null,
+      "english_translation": "Doshas to be avoided in the marriage samskara: Utpaata, Mahapaata, Dagdha Tithi, evil combinations like Vyatipaata, combustion of Moon/Jupiter/Venus, Tithi Kshaya, Tithi Vriddhi, Gandanta, Bhadra, Sankranti day, combustion of Ascendant Lord and Navamsha Lord, Ascendant/Navamsha/Moon lords in 6/8 houses, malefic shadvarga, Chandrayudha, Khaijoor, Dasha Yoga, Jamitra, Latta, Vedha (Sapta and Pancha Shalaka), Baana, Paapa Kartari, Dusta yoga from Tithi/Nakshatra/Day, Ardha Yaama, Kulika, etc.",
+      "applied_rule_logic": "Documentation source for the full 21-dosha scope in marriage_rules.json. Engine implements the 4 major doshas (Latta, Jamitra, Paata, Ekargala) + the Sun/Moon-in-Lagna removal; the rest are recorded as provenance notes.",
+      "basis": "classical",
+      "proof": "confirmed"
     }
   },
   "activities": {
@@ -2063,6 +2238,6 @@
       "functional_group": 92,
       "formula": 0
     },
-    "verse_entries": 29
+    "verse_entries": 46
   }
 }

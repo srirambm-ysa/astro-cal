@@ -586,6 +586,35 @@ export class Engine {
     };
   }
 
+  /* ===== MARRIAGE HELPERS (additive — used by marriage.mjs) ===== */
+
+  /* Lagna rashi (0-11) of the ascendant at jd for a geo [lon, lat, alt].
+     Uses houses_ex's Ascendant cusp (ascmc[0], SE_ASC) in sidereal mode. */
+  ascendant(jd, geo) {
+    const [lon, lat] = geo;
+    const h = this.swe.houses_ex(jd, this.swe.SEFLG_SWIEPH | this.swe.SEFLG_SIDEREAL, lat, lon, "W");
+    return this.rashiOf(h.ascmc[0]);
+  }
+
+  /* Sidereal rashi + nakshatra + pada of one planet at jd. */
+  planetPosition(jd, planet) {
+    const lon = this.siderealLon(jd, planet);
+    return { lon, rashi: this.rashiOf(lon), nakshatra: this.nakshatraOf(lon), pada: this.padaOf(lon) };
+  }
+
+  /* Positions of all 9 navagrahas at jd (Sun..Saturn + Rahu/Ketu). */
+  planetPositions(jd) {
+    const ids = [this.swe.SE_SUN, this.swe.SE_MOON, this.swe.SE_MARS, this.swe.SE_MERCURY,
+      this.swe.SE_JUPITER, this.swe.SE_VENUS, this.swe.SE_SATURN, this.swe.SE_MEAN_NODE, this.swe.SE_TRUE_NODE];
+    const names = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
+    const out = {};
+    for (let i = 0; i < ids.length; i++) out[names[i]] = this.planetPosition(jd, ids[i]);
+    return out;
+  }
+
+  /* Sun nakshatra (0-26) at jd — needed for Ekargala/Khaijoor and Paata checks. */
+  sunNakshatra(jd) { return this.nakshatraOf(this.siderealLon(jd, this.swe.SE_SUN)); }
+
   /* ===== DAY COMPUTATION (shared by main thread + worker) ===== */
 
   /* Compute all astronomical + phase-2 fields for one civil day.

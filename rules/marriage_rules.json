@@ -1,0 +1,341 @@
+{
+  "schema": "marriage-rules-v1",
+  "meta": {
+    "title": "Vivaha Muhurta + Ashtakoota matchmaking rules",
+    "source": "Muhurta Chintamani (Acharya Rama Daivagya), trans. Girish Chand Sharma - muhurtha-chinthamani.pdf",
+    "chapter": "Chapter 6 - Vivaha Prakarana (Marriage Sanskaras), pages 149-227",
+    "generated": "2026-08-13",
+    "principle": "Self-contained rules module for the marriage engine. Every rule carries a verseKey resolvable in reference/provenance_registry.json and a PDF page reference. All rules verified against the extracted OCR text (reference/archive/vivaha/ch6_text.txt).",
+    "notes": [
+      "Docs (docs/*.md) cite 'Vivaha Prakarana Chapter 3, Slokas 38-52' - wrong. The actual source chapter is Chapter 6, PDF pages 149-227. Provenance cites the real pages.",
+      "Corpus entry ACT_SAM_VIVAHA_MARRIAGE omits MOOLA from allowed marriage nakshatras; the source (p.194) explicitly includes it. This file uses the source-correct list of 11 nakshatras.",
+      "GRAHA_MAITRI friendship matrix here is source-verified (p.169-171) and differs from docs/marriage-and-match-making-ext.md (docs miscoded several friend/enemy pairs).",
+      "Nadi dosha pariharas: only the 3 source-attested removals (p.179) are listed. The docs' 4th 'Rashi Lord Friendship' parihara for Nadi is NOT attested in the source and is omitted.",
+      "Ekargala (Khaijoor): source rule (p.202) is 'Moon in an odd-numbered nakshatra from the Sun's star on a bad-yoga day'. The docs' (Sun+Moon)%27 odd formula is WRONG.",
+      "Paata dosha: source (p.200) covers 6 yogas (Harshana, Vaidhriti, Sadhya, Vyatipaata, Ganda, Shoola) plus the Narada/Vashishtha nakshatra-counting variant, not just Vyatipata/Vaidhriti.",
+      "Jamitra dosha: source (p.204) is 'any planet in the 7th sign from Ascendant or Moon (+ 55th navamsha)', not malefics-only as docs state."
+    ]
+  },
+  "ashtakoota": {
+    "maxScore": 36,
+    "eligibility": {
+      "minScore": 18,
+      "hardBlockers": ["NADI_DOSHA", "BHAKOOT_DOSHA"],
+      "rule": "isCompatible = totalScore >= 18 AND no uncanceled Nadi/Bhakoot dosha",
+      "verseKey": "VIVAHA_THRESHOLD_18",
+      "page": 160
+    },
+    "thresholdTiers": [
+      { "min": 31, "max": 36, "label": "MOST_EXCELLENT" },
+      { "min": 21, "max": 31, "label": "EXCELLENT" },
+      { "min": 17, "max": 20, "label": "MEDIUM" },
+      { "min": 0, "max": 16, "label": "NOT_SUITABLE" }
+    ],
+    "dustaBhakootaTiers": [
+      { "min": 30, "max": 36, "label": "MOST_EXCELLENT" },
+      { "min": 26, "max": 30, "label": "EXCELLENT" },
+      { "min": 21, "max": 25, "label": "MEDIUM" },
+      { "min": 0, "max": 20, "label": "INauspicious" }
+    ],
+    "tiersSource": "Jyotirnibandha, quoted at p.160",
+    "kootas": {
+      "varna": {
+        "maxScore": 1,
+        "verseKey": "VIVAHA_VARNA_KOOTA",
+        "page": 161,
+        "rashiVarna": {
+          "1": 2, "2": 3, "3": 4, "4": 1, "5": 2, "6": 3, "7": 4, "8": 1, "9": 2, "10": 3, "11": 4, "12": 1
+        },
+        "varnaNames": { "1": "Brahmin", "2": "Kshatriya", "3": "Vaishya", "4": "Shudra" },
+        "rashiVarnaNote": "Cancer/Scorpio/Pisces=Brahmin; Aries/Leo/Sagittarius=Kshatriya; Taurus/Virgo/Capricorn=Vaishya; Gemini/Aquarius/Libra=Shudra.",
+        "rule": "score = groomVarna >= brideVarna ? 1 : 0. A girl of higher Varna than the boy is not auspicious."
+      },
+      "vashya": {
+        "maxScore": 2,
+        "verseKey": "VIVAHA_VASHYA_KOOTA",
+        "page": 163,
+        "vashyaTypes": {
+          "CHATUSHPADA": ["Aries", "Taurus", "latter half of Sagittarius", "first half of Capricorn"],
+          "NARA": ["Gemini", "Virgo", "Libra", "first half of Sagittarius"],
+          "JALACHARA": ["Cancer", "first half of Capricorn", "Pisces", "Aquarius"],
+          "BANACHARA": ["Leo"],
+          "KEETA": ["Scorpio"]
+        },
+        "pointScale": [
+          { "relation": "Maitra/Maitri (friendship)", "points": 2 },
+          { "relation": "Vashya + Bair (enmity)", "points": 1 },
+          { "relation": "Vashya + Bhakshya", "points": 0.5 },
+          { "relation": "Bair + Bhakshya", "points": 0 }
+        ],
+        "rule": "Vashya = mutual attraction between the couple's signs. Engine approximation: same rashi -> 2; same rashi lord -> 2; mutual-friendly rashi lords -> 1; else 0.5.",
+        "note": "Full 5-vashya speculum (Chatushpada/Nara/Jalachara/Banachara/Keeta) is encoded above for future refinement."
+      },
+      "tara": {
+        "maxScore": 3,
+        "verseKey": "VIVAHA_TARA_KOOTA",
+        "page": 165,
+        "inauspiciousRemainders": [3, 5, 7],
+        "auspiciousRemainders": [1, 2, 4, 6, 8, 0],
+        "rule": "Count from bride's nakshatra to groom's and groom's to bride's; divide each count by 9. Remainder 3/5/7 => inauspicious Tara. Both auspicious => 3 points; one auspicious => 1.5; none => 0.",
+        "countRule": "countGtoB = (groomStar - brideStar + 27) % 27; remainder = (countGtoB + 1) % 9."
+      },
+      "yoni": {
+        "maxScore": 4,
+        "verseKey": "VIVAHA_YONI_KOOTA",
+        "page": 166,
+        "nakshatraYoni": {
+          "1": "HORSE", "2": "ELEPHANT", "3": "RAM", "4": "SERPENT", "5": "SERPENT", "6": "DOG",
+          "7": "TOM_CAT", "8": "RAM", "9": "TOM_CAT", "10": "RAT", "11": "RAT", "12": "COW",
+          "13": "SHE_BUFFALO", "14": "LEOPARD", "15": "SHE_BUFFALO", "16": "LEOPARD", "17": "DEER", "18": "DEER",
+          "19": "DOG", "20": "MONKEY", "21": "Mongoose", "22": "MONKEY", "23": "LION", "24": "HORSE",
+          "25": "LION", "26": "COW", "27": "ELEPHANT"
+        },
+        "yoniNames": {
+          "HORSE": "Ashwa", "ELEPHANT": "Haathi", "RAM": "Medha", "SERPENT": "Sarpa", "DOG": "Swana",
+          "TOM_CAT": "Marjara", "RAT": "Mushaka", "COW": "Gau", "SHE_BUFFALO": "Mahisha", "LEOPARD": "Vyaghra",
+          "DEER": "Harina", "MONKEY": "Vanara", "Mongoose": "Nakula", "LION": "Singha"
+        },
+        "mahabairPairs": [
+          ["HORSE", "SHE_BUFFALO"],
+          ["LION", "ELEPHANT"],
+          ["RAM", "MONKEY"],
+          ["Mongoose", "SERPENT"],
+          ["DEER", "DOG"],
+          ["TOM_CAT", "RAT"],
+          ["LEOPARD", "COW"]
+        ],
+        "pointScale": [
+          { "relation": "Ati-mitrata (same yoni / extreme friendship)", "points": 4 },
+          { "relation": "Mitrata (friendship)", "points": 3 },
+          { "relation": "Udaaseenta (neutrality)", "points": 2 },
+          { "relation": "Bair (enmity)", "points": 1 },
+          { "relation": "Mahabair (extreme enmity)", "points": 0 }
+        ],
+        "rule": "Engine mapping: same yoni => 4; pair in mahabairPairs => 0; else 2 (neutral). A finer friendship matrix is not attested in the source.",
+        "note": "Marriage on a Mahabair pair is avoided unless Vashya is friendly. 28 nakshatras counted (Abhijita shares Mongoose with Uttarashadha)."
+      },
+      "maitri": {
+        "maxScore": 5,
+        "verseKey": "VIVAHA_GRAHA_MAITRI_KOOTA",
+        "page": 169,
+        "rashiLords": {
+          "1": "Mars", "2": "Venus", "3": "Mercury", "4": "Moon", "5": "Sun", "6": "Mercury",
+          "7": "Venus", "8": "Mars", "9": "Jupiter", "10": "Saturn", "11": "Saturn", "12": "Jupiter"
+        },
+        "naturalFriendship": {
+          "Sun": { "friends": ["Moon", "Mars", "Jupiter"], "enemies": ["Venus", "Saturn"], "neutral": ["Mercury"] },
+          "Moon": { "friends": ["Sun", "Mercury"], "enemies": [], "neutral": ["Mars", "Jupiter", "Venus", "Saturn"] },
+          "Mars": { "friends": ["Sun", "Moon", "Jupiter"], "enemies": ["Mercury"], "neutral": ["Venus", "Saturn"] },
+          "Mercury": { "friends": ["Sun", "Venus"], "enemies": ["Moon"], "neutral": ["Mars", "Jupiter", "Saturn"] },
+          "Jupiter": { "friends": ["Sun", "Moon", "Mars"], "enemies": ["Mercury", "Venus"], "neutral": ["Saturn"] },
+          "Venus": { "friends": ["Mercury", "Saturn"], "enemies": ["Sun", "Moon"], "neutral": ["Mars", "Jupiter"] },
+          "Saturn": { "friends": ["Mercury", "Venus"], "enemies": ["Sun", "Moon", "Mars"], "neutral": ["Jupiter"] }
+        },
+        "pointScale": [
+          { "relation": "same or friends", "points": 5 },
+          { "relation": "friend + neutral", "points": 4 },
+          { "relation": "both neutral", "points": 3 },
+          { "relation": "friend + enemy", "points": 2 },
+          { "relation": "neutral + enemy (or both enemies)", "points": 0 }
+        ],
+        "rule": "score from relationship between the Rashi lords of the couple's moon signs. Only Naisargika (natural) friendship is considered.",
+        "note": "Source-verified matrix. Differs from docs: e.g. source says Mercury is Moon's friend (docs coded enemy), Moon/Mars/Jupiter are Mars' friends (docs miscoded), Saturn is neutral to Jupiter (docs coded enemy)."
+      },
+      "gana": {
+        "maxScore": 6,
+        "verseKey": "VIVAHA_GANA_KOOTA",
+        "page": 171,
+        "nakshatraGana": {
+          "1": "DEVA", "2": "MANUSHYA", "3": "RAKSHASA", "4": "MANUSHYA", "5": "DEVA", "6": "MANUSHYA",
+          "7": "DEVA", "8": "DEVA", "9": "RAKSHASA", "10": "RAKSHASA", "11": "MANUSHYA", "12": "MANUSHYA",
+          "13": "DEVA", "14": "RAKSHASA", "15": "DEVA", "16": "RAKSHASA", "17": "DEVA", "18": "RAKSHASA",
+          "19": "RAKSHASA", "20": "MANUSHYA", "21": "MANUSHYA", "22": "DEVA", "23": "RAKSHASA", "24": "RAKSHASA",
+          "25": "MANUSHYA", "26": "MANUSHYA", "27": "DEVA"
+        },
+        "ganaNames": { "DEVA": "Deva", "MANUSHYA": "Manushya", "RAKSHASA": "Rakshasa" },
+        "pointRules": [
+          { "combination": "same gana", "points": 6, "effect": "excessive love" },
+          { "combination": "Deva groom + Manushya bride", "points": 5, "effect": "average love" },
+          { "combination": "Manushya groom + Deva bride", "points": 6, "effect": "average love (one reading)" },
+          { "combination": "Deva + Rakshasa (either order)", "points": 1, "effect": "quarrels" },
+          { "combination": "Manushya + Rakshasa (either order)", "points": 0, "effect": "death" }
+        ],
+        "rule": "Deva nakshatras (9): Ashwini, Mrigashira, Punarvasu, Pushya, Hasta, Swati, Anuradha, Shravana, Revati. Manushya (9): Bharani, Rohini, Ardra, Purva/Uttara Phalguni, Purva/Uttara Ashadha, Purva/Uttara Bhadrapada. Rakshasa (9): Krittika, Ashlesha, Magha, Chitra, Vishakha, Jyeshtha, Moola, Dhanishtha, Shatabhisha.",
+        "note": "A Rakshasa native should wed a Rakshasa native (source). Gana-compatible scoring for same-gana gives 6."
+      },
+      "bhakoot": {
+        "maxScore": 7,
+        "verseKey": "VIVAHA_BHAKOOTA_KOOTA",
+        "page": 172,
+        "badStepDistances": [1, 4, 5],
+        "badOffsetsClassical": [2, 12, 5, 9, 6, 8],
+        "offsetNote": "badStepDistances are the source-correct mod-12 sign steps for the classical house pairs: 1 step = 2-12 (Dwidwadasha), 4 steps = 5-9 (Navapanchama), 5 steps = 6-8 (Shashtashtaka). badOffsetsClassical lists the traditional 2nd/12th/5th/9th/6th/8th house positions for provenance display.",
+        "effects": {
+          "6,8": "giver of death (Shadashtaka)",
+          "5,9": "loss of progeny (Navapanchama)",
+          "2,12": "poverty (Dwidwadasha)"
+        },
+        "favorableOffsets": [3, 11, 4, 10, 7],
+        "enemy7thPairs": [["Capricorn", "Cancer"], ["Leo", "Aquarius"]],
+        "rule": "score = 7 for favorable offsets; 0 for [2,12,5,9,6,8] unless a parihara (rashi-lord identity/friendship) cancels.",
+        "pariharas": [
+          { "code": "BHAKOOT_PARIHARA_LORD_IDENTITY", "rule": "Lords of the Janama Rashis are the same planet", "canceled": true, "verseKey": "VIVAHA_BHAKOOTA_KOOTA", "page": 175 },
+          { "code": "BHAKOOT_PARIHARA_LORD_FRIENDSHIP", "rule": "Lords of the Janama Rashis are mutual friends", "canceled": true, "verseKey": "VIVAHA_BHAKOOTA_KOOTA", "page": 175 },
+          { "code": "BHAKOOT_PARIHARA_NAVAMSHA", "rule": "Navamsha lords of both are friendly and strong (requires navamsha data - not implemented)", "canceled": false, "verseKey": "VIVAHA_BHAKOOTA_KOOTA", "page": 175 },
+          { "code": "BHAKOOT_PARIHARA_TARA", "rule": "Tara of both is excellent (see tara koota)", "canceled": false, "verseKey": "VIVAHA_BHAKOOTA_KOOTA", "page": 175 },
+          { "code": "BHAKOOT_PARIHARA_VASHYA", "rule": "Bride's rashi is the Vashya of the groom's rashi (see vashya koota)", "canceled": false, "verseKey": "VIVAHA_BHAKOOTA_KOOTA", "page": 175 }
+        ],
+        "pariharaNote": "All five removals require favorable Nadi. Engine implements lord identity + lord friendship (both computable from rashi lords)."
+      },
+      "nadi": {
+        "maxScore": 8,
+        "verseKey": "VIVAHA_NADI_KOOTA",
+        "page": 176,
+        "nakshatraNadi": {
+          "1": "ADI", "2": "MADHYA", "3": "ANTYA", "4": "ANTYA", "5": "MADHYA", "6": "ADI",
+          "7": "ADI", "8": "MADHYA", "9": "ANTYA", "10": "ANTYA", "11": "MADHYA", "12": "ADI",
+          "13": "ADI", "14": "MADHYA", "15": "ANTYA", "16": "ANTYA", "17": "MADHYA", "18": "ADI",
+          "19": "ADI", "20": "MADHYA", "21": "ANTYA", "22": "ANTYA", "23": "MADHYA", "24": "ADI",
+          "25": "ADI", "26": "MADHYA", "27": "ANTYA"
+        },
+        "nadiNames": { "ADI": "Adi", "MADHYA": "Madhya", "ANTYA": "Antya" },
+        "rule": "score = 8 for different nadi; 0 for same nadi unless a parihara cancels.",
+        "severityNote": "Same nadi is inauspicious; Madhya+Madhya specifically is 'certainly givers of death' (source). Nadi governs health, longevity and offspring happiness.",
+        "pariharas": [
+          { "code": "NADI_PARIHARA_SAME_RASHI_DIFF_NAKSHATRA", "rule": "Same Janama Rashi but different nakshatras", "canceled": true, "verseKey": "VIVAHA_NADI_DOSHA_PARIHARA", "page": 179 },
+          { "code": "NADI_PARIHARA_SAME_NAKSHATRA_DIFF_RASHI", "rule": "Same nakshatra spanning different rashis (also removes Gana dosha)", "canceled": true, "verseKey": "VIVAHA_NADI_DOSHA_PARIHARA", "page": 179 },
+          { "code": "NADI_PARIHARA_DIFF_PADA", "rule": "Same nakshatra but different padas (quarters)", "canceled": true, "verseKey": "VIVAHA_NADI_DOSHA_PARIHARA", "page": 179 }
+        ],
+        "pariharaNote": "Source lists only these 3 removals (p.179). The docs' 4th (rashi-lord friendship for Nadi) is NOT attested and is not applied."
+      }
+    },
+    "ganaNakshatra": {
+      "DEVA": [1, 5, 7, 8, 13, 15, 17, 22, 27],
+      "MANUSHYA": [2, 4, 6, 11, 12, 20, 21, 25, 26],
+      "RAKSHASA": [3, 9, 10, 14, 16, 18, 19, 23, 24]
+    },
+    "nadiNakshatra": {
+      "ADI": [1, 6, 7, 12, 13, 18, 19, 24, 25],
+      "MADHYA": [2, 5, 8, 11, 14, 17, 20, 23, 26],
+      "ANTYA": [3, 4, 9, 10, 15, 16, 21, 22, 27]
+    }
+  },
+  "nakshatraOrderNote": "Gargacharya (p.179): in the serial order the groom's nakshatra should come before the bride's. If the male's nakshatra is second to the female's it is not auspicious.",
+  "dayFilters": {
+    "verseKey": "VIVAHA_MARRIAGE_NAKSHATRAS",
+    "page": 194,
+    "allowedNakshatras": ["MRIGASHIRA", "HASTA", "MOOLA", "ANURADHA", "MAGHA", "ROHINI", "REVATI", "UTTARA_PHALGUNI", "UTTARA_ASHADHA", "UTTARA_BHADRAPADA", "SWATI"],
+    "allowedNakshatraIndices": [5, 13, 19, 17, 10, 4, 27, 12, 21, 26, 15],
+    "allowedTithiGroups": ["PURNA", "NANDA", "JAYA", "BHADRA"],
+    "forbiddenTithiGroups": ["RIKTA", "AMAVASYA"],
+    "allowedVaras": ["MON", "WED", "THU", "FRI"],
+    "allowedVaraIndices": [1, 3, 4, 5],
+    "rule": "Marriage is auspicious in the Vedha-rahita (without Vedha) nakshatras of Mrigashira, Hasta, Moola, Anuradha, Magha, Rohini, Revati, Uttaraphalguni, Uttarashadha, Uttarabhadrapada and Swati; on all tithis except Rikta and Amavasya; and on Monday, Wednesday, Thursday and Friday.",
+    "sourceNotes": [
+      "Source includes MOOLA (corpus omits it) - this module uses the source-correct 11-star list.",
+      "Nakshatra must additionally be free of Vedha (Sapta/Pancha Shalaka) for marriage.",
+      "These day filters are COPIES of the corpus ACT_SAM_VIVAHA_MARRIAGE constraints, corrected to the source; the module is self-contained and does not read activity_corpus.json."
+    ]
+  },
+  "abhijita": {
+    "verseKey": "VIVAHA_MARRIAGE_NAKSHATRAS",
+    "page": 194,
+    "definition": "The 4th quarter of Uttarashadha plus the first 1/15th part of Shravana together form the Abhijita period. Abhijita is not a separate nakshatra."
+  },
+  "vivahaDoshas": {
+    "masterVerseKey": "VIVAHA_DOSHA_MASTER_21",
+    "masterPage": 227,
+    "implemented": {
+      "latta": {
+        "code": "LATTA_DOSHA",
+        "isImplemented": true,
+        "verseKey": "LATTA_DOSHA_ACTIVE",
+        "page": 199,
+        "rule": "Planets kick nakshatras at fixed counts from their own star. Forward (regular order): Sun 12th, Saturn 8th, Jupiter 6th, Mars 3rd. Backward: Mercury 7th, Rahu 9th, Full Moon 22nd, Venus 5th. If the proposed marriage nakshatra equals any planet's kicked star, Latta dosha is active.",
+        "kickOffsets": {
+          "Sun": 12, "Saturn": 8, "Jupiter": 6, "Mars": 3,
+          "Moon": 5, "Mercury": 20, "Venus": 22, "Rahu": 9, "Ketu": 9
+        },
+        "kickOffsetsNote": "kickOffsets are forward-mod-27 equivalent counts. Source (p.199): Mercury/Rahu/Full Moon/Venus kick the 7th/9th/22nd/5th BACKWARD; Sun/Saturn/Jupiter/Mars kick the 12th/8th/6th/3rd FORWARD. Because Rahu always moves backward, its Latta star is counted in regular (forward) order - the 9th forward (Ashlesha for Rahu in Ashwini). Backward offsets normalized: Moon 27-22=5, Mercury 27-7=20, Venus 27-5=22, Rahu/Ketu 9 (forward per source note).",
+        "effects": "Sun-loss of money; Moon-total destruction; Mars-death; Mercury-destruction; Jupiter-destruction of relatives; Venus-loss of work; Saturn-destruction of the family; Rahu-death.",
+        "parihara": "Only the nakshatra quarter in which the kicking planet sits is afflicted; removal per VIVAHA_DOSHA_REMOVAL_SUN_MOON_LAGNA (Sun+Moon strong in Lagna)."
+      },
+      "jamitra": {
+        "code": "JAMITRA_DOSHA",
+        "isImplemented": true,
+        "verseKey": "JAMITRA_DOSHA_ACTIVE",
+        "page": 204,
+        "rule": "Any planet situated in the 7th sign from the muhurta Ascendant or from the Moon causes Jamitra dosha. Also a planet in the 55th navamsha from Ascendant or Moon.",
+        "removal": [
+          "Planet in 7th sign receives benefic aspect",
+          "Moon exalted, own sign, friend's sign, or in benefic shadvarga",
+          "Sun in 3/6/11 houses (Martanda Vallabha)",
+          "Sheeghrabodha: Jamitra by Moon/Mercury/Jupiter/Venus is auspicious; by Sun/Mars/Saturn/Rahu inauspicious"
+        ]
+      },
+      "pata": {
+        "code": "PATA_DOSHA",
+        "isImplemented": true,
+        "verseKey": "PATA_DOSHA_ACTIVE",
+        "page": 200,
+        "rule": "Nakshatra at the end of the yogas Harshana, Vaidhriti, Sadhya, Vyatipaata, Ganda or Shoola is affected by Paata dosha. Narada/Vashishtha variant: count from the Sun's nakshatra to Ashlesha, Magha, Anuradha, Chitra, Shravana, Revati; the nakshatras at those numbers from Ashwini are afflicted.",
+        "pataYogaIndices": [13, 26, 21, 16, 9, 8],
+        "pataYogaNames": ["Harshana", "Vaidhriti", "Sadhya", "Vyatipata", "Ganda", "Shoola"],
+        "removal": "VIVAHA_DOSHA_REMOVAL_SUN_MOON_LAGNA"
+      },
+      "ekargala": {
+        "code": "EKARGALA_DOSHA",
+        "isImplemented": true,
+        "verseKey": "EKARGALA_DOSHA_ACTIVE",
+        "page": 202,
+        "rule": "Khaijoor/Ekargala: on a day with an inauspicious yoga (Vyaghaata, Ganda, Vyatipaata, Shoola, Vishakambha, Vaidhriti, Vajra, Parigha, Atiganda), if the Moon is in an odd-numbered nakshatra from the Sun's nakshatra (all 28 counted; per Narada Abhijita excluded), Ekargala is active.",
+        "badYogaIndices": [12, 9, 16, 8, 0, 26, 14, 18, 5],
+        "badYogaNames": ["Vyaghata", "Ganda", "Vyatipata", "Shoola", "Vishkambha", "Vaidhriti", "Vajra", "Parigha", "Atiganda"],
+        "removal": "VIVAHA_DOSHA_REMOVAL_SUN_MOON_LAGNA"
+      }
+    },
+    "removalRule": {
+      "code": "DOSHA_REMOVAL_SUN_MOON_LAGNA",
+      "isImplemented": true,
+      "verseKey": "VIVAHA_DOSHA_REMOVAL_SUN_MOON_LAGNA",
+      "page": 206,
+      "rule": "If the Sun and the Moon, being endowed with strength, are posited in the Lagna of the auspicious deed, then the doshas of Ekargala, Upagraha, Paata, Latta, Jamitra, Kartari, Udaya and Asta are destroyed (as darkness by the rising sun)."
+    },
+    "documentedButNotImplemented": [
+      { "code": "UTPAATA", "page": 227, "note": "Portents/omens. Not implemented." },
+      { "code": "MAHAPAATA_KRANTI_SAMYA", "page": 201, "note": "Sun and Moon in opposite pairs Leo-Aries, Taurus-Capricorn, Libra-Aquarius, Virgo-Pisces, Cancer-Scorpio, Sagittarius-Gemini. Not implemented." },
+      { "code": "DAGDHA_TITHI", "page": 204, "note": "Sun-sign dependent burned tithi (e.g. Sun in Sagittarius/Pisces -> 2nd tithi). Regional (Madhya Pradesh). Not implemented." },
+      { "code": "COMBUSTION_MOON_JUPITER_VENUS", "page": 227, "note": "Asta of Moon/Jupiter/Venus. Jupiter/Venus combustion is a corpus hard blocker (ASTA_GURU_ACTIVE / ASTA_SHUKRA_ACTIVE); Moon combustion not implemented." },
+      { "code": "TITHI_KSHAYA", "page": 227, "note": "Dropped tithi. Not implemented." },
+      { "code": "TITHI_VRIDDHI", "page": 227, "note": "Repeated tithi. Not implemented." },
+      { "code": "GANDANTA", "page": 186, "note": "Junction degrees between water/fire signs. Not implemented." },
+      { "code": "BHADRA", "page": 227, "note": "Bhadra/Vishti - already a corpus hard blocker (BHADRA_EARTH_ACTIVE)." },
+      { "code": "SANKRANTI_DAY", "page": 213, "note": "Solar ingress day. Already a corpus panchanga blocker (SANKRANTI_DAY_ACTIVE)." },
+      { "code": "COMBUSTION_ASCENDANT_NAVAMSHA_LORDS", "page": 227, "note": "Not implemented." },
+      { "code": "LORD_MOON_IN_6_8", "page": 227, "note": "Ascendant/Navamsha/Moon lords in 6/8 houses. Not implemented (no chart)." },
+      { "code": "MALEFIC_SHADVARGA", "page": 227, "note": "Divisional chart of malefic. Not implemented." },
+      { "code": "CHANDRAYUDHA", "page": 227, "note": "Not implemented." },
+      { "code": "UPAGRAHA", "page": 202, "note": "Moon in nakshatras numbered 5/8/10/14/7/19/15/18/21/22/23/24/25 from the Sun's star; regional (Delhi, Vahlika). Not implemented." },
+      { "code": "DASHA_YOGA", "page": 206, "note": "(Sun-star + Moon-star) % 27 remainder in {0,1,4,6,10,11,15,18,19,20} => afflicted; removed if Jupiter/Venus aspect lagna. Not implemented." },
+      { "code": "VEDHA_SAPTA_PANCHA_SHALAKA", "page": 195, "note": "Sapta/Pancha Shalaka piercing pairs; Vedha-rahta marriage stars. Not implemented." },
+      { "code": "BAANA_DOSHA", "page": 208, "note": "(tithis passed + Ascendant) % 9 remainders (Roga/Agni/Shastra/Sthamba/Raja/Mosha/Raja+Mosha). Not implemented." },
+      { "code": "PAAPA_KARTARI", "page": 187, "note": "Malefic sandwich. Not implemented." },
+      { "code": "DUSTA_YOGA_TITHI_NAKSHATRA_DAY", "page": 227, "note": "Not implemented." },
+      { "code": "ARDHA_YAAMA", "page": 203, "note": "Not implemented." },
+      { "code": "KULIKA", "page": 203, "note": "Not implemented." }
+    ]
+  },
+  "personalFilters": {
+    "dualTaraChandraBala": {
+      "verseKey": "VIVAHA_THRESHOLD_18",
+      "note": "Stage 2 rejects a date if either partner suffers Naidhana (7th) Tara or Ashtama Chandra (8th-house Moon). Tara numerology per VIVAHA_TARA_KOOTA; Chandra Bala from moon-rashi vs birth-rashi relative positions.",
+      "rule": "For each partner compute Tara of the day's nakshatra against the birth nakshatra and Chandra position against birth rashi; reject the slot for the couple if either shows the severe affliction."
+    }
+  },
+  "scoring": {
+    "baseValidSlot": 75,
+    "matchmakingBonusScale": 15,
+    "shubhThreshold": 80,
+    "note": "Final slot score = 75 base + (totalGuna/36)*15 + tara bonuses; SHUBH if >= 80 else MADHYAMA. Mirrors docs/marriage-and-match-making-ext.md formula."
+  }
+}
