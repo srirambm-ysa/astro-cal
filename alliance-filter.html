@@ -107,10 +107,6 @@
   .recommended .who{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em}
   .recommended .pair{font-family:"Rozha One",serif;font-size:20px;color:var(--vermilion)}
   .recommended .score{font-size:14px;font-weight:600}
-  .wl-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
-  .wl-table th{text-align:left;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
-    border-bottom:1px solid var(--gold);padding:5px 8px;white-space:nowrap}
-  .wl-table td{border-bottom:1px solid var(--line-faint);padding:5px 8px;vertical-align:top}
   /* ---------- NIGHT MODE ---------- */
   body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
     --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
@@ -278,7 +274,7 @@
     const tierOrder = ["MOST_EXCELLENT", "EXCELLENT", "MEDIUM", "NOT_SUITABLE"];
     const topTier = tierOrder.find((t) => (s.byTier[t] || 0) > 0) || "—";
     return `<div class="card">
-      <h2>Tier 1 · Compatible Whitelist</h2>
+      <h2>Tier 1 · Compatibility Summary</h2>
       <div class="note">Fixed: <b>${fp.role === "groom" ? "👨 Groom" : "👰 Bride"}</b> — ${fp.nakshatraName} / ${fp.rashiName} / Pada ${fp.pada}</div>
       <div class="whitelist-summary">
         <div class="stat"><div class="k">Valid Profiles</div><div class="v">${s.validProfiles}</div></div>
@@ -292,27 +288,7 @@
         <p>No partner birth combination meets the minimum score (${whitelist.options.minScore}/36) without an active Nadi or Bhakoot dosha.</p>
         <p class="note">Consider lowering the minimum score or consulting a jyotishi for remedial measures.</p></div>
       ` : `
-        <div style="margin-top:10px">
-          <strong>Compatible Nakshatra–Rashi Pairs (${s.compatibleCount}):</strong>
-          <div class="table-wrap">
-            <table class="wl-table">
-              <tr>
-                <th>#</th><th>Nakshatra</th><th>Rashi</th><th>Pada</th><th>Score</th><th>Tier</th><th>Marriage Nak</th>
-              </tr>
-              ${whitelist.compatible.map((r, i) => `
-                <tr>
-                  <td>${i + 1}</td>
-                  <td class="cell-nak">${r.nakshatraName}</td>
-                  <td class="cell-rashi">${r.rashiName}</td>
-                  <td style="text-align:center">P${r.bestPada}</td>
-                  <td class="cell-score">${r.totalScore}/36</td>
-                  <td class="cell-tier">${tierBadge(r.tierLabel)}</td>
-                  <td style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
-                </tr>
-              `).join("")}
-            </table>
-          </div>
-        </div>
+        <div class="note" style="margin-top:8px">${s.compatibleCount} of ${s.candidatePairs} candidate pairs pass Stage 1. The ranked best matches with koota detail are listed in Tier 2.</div>
       `}
       <div class="provenance"><span class="src">Source:</span> ${whitelist.provenance}</div>
     </div>`;
@@ -417,7 +393,9 @@
       };
       const whitelist = computeAllianceWhitelist(input, rules, opts);
       bar.style.width = "100%";
-      $("result").innerHTML = tier1(whitelist) + tier2(whitelist);
+      $("result").innerHTML = whitelist.summary.compatibleCount === 0
+        ? tier1(whitelist)
+        : tier1(whitelist) + tier2(whitelist);
 
       // Export handlers
       $("exportJson").onclick = () => {
