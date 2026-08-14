@@ -107,6 +107,28 @@
   .recommended .who{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em}
   .recommended .pair{font-family:"Rozha One",serif;font-size:20px;color:var(--vermilion)}
   .recommended .score{font-size:14px;font-weight:600}
+  .wl-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+  .wl-table th{text-align:left;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+    border-bottom:1px solid var(--gold);padding:5px 8px;white-space:nowrap}
+  .wl-table td{border-bottom:1px solid var(--line-faint);padding:5px 8px;vertical-align:top}
+  /* ---------- NIGHT MODE ---------- */
+  body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
+    --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
+    --panel-a:#2C3365; --panel-b:#232A55;
+    --saffron:#E8792B; --vermilion:#E25B4A; --gold:#C9A227; --gold-bright:#E4C45A;
+    --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
+    box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .frame::before{border-color:var(--line)}
+  body.night .frame::after{border-color:var(--line-faint)}
+  body.night select{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .btn.secondary{background:var(--panel-a);border-color:var(--line)}
+  body.night .btn.secondary:hover{background:var(--panel-b)}
+  body.night .recommended{background:linear-gradient(135deg,rgba(201,162,39,.14),rgba(228,196,90,.06))}
+  body.night .whitelist-summary{background:var(--panel-b)}
+  body.night .rank-table th{color:#c6bfa8}
+  body.night .rank-table tr:hover td{background:rgba(201,162,39,.05)}
+  body.night .alert{background:rgba(226,91,74,.08)}
   /* ---------- PRINT / PDF ---------- */
   @media print{
     @page{margin:12mm}
@@ -137,6 +159,10 @@
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn secondary" id="themeBtn" type="button" title="Toggle day / night mode">
+        <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span id="themeLabel">Night mode</span>
+      </button>
       <a class="btn secondary" href="marriage.html" style="text-decoration:none">💍 Vivaha Muhurta</a>
       <a class="btn secondary" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
     </div>
@@ -205,6 +231,17 @@
 
   let rules = null;
 
+  /* ---------- theme (shared key with app.js: astro-cal-theme) ---------- */
+  const ICON_MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  const ICON_SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  function setTheme(night) {
+    document.body.classList.toggle("night", night);
+    $("themeIcon").innerHTML = night ? ICON_SUN : ICON_MOON;
+    $("themeLabel").textContent = night ? "Day mode" : "Night mode";
+    localStorage.setItem("astro-cal-theme", night ? "night" : "day");
+  }
+  function toggleTheme() { setTheme(!document.body.classList.contains("night")); }
+
   async function init() {
     $("calcBtn").disabled = true;
     $("calcBtn").innerHTML = "Loading classical rules…";
@@ -215,6 +252,8 @@
       $("calcBtn").innerHTML = "Compute Best Matches";
     }
   }
+  setTheme(localStorage.getItem("astro-cal-theme") === "night");
+  $("themeBtn").addEventListener("click", toggleTheme);
   init();
 
   function tierBadge(label) {
@@ -253,14 +292,25 @@
         <p>No partner birth combination meets the minimum score (${whitelist.options.minScore}/36) without an active Nadi or Bhakoot dosha.</p>
         <p class="note">Consider lowering the minimum score or consulting a jyotishi for remedial measures.</p></div>
       ` : `
-        <div style="margin-top:8px">
+        <div style="margin-top:10px">
           <strong>Compatible Nakshatra–Rashi Pairs (${s.compatibleCount}):</strong>
-          <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">
-            ${whitelist.compatible.map(r => `
-              <span class="pill" style="background:rgba(30,110,79,.1);border-color:var(--good);color:var(--good)">
-                ${r.nakshatraName} / ${r.rashiName} / P${r.bestPada} — ${r.totalScore}/36 ${tierBadge(r.tierLabel)}
-              </span>
-            `).join("")}
+          <div class="table-wrap">
+            <table class="wl-table">
+              <tr>
+                <th>#</th><th>Nakshatra</th><th>Rashi</th><th>Pada</th><th>Score</th><th>Tier</th><th>Marriage Nak</th>
+              </tr>
+              ${whitelist.compatible.map((r, i) => `
+                <tr>
+                  <td>${i + 1}</td>
+                  <td class="cell-nak">${r.nakshatraName}</td>
+                  <td class="cell-rashi">${r.rashiName}</td>
+                  <td style="text-align:center">P${r.bestPada}</td>
+                  <td class="cell-score">${r.totalScore}/36</td>
+                  <td class="cell-tier">${tierBadge(r.tierLabel)}</td>
+                  <td style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
+                </tr>
+              `).join("")}
+            </table>
           </div>
         </div>
       `}
