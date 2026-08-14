@@ -11,6 +11,7 @@ import {
   evaluateVivahaDoshas,
   personalFilters,
   scoreWeddingDay,
+  scoreWeddingDays,
   scanWeddingWindow,
   loadRules,
 } from "../marriage.mjs";
@@ -110,7 +111,7 @@ function dayBase(extra = {}) {
     vara: 1, tithiIndex: 0, moonNakshatra: 4, moonRashi: 0,
     yoga: { index: 23, name: "Sobhana" }, sankranti: false,
     combustion: { guru: false, shukra: false }, bhadra: null,
-    lagnaRashi: 0, sunNakshatra: 0,
+    lagnaRashi: 0, sunNakshatra: 0, tMonth: 7, // Karthigai / Vrischika — allowed
     planets: { Sun: { nakshatra: 1, rashi: 1 }, Moon: { nakshatra: 2, rashi: 2 } },
     ...extra,
   };
@@ -233,6 +234,76 @@ t("Universal: Jupiter combustion rejects", (() => {
 }
 sum("STAGE2-FILTERS");
 
+/* ============ SCORE-WINDOW (pure: worker-path scoring reused) ============== */
+console.log("\n=== scoreWeddingDays: batch scoring of precomputed day snapshots ===");
+{
+  const days = [
+    dayBase(),                                          // clean -> SHUBH 87
+    dayBase({ tithiIndex: 3 }),                         // RIKTA tithi -> REJECTED
+    dayBase({ moonNakshatra: 0 }),                      // nak 1 forbidden -> REJECTED
+    dayBase({ yoga: { index: 23, name: "Sobhana" }, sunNakshatra: 4, moonNakshatra: 4, moonRashi: 5 }), // clean SHUBH (Madhyama? 75+12.08=87)
+  ];
+  const s = scoreWeddingDays(days, COMPAT29, cleanMatch, rules);
+  t("scoreWeddingDays totals all days", s.total === days.length, `total=${s.total}`);
+  t("scoreWeddingDays returns 2 SHUBH", s.shubh.length === 2, `shubh=${s.shubh.length}`);
+  t("scoreWeddingDays rejects 2", s.rejected === 2, `rejected=${s.rejected}`);
+  t("scoreWeddingDays sorts shubh desc", (() => {
+    const sc = s.shubh.map((x) => x.score);
+    return sc.every((v, i) => i === 0 || sc[i - 1] >= v);
+  })());
+  t("scoreWeddingDays pure (no engine fields mutated)", (() => {
+    const day = dayBase();
+    const before = JSON.stringify(day);
+    scoreWeddingDays([day], COMPAT29, cleanMatch, rules);
+    return JSON.stringify(day) === before;
+  })());
+}
+sum("SCOREWINDOW");
+
+/* ===== MONTH ELIGIBILITY: Sun-sign (Saur Maasa) region presets ===== */
+console.log("\n=== monthEligibility: Sun-sign region presets (Saur Maasa, MC Ch.6 p.155) ===");
+{
+  const margazhi = dayBase({ tMonth: 8 });   // Dhanus / Margazhi
+  const aadi = dayBase({ tMonth: 3 });       // Karka / Aadi
+  const panguni = dayBase({ tMonth: 11 });   // Meena / Panguni
+  const mesha = dayBase({ tMonth: 0 });      // Mesha — allowed
+  const me = rules.monthEligibility;
+
+  t("monthEligibility presets exist (5)", me && me.presets.length === 5, `count=${me && me.presets.length}`);
+  t("Margazhi (tMonth 8) rejected under default (classical)", (() => {
+    const r = scoreWeddingDay(margazhi, COMPAT29, cleanMatch, rules);
+    return r.status === "REJECTED" && r.blockers.some((b) => b.includes("SUN_SIGN_INELIGIBLE"));
+  })());
+  t("Margazhi rejected under EVERY region preset", (() => {
+    return me.presets.every((p) =>
+      scoreWeddingDay(margazhi, COMPAT29, cleanMatch, rules, p.code).status === "REJECTED");
+  })());
+  t("Aadi (tMonth 3) rejected under classical but allowed under pan-indian", (() => {
+    const cls = scoreWeddingDay(aadi, COMPAT29, cleanMatch, rules, "classical").status;
+    const pi = scoreWeddingDay(aadi, COMPAT29, cleanMatch, rules, "pan-indian").status;
+    return cls === "REJECTED" && pi === "SHUBH";
+  })());
+  t("Panguni (tMonth 11) rejected under classical, allowed under tamil-nadu", (() => {
+    const cls = scoreWeddingDay(panguni, COMPAT29, cleanMatch, rules, "classical").status;
+    const tn = scoreWeddingDay(panguni, COMPAT29, cleanMatch, rules, "tamil-nadu").status;
+    return cls === "REJECTED" && tn === "SHUBH";
+  })());
+  t("Mesha (tMonth 0) accepted under every preset", (() => {
+    return me.presets.every((p) =>
+      scoreWeddingDay(mesha, COMPAT29, cleanMatch, rules, p.code).status !== "REJECTED");
+  })());
+  t("scoreWeddingDays honors region param", (() => {
+    const cls = scoreWeddingDays([panguni, mesha], COMPAT29, cleanMatch, rules, "classical");
+    const tn = scoreWeddingDays([panguni, mesha], COMPAT29, cleanMatch, rules, "tamil-nadu");
+    return cls.rejected === 1 && cls.shubh.length === 1 && tn.rejected === 0 && tn.shubh.length === 2;
+  })());
+  t("Unknown region falls back to default (classical)", (() => {
+    const r = scoreWeddingDay(panguni, COMPAT29, cleanMatch, rules, "bogus-region");
+    return me.default === "classical" && r.status === "REJECTED";
+  })());
+}
+sum("MONTH-ELIGIBILITY");
+
 /* ================= INTEGRATION: real engine Nov-2026 ======================= */
 console.log("\n=== SCAN: real engine Nov 2026 window ===");
 const eng = await new Engine().init();
@@ -252,6 +323,18 @@ t("Nov 25 shubh day carries Jamitra removal", (() => {
   const s = scanRes.shubh.find((x) => x.iso === "2026-11-25");
   return s && s.doshas.appliedRemovals.some((r) => r.code === "JAMITRA_DOSHA");
 })());
+{
+  // Dhanus ingress = 2026-12-17; whole 12/17-12/31 window is Margazhi/Dhanurmasa.
+  const decRes = await scanWeddingWindow(
+    { couple: COMPAT29, startISO: "2026-12-17", endISO: "2026-12-31", geo: [80.27, 13.08, 0],
+      region: "classical", onProgress: () => {} },
+    eng, rules,
+  );
+  t("Dec Dhanus window: 2026-12-28 NOT offered under classical (Sun in Margazhi)", (() => {
+    const offered = [...decRes.shubh, ...decRes.madhyama].some((x) => x.iso === "2026-12-28");
+    return !offered && decRes.rejected === decRes.total;
+  })());
+}
 sum("SCAN");
 
 console.log(`\nMarriage suite: ${total} pass / ${totalF} fail`);

@@ -209,6 +209,18 @@ function ekargalaYogas(rules) {
   return (rules.vivahaDoshas.implemented.ekargala.badYogaIndices || []);
 }
 
+/* Month eligibility (Muhurta Chintamani Ch.6 'Saur Maasa', PDF p.155):
+   marriage is auspicious only while the Sun is in Aries/Taurus/Gemini/Scorpio/
+   Capricorn/Aquarius. day.tMonth IS the sidereal Sun rashi (0=Mesha..11=Meena),
+   so a day is hard-rejected when its tMonth is in the selected region preset's
+   excludedSunRashis. `region` defaults to rules.monthEligibility.default. */
+function monthPreset(rules, region) {
+  const me = rules.monthEligibility;
+  if (!me || !me.presets || !me.presets.length) return null;
+  const code = region && me.presets.some((p) => p.code === region) ? region : me.default;
+  return me.presets.find((p) => p.code === code) || null;
+}
+
 export function evaluateVivahaDoshas(day, couple, rules) {
   const active = [];
   const removals = [];
@@ -323,8 +335,9 @@ function universalBlockers(day) {
   return blocks;
 }
 
-/* Evaluate one day for the couple. Returns a scored slot (SHUBH / MADHYAMA / REJECTED). */
-export function scoreWeddingDay(day, couple, matchResult, rules) {
+/* Evaluate one day for the couple. Returns a scored slot (SHUBH / MADHYAMA / REJECTED).
+   `region` selects the month-eligibility preset (defaults to rules.monthEligibility.default). */
+export function scoreWeddingDay(day, couple, matchResult, rules, region) {
   const d = rules.dayFilters;
   const nakshatraOk = d.allowedNakshatraIndices.includes(day.moonNakshatra + 1);
   const tithiOk = !d.forbiddenTithiGroups.includes(tithiGroupOf(day.tithiIndex));
@@ -334,6 +347,11 @@ export function scoreWeddingDay(day, couple, matchResult, rules) {
   if (!nakshatraOk) blockers.push(`Nakshatra ${day.moonNakshatra + 1} not in marriage list`);
   if (!tithiOk) blockers.push(`Tithi group ${tithiGroupOf(day.tithiIndex)} forbidden`);
   if (!varaOk) blockers.push(`Vara ${day.vara} not an auspicious marriage day`);
+  const me = rules.monthEligibility;
+  const preset = monthPreset(rules, region);
+  if (preset && preset.excludedSunRashis.includes(day.tMonth)) {
+    blockers.push(`SUN_SIGN_INELIGIBLE: Sun in ${me.rashiNames[day.tMonth]} (${me.tamilMonthNames[day.tMonth]}) — ${preset.name} excludes ${preset.excludedMonths.join(", ")} (Saur Maasa, MC Ch.6 p.${me.page})`);
+  }
   blockers.push(...universalBlockers(day));
 
   const doshas = evaluateVivahaDoshas(day, couple, rules);
@@ -359,8 +377,29 @@ export function scoreWeddingDay(day, couple, matchResult, rules) {
 }
 
 /* ============================================================================
+   SCORING — pure, astronomy-free. scores an array of already-computed day
+   snapshots (each with computeDay fields + marriage extras { lagnaRashi,
+   sunNakshatra, planets }). Shared by scanWeddingWindow (main thread) and the
+   Web Worker path (marriage.html), so the heavy astronomy runs off-thread while
+   scoring stays cheap and deterministic on the UI thread.
+   ============================================================================ */
+
+export function scoreWeddingDays(days, couple, matchResult, rules, region) {
+  const results = [];
+  for (let i = 0; i < days.length; i++) {
+    results.push(scoreWeddingDay(days[i], couple, matchResult, rules, region));
+  }
+  const shubh = results.filter((r) => r.status === "SHUBH").sort((a, b) => b.score - a.score);
+  const madhyama = results.filter((r) => r.status === "MADHYAMA");
+  const rejected = results.length - shubh.length - madhyama.length;
+  return { shubh, madhyama, rejected, total: results.length };
+}
+
+/* ============================================================================
    SCAN ORCHESTRATOR — walks a calendar window, builds day snapshots via Engine,
    returns ranked shubh dates (STAGE 2 runs only after Stage 1 passes).
+   Yields to the event loop every ~10 days so the UI stays responsive even in
+   the main-thread fallback path (the worker path skips this entirely).
    ============================================================================ */
 
 function dayExtras(engine, day) {
@@ -371,14 +410,14 @@ function dayExtras(engine, day) {
   return { lagnaRashi, sunNakshatra, planets };
 }
 
-export async function scanWeddingWindow({ couple, startISO, endISO, geo, onProgress }, engine, rules) {
+export async function scanWeddingWindow({ couple, startISO, endISO, geo, onProgress, region }, engine, rules) {
   const matchResult = calculateAshtakoota(couple.groom, couple.bride, rules);
   if (!matchResult.isCompatible) {
     return { matchResult, shubh: [], madhyama: [], rejected: 0, total: 0, skippedStage2: true };
   }
   const [sy, sm, sd] = startISO.split("-").map(Number);
   const [ey, em, ed] = endISO.split("-").map(Number);
-  const results = [];
+  const days = [];
   const dStart = new Date(sy, sm - 1, sd);
   const dEnd = new Date(ey, em - 1, ed);
   let cursor = new Date(dStart);
@@ -388,14 +427,12 @@ export async function scanWeddingWindow({ couple, startISO, endISO, geo, onProgr
     const day = engine.computeDay(y, m, d, geo, null, 5.5);
     day.geo = geo;
     Object.assign(day, dayExtras(engine, day));
-    const verdict = scoreWeddingDay(day, couple, matchResult, rules);
-    results.push(verdict);
+    days.push(day);
     processed++;
     if (onProgress) onProgress(processed, day.iso);
+    if (processed % 10 === 0) await new Promise((r) => setTimeout(r, 0));
     cursor.setDate(cursor.getDate() + 1);
   }
-  const shubh = results.filter((r) => r.status === "SHUBH").sort((a, b) => b.score - a.score);
-  const madhyama = results.filter((r) => r.status === "MADHYAMA");
-  const rejected = results.length - shubh.length - madhyama.length;
-  return { matchResult, shubh, madhyama, rejected, total: results.length };
+  const scored = scoreWeddingDays(days, couple, matchResult, rules, region);
+  return { matchResult, ...scored };
 }

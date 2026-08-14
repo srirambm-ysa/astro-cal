@@ -237,6 +237,52 @@
       "These day filters are COPIES of the corpus ACT_SAM_VIVAHA_MARRIAGE constraints, corrected to the source; the module is self-contained and does not read activity_corpus.json."
     ]
   },
+  "monthEligibility": {
+    "verseKey": "VIVAHA_SAUR_MAASA_SUN_SIGNS",
+    "page": 155,
+    "default": "classical",
+    "rule": "Marriage is auspicious only while the Sun transits the sidereal signs Aries, Taurus, Gemini, Scorpio, Capricorn and Aquarius (Saur Maasa - solar month). Aadi (Karka), Aavani (Simha), Purattasi (Kanya), Aippasi (Tula), Margazhi (Dhanus) and Panguni (Meena) are excluded by the strict rule. Applied via day.tMonth, the engine's sidereal Sun rashi (0=Mesha .. 11=Meena). Regional presets relax the strict list to observed practice.",
+    "rashiNames": ["Mesha", "Vrishabha", "Mithuna", "Karka", "Simha", "Kanya", "Tula", "Vrischika", "Dhanus", "Makara", "Kumbha", "Meena"],
+    "tamilMonthNames": ["Chithirai", "Vaikasi", "Aani", "Aadi", "Aavani", "Purattasi", "Aippasi", "Karthigai", "Margazhi", "Thai", "Maasi", "Panguni"],
+    "presets": [
+      {
+        "code": "classical",
+        "name": "Muhurta Chintamani (strict)",
+        "excludedSunRashis": [3, 4, 5, 6, 8, 11],
+        "excludedMonths": ["Aadi", "Aavani", "Purattasi", "Aippasi", "Margazhi", "Panguni"],
+        "note": "Strict Saur Maasa rule from Ch.6 p.155: Sun must be in Aries/Taurus/Gemini/Scorpio/Capricorn/Aquarius. Blocking Dec 28 (Sun in Dhanus/Margazhi) for the Rohini-Krittika sample is this rule firing."
+      },
+      {
+        "code": "tamil-nadu",
+        "name": "Tamil Nadu",
+        "excludedSunRashis": [3, 5, 8],
+        "excludedMonths": ["Aadi", "Purattasi", "Margazhi"],
+        "note": "Tamil custom avoids Aadi, Purattasi and Margazhi; Aavani/Aippasi are married in practice and Panguni (Panguni Uthiram) is favoured."
+      },
+      {
+        "code": "karnataka",
+        "name": "Karnataka",
+        "excludedSunRashis": [3, 4, 5, 6, 8],
+        "excludedMonths": ["Ashada", "Shravana", "Bhadrapada", "Ashvina", "Dhanurmasa"],
+        "note": "Karnataka avoids Ashadha/Shravana/Bhadrapada (Chaturmas, Pitru Paksha), Navaratri in Ashvina, and Dhanurmasa; Vaishakha and Karthika are peak."
+      },
+      {
+        "code": "telugu",
+        "name": "Andhra Pradesh / Telangana",
+        "excludedSunRashis": [3, 4, 5, 6, 8],
+        "excludedMonths": ["Aashada", "Shravana", "Bhadrapada", "Ashwayuja", "Dhanurmasa"],
+        "note": "Telugu calendars block Aashadam and Chaturmasam (Shravana-Bhadrapada-Ashwayuja) and Dhanurmasam."
+      },
+      {
+        "code": "pan-indian",
+        "name": "Pan-Indian (floor)",
+        "excludedSunRashis": [4, 5, 6, 8],
+        "excludedMonths": ["Shravana", "Bhadrapada", "Ashvina", "Dhanurmasa"],
+        "note": "The near-universal avoidances: Chaturmas (Vishnu's sleep) and Dhanurmasa. Ashada/Aadi and Phalguna/Panguni vary by region and are kept."
+      }
+    ],
+    "boundaryNote": "Regional lunar-month names (Tamil Aadi vs Telugu Aashadam vs Kannada Ashada) are approximated by the solar sign they overlap (MC's Saur Maasa principle). Lunar months straddle the solar sankranti by a few days, so dates near a month boundary can differ from a regional panchangam's printed list."
+  },
   "abhijita": {
     "verseKey": "VIVAHA_MARRIAGE_NAKSHATRAS",
     "page": 194,

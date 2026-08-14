@@ -82,8 +82,30 @@
   .stat .s .k{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
   .stat .s .v{font-size:18px;font-family:"Rozha One",serif;color:var(--vermilion)}
   .hidden{display:none}
-  #progress{height:4px;background:var(--panel-b);border:1px solid var(--line);margin-bottom:14px;overflow:hidden}
+  #progress{height:4px;background:var(--panel-b);border:1px solid var(--line);overflow:hidden}
   #progress>div{height:100%;width:0;background:var(--saffron)}
+  #progressLabel{text-align:center;color:var(--vermilion);font-size:12px;letter-spacing:.03em;min-height:1.1em;margin:5px 0 14px;text-transform:uppercase}
+  .btn.secondary{background:var(--panel-a);color:var(--ink);border-color:var(--line)}
+  .btn.secondary:hover{background:var(--panel-b);color:var(--ink)}
+  /* ---------- NIGHT MODE (shared key with app.js: astro-cal-theme) ---------- */
+  body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
+    --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
+    --panel-a:#2C3365; --panel-b:#232A55;
+    --saffron:#E8792B; --vermilion:#E25B4A; --gold:#C9A227; --gold-bright:#E4C45A;
+    --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
+    box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .frame::before{border-color:var(--line)}
+  body.night .frame::after{border-color:var(--line-faint)}
+  body.night select,body.night .date{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .person{background:#1E2345;border-color:var(--line-faint)}
+  body.night .koota{background:#1E2345}
+  body.night details{background:#1E2345}
+  body.night .date-table th{color:#c6bfa8}
+  body.night .date-table td{border-color:var(--line-faint)}
+  body.night .alert{background:rgba(226,91,74,.08);color:#f0c6bd}
+  body.night .btn.secondary{background:var(--panel-a);border-color:var(--line)}
+  body.night .btn.secondary:hover{background:var(--panel-b)}
 </style>
 </head>
 <body>
@@ -97,12 +119,17 @@
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn secondary" id="themeBtn" type="button" title="Toggle day / night mode">
+        <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span id="themeLabel">Night mode</span>
+      </button>
       <a class="btn" href="alliance-filter.html" style="text-decoration:none">🔍 Alliance Filter</a>
       <a class="btn" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
     </div>
   </header>
 
   <div id="progress"><div></div></div>
+  <div id="progressLabel"></div>
 
   <div class="card" id="formCard">
     <h2>Couple Details</h2>
@@ -132,12 +159,14 @@
     <div class="range-row">
       <div class="field"><label>From</label><input type="date" class="date" id="fromDate"></div>
       <div class="field"><label>To</label><input type="date" class="date" id="toDate"></div>
-      <div></div>
+      <div class="field"><label>Region</label><select id="region"></select></div>
     </div>
-    <div class="center">
-      <button class="btn" id="calcBtn">Calculate Compatibility & Find Shubh Dates</button>
+    <div class="note">Region sets the Sun-sign (solar month) eligibility mask — Muhurta Chintamani Ch.6 “Saur Maasa” (Sun in Aries/Taurus/Gemini/Scorpio/Capricorn/Aquarius) plus regional practice. Aadi/Ashada and Margazhi/Dhanurmasa are excluded in every region; the strict classical rule additionally excludes Aavani, Purattasi, Aippasi and Panguni.</div>
+    <div class="center" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" id="compatBtn">Calculate Compatibility</button>
+      <button class="btn" id="datesBtn" disabled>Find Shubh Dates</button>
     </div>
-    <div class="note">Stage 1 runs Ashtakoota (36-guna) matchmaking first. If the couple is ineligible (score &lt; 18 or uncanceled Nadi/Bhakoot Dosha), the search stops before scanning any dates.</div>
+    <div class="note">Step 1 — <b>Calculate Compatibility</b> runs Ashtakoota (36-guna) matchmaking only so you can review the couple's score before any calendar work. If the couple is eligible, <b>Find Shubh Dates</b> (which re-verifies compatibility, then scans the wedding window) becomes enabled.</div>
   </div>
 
   <div id="result"></div>
@@ -146,7 +175,8 @@
 
 <script type="module">
   import { Engine, NAKSHATRA, RASHI } from "./engine.js";
-  import { calculateAshtakoota, scanWeddingWindow, loadRules } from "./marriage.mjs";
+  import { calculateAshtakoota, scanWeddingWindow, loadRules, scoreWeddingDays } from "./marriage.mjs";
+  import { computeMarriageRangeViaWorker } from "./worker-client.mjs";
 
   const $ = (id) => document.getElementById(id);
   const NAK_1BASED = NAKSHATRA.map((n, i) => `${n} (${i + 1})`);
@@ -160,12 +190,30 @@
   $("bPada").innerHTML = [1, 2, 3, 4].map((p) => `<option>${p}</option>`).join("");
 
   const today = new Date();
-  const iso = (d) => d.toISOString().slice(0, 10);
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   $("fromDate").value = iso(new Date(today.getFullYear(), today.getMonth(), 1));
-  $("toDate").value = iso(new Date(today.getFullYear() + 1, today.getMonth(), 28));
+  $("toDate").value = iso(new Date(today.getFullYear(), today.getMonth() + 6, 28));
 
-  const eng = await new Engine().init();
   const rules = await loadRules();
+
+  const me = rules.monthEligibility;
+  if (me && me.presets) {
+    $("region").innerHTML = me.presets.map((p) => `<option value="${p.code}">${p.name}</option>`).join("");
+    $("region").value = me.default || me.presets[0].code;
+  }
+
+  /* ---------- theme (shared key with app.js: astro-cal-theme) ---------- */
+  const ICON_MOON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  const ICON_SUN = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  function setTheme(night) {
+    document.body.classList.toggle("night", night);
+    $("themeIcon").innerHTML = night ? ICON_SUN : ICON_MOON;
+    $("themeLabel").textContent = night ? "Day mode" : "Night mode";
+    localStorage.setItem("astro-cal-theme", night ? "night" : "day");
+  }
+  function toggleTheme() { setTheme(!document.body.classList.contains("night")); }
+  setTheme(localStorage.getItem("astro-cal-theme") === "night");
+  $("themeBtn").addEventListener("click", toggleTheme);
 
   function couple() {
     return {
@@ -213,6 +261,8 @@ function tier1(m) {
 
   function tier2(res) {
     const match = res.matchResult;
+    const me = rules.monthEligibility;
+    const preset = me ? (me.presets.find((p) => p.code === (res.region || me.default)) || me.presets[0]) : null;
     if (res.skippedStage2) {
       return `<div class="alert"><h2>Matchmaking Alert</h2>
         <p>This pair scores <b>${match.totalScore}/36 Gunas</b> with an active, uncanceled ${[match.hasNadiDosha ? "Nadi Dosha" : "", match.hasBhakootDosha ? "Bhakoot Dosha" : ""].filter(Boolean).join(" and ")}. In accordance with classical guidelines (Muhurta Chintamani Ch.6), wedding dates cannot be generated for this combination without prior remedial consultation.</p>
@@ -239,6 +289,7 @@ function tier1(m) {
         <div class="s"><div class="k">Madhyama</div><div class="v">${madhyama.length}</div></div>
         <div class="s"><div class="k">Rejected</div><div class="v">${res.rejected}</div></div>
       </div>
+      ${preset ? `<div class="note">Sun-sign mask (region): <b>${preset.name}</b> — excludes ${preset.excludedMonths.join(", ")}. Saur Maasa, Muhurta Chintamani Ch.6 p.${me.page}.</div>` : ""}
       <table class="date-table">
         <tr><th>#</th><th>Date</th><th>Quality</th><th>Strengths</th><th>Dosha audit</th></tr>
         ${rows([...shubh, ...madhyama].slice(0, 15))}
@@ -247,31 +298,77 @@ function tier1(m) {
     </div>`;
   }
 
-  $("calcBtn").addEventListener("click", async () => {
-    const btn = $("calcBtn"); btn.disabled = true;
+  const NATAL_FIELDS = ["gNak", "gRashi", "gPada", "bNak", "bRashi", "bPada"];
+  let compatPassed = false;
+
+  function renderCompat(m) {
+    $("result").innerHTML = tier1(m) + `<div id="tier2wrap"></div>`;
+    compatPassed = m.isCompatible;
+    $("datesBtn").disabled = !compatPassed;
+    if (!m.isCompatible) {
+      document.getElementById("tier2wrap").innerHTML = tier2({ matchResult: m, skippedStage2: true });
+    }
+    return m;
+  }
+
+  $("compatBtn").addEventListener("click", () => {
+    renderCompat(calculateAshtakoota(couple().groom, couple().bride, rules));
+  });
+
+  NATAL_FIELDS.forEach((id) => $(id).addEventListener("change", () => {
+    if (!compatPassed) return;
+    compatPassed = false;
+    $("datesBtn").disabled = true;
+  }));
+
+  $("datesBtn").addEventListener("click", async () => {
     const from = $("fromDate").value, to = $("toDate").value;
-    if (!from || !to || from > to) { btn.disabled = false; alert("Please pick a valid date window."); return; }
+    if (!from || !to || from > to) return alert("Please pick a valid date window.");
     const bar = document.querySelector("#progress > div");
-    let count = 0;
+    const pctEl = $("progressLabel");
+    const setProgress = (pct, label) => {
+      bar.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      if (label) pctEl.textContent = label;
+    };
+    const daysTotal = Math.round((new Date(to) - new Date(from)) / 86400000) + 1;
+    const btn = $("datesBtn"); btn.disabled = true;
     try {
       const c = couple();
+      const region = $("region").value;
       const m = calculateAshtakoota(c.groom, c.bride, rules);
-      $("result").innerHTML = tier1(m) + `<div id="tier2wrap"></div>`;
       if (!m.isCompatible) {
-        const res = { matchResult: m, skippedStage2: true };
-        document.getElementById("tier2wrap").innerHTML = tier2(res);
+        renderCompat(m);
         return;
       }
-      bar.style.width = "2%";
-      const res = await scanWeddingWindow({
-        couple: c, startISO: from, endISO: to, geo: [80.27, 13.08, 0],
-        onProgress: (n, iso) => { count = n; },
-      }, eng, rules);
-      bar.style.width = "100%";
-      document.getElementById("tier2wrap").innerHTML = tier2(res);
+      $("result").innerHTML = tier1(m) + `<div id="tier2wrap"></div>`;
+      const [sy, sm, sd] = from.split("-").map(Number);
+      const [ey, em, ed] = to.split("-").map(Number);
+      setProgress(1, "Computing dates… please wait");
+      const geo = [80.27, 13.08, 0];
+      let scored = null;
+      try {
+        const days = await computeMarriageRangeViaWorker(
+          { y: sy, m: sm, d: sd }, { y: ey, m: em, d: ed }, geo, 5.5,
+          { onProgress: (done) => setProgress((done / daysTotal) * 100, `Computing dates… ${Math.round((done / daysTotal) * 100)}% — please wait (${done} / ${daysTotal} days)`) },
+        );
+        if (days) scored = scoreWeddingDays(days, c, m, rules, region);
+      } catch (e) { scored = null; }
+      if (!scored) {
+        let eng = null;
+        try { eng = await new Engine().init(); } catch (e) { throw new Error("Swiss Ephemeris failed to load: " + e.message); }
+        const res = await scanWeddingWindow({ couple: c, startISO: from, endISO: to, geo, region,
+          onProgress: (n) => setProgress((n / daysTotal) * 100, `Computing dates… ${Math.round((n / daysTotal) * 100)}% — please wait (${n} / ${daysTotal} days)`) }, eng, rules);
+        eng.close();
+        scored = { shubh: res.shubh, madhyama: res.madhyama, rejected: res.rejected, total: res.total };
+      }
+      setProgress(100, "Done — computing dates complete.");
+      document.getElementById("tier2wrap").innerHTML = tier2({ matchResult: m, region, ...scored });
     } catch (err) {
       $("result").innerHTML = `<div class="alert"><h2>Engine error</h2><p class="mono">${err.message}</p></div>`;
-    } finally { btn.disabled = false; setTimeout(() => bar.style.width = "0", 600); }
+    } finally {
+      btn.disabled = false;
+      setTimeout(() => { bar.style.width = "0"; pctEl.textContent = ""; }, 800);
+    }
   });
 </script>
 </body>

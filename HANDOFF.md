@@ -4,10 +4,10 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-13 (Alliance Filter session)
+Last updated: 2026-08-14 (Vivaha marriage UX — night mode, worker, region mask, two-step flow)
 
-**Session token count (current · Alliance Filter build + UI refinements):** REAL billed 1,058,529
-(RAW 5,651,193 · 81.3% cache efficiency, 90.8% cache-hit share; 59 requests).
+**Session token count (current · Vivaha marriage UX session):** REAL billed 4,259,454
+(RAW 26,363,569 · 83.8% cache efficiency, 93.8% cache-hit share; 240 requests).
 
 ## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
 - **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
@@ -115,13 +115,24 @@ Last updated: 2026-08-13 (Alliance Filter session)
 - **Verified**: `npm test` 45/45 alliance (full suite green) + 14/14 Playwright browser
   checks on `alliance-filter.html` (load, compute, render, expand koota, badge styling).
 
+## Goal Accomplished (this session — 2026-08-14 · Vivaha marriage UX: night mode · worker · region mask · two-step flow)
+- **Night mode** in `marriage.html` (parity with index/alliance-filter; shared `astro-cal-theme` key, `body.night`).
+- **Slowness fix**: off-thread day computation via Web Worker — **`marriage.worker.js` + `worker-client.mjs`** (untracked, new); falls back to main-thread `scanWeddingWindow` when worker/wasm unavailable. Progress callback yields per processed day.
+- **Region preset + Saur Maasa mask**: `region` select feeds `rules.monthEligibility` presets (in `rules/marriage_rules.json`); Sun in an excluded month hard-rejects the day. Universal exclusions Aadi/Ashada + Margazhi/Dhanurmasa; strict classical additionally excludes Aavani/Purattasi/Aippasi/Panguni.
+- **Two-step UI** (`marriage.html`): **Calculate Compatibility** (Stage 1 Ashtakoota only — reviewable, fail-fast alert on ineligible) then enabled **Find Shubh Dates** (re-verifies compatibility, then scans). Editing any natal field re-disables the date search. Progress bar shows `% + "Computing dates… please wait (N / M days)"`, auto-reset after done.
+- **Verified dual personal blockers (no off-by-one)**: `personalFilters()` iterates BOTH partners; **Ashtama Chandra** (day Moon in 8th rashi from birth) + **Naidhana Tara** (7th star) hard-REJECT the day. Cross-checked 0-based `day.moonRashi/moonNakshatra` (engine `rashiOf`/`nakshatraOf`) vs 1-based form inputs — formulas hit the correct house/star.
+- **Smoke test extended** → `tests/marriage-browser.mjs` **18/18** (button state machine, no Tier-2 leak pre-scan, progress % + text captured, reset after done, SHUBH 2026-11-25 dual-personal clear).
+- **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
+
 ## Immediate Next Steps
-1. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
+0. **Commit the accumulated Vivaha marriage UX work** (night mode, worker, region mask, two-step flow) — owner to confirm at next session; keep the two untracked worker files.
+1. Owner's "few more minor tweaks" in `marriage.html` / alliance pages — collect at session start (owner deferred; not specified this session).
+2. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
    likely SIMPLIFY** — this session added many constructs (aspect-ratio override, muhwhy footer, modal hidden,
    cal-head title, panel vars) that must be re-verified against the printed output; (b) **ICS export discussion**
    needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
-2. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
-3. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
+3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
+4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
    If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
    preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
 
@@ -151,6 +162,7 @@ Last updated: 2026-08-13 (Alliance Filter session)
   (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
 - **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #0.
 - **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
+- **Working tree is dirty (2026-08-14)**: Vivaha marriage UX session uncommitted — see Immediate Next Steps #0. `marriage.worker.js` + `worker-client.mjs` are new untracked files that MUST ship with the commit for the worker path to work.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`

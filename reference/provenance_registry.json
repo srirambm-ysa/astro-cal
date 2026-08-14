@@ -482,6 +482,16 @@
       "basis": "classical",
       "proof": "confirmed"
     },
+    "VIVAHA_SAUR_MAASA_SUN_SIGNS": {
+      "label": "Proper time for marriage - Sun signs (Saur Maasa)",
+      "chapter": "ch6_vivaha",
+      "verse": "Chapter 6, p.155",
+      "sanskrit_sloka": null,
+      "english_translation": "Celebrating marriage is auspicious when the Sun is in the signs of Gemini, Aquarius, Capricorn, Scorpio, Taurus and Aries. If the Sun is in Gemini, marriage in the month of Ashadha is auspicious only from Pratipada to the 10th tithi of Shukla Paksha. Notes: It is the Saur Maasa (solar month) alone which is regarded as proper for auspicious deeds like marriage. Marriage is not to be celebrated in the months of Kartika, Pausha and Chaitra, unless the Sun has entered the next sign within them (e.g. Kartika becomes Margashirsha when the Sun enters Scorpio in it).",
+      "applied_rule_logic": "Month-eligibility mask: a day is hard-rejected when the Sun's sidereal sign (day.tMonth, 0=Mesha..11=Meena) is in the selected region preset's excludedSunRashis. Default preset 'classical' excludes Karka(3)/Simha(4)/Kanya(5)/Tula(6)/Dhanus(8)/Meena(11); regional presets relax to observed practice (e.g. Tamil Nadu keeps Panguni, pan-Indian floor keeps Ashada).",
+      "basis": "classical",
+      "proof": "confirmed"
+    },
     "JAMITRA_DOSHA_ACTIVE": {
       "label": "Jamitra Dosha (7th sign / 55th navamsha affliction)",
       "chapter": "ch6_vivaha",
