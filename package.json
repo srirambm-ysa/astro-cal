@@ -5,8 +5,9 @@
   "description": "Vedic muhurta calendar (vanilla ESM + swisseph-wasm)",
   "type": "module",
   "scripts": {
-    "test": "node tests/tests-suite.mjs && node tests/marriage-tests.mjs",
+    "test": "node tests/tests-suite.mjs && node tests/marriage-tests.mjs && node tests/alliance-filter-tests.mjs",
     "test:marriage": "node tests/marriage-tests.mjs",
+    "test:alliance": "node tests/alliance-filter-tests.mjs",
     "modes": "node tests/mode-summary.mjs",
     "serve": "node serve.cjs"
   }

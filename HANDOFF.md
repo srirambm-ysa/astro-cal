@@ -4,10 +4,19 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-13 (evening)
+Last updated: 2026-08-13 (Alliance Filter session)
 
-**Session token count (2026-08-13 · UI polish + lay why-rejected session):** REAL billed 5,826,211
-(RAW 30,776,688 · 81.1% cache efficiency, 90.7% cache-hit share; 324 requests).
+**Session token count (current · Alliance Filter build + UI refinements):** REAL billed 1,058,529
+(RAW 5,651,193 · 81.3% cache efficiency, 90.8% cache-hit share; 59 requests).
+
+## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
+- **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
+- **Phase B — Rules:** `rules/marriage_rules.json` (schema `marriage-rules-v1`), fully self-contained (no reads of `activity_corpus.json`/`taxonomy.js`; day filters copied+source-corrected). 16 verseKeys resolve; source-corrected 7 docs bugs (Bhakoot bad offsets [1,4,5]; Tara auspicious remainders [1,2,4,6,8,0]; verified Graha Maitri matrix; only 3 source-attested Nadi pariharas; 11 marriage nakshatras incl. MOOLA; 6 Paata yogas; Ekargala Moon-star-odd-count rule). ~21 non-core doshas documented-but-not-implemented.
+- **Phase C — Additive engine.js helpers ONLY:** `ascendant()`, `planetPosition(s)()`, `sunNakshatra()` inserted before the DAY COMPUTATION section. No other engine changes.
+- **Phase D — Engine + UI:** `marriage.mjs` (pure Stage-1 `calculateAshtakoota` w/ 8-koota breakdown + pariharas → Stage-2 Vivaha doshas Latta/Jamitra/Paata/Ekargala + Sun+Moon-Lagna removal + day filters + dual personal filters (Naidhana Tara / Ashtama Chandra) + scoring + scan, fail-fast `skippedStage2` gating) and `marriage.html` two-tier UI (guna meter, parihara pills, provenance, ranked SHUBH dates w/ dosha audit). Browser-validated via Playwright (ELIGIBLE 29/36, SHUBH 2026-11-25 @87 w/ Jamitra removal).
+- **Phase E — Tests:** `tests/marriage-tests.mjs` (37 assertions, 0 fail) + `tests/marriage-browser.mjs` (8 browser checks). `npm test` runs both suites.
+- **Provenance:** registry extended with `ch6_vivaha` chapter + 17 confirmed verse entries; `LATTA_DOSHA_ACTIVE` upgraded unverified→confirmed. `tools/build_provenance.js` green (140 activities, 46 verse entries).
+- **Alliance filter work is scoped but NOT built yet**: PRD drafted (`docs/alliance-filter-prd.md`); engine/UI/tests deferred to next session. Fixed-person ranked best-match calculator reusing `calculateAshtakoota` over 108 valid birth profiles.
 
 ## Goal Accomplished (this session — 2026-08-13 · calendar/UI polish + lay "why rejected" · committed `61b336d`)
 - **Calendar cells** enlarged to square (60→84px min-height, `aspect-ratio:1/1`, print `auto`), full
@@ -84,24 +93,22 @@ Last updated: 2026-08-13 (evening)
   for e.g. Startup (soft=10). That band is now a *calibration* task (next steps), not a
   structural defect — all mode invariants pass.
 
+## Goal Accomplished (2026-08-13 · Alliance Filter — best-match calculator per `docs/alliance-filter-prd.md`)
+- **`alliance-filter.mjs`**: pure module with `generateValidProfiles()` (108 canonical Moon-pada positions from 360/27° nakshatra spans), `computeAllianceWhitelist(input, rules, opts)` (pada-agnostic best per 36 valid nak×rashi pairs; ranking by isCompatible → marriageNakshatraFirst → totalScore → tier → parihara count → dosha severity), `toCSV()` and `toJSON()` exporters. Reuses `marriage.mjs#calculateAshtakoota`; validates fixed-person input for nakshatra/rashi/pada consistency.
+- **`alliance-filter.html`**: fixed-person form (role, nakshatra, rashi, pada + "Show Up To" / min-score options), Tier 1 compatible-whitelist summary, Tier 2 ranked table showing **only compatible** profiles with marriage-nakshatra matches first, per-row 8-koota breakdown shown as a full-width row below, dosha/parihara pills, marriage-nakshatra flag, JSON/CSV export + browser print-to-PDF.
+- **Navigation**: added "🔍 Alliance Filter" link in `marriage.html` header.
+- **Tests**: `tests/alliance-filter-tests.mjs` (45 assertions, 0 fail) covering valid-profile generation, whitelist ranking, bride/groom roles, input validation, CSV/JSON export, score integration against `calculateAshtakoota`, min-score filter, and marriage-nakshatra preference sort. Wired into `npm test` via `package.json` (`test:alliance` also available).
+
 ## Immediate Next Steps
-0. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
+0. **COMMIT this session's Alliance Filter work** — uncommitted files: `alliance-filter.mjs`, `alliance-filter.html`, `tests/alliance-filter-tests.mjs`, `marriage.html`, `package.json`, `HANDOFF.md`.
+1. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
    likely SIMPLIFY** — this session added many constructs (aspect-ratio override, muhwhy footer, modal hidden,
    cal-head title, panel vars) that must be re-verified against the printed output; (b) **ICS export discussion**
    needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
-1. **Mode-pipeline testing (DONE 2026-08-13)** — `what-is-personal-mode.md` superseded the old
-   Soft⊆Personal design: Personal is now Option A (⊆ Full) with Tara **and** Chandra Bala,
-   universal base is impersonal, thresholds FULL=80/SOFT=60/PERSONAL=75. `tests/tests-suite.mjs`
-   re-validated: personal⊆full⊆soft, PRS-01 all-bad-tara reject, PRS-02 Ashtama reject, PRS-03
-   good-tara-full→Shubh. (Prior session's structural fix remains: t1 never rescuable, unified base.)
-2. **Broaden verification** — DONE: Aug/Sep-2026 + Jan-2027 × Griha/Startup/Mortgage; INV 151,
-   BND 9, OVR 143, PRS 7. Volatile: Sep Mortgage = 0/0/0 (no Shubh at all that month) — confirm
-   acceptable to owner.
-3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
-4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
+2. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
+3. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
    If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
    preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
-5. **COMMIT this session's work** — DONE 2026-08-13 (`61b336d`).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
@@ -128,6 +135,7 @@ Last updated: 2026-08-13 (evening)
   `npm test` / `npm run modes`). Older leaked harness copies remain in `C:\Users\Sony\AppData\Local\Temp\opencode\`
   (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
 - **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #0.
+- **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`

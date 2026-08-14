@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alliance Filter — Best Match Calculator</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --canvas:#EFEBE0; --paper:#FFFFFF; --ink:#3D2412; --ink-soft:#7a5a44;
+    --panel-a:#FFFFFF; --panel-b:#F1EEE5;
+    --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E; --good:#1E6E4F; --bad:#9A2B2B;
+    --line:#C8A86E; --line-faint:#E2D3AE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.55;
+  }
+  h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);
+    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+  .frame::after{content:"";position:absolute;inset:9px;border:1px solid var(--line-faint);pointer-events:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.two-col{grid-template-columns:1fr}}
+  .person{border:1px solid var(--line-faint);background:var(--panel-b);padding:12px}
+  .person h3{font-size:16px;color:var(--vermilion);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:9px}
+  .field label{font-size:13px;color:var(--ink-soft);letter-spacing:.03em}
+  select,.date{font-family:"Eczar",serif;font-size:14px;border:1px solid var(--gold);background:var(--paper);
+    color:var(--ink);padding:6px 8px;width:100%}
+  .hint{font-size:11.5px;color:var(--ink-soft);grid-column:2;margin-top:-4px}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);
+    padding:8px 16px;cursor:pointer;font-size:15px;display:inline-flex;align-items:center;gap:7px;justify-content:center}
+  .btn:hover{background:var(--saffron);color:#2b1505}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.secondary{background:var(--panel-a);color:var(--ink);border-color:var(--line)}
+  .btn.secondary:hover{background:var(--panel-b)}
+  .center{text-align:center}
+  .badge{display:inline-block;padding:3px 10px;font-size:13px;font-weight:600;letter-spacing:.04em;border-radius:2px}
+  .badge.ok{background:#1E6E4F;color:#fff}
+  .badge.no{background:#9A2B2B;color:#fff}
+  .badge.mid{background:var(--gold-bright);color:#2b1505}
+  .badge.most{background:var(--vermilion);color:#fff}
+  .badge.excellent{background:var(--saffron);color:#fff}
+  .badge.medium{background:var(--gold);color:#2b1505}
+  .badge.poor{background:var(--bad);color:#fff}
+  .meter{height:14px;background:var(--panel-b);border:1px solid var(--line);position:relative;overflow:hidden}
+  .meter>div{height:100%;background:linear-gradient(90deg,var(--saffron),var(--vermilion));transition:width .6s}
+  .meter .cut{position:absolute;top:0;bottom:0;width:2px;background:var(--ink-soft);opacity:.7}
+  .koota-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:10px}
+  .koota{border:1px solid var(--line-faint);background:var(--panel-b);padding:8px 10px}
+  .koota .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .koota .name{font-size:13px;font-weight:600;color:var(--ink)}
+  .koota .pts{font-size:13px;color:var(--vermilion);font-weight:600;white-space:nowrap}
+  .koota .det{font-size:11.5px;color:var(--ink-soft)}
+  .pill{display:inline-block;border:1px solid var(--teal);color:var(--teal);background:rgba(47,126,126,.08);
+    padding:2px 9px;font-size:12px;margin:3px 4px 0 0}
+  .pill.warn{border-color:var(--bad);color:var(--bad);background:rgba(154,43,43,.06)}
+  .alert{border:1px solid var(--bad);background:rgba(177,59,43,.06);padding:14px 16px;color:#5e1f1f}
+  .alert h2{color:var(--bad)}
+  .table-wrap{overflow-x:auto;margin-top:10px}
+  .rank-table{width:100%;min-width:900px;border-collapse:collapse;font-size:13px}
+  .rank-table th{text-align:left;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+    border-bottom:1px solid var(--gold);padding:6px 8px;white-space:nowrap}
+  .rank-table td{border-bottom:1px solid var(--line-faint);padding:6px 8px;vertical-align:top;white-space:nowrap}
+  .rank-table tr:hover td{background:rgba(185,138,62,.04)}
+  .rank-table .cell-nak{font-weight:600;color:var(--vermilion)}
+  .rank-table .cell-rashi{color:var(--ink)}
+  .rank-table .cell-score{font-family:"Rozha One",serif;color:var(--vermilion);font-weight:600}
+  .rank-table .cell-tier{white-space:nowrap}
+  .rank-table .cell-dosha{font-size:11px}
+  .rank-table .cell-dosha .active{color:var(--bad)}
+  .rank-table .cell-dosha .canceled{color:var(--teal)}
+  .rank-table .cell-dosha .clean{color:var(--good)}
+  .whitelist-summary{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;padding:10px;background:var(--panel-b);border:1px solid var(--line-faint)}
+  .whitelist-summary .stat{display:flex;flex-direction:column;min-width:120px}
+  .whitelist-summary .stat .k{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+  .whitelist-summary .stat .v{font-size:18px;font-family:"Rozha One",serif;color:var(--vermilion)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .note{font-size:12px;color:var(--ink-soft);margin-top:8px}
+  .bar-row{display:flex;gap:8px;align-items:center}
+  .bar-row .grow{flex:1}
+  .stat{display:flex;gap:18px;margin:6px 0 10px;flex-wrap:wrap}
+  .stat .s .k{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+  .stat .s .v{font-size:18px;font-family:"Rozha One",serif;color:var(--vermilion)}
+  .hidden{display:none}
+  #progress{height:4px;background:var(--panel-b);border:1px solid var(--line);margin-bottom:14px;overflow:hidden}
+  #progress>div{height:100%;width:0;background:var(--saffron)}
+  details{background:var(--panel-b);border:1px solid var(--line-faint);margin:6px 0}
+  details summary{cursor:pointer;padding:8px 11px;font-size:13px;font-weight:600;color:var(--ink)}
+  details .body{padding:2px 11px 10px;font-size:12.5px;color:var(--ink-soft)}
+  .mono{font-family:Consolas,Menlo,monospace;font-size:11.5px;line-height:1.5}
+  .provenance{font-size:11px;color:var(--ink-soft);margin-top:6px}
+  .provenance .src{font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="frame">
+  <header class="top">
+    <div class="logo">
+      <span class="mark">🔍</span>
+      <div><h1>Alliance Filter</h1>
+        <div class="sub">Best-Match Calculator — Muhurta Chintamani, Ch.6</div>
+      </div>
+    </div>
+    <a class="btn secondary" href="marriage.html" style="text-decoration:none">← Vivaha Muhurta</a>
+  </header>
+
+  <div id="progress"><div></div></div>
+
+  <div class="card" id="formCard">
+    <h2>Fixed Person (Anchor)</h2>
+    <div class="two-col">
+      <div class="person">
+        <h3>👤 Your Details</h3>
+        <div class="field"><label>Role</label>
+          <select id="role">
+            <option value="groom">Groom</option>
+            <option value="bride">Bride</option>
+          </select></div>
+        <div class="field"><label>Nakshatra</label>
+          <select id="nak"></select></div>
+        <div class="field"><label>Rashi (Moon)</label>
+          <select id="rashi"></select></div>
+        <div class="field"><label>Pada (1–4)</label>
+          <select id="pada"></select></div>
+        <div class="field"><label class="hint" style="grid-column:2">Pada matters for Nadi Pada-Bheda parihara when the partner shares the same nakshatra.</label></div>
+      </div>
+      <div class="person">
+        <h3>⚙️ Options</h3>
+        <div class="field"><label>Show Up To</label>
+          <select id="topN">
+            <option value="18" selected>Top 18 compatible</option>
+            <option value="10">Top 10 compatible</option>
+            <option value="999">All compatible</option>
+          </select></div>
+        <div class="field"><label>Min Score</label>
+          <select id="minScore">
+            <option value="18" selected>18 (Classical)</option>
+            <option value="21">21 (Medium+)</option>
+            <option value="26">26 (Excellent)</option>
+            <option value="31">31 (Most Excellent)</option>
+          </select></div>
+        <div class="field"><label class="hint" style="grid-column:2">Filters valid partner birth combinations. Does NOT scan dates — run matches through Vivaha Muhurta afterward.</label></div>
+      </div>
+    </div>
+    <div class="center">
+      <button class="btn" id="calcBtn">Compute Best Matches</button>
+    </div>
+  </div>
+
+  <div id="result"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { NAKSHATRA, RASHI } from "./engine.js";
+  import { computeAllianceWhitelist, toCSV, toJSON, loadRules } from "./alliance-filter.mjs";
+
+  const $ = (id) => document.getElementById(id);
+  const NAK_1BASED = NAKSHATRA.map((n, i) => `${n} (${i + 1})`);
+  const RASHI_1BASED = RASHI.map((r, i) => `${r} (${i + 1})`);
+
+  function fillSel(el, arr) { el.innerHTML = arr.map((x, i) => `<option value="${i + 1}">${x}</option>`).join(""); }
+
+  fillSel($("nak"), NAK_1BASED);
+  fillSel($("rashi"), RASHI_1BASED);
+  $("pada").innerHTML = [1, 2, 3, 4].map((p) => `<option>${p}</option>`).join("");
+
+  let rules = null;
+
+  async function init() {
+    rules = await loadRules();
+  }
+  init();
+
+  function tierBadge(label) {
+    if (!label) return `<span class="badge">—</span>`;
+    const cls = label.toLowerCase().replace("_", "-");
+    return `<span class="badge ${cls}">${label.replace("_", " ")}</span>`;
+  }
+
+  function doshaCell(row) {
+    const parts = [];
+    if (row.hasNadiDosha) {
+      parts.push(row.nadiPariharaApplied
+        ? `<span class="canceled">Nadi ✓ Parihara</span>`
+        : `<span class="active">Nadi ACTIVE</span>`);
+    } else {
+      parts.push(`<span class="clean">Nadi OK</span>`);
+    }
+    if (row.hasBhakootDosha) {
+      parts.push(row.bhakootPariharaApplied
+        ? `<span class="canceled">Bhakoot ✓ Parihara</span>`
+        : `<span class="active">Bhakoot ACTIVE</span>`);
+    } else {
+      parts.push(`<span class="clean">Bhakoot OK</span>`);
+    }
+    return parts.join("<br>");
+  }
+
+  function pariharaPills(row) {
+    const pills = [];
+    if (row.nadiPariharaApplied) pills.push(`<span class="pill">✓ Nadi Parihara</span>`);
+    if (row.bhakootPariharaApplied) pills.push(`<span class="pill">✓ Bhakoot Parihara</span>`);
+    return pills.join("") || "—";
+  }
+
+  function tier1(whitelist) {
+    const fp = whitelist.fixedPerson;
+    const s = whitelist.summary;
+    return `<div class="card">
+      <h2>Tier 1 · Compatible Whitelist</h2>
+      <div class="note">Fixed: <b>${fp.role === "groom" ? "👨 Groom" : "👰 Bride"}</b> — ${fp.nakshatraName} / ${fp.rashiName} / Pada ${fp.pada}</div>
+      <div class="whitelist-summary">
+        <div class="stat"><div class="k">Valid Profiles</div><div class="v">${s.validProfiles}</div></div>
+        <div class="stat"><div class="k">Candidate Pairs</div><div class="v">${s.candidatePairs}</div></div>
+        <div class="stat"><div class="k">Compatible</div><div class="v">${s.compatibleCount}</div></div>
+        <div class="stat"><div class="k">Max Score</div><div class="v">${s.maxScore}/36</div></div>
+        <div class="stat"><div class="k">Top Tier</div><div class="v">${Object.entries(s.byTier).sort((a,b)=>b[1]-a[1])[0]?.[0]?.replace("_"," ") || "—"}</div></div>
+      </div>
+      ${s.compatibleCount === 0 ? `
+        <div class="alert"><h2>No Compatible Matches</h2>
+        <p>No partner birth combination meets the minimum score (${whitelist.options.minScore}/36) without an active Nadi or Bhakoot dosha.</p>
+        <p class="note">Consider lowering the minimum score or consulting a jyotishi for remedial measures.</p></div>
+      ` : `
+        <div style="margin-top:8px">
+          <strong>Compatible Nakshatra–Rashi Pairs (${s.compatibleCount}):</strong>
+          <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">
+            ${whitelist.compatible.map(r => `
+              <span class="pill" style="background:rgba(30,110,79,.1);border-color:var(--good);color:var(--good)">
+                ${r.nakshatraName} / ${r.rashiName} / P${r.bestPada} — ${r.totalScore}/36 ${tierBadge(r.tierLabel)}
+              </span>
+            `).join("")}
+          </div>
+        </div>
+      `}
+      <div class="provenance"><span class="src">Source:</span> ${whitelist.provenance}</div>
+    </div>`;
+  }
+
+  function tier2(whitelist) {
+    if (whitelist.ranking.length === 0) {
+      return `<div class="card">
+        <h2>Tier 2 · Ranked Best Matches</h2>
+        <div class="alert"><h2>No Compatible Matches to Display</h2>
+        <p>Adjust the minimum score or fixed-person details to see ranked results.</p></div>
+      </div>`;
+    }
+
+    const rows = whitelist.ranking.map((r) => `
+      <tr>
+        <td>${r.rank}</td>
+        <td class="cell-nak">${r.nakshatraName}</td>
+        <td class="cell-rashi">${r.rashiName}</td>
+        <td style="text-align:center">P${r.bestPada}</td>
+        <td class="cell-score">${r.totalScore}/36 (${r.scorePercentage}%)</td>
+        <td class="cell-tier">${tierBadge(r.tierLabel)}</td>
+        <td class="cell-dosha">${doshaCell(r)}</td>
+        <td>${pariharaPills(r)}</td>
+        <td style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
+      </tr>
+      <tr class="detail-row">
+        <td colspan="9" style="padding:0;border-bottom:1px solid var(--gold)">
+          <details>
+            <summary style="padding:8px 11px;background:var(--panel-b)">Koota Breakdown</summary>
+            <div class="body" style="padding:10px 11px"><div class="koota-grid">${kootaDetail(r.breakdown)}</div></div>
+          </details>
+        </td>
+      </tr>
+    `).join("");
+
+    const label = whitelist.options.topN >= 999 ? "All Compatible" : `Top ${whitelist.options.topN} Compatible`;
+
+    return `<div class="card">
+      <h2>Tier 2 · Ranked Best Matches (${label})</h2>
+      <div class="stat">
+        <div class="s"><div class="k">Shown</div><div class="v">${whitelist.ranking.length}</div></div>
+        <div class="s"><div class="k">Compatible Total</div><div class="v">${whitelist.summary.compatibleCount}</div></div>
+        <div class="s"><div class="k">Max Score</div><div class="v">${whitelist.summary.maxScore}/36</div></div>
+      </div>
+      <div class="table-wrap">
+        <table class="rank-table">
+          <tr>
+            <th>#</th><th>Nakshatra</th><th>Rashi</th><th>Pada</th><th>Score</th><th>Tier</th><th>Doshas</th><th>Pariharas</th><th>Marriage Nak</th>
+          </tr>
+          ${rows}
+        </table>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="exportJson">Export JSON</button>
+        <button class="btn secondary" id="exportCsv">Export CSV</button>
+        <button class="btn secondary" id="printBtn">Print / Save PDF</button>
+      </div>
+      <div class="note">Score ≥ ${whitelist.options.minScore} + no uncanceled Nadi/Bhakoot = Compatible (Stage 1 pass). "Marriage Nak" = partner's birth nakshatra is in the 11 classical marriage nakshatras (Ch.6 p.194) — a Stage 2 hint only.</div>
+    </div>`;
+  }
+
+  function kootaDetail(breakdown) {
+    if (!breakdown) return "";
+    const k = breakdown;
+    const short = { varna:"Varna", vashya:"Vashya", tara:"Tara", yoni:"Yoni", maitri:"Maitri", gana:"Gana", bhakoot:"Bhakoot", nadi:"Nadi" };
+    return Object.entries(k).map(([key, v]) => `
+      <div class="koota">
+        <div class="row"><span class="name">${short[key]}</span><span class="pts">${v.score}/${v.maxScore}</span></div>
+        <div class="det">${v.details}${v.pariharaDetails ? `<br><span style="color:var(--teal)">✓ ${v.pariharaDetails}</span>` : ""}</div>
+      </div>
+    `).join("");
+  }
+
+  $("calcBtn").addEventListener("click", async () => {
+    const btn = $("calcBtn"); btn.disabled = true;
+    const bar = document.querySelector("#progress > div");
+    try {
+      bar.style.width = "10%";
+      const input = {
+        role: $("role").value,
+        nakshatra: +$("nak").value,
+        rashi: +$("rashi").value,
+        pada: +$("pada").value,
+      };
+      const opts = {
+        topN: +$("topN").value,
+        minScore: +$("minScore").value,
+      };
+      const whitelist = computeAllianceWhitelist(input, rules, opts);
+      bar.style.width = "100%";
+      $("result").innerHTML = tier1(whitelist) + tier2(whitelist);
+
+      // Export handlers
+      $("exportJson").onclick = () => {
+        const blob = new Blob([toJSON(whitelist)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = `alliance-whitelist-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.json`;
+        a.click(); URL.revokeObjectURL(url);
+      };
+      $("exportCsv").onclick = () => {
+        const blob = new Blob([toCSV(whitelist)], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = `alliance-whitelist-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.csv`;
+        a.click(); URL.revokeObjectURL(url);
+      };
+      $("printBtn").onclick = () => window.print();
+
+    } catch (err) {
+      $("result").innerHTML = `<div class="alert"><h2>Error</h2><p class="mono">${err.message}</p></div>`;
+    } finally {
+      btn.disabled = false;
+      setTimeout(() => bar.style.width = "0", 600);
+    }
+  });
+</script>
+</body>
+</html>
