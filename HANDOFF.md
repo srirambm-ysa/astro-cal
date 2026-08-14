@@ -99,8 +99,23 @@ Last updated: 2026-08-13 (Alliance Filter session)
 - **Navigation**: added "🔍 Alliance Filter" link in `marriage.html` header.
 - **Tests**: `tests/alliance-filter-tests.mjs` (45 assertions, 0 fail) covering valid-profile generation, whitelist ranking, bride/groom roles, input validation, CSV/JSON export, score integration against `calculateAshtakoota`, min-score filter, and marriage-nakshatra preference sort. Wired into `npm test` via `package.json` (`test:alliance` also available).
 
+## Goal Accomplished (this session — 2026-08-14 · Alliance Filter UI polish · committed `34e167b`)
+- **Fixed tier badge class mismatch**: `tierBadge()` emitted `most-excellent`/`not-suitable`
+  classes but CSS defined `.badge.most`/`.badge.poor` → MOST_EXCELLENT/NOT_SUITABLE rows
+  rendered unstyled. Renamed CSS classes to match.
+- **Added `@media print` block** (mirrors `index.html`): clean print-to-PDF — hides form,
+  header, actions, progress, notes + `<details>`; exact print colors for badges/pills/koota.
+- **Recommended Match banner** atop Tier 2: best compatible row (pair / score / tier /
+  marriage-nak flag / dosha pills).
+- **Fixed "Top Tier" stat** in Tier 1: was picking most-frequent tier, now highest present.
+- **Merged redundant columns**: table's "Doshas" + "Pariharas" were duplicates (compatible
+  rows always have `hasNadiDosha=false`, so the dosha column showed only "OK"); one column
+  now reports canceled-parihara state directly. Removed dead `pariharaPills()`.
+- **Calc button guarded** until rules load; added Muhurta Calendar (`index.html`) nav link.
+- **Verified**: `npm test` 45/45 alliance (full suite green) + 14/14 Playwright browser
+  checks on `alliance-filter.html` (load, compute, render, expand koota, badge styling).
+
 ## Immediate Next Steps
-0. **COMMIT this session's Alliance Filter work** — uncommitted files: `alliance-filter.mjs`, `alliance-filter.html`, `tests/alliance-filter-tests.mjs`, `marriage.html`, `package.json`, `HANDOFF.md`.
 1. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
    likely SIMPLIFY** — this session added many constructs (aspect-ratio override, muhwhy footer, modal hidden,
    cal-head title, panel vars) that must be re-verified against the printed output; (b) **ICS export discussion**
