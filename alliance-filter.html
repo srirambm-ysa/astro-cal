@@ -51,10 +51,10 @@
   .badge.ok{background:#1E6E4F;color:#fff}
   .badge.no{background:#9A2B2B;color:#fff}
   .badge.mid{background:var(--gold-bright);color:#2b1505}
-  .badge.most{background:var(--vermilion);color:#fff}
+  .badge.most-excellent{background:var(--vermilion);color:#fff}
   .badge.excellent{background:var(--saffron);color:#fff}
   .badge.medium{background:var(--gold);color:#2b1505}
-  .badge.poor{background:var(--bad);color:#fff}
+  .badge.not-suitable{background:var(--bad);color:#fff}
   .meter{height:14px;background:var(--panel-b);border:1px solid var(--line);position:relative;overflow:hidden}
   .meter>div{height:100%;background:linear-gradient(90deg,var(--saffron),var(--vermilion));transition:width .6s}
   .meter .cut{position:absolute;top:0;bottom:0;width:2px;background:var(--ink-soft);opacity:.7}
@@ -103,6 +103,27 @@
   .mono{font-family:Consolas,Menlo,monospace;font-size:11.5px;line-height:1.5}
   .provenance{font-size:11px;color:var(--ink-soft);margin-top:6px}
   .provenance .src{font-weight:600;color:var(--ink)}
+  .recommended{border:1.5px solid var(--gold);background:linear-gradient(135deg,rgba(185,138,62,.12),rgba(211,169,79,.08));padding:12px 14px;margin-bottom:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .recommended .who{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em}
+  .recommended .pair{font-family:"Rozha One",serif;font-size:20px;color:var(--vermilion)}
+  .recommended .score{font-size:14px;font-weight:600}
+  /* ---------- PRINT / PDF ---------- */
+  @media print{
+    @page{margin:12mm}
+    body{background:#fff;color:#000;font-size:11px}
+    .frame{border:1px solid #999;background:#fff;box-shadow:none;padding:10px}
+    .frame::before,.frame::after{display:none}
+    header.top,.actions,#formCard,#progress,.note{display:none !important}
+    .card{border:1px solid #999;background:#fff;break-inside:avoid;padding:10px}
+    .recommended{border:1px solid #999;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .rank-table td,.rank-table th{border-color:#999;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .rank-table tr:hover td{background:#fff}
+    .badge,.pill{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .provenance{color:#444}
+    .whitelist-summary{border:1px solid #999;background:#fff}
+    .koota{border:1px solid #ccc;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    details{display:none !important}
+  }
 </style>
 </head>
 <body>
@@ -115,7 +136,10 @@
         <div class="sub">Best-Match Calculator — Muhurta Chintamani, Ch.6</div>
       </div>
     </div>
-    <a class="btn secondary" href="marriage.html" style="text-decoration:none">← Vivaha Muhurta</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="marriage.html" style="text-decoration:none">💍 Vivaha Muhurta</a>
+      <a class="btn secondary" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
+    </div>
   </header>
 
   <div id="progress"><div></div></div>
@@ -182,7 +206,14 @@
   let rules = null;
 
   async function init() {
-    rules = await loadRules();
+    $("calcBtn").disabled = true;
+    $("calcBtn").innerHTML = "Loading classical rules…";
+    try {
+      rules = await loadRules();
+    } finally {
+      $("calcBtn").disabled = false;
+      $("calcBtn").innerHTML = "Compute Best Matches";
+    }
   }
   init();
 
@@ -193,34 +224,20 @@
   }
 
   function doshaCell(row) {
-    const parts = [];
-    if (row.hasNadiDosha) {
-      parts.push(row.nadiPariharaApplied
-        ? `<span class="canceled">Nadi ✓ Parihara</span>`
-        : `<span class="active">Nadi ACTIVE</span>`);
-    } else {
-      parts.push(`<span class="clean">Nadi OK</span>`);
-    }
-    if (row.hasBhakootDosha) {
-      parts.push(row.bhakootPariharaApplied
-        ? `<span class="canceled">Bhakoot ✓ Parihara</span>`
-        : `<span class="active">Bhakoot ACTIVE</span>`);
-    } else {
-      parts.push(`<span class="clean">Bhakoot OK</span>`);
-    }
-    return parts.join("<br>");
-  }
-
-  function pariharaPills(row) {
-    const pills = [];
-    if (row.nadiPariharaApplied) pills.push(`<span class="pill">✓ Nadi Parihara</span>`);
-    if (row.bhakootPariharaApplied) pills.push(`<span class="pill">✓ Bhakoot Parihara</span>`);
-    return pills.join("") || "—";
+    const nadi = row.nadiPariharaApplied
+      ? `<span class="canceled">Nadi ✓ Parihara</span>`
+      : `<span class="clean">Nadi OK</span>`;
+    const bhakoot = row.bhakootPariharaApplied
+      ? `<span class="canceled">Bhakoot ✓ Parihara</span>`
+      : `<span class="clean">Bhakoot OK</span>`;
+    return `${nadi}<br>${bhakoot}`;
   }
 
   function tier1(whitelist) {
     const fp = whitelist.fixedPerson;
     const s = whitelist.summary;
+    const tierOrder = ["MOST_EXCELLENT", "EXCELLENT", "MEDIUM", "NOT_SUITABLE"];
+    const topTier = tierOrder.find((t) => (s.byTier[t] || 0) > 0) || "—";
     return `<div class="card">
       <h2>Tier 1 · Compatible Whitelist</h2>
       <div class="note">Fixed: <b>${fp.role === "groom" ? "👨 Groom" : "👰 Bride"}</b> — ${fp.nakshatraName} / ${fp.rashiName} / Pada ${fp.pada}</div>
@@ -229,7 +246,7 @@
         <div class="stat"><div class="k">Candidate Pairs</div><div class="v">${s.candidatePairs}</div></div>
         <div class="stat"><div class="k">Compatible</div><div class="v">${s.compatibleCount}</div></div>
         <div class="stat"><div class="k">Max Score</div><div class="v">${s.maxScore}/36</div></div>
-        <div class="stat"><div class="k">Top Tier</div><div class="v">${Object.entries(s.byTier).sort((a,b)=>b[1]-a[1])[0]?.[0]?.replace("_"," ") || "—"}</div></div>
+        <div class="stat"><div class="k">Top Tier</div><div class="v">${topTier === "—" ? "—" : topTier.replace("_", " ")}</div></div>
       </div>
       ${s.compatibleCount === 0 ? `
         <div class="alert"><h2>No Compatible Matches</h2>
@@ -269,11 +286,10 @@
         <td class="cell-score">${r.totalScore}/36 (${r.scorePercentage}%)</td>
         <td class="cell-tier">${tierBadge(r.tierLabel)}</td>
         <td class="cell-dosha">${doshaCell(r)}</td>
-        <td>${pariharaPills(r)}</td>
         <td style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
       </tr>
       <tr class="detail-row">
-        <td colspan="9" style="padding:0;border-bottom:1px solid var(--gold)">
+        <td colspan="8" style="padding:0;border-bottom:1px solid var(--gold)">
           <details>
             <summary style="padding:8px 11px;background:var(--panel-b)">Koota Breakdown</summary>
             <div class="body" style="padding:10px 11px"><div class="koota-grid">${kootaDetail(r.breakdown)}</div></div>
@@ -284,8 +300,22 @@
 
     const label = whitelist.options.topN >= 999 ? "All Compatible" : `Top ${whitelist.options.topN} Compatible`;
 
+    const rec = whitelist.summary.recommended;
+    const recHtml = rec && rec.isCompatible ? `
+      <div class="recommended">
+        <div><div class="who">⭐ Recommended Match</div>
+          <div class="pair">${rec.nakshatraName} / ${rec.rashiName} / P${rec.bestPada}</div>
+        </div>
+        <div><div class="who">Score</div>
+          <div class="score">${rec.totalScore}/36 (${rec.scorePercentage}%)</div></div>
+        <div>${tierBadge(rec.tierLabel)}${rec.birthNakInMarriageList ? `<span class="badge ok" style="margin-left:6px">✓ Marriage Nak</span>` : ""}</div>
+        ${rec.nadiPariharaApplied ? `<span class="pill warn">Nadi ✓ Parihara</span>` : `<span class="pill">Nadi OK</span>`}
+        ${rec.bhakootPariharaApplied ? `<span class="pill warn">Bhakoot ✓ Parihara</span>` : `<span class="pill">Bhakoot OK</span>`}
+      </div>` : "";
+
     return `<div class="card">
       <h2>Tier 2 · Ranked Best Matches (${label})</h2>
+      ${recHtml}
       <div class="stat">
         <div class="s"><div class="k">Shown</div><div class="v">${whitelist.ranking.length}</div></div>
         <div class="s"><div class="k">Compatible Total</div><div class="v">${whitelist.summary.compatibleCount}</div></div>
@@ -294,7 +324,7 @@
       <div class="table-wrap">
         <table class="rank-table">
           <tr>
-            <th>#</th><th>Nakshatra</th><th>Rashi</th><th>Pada</th><th>Score</th><th>Tier</th><th>Doshas</th><th>Pariharas</th><th>Marriage Nak</th>
+            <th>#</th><th>Nakshatra</th><th>Rashi</th><th>Pada</th><th>Score</th><th>Tier</th><th>Doshas</th><th>Marriage Nak</th>
           </tr>
           ${rows}
         </table>
