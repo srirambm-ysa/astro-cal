@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFEBE0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Vivaha Muhurta — Matchmaking & Shubh Wedding Dates</title>
 <link rel="icon" type="image/svg+xml" href="favicon-marriage.svg">
 <link rel="stylesheet" href="fonts.css">
@@ -34,6 +38,27 @@
   .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:760px){.two-col{grid-template-columns:1fr}}
+  /* ---------- MOBILE ---------- */
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:10px}
+    header.top{gap:10px;padding-bottom:10px}
+    .btn{min-height:44px;padding:10px 14px;font-size:16px}
+    .field{grid-template-columns:1fr;gap:4px}
+    .field label{font-size:14px}
+    select,.date{font-size:16px;min-height:44px}
+    .hint{grid-column:1}
+    .card{padding:12px}
+    .koota-grid{grid-template-columns:1fr 1fr}
+    .koota{padding:7px 8px}
+    .stat{gap:14px}
+    .stat .s .v{font-size:16px}
+    .date-table{font-size:12.5px}
+    .date-table th,.date-table td{padding:5px 6px}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .range-row{gap:8px}
+  }
+  @media(max-width:400px){.koota-grid{grid-template-columns:1fr}}
   .person{border:1px solid var(--line-faint);background:var(--panel-b);padding:12px}
   .person h3{font-size:16px;color:var(--vermilion);margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:9px}
@@ -305,10 +330,12 @@ function tier1(m) {
         <div class="s"><div class="k">Rejected</div><div class="v">${res.rejected}</div></div>
       </div>
       ${preset ? `<div class="note">Sun-sign mask (region): <b>${preset.name}</b> — excludes ${preset.excludedMonths.join(", ")}. Saur Maasa, Muhurta Chintamani Ch.6 p.${me.page}.</div>` : ""}
+      <div class="table-wrap">
       <table class="date-table">
         <tr><th>#</th><th>Date</th><th>Quality</th><th>Strengths</th><th>Dosha audit</th></tr>
         ${rows([...shubh, ...madhyama].slice(0, 15))}
       </table>
+      </div>
       <div class="note">Couple score ${match.totalScore}/36 feeds the slot score (75 base + scaled bonus). Hard blockers (Bhadra-Earth, Sankranti, Jupiter/Venus combustion, Latta, Jamitra, Paata, Ekargala) reject the day outright; the Sun+Moon-in-Lagna removal rule clears afflictions when classical.</div>
     </div>`;
   }

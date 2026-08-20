@@ -1,11 +1,10 @@
-/* astro-cal app — UI + orchestration. Vanilla ESM, localStorage personal layer. */
+/* astro-cal app — UI + orchestration. Vanilla ESM, stateless (localStorage holds only theme + birth + view prefs). */
 import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,
          YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
 import { loadTaxonomy } from "./taxonomy.js";
 
 const LS = {
   birth: "astro-cal-birth",
-  events: "astro-cal-events",
   theme: "astro-cal-theme",
   view: "astro-cal-view",
 };
@@ -23,7 +22,6 @@ const I = {
   yama: '<svg viewBox="0 0 24 24" fill="none" stroke="#3D2412" stroke-width="1.7"><path d="M5 9l2-3 3 2 3-3 2 2 3-2 1 4-3 5-9-3z" fill="#B98A3E" opacity=".15"/><path d="M5 15h14M7 15v4M17 15v4" stroke="#B98A3E"/></svg>',
   gulika: '<svg viewBox="0 0 24 24" fill="none" stroke="#3D2412" stroke-width="1.7"><circle cx="12" cy="12" r="8" fill="#262A4A" opacity=".22"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#262A4A"/><circle cx="9" cy="9" r="1.1" fill="#F8F0DE"/></svg>',
   shr: '<svg viewBox="0 0 24 24" fill="none" stroke="#B13B2B" stroke-width="1.6"><path d="M8 17c4-1 6-1 8 0M9 14c3-2 5-2 6-1M11 20c2-1 3-1 5-1M7 18l1 3M16 18l1 3" opacity=".7"/><path d="M12 8l2-1 2-3 2 1-1 2-1 2h-4z" fill="#D97427"/></svg>',
-  per: '<svg viewBox="0 0 24 24" fill="none" stroke="#B98A3E" stroke-width="1.6"><path d="M12 2l1.8 3.4 3.9.5-2.9 2.7.7 3.9L12 10.8 8.5 12.5l.7-3.9L6.3 5.9l3.9-.5L12 2z" fill="#B98A3E" opacity=".25"/><circle cx="12" cy="12" r="9" stroke="#B98A3E"/></svg>',
   fest: '<svg viewBox="0 0 24 24" fill="none" stroke="#D97427" stroke-width="1.6"><path d="M12 3l1.2 3 3 1.2-3 1.2L12 11.4l-1.2-3-3-1.2 3-1.2L12 3z" fill="#D97427" opacity=".35"/><circle cx="12" cy="12" r="8" stroke="#D97427" stroke-dasharray="3 2"/></svg>',
   san: '<svg viewBox="0 0 24 24" fill="none" stroke="#B13B2B" stroke-width="1.7"><path d="M12 3v18M3 12h18" opacity=".5"/><circle cx="12" cy="12" r="6" fill="#B13B2B" opacity=".2"/><circle cx="12" cy="12" r="3.4" fill="#B13B2B"/></svg>',
   cha: '<svg viewBox="0 0 24 24" fill="none" stroke="#B13B2B" stroke-width="1.7"><path d="M12 3a9 9 0 0 1 0 18z" fill="#B13B2B" opacity=".25"/><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>',
@@ -440,7 +438,6 @@ function muhurtaVerdict(day, janmaNakshatra, act, opts = {}) {
 /* ---------- state ---------- */
 let swe = null;
 let birth = null;      // { nakshatra:0-26, pada:1-4, rashi:0-11, place, lat, lon, tz }
-let events = [];       // [{id,type,name,date?,tMonth?,tKind?,tVal?}]
 let view = { range: "month", anchor: todayISO(), activity: "ACT_REAL_GRIHA_PRAVESHA_NEW", mode: "full" }; // anchor = civil date (YYYY-MM-DD); mode = selection_mode (§2.6.7)
 // The muhurta table is computed ONLY via the "Compute Muhurta" button (owner request
 // 2026-08-13). render() skips renderMuhurta unless this is true, so browsing the
@@ -507,72 +504,13 @@ function fmtHHMM(jd) { const t = timeIST(jd); return t.hhmm; }
 function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
 function load(key, fallback) { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }
 
-/* ---------- festival + personal day matching ---------- */
+/* ---------- festival day matching ---------- */
 function festivalMatches(f, tm, moonNakshatra, tithiIndex, tDay) {
   if (f.tMonth !== tm) return false;
   if (f.kind === "nakshatra") return moonNakshatra === f.val;
   if (f.kind === "tithi") return tithiIndex === f.val;
   if (f.kind === "tamday") return tDay === f.val;
   return false;
-}
-function personalMatches(ev, y, m, d, tm, moonNakshatra, tithiIndex, tDay) {
-  if (ev.type === "birthday") {
-    const dt = new Date(y, m - 1, d);
-    const bd = new Date(ev.date);
-    return dt.getMonth() === bd.getMonth() && dt.getDate() === bd.getDate();
-  }
-  if (ev.type === "blocked" || ev.type === "important") return ev.date === ymdToISO(y, m, d);
-  if (ev.type === "tamil") {
-    if (ev.tMonth !== tm) return false;
-    if (ev.tKind === "nakshatra") return moonNakshatra === ev.tVal;
-    if (ev.tKind === "tithi") return tithiIndex === ev.tVal;
-    if (ev.tKind === "tamday") return tDay === ev.tVal;
-    return false;
-  }
-  return false; // shraddha computed separately (needs death tithi + lunar month)
-}
-
-/* ---------- shraddha (annual death-tithi; Pitru Paksha fallback) ---------- */
-function computeShraddha(ev, y, swe) {
-  // Primary: same lunar tithi+paksha in the same lunar month each year.
-  // Fallback (death on amavasya/purnima/chaturdashi, or no date): Sarva Pitru Amavasya.
-  if (!ev.date) return [];
-  const { y: dy, m: dm, d: dd } = isoToYMD(ev.date);
-  const deathJD = swe.julday(dy, dm, dd, 12 - 5.5);
-  const dt = swe.tithi(deathJD);
-  // Traditional exception: deaths on Amavasya, Purnima or Chaturdashi are
-  // commemorated on Sarva Pitru Amavasya instead of the monthly tithi.
-  const special = dt.index === 29 || dt.index === 14 || dt.index === 13 || dt.index === 28;
-  if (special) {
-    const t0 = swe.julday(y, 8, 1, 0);
-    const spa = swe.sarvaPitruAmavasya(t0);
-    if (spa) {
-      const d = swe.revjul(spa);
-      return [{ iso: ymdToISO(d.year, d.month, d.day), kind: "spa" }];
-    }
-    return [];
-  }
-  // Primary: same tithi in the same lunar month. Search the Amanta cycles in year y,
-  // take the cycle whose month matches the death's lunar month, then the days inside it
-  // whose sunrise tithi == death tithi; use the SECOND occurrence if it appears twice.
-  const deathLunarMonth = swe.lunarMonthOf(deathJD);
-  const start = swe.julday(y, 1, 1, 0);
-  const end = swe.julday(y, 12, 31, 0);
-  const cycles = swe.amantaCycles(start, end);
-  const cycle = cycles.find((c) => c.month === deathLunarMonth);
-  if (!cycle) return [];
-  const hits = [];
-  let prevDayKey = "";
-  for (let t = cycle.start; t <= cycle.end + 1; t += 0.5) {
-    const tt = swe.tithi(t);
-    if (tt.index !== dt.index) continue;
-    const d = swe.revjul(t);
-    const iso = ymdToISO(d.year, d.month, d.day);
-    if (iso !== prevDayKey) { hits.push(iso); prevDayKey = iso; }
-  }
-  if (hits.length >= 2) return [{ iso: hits[hits.length - 1], kind: "annual" }];
-  if (hits.length === 1) return [{ iso: hits[0], kind: "annual" }];
-  return [];
 }
 
 /* ---------- day computation ---------- */
@@ -651,7 +589,7 @@ async function render() {
   const tz = birth.tz || TZ_IST;
   const dayMap = await buildDayMap(rangeStart, rangeEnd, geo, birth.nakshatra, tz);
 
-  // overlay per-day flags (chandrashtama, eclipses, festivals, personal)
+  // overlay per-day flags (chandrashtama, eclipses, festivals)
   const flagMap = new Map();
   const windowsByDay = new Map();
   for (const w of chandraWindows) {
@@ -670,16 +608,6 @@ async function render() {
   }
   for (const ecl of solarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Solar eclipse${ecl.total ? " (total)" : ecl.annular ? " (annular)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
   for (const ecl of lunarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Lunar eclipse${ecl.total ? " (total)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
-
-  // shraddha for the range
-  for (const ev of events) {
-    if (ev.type !== "shraddha") continue;
-    for (let yy = rangeStart.y; yy <= rangeEnd.y; yy++) {
-      for (const s of computeShraddha(ev, yy, swe)) {
-        if (!flagMap.has(s.iso)) flagMap.set(s.iso, { key: "shr", name: `Shraddha — ${ev.name}` });
-      }
-    }
-  }
 
   // render grid
   $("cal").innerHTML = "";
@@ -739,19 +667,17 @@ function renderCell(cell, dayMap, flagMap, windowsByDay) {
   return el;
 }
 
-/* category dots for a day cell: moon, eclipse, festival, personal, shraddha */
+/* category dots for a day cell: moon, eclipse, festival */
 function dayDots(day, iso, flagMap) {
   const cats = [];
   if (day.tithi.amavasya || day.tithi.purnima) cats.push("moon");
   if (flagMap.has(iso) && flagMap.get(iso).key === "ecl") cats.push("eclipse");
   const moonN = day.moonNakshatra;
   for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) { cats.push("festival"); break; }
-  for (const ev of events) if (personalMatches(ev, day.y, day.m, day.d, day.tMonth, moonN, day.tithiIndex, day.tDay)) { cats.push("personal"); break; }
-  if (flagMap.has(iso) && flagMap.get(iso).key === "shr") cats.push("shraddha");
   return cats.slice(0, 4).map((c) => `<span class="dot ${c}"></span>`).join("");
 }
 
-const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival", personal: "Personal", shraddha: "Shraddha" };
+const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival" };
 
 /* phase-2 muhurta table (above calendar): only Shubh muhurtas for the focused
    sub-activity/task (verdict chips EXCELLENT/GOOD). Uses the §2.6 v1.0 scoring engine
@@ -887,14 +813,9 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     if (flagMap.has(day.iso)) {
       const f = flagMap.get(day.iso);
       if (f.key === "ecl") entries.push({ cat: "eclipse", name: f.name, sub: "" });
-      if (f.key === "shr") entries.push({ cat: "shraddha", name: f.name, sub: "annual · confirm with a priest" });
     }
     const moonN = day.moonNakshatra;
     for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) entries.push({ cat: "festival", name: f.name, sub: "Tamil festival" });
-    for (const ev of events) {
-      if (personalMatches(ev, y, m, d, day.tMonth, moonN, day.tithiIndex, day.tDay))
-        entries.push({ cat: "personal", name: ev.name, sub: ev.type === "birthday" ? "Annual" : ev.type === "blocked" ? "Blocked day" : "Personal event" });
-    }
     if (!entries.length) continue;
     const dt = new Date(y, m - 1, d);
     const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
@@ -915,9 +836,7 @@ function renderLegend() {
     <div class="item"><span class="swatch two"></span>Chandrashtama (orange coarse · red peak)</div>
     <div class="item"><span class="swatch moon"></span>Moon phase</div>
     <div class="item"><span class="swatch eclipse"></span>Eclipse</div>
-    <div class="item"><span class="swatch festival"></span>Festival</div>
-    <div class="item"><span class="swatch personal"></span>Personal</div>
-    <div class="item"><span class="swatch shraddha"></span>Shraddha</div>`;
+    <div class="item"><span class="swatch festival"></span>Festival</div>`;
 }
 
 function showDetail(iso, dayMap, flagMap, windowsByDay) {
@@ -934,24 +853,21 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
   }
   const k = day.kalam;
   if (k) {
-    parts.push(periodRow(I.rahu, "Rahu Kalam", `${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)} · avoid new work`, "mid", "Rahu"));
-    parts.push(periodRow(I.yama, "Yama Ghatam", `${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)} · avoid travel`, "mut", "Yama"));
-    parts.push(periodRow(I.gulika, "Gulika Kalam", `${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)} · avoid beginnings`, "mut", "Gulika"));
+    $("rRahu").textContent = fmtHHMM(k.rahu.start) + "–" + fmtHHMM(k.rahu.end);
+    $("rYama").textContent = fmtHHMM(k.yama.start) + "–" + fmtHHMM(k.yama.end);
+    $("rGulika").textContent = fmtHHMM(k.gulika.start) + "–" + fmtHHMM(k.gulika.end);
+  } else {
+    $("rRahu").textContent = "–"; $("rYama").textContent = "–"; $("rGulika").textContent = "–";
   }
   if (day.tithi.amavasya) parts.push(periodRow(I.ama, "Amavasya (new moon)", "All day", "per", "Moon"));
   if (day.tithi.purnima) parts.push(periodRow(I.pur, "Purnima (full moon)", "All day", "per", "Moon"));
   if (flagMap.has(iso)) {
     const f = flagMap.get(iso);
     if (f.key === "ecl") parts.push(periodRow(I.ecl, f.name, f.start ? `${fmtHHMM(f.start)} → ${fmtHHMM(f.end)}` : "All day", "per", "Eclipse"));
-    if (f.key === "shr") parts.push(periodRow(I.shr, f.name, "Annual · confirm with a priest", "per", "Shraddha"));
   }
-  // festivals + personal
+  // festivals
   const moonN = day.moonNakshatra;
   for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) parts.push(periodRow(I.fest, f.name, `${dayLabelTamil(day.tMonth, day.tDay)} · Tamil calendar`, "mut", "Festival"));
-  for (const ev of events) {
-    if (personalMatches(ev, day.y, day.m, day.d, day.tMonth, moonN, day.tithiIndex, day.tDay))
-      parts.push(periodRow(I.per, ev.name, ev.type === "birthday" ? "Annual · personal event" : "Personal event", "per", "Personal"));
-  }
   $("detail").innerHTML = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
   $("rSunrise").textContent = day.rise ? fmtHHMM(day.rise) : "–";
   $("rSunset").textContent = day.set ? fmtHHMM(day.set) : "–";
@@ -1170,42 +1086,9 @@ async function buildICS(startISO, endISO) {
     if (day.tithi.purnima) event("Purnima (full moon)", dateStr, { allday: true });
     const moonN = day.moonNakshatra;
     for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) event(f.name, dateStr, { allday: true });
-    const { y: yy, m: mm, d: dd } = isoToYMD(iso);
-    for (const ev of events) {
-      if (personalMatches(ev, yy, mm, dd, day.tMonth, moonN, day.tithiIndex, day.tDay)) {
-        event(ev.name, dateStr, { allday: true, rrule: ev.type === "birthday" ? "FREQ=YEARLY" : undefined });
-      }
-    }
-  }
-  // shraddha (annual death-tithi / Sarva Pitru Amavasya) — computed per year like render()
-  for (const ev of events) {
-    if (ev.type !== "shraddha") continue;
-    for (let yy = sy; yy <= ey; yy++) {
-      for (const s of computeShraddha(ev, yy, swe)) {
-        const iso = s.iso;
-        if (iso >= startISO && iso <= endISO) event(`Shraddha — ${ev.name}`, iso.replace(/-/g, ""), { allday: true });
-      }
-    }
   }
   add("END:VCALENDAR");
   return lines.join("\r\n") + "\r\n";
-}
-
-/* ---------- events UI ---------- */
-function renderEvents() {
-  $("evCount").textContent = events.length ? `(${events.length})` : "";
-  $("evList").innerHTML = events.length ? "" : '<div class="note">No personal events yet. Add birthdays, blocked days, shraddha tithis, or Tamil-month events.</div>';
-  for (const ev of events) {
-    const desc = ev.type === "birthday" ? `Annual · ${ev.date}` : ev.type === "shraddha" ? `Death date · ${ev.date}` : ev.type === "tamil" ? `${TAMIL_MONTH[ev.tMonth]} · ${ev.tKind} ${ev.tVal}` : ev.date;
-    $("evList").insertAdjacentHTML("beforeend", `<div class="ev"><div><div class="t">${ev.name}</div><div class="tt">${desc}</div></div><button class="rm" data-id="${ev.id}">remove</button></div>`);
-  }
-  $("evList").querySelectorAll(".rm").forEach((b) => b.addEventListener("click", () => { events = events.filter((e) => e.id !== Number(b.dataset.id)); save(LS.events, events); renderEvents(); render(); }));
-}
-
-function evFormToggle() {
-  const t = $("evType").value;
-  $("evDateF").hidden = t === "tamil";
-  $("evTamilF").hidden = t !== "tamil";
 }
 
 /* ---------- theme ---------- */
@@ -1281,13 +1164,7 @@ async function init() {
   applyCardShades();
   const t = load(LS.theme, "day");
   setTheme(t === "night");
-  const ev = load(LS.events, []);
-  events = Array.isArray(ev) ? ev : [];
   view = { ...view, ...load(LS.view, {}) };
-  renderEvents();
-
-  // populate tamil month select
-  TAMIL_MONTH.forEach((name, i) => $("evTMonth").insertAdjacentHTML("beforeend", `<option value="${i}">${name}</option>`));
 
   // populate muhurta selection cascade: domain → activity (sub-domain) → sub-activity/task
   TAX = await loadTaxonomy();
@@ -1439,25 +1316,10 @@ async function init() {
   $("computeBtn").addEventListener("click", computeBirth);
   $("editBirthBtn").addEventListener("click", () => { $("landing").hidden = false; openBirthForm(); });
   $("themeBtn").addEventListener("click", toggleTheme);
-  evFormToggle();
   $("navPrev").addEventListener("click", () => nav(-1));
   $("navNext").addEventListener("click", () => nav(1));
   $("printBtn").addEventListener("click", printView);
   $("copyBtn").addEventListener("click", copyDayEvents);
-  $("evType").addEventListener("change", evFormToggle);
-  $("evAdd").addEventListener("click", () => {
-    const name = $("evName").value.trim();
-    if (!name) return;
-    const type = $("evType").value;
-    const ev = { id: Date.now(), name, type };
-    if (type === "tamil") { ev.tMonth = Number($("evTMonth").value); ev.tKind = $("evTKind").value; ev.tVal = Number($("evTVal").value); }
-    else ev.date = $("evDate").value;
-    events.push(ev);
-    save(LS.events, events);
-    $("evName").value = "";
-    renderEvents();
-    if (birth) render();
-  });
   $("icsBtn").addEventListener("click", () => {
     if (!birth) { alert("Compute a calendar first."); return; }
     const { y: yy, m: mm } = isoToYMD(view.anchor);

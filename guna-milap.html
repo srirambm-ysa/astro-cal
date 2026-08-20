@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFEBE0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>॥ श्री ॥ Guna Milap — Compatibility Finder</title>
 <link rel="icon" type="image/svg+xml" href="favicon-guna-milap.svg">
 <link rel="stylesheet" href="fonts.css">
@@ -34,6 +38,40 @@
   .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:760px){.two-col{grid-template-columns:1fr}}
+  /* ---------- MOBILE ---------- */
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:10px}
+    header.top{gap:10px;padding-bottom:10px}
+    .btn{min-height:44px;padding:10px 14px;font-size:16px}
+    .field{grid-template-columns:1fr;gap:4px}
+    .field label{font-size:14px}
+    select{font-size:16px;min-height:44px}
+    .hint{grid-column:1}
+    .card{padding:12px}
+    .koota-grid{grid-template-columns:1fr 1fr}
+    .koota{padding:7px 8px}
+    .stat{gap:14px}
+    .stat .s .v{font-size:16px}
+    .whitelist-summary{gap:12px}
+    .whitelist-summary .stat{min-width:0;flex:1 1 40%}
+    .recommended{gap:10px;padding:10px}
+    .recommended .pair{font-size:17px}
+    .actions{gap:8px}
+    .actions .btn{flex:1 1 100%}
+    .table-wrap{overflow:visible}
+    .rank-table{min-width:0}
+    .rank-table thead{display:none}
+    .rank-table,.rank-table tbody,.rank-table tr,.rank-table td{display:block;width:100%}
+    .rank-table tr{border:1px solid var(--line-faint);margin-bottom:8px;padding:8px 10px;background:var(--panel-a)}
+    .rank-table tr.detail-row{border:0;padding:0;margin-top:-6px}
+    .rank-table td{display:grid;grid-template-columns:88px 1fr;gap:4px 8px;align-items:baseline;border:0;padding:3px 0;white-space:normal}
+    .rank-table td::before{content:attr(data-label);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+    .rank-table td[data-label=""]::before{display:none}
+    .rank-table td[data-label=""]{grid-template-columns:1fr}
+    .rank-table .cell-nak,.rank-table .cell-score{white-space:nowrap}
+  }
+  @media(max-width:400px){.koota-grid{grid-template-columns:1fr}}
   .person{border:1px solid var(--line-faint);background:var(--panel-b);padding:12px}
   .person h3{font-size:16px;color:var(--vermilion);margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:9px}
@@ -321,17 +359,17 @@
 
     const rows = whitelist.ranking.map((r) => `
       <tr>
-        <td>${r.rank}</td>
-        <td class="cell-nak">${r.nakshatraName}</td>
-        <td class="cell-rashi">${r.rashiName}</td>
-        <td style="text-align:center">P${r.bestPada}</td>
-        <td class="cell-score">${r.totalScore}/36 (${r.scorePercentage}%)</td>
-        <td class="cell-tier">${tierBadge(r.tierLabel)}</td>
-        <td class="cell-dosha">${doshaCell(r)}</td>
-        <td style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
+        <td data-label="">${r.rank}</td>
+        <td class="cell-nak" data-label="Nakshatra">${r.nakshatraName}</td>
+        <td class="cell-rashi" data-label="Rashi">${r.rashiName}</td>
+        <td data-label="Pada">P${r.bestPada}</td>
+        <td class="cell-score" data-label="Score">${r.totalScore}/36 (${r.scorePercentage}%)</td>
+        <td class="cell-tier" data-label="Tier">${tierBadge(r.tierLabel)}</td>
+        <td class="cell-dosha" data-label="Doshas">${doshaCell(r)}</td>
+        <td data-label="Marriage Nak" style="text-align:center">${r.birthNakInMarriageList ? `<span class="badge ok">✓</span>` : `<span class="badge mid">—</span>`}</td>
       </tr>
       <tr class="detail-row">
-        <td colspan="8" style="padding:0;border-bottom:1px solid var(--gold)">
+        <td colspan="8" data-label="" style="padding:0;border-bottom:1px solid var(--gold)">
           <details>
             <summary style="padding:8px 11px;background:var(--panel-b)">Koota Breakdown</summary>
             <div class="body" style="padding:10px 11px"><div class="koota-grid">${kootaDetail(r.breakdown)}</div></div>
