@@ -4,10 +4,10 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-14 (Vivaha marriage UX — night mode, worker, region mask, two-step flow)
+Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month table)
 
-**Session token count (current · Vivaha marriage UX session):** REAL billed 4,259,454
-(RAW 26,363,569 · 83.8% cache efficiency, 93.8% cache-hit share; 240 requests).
+**Session token count (current · mobile overhaul session):** REAL billed 5,470,257
+(RAW 35,464,881 · 84.6% cache efficiency, 94.4% cache-hit share; 302 requests).
 
 ## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
 - **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
@@ -115,6 +115,14 @@ Last updated: 2026-08-14 (Vivaha marriage UX — night mode, worker, region mask
 - **Verified**: `npm test` 45/45 alliance (full suite green) + 14/14 Playwright browser
   checks on `alliance-filter.html` (load, compute, render, expand koota, badge styling).
 
+## Goal Accomplished (this session — 2026-08-20 · rebrand + ocgraph + mobile-first + grid→table)
+- **Guna Milap rebrand** (committed `a8d40e9`): Alliance Filter → "॥ श्री ॥ Guna Milap — Compatibility Finder" across page/file/UI names + professional footers; engine API identifiers kept stable (owner decision). `docs/guna-milap-prd.md` is the spec; schema `guna-milap-whitelist-v1`; reuse `marriage.mjs#calculateAshtakoota`.
+- **ocgraph hardened** (committed `1493796` in D:\ocgraph): parser now supports `.mjs`/`.cjs` modules + inline HTML `<script type="module">` ES imports (IMPORTS edges); `.css` restored in `_JS_EXTENSIONS`; test fixture `helper.mjs`; **55/55 tests pass**; astro-cal DB rebuilt (27 files, 804 nodes, 971 edges). AGENTS.md Tier 2 updated.
+- **Mobile-first responsive overhaul** (committed `bb6d809`): all 3 pages got `viewport-fit=cover` + theme-color + PWA meta, ≥44px touch targets, 16px inputs, compact panchang strip (sunrise/sunset/tithi + rahu/yama/gulika in one 6-cell rhythm grid), `minmax(0,1fr)` layout + `.table-wrap` scroll for muhurta/key-event tables, guna-milap `.rank-table` stacked cards, marriage `.date-table` wrapper. **Personal events + shraddha removed** from index.html (stateless/privacy — localStorage now only theme+birth+view); personal-*mode* scoring untouched.
+- **Calendar grid → full-month table** (committed `90b3e83`): grid cells overlapped on narrow widths; removed `.calendar/.cell/.dot/.bar/.swatch/.legend` + the day-detail card. One row per day (Date | Tithi | Nakshatra | Kalam | Events chips); selecting a row expands an inline `.mdetail` row merging the former day card (sunrise/sunset, full kalam ranges, period rows); mobile stacks rows into labeled cards. Copy button reads the expanded row.
+- **Verification**: `node --check` clean; `npm test` all green (Marriage 51 + Alliance 45 + INV/BND/OVR/PRS suites); Playwright probes at 360×800 (overX=0 everywhere, full row count, expand/collapse works) and 1280 desktop (real table, columns intact).
+- **Task board**: astro-cal AC-TSK-0001 + AC-TSK-0003 remain in_progress (carry forward). No owner-confirmed completions this session.
+
 ## Goal Accomplished (this session — 2026-08-14 · Vivaha marriage UX: night mode · worker · region mask · two-step flow)
 - **Night mode** in `marriage.html` (parity with index/alliance-filter; shared `astro-cal-theme` key, `body.night`).
 - **Slowness fix**: off-thread day computation via Web Worker — **`marriage.worker.js` + `worker-client.mjs`** (untracked, new); falls back to main-thread `scanWeddingWindow` when worker/wasm unavailable. Progress callback yields per processed day.
@@ -125,16 +133,18 @@ Last updated: 2026-08-14 (Vivaha marriage UX — night mode, worker, region mask
 - **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
 
 ## Immediate Next Steps
-0. **Commit the accumulated Vivaha marriage UX work** (night mode, worker, region mask, two-step flow) — owner to confirm at next session; keep the two untracked worker files.
-1. Owner's "few more minor tweaks" in `marriage.html` / alliance pages — collect at session start (owner deferred; not specified this session).
+0. **All astro-cal + ocgraph work from this session is COMMITTED** (`a8d40e9`, `bb6d809`, `90b3e83` in astro-cal; `1493796` in ocgraph). Working tree clean.
+1. Owner's "few more minor tweaks" in `marriage.html` / guna-milap pages — collect at session start (owner deferred; not specified this session).
 2. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
-   likely SIMPLIFY** — this session added many constructs (aspect-ratio override, muhwhy footer, modal hidden,
-   cal-head title, panel vars) that must be re-verified against the printed output; (b) **ICS export discussion**
-   needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
+   likely SIMPLIFY** — the month-table refactor (90b3e83) changed the printed surface again; re-verify print output
+   for all three pages; (b) **ICS export discussion** needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
 3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
 4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
    If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
    preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
+5. **Visual polish on the new month table (open, optional)**: consider grouping rows by week (weekday header bands) or
+   adding a mini in-row chandrashtama bar; current chips + expandable detail are functional but plain.
+6. Consider ocgraph cross-page edges for the month table (app.js now renders the table; IMPORTS already cover index.html→app.js).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
@@ -160,9 +170,11 @@ Last updated: 2026-08-14 (Vivaha marriage UX — night mode, worker, region mask
 - Harness scripts now live in **repo** `tests/` (`tests-suite.mjs`, `mode-summary.mjs`; `package.json`
   `npm test` / `npm run modes`). Older leaked harness copies remain in `C:\Users\Sony\AppData\Local\Temp\opencode\`
   (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
-- **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #0.
+- **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #2.
+- **Month table (90b3e83)**: the full-month table is the single calendar surface now — no grid. `view.selected` (shared with the muhurta table) drives the inline `.mdetail` expand; nav to another month with a stale `view.selected` just renders no expanded row (safe). Mobile stacked cards rely on `td::before[data-label]` — new columns must add `data-label` or the label cell renders empty. Weekend tint uses `.mrow.weekend`; today uses `.mrow.today td.dt .d-num`. The muhurta table (`#muhurtas`, 4 cols) is separate and unaffected.
+- **Probe workflow**: mobile verification uses `node serve.cjs` (PORT env) + Playwright scripts at `C:\Users\Sony\AppData\Local\Temp\mobile-probe*.mjs` (360×800 isMobile hasTouch). New probes can be written per page; the key assertion is `document.documentElement.scrollWidth - clientWidth === 0`.
 - **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
-- **Working tree is dirty (2026-08-14)**: Vivaha marriage UX session uncommitted — see Immediate Next Steps #0. `marriage.worker.js` + `worker-client.mjs` are new untracked files that MUST ship with the commit for the worker path to work.
+- **Working tree is CLEAN (2026-08-20)** — all session work committed. Previously dirty state (Vivaha marriage UX, worker files) was committed earlier as `1409b2b`; `marriage.worker.js` + `worker-client.mjs` shipped with it.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
