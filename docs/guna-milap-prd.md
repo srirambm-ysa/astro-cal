@@ -1,6 +1,6 @@
-# Best-Match Calculator — "Alliance Filter" (PRD)
+# Best-Match Calculator — "Guna Milap" (PRD)
 
-Companion feature to `marriage.html` / `marriage.mjs`. Lets an alliance search
+Companion feature to `marriage.html` / `marriage.mjs`. Lets a matchmaking search
 **first cut on a whitelist of compatible birth combinations** for one partner,
 instead of brute-force testing every biodata profile against the full Ashtakoota
 engine.
@@ -112,7 +112,7 @@ interface AllianceRow {
 }
 
 interface AllianceWhitelist {
-  schema: "alliance-whitelist-v1";
+  schema: "guna-milap-whitelist-v1";
   generatedAt: string;          // ISO
   fixedPerson: {
     role: string; nakshatra: number; nakshatraName: string;
@@ -135,7 +135,7 @@ interface AllianceWhitelist {
 
 CSV columns: `rank,nakshatra,rashi,bestPada,totalScore,scorePercentage,tierLabel,isCompatible,nadiDosha,bhakootDosha,pariharas,birthNakInMarriageList`.
 
-## 5. Engine contract (alliance-filter.mjs)
+## 5. Engine contract (guna-milap.mjs)
 
 | Export | Role |
 |---|---|

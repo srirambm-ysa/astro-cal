@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alliance Filter — Best Match Calculator</title>
-<link rel="icon" type="image/svg+xml" href="favicon-alliance.svg">
+<title>॥ श्री ॥ Guna Milap — Compatibility Finder</title>
+<link rel="icon" type="image/svg+xml" href="favicon-guna-milap.svg">
 <link rel="stylesheet" href="fonts.css">
 <style>
   :root{
@@ -126,6 +126,16 @@
   body.night .rank-table th{color:#c6bfa8}
   body.night .rank-table tr:hover td{background:rgba(201,162,39,.05)}
   body.night .alert{background:rgba(226,91,74,.08)}
+  /* ---------- FOOTER / DISCLAIMER ---------- */
+  .site-footer{margin-top:4px;padding:14px 16px 12px;border:1px solid var(--line-faint);background:var(--panel-b)}
+  .site-footer .disclaimer{font-size:12px;color:var(--ink-soft);line-height:1.65;margin-bottom:10px}
+  .site-footer .disclaimer strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin-bottom:3px}
+  .site-footer .credit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-faint);padding-top:9px;font-size:12px}
+  .site-footer .credit .orn{color:var(--gold);font-family:"Rozha One",serif}
+  .site-footer .credit a{color:var(--vermilion);text-decoration:none;font-weight:600;letter-spacing:.02em}
+  .site-footer .credit a:hover{color:var(--saffron)}
+  body.night .site-footer .credit a{color:var(--gold-bright)}
+  @media print{.site-footer{border:1px solid #999;background:#fff}.site-footer .disclaimer{color:#444}.site-footer .credit a{color:#000}}
   /* ---------- PRINT / PDF ---------- */
   @media print{
     @page{margin:12mm}
@@ -150,9 +160,9 @@
   <div class="frame">
   <header class="top">
     <div class="logo">
-      <span class="mark">🔍</span>
-      <div><h1>Alliance Filter</h1>
-        <div class="sub">Best-Match Calculator — Muhurta Chintamani, Ch.6</div>
+      <span class="mark">॥ श्री ॥</span>
+      <div><h1>Guna Milap</h1>
+        <div class="sub">Compatibility Finder — Muhurta Chintamani, Ch.6</div>
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -209,12 +219,17 @@
   </div>
 
   <div id="result"></div>
+
+  <footer class="site-footer">
+    <div class="disclaimer"><strong>Disclaimer</strong>This filter ranks partner birth combinations purely by classical Ashtakoota scoring from Muhurta Chintamani, Chapter 6 — a first-cut screening aid, not an endorsement of any person or match. Compatibility depends on far more than a 36-guna score, and the pada-agnostic "best" shown here is a computational optimum over valid quarters. Treat the output as a shortlist to discuss with a qualified astrologer, who should verify the full compatibility and any date before a decision.</div>
+    <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+  </footer>
   </div>
 </div>
 
 <script type="module">
   import { NAKSHATRA, RASHI } from "./engine.js";
-  import { computeAllianceWhitelist, toCSV, toJSON, loadRules } from "./alliance-filter.mjs";
+  import { computeAllianceWhitelist, toCSV, toJSON, loadRules } from "./guna-milap.mjs";
 
   const $ = (id) => document.getElementById(id);
   const NAK_1BASED = NAKSHATRA.map((n, i) => `${n} (${i + 1})`);
@@ -403,14 +418,14 @@
         const blob = new Blob([toJSON(whitelist)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url; a.download = `alliance-whitelist-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.json`;
+        a.href = url; a.download = `guna-milap-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.json`;
         a.click(); URL.revokeObjectURL(url);
       };
       $("exportCsv").onclick = () => {
         const blob = new Blob([toCSV(whitelist)], { type: "text/csv" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url; a.download = `alliance-whitelist-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.csv`;
+        a.href = url; a.download = `guna-milap-${input.role}-${input.nakshatra}-${input.rashi}-${input.pada}.csv`;
         a.click(); URL.revokeObjectURL(url);
       };
       $("printBtn").onclick = () => window.print();

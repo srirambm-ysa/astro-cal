@@ -32,12 +32,13 @@
   h1{font-size:21px}
   .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
   .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .range{display:flex;align-items:center;border:1px solid var(--gold);background:var(--paper)}
-  .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink)}
+  .range{display:flex;align-items:stretch;border:1px solid var(--gold);background:var(--paper)}
+  .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:0 12px;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center}
   .range button.active{background:var(--saffron);color:#2b1505;font-weight:600}
   .range .nav{color:var(--vermilion);font-weight:600}
-  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:3px 12px;white-space:nowrap;letter-spacing:.02em}
-  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 11px;font-weight:600;font-size:13px;white-space:nowrap}
+  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:0 12px;white-space:nowrap;letter-spacing:.02em;display:flex;align-items:center}
+  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 14px;font-weight:600;font-size:13px;white-space:nowrap;height:38px}
+  .controls .range,.controls .btn{height:38px}
   .persona .pers-star{color:var(--saffron);font-size:12px;line-height:1}
   .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center}
   .btn.ghost{background:transparent;color:var(--ink)}
@@ -225,6 +226,16 @@
   body.night .chip.verdict.Neutral{color:#141835}
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr}}
   @media(max-width:560px){.cell{min-height:60px}.cell .num{font-size:14px}.cell .tm{font-size:9px}.cell .tithi{font-size:8px}}
+  /* ---------- FOOTER / DISCLAIMER ---------- */
+  .site-footer{margin-top:4px;padding:14px 16px 12px;border:1px solid var(--line-faint);background:var(--panel-b)}
+  .site-footer .disclaimer{font-size:12px;color:var(--ink-soft);line-height:1.65;margin-bottom:10px}
+  .site-footer .disclaimer strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin-bottom:3px}
+  .site-footer .credit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-faint);padding-top:9px;font-size:12px}
+  .site-footer .credit .orn{color:var(--gold);font-family:"Rozha One",serif}
+  .site-footer .credit a{color:var(--vermilion);text-decoration:none;font-weight:600;letter-spacing:.02em}
+  .site-footer .credit a:hover{color:var(--saffron)}
+  body.night .site-footer .credit a{color:var(--gold-bright)}
+  @media print{.site-footer{border:1px solid #999;background:#fff}.site-footer .disclaimer{color:#444}.site-footer .credit a{color:#000}}
   /* ---------- PRINT / PDF ---------- */
   @media print{
     @page{margin:12mm}
@@ -265,7 +276,7 @@
         <span id="themeLabel">Night mode</span>
       </button>
       <a class="btn ghost" href="marriage.html" style="text-decoration:none">💍 Vivaha</a>
-      <a class="btn ghost" href="alliance-filter.html" style="text-decoration:none">🔍 Alliance</a>
+      <a class="btn ghost" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
       <button class="btn" id="printBtn">Print / PDF</button>
       <button class="btn" id="icsBtn">Download ICS</button>
     </div>
@@ -376,6 +387,11 @@
     <div class="legend" id="legend"></div>
     <div class="note">Chandrashtama (bar): orange coarse rashi window · red peak star window. Dots: moon phases · eclipse · festival · personal · shraddha.</div>
   </section>
+
+  <footer class="site-footer">
+    <div class="disclaimer"><strong>Disclaimer</strong>This calendar is a personal muhurta aid generated locally from the Swiss Ephemeris and classical Muhurta Chintamani rules. It is provided for informational and cultural reference, not as professional astrological or religious advice. Panchang values vary by school, ayanamsa and location, and the classifications here may differ from the practice of your family pundit or temple. For dates that matter — marriage, travel, purchases, ceremonies — consult a qualified jyotishi and confirm against a trusted panchang.</div>
+    <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+  </footer>
 
 </div>
 </div>

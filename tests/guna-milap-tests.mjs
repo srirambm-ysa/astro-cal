@@ -1,4 +1,4 @@
-/* alliance-filter-tests.mjs — unit tests for the Alliance Filter module.
+/* guna-milap-tests.mjs — unit tests for the Guna Milap (Compatibility Finder) module.
  * Self-contained: imports marriage.mjs (for calculateAshtakoota) + rules directly.
  * Validates generateValidProfiles, computeAllianceWhitelist, toCSV, toJSON.
  */
@@ -10,7 +10,7 @@ import {
   computeAllianceWhitelist,
   toCSV,
   toJSON,
-} from "../alliance-filter.mjs";
+} from "../guna-milap.mjs";
 import { calculateAshtakoota } from "../marriage.mjs";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url)) + "/..";
@@ -66,7 +66,7 @@ console.log("\n--- computeAllianceWhitelist ---");
 const fixedGroom = { role: "groom", nakshatra: 1, rashi: 1, pada: 1 };
 const wl = computeAllianceWhitelist(fixedGroom, rules, { topN: 18, minScore: 18 });
 
-t("returns whitelist object with schema", wl.schema === "alliance-whitelist-v1");
+t("returns whitelist object with schema", wl.schema === "guna-milap-whitelist-v1");
 t("fixedPerson echoed correctly", wl.fixedPerson.nakshatra === 1 && wl.fixedPerson.rashi === 1 && wl.fixedPerson.pada === 1 && wl.fixedPerson.role === "groom");
 t("ranking contains only compatible profiles", wl.ranking.every(r => r.isCompatible));
 t("ranking length <= topN and <= compatibleCount", wl.ranking.length <= 18 && wl.ranking.length <= wl.summary.compatibleCount);
@@ -138,7 +138,7 @@ sum("TO_CSV");
 console.log("\n--- toJSON ---");
 const jsonStr = toJSON(wl);
 t("JSON parses back", (() => { try { JSON.parse(jsonStr); return true; } catch { return false; } })());
-t("JSON contains whitelist structure", jsonStr.includes("alliance-whitelist-v1") && jsonStr.includes("fixedPerson") && jsonStr.includes("ranking"));
+t("JSON contains whitelist structure", jsonStr.includes("guna-milap-whitelist-v1") && jsonStr.includes("fixedPerson") && jsonStr.includes("ranking"));
 sum("TO_JSON");
 
 /* ---------- Integration: verify scores match calculateAshtakoota ---------- */

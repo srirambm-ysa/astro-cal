@@ -1,4 +1,4 @@
-/* alliance-filter.mjs — Best-Match Calculator (Alliance Filter) for astro-cal.
+/* guna-milap.mjs — Compatibility Finder (36-guna best-match calculator) for astro-cal.
  *
  * Given one fixed person's birth (nakshatra, rashi, pada), computes the ranked
  * set of partner birth combinations that score best on the 36-guna Ashtakoota.
@@ -94,7 +94,7 @@ function groupByNakshatraRashi(profiles) {
    ============================================================================ */
 
 /**
- * Computes the ranked alliance whitelist for a fixed person.
+ * Computes the ranked Guna Milap (compatibility whitelist) for a fixed person.
  *
  * @param {Object} input - Fixed person data
  * @param {string} input.role - "groom" | "bride"
@@ -233,7 +233,7 @@ export function computeAllianceWhitelist(input, rules, opts = {}) {
   const recommended = compatible[0] || rows[0] || null;
 
   return {
-    schema: "alliance-whitelist-v1",
+    schema: "guna-milap-whitelist-v1",
     generatedAt: new Date().toISOString(),
     fixedPerson: {
       role: fixedPerson.role,

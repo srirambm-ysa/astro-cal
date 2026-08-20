@@ -106,6 +106,16 @@
   body.night .alert{background:rgba(226,91,74,.08);color:#f0c6bd}
   body.night .btn.secondary{background:var(--panel-a);border-color:var(--line)}
   body.night .btn.secondary:hover{background:var(--panel-b)}
+  /* ---------- FOOTER / DISCLAIMER ---------- */
+  .site-footer{margin-top:4px;padding:14px 16px 12px;border:1px solid var(--line-faint);background:var(--panel-b)}
+  .site-footer .disclaimer{font-size:12px;color:var(--ink-soft);line-height:1.65;margin-bottom:10px}
+  .site-footer .disclaimer strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin-bottom:3px}
+  .site-footer .credit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-faint);padding-top:9px;font-size:12px}
+  .site-footer .credit .orn{color:var(--gold);font-family:"Rozha One",serif}
+  .site-footer .credit a{color:var(--vermilion);text-decoration:none;font-weight:600;letter-spacing:.02em}
+  .site-footer .credit a:hover{color:var(--saffron)}
+  body.night .site-footer .credit a{color:var(--gold-bright)}
+  @media print{.site-footer{border:1px solid #999;background:#fff}.site-footer .disclaimer{color:#444}.site-footer .credit a{color:#000}}
 </style>
 </head>
 <body>
@@ -113,7 +123,7 @@
   <div class="frame">
   <header class="top">
     <div class="logo">
-      <span class="mark">💍</span>
+      <span class="mark">॥ श्री ॥</span>
       <div><h1>Vivaha Muhurta</h1>
         <div class="sub">Matchmaking & Shubh Wedding Dates — Muhurta Chintamani, Ch.6</div>
       </div>
@@ -123,7 +133,7 @@
         <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <span id="themeLabel">Night mode</span>
       </button>
-      <a class="btn" href="alliance-filter.html" style="text-decoration:none">🔍 Alliance Filter</a>
+      <a class="btn" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
       <a class="btn" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
     </div>
   </header>
@@ -170,6 +180,11 @@
   </div>
 
   <div id="result"></div>
+
+  <footer class="site-footer">
+    <div class="disclaimer"><strong>Disclaimer</strong>This matchmaking and muhurta tool applies classical Ashtakoota (36-guna) rules from Muhurta Chintamani, Chapter 6, to the nakshatras you provide. It is an educational reference — a transparent first pass — not a verdict on a couple or a substitute for a competent astrologer, whose judgment considers the full charts, transits and family circumstances. Parihara cancellations and regional month rules are implemented as documented here; always confirm a final date with your family pundit.</div>
+    <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+  </footer>
   </div>
 </div>
 
