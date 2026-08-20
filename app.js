@@ -522,18 +522,6 @@ async function computeDay(y, m, d, geo, tz = TZ_IST) {
 
 function dayLabelTamil(tMonth, tDay) { return `${TAMIL_MONTH[tMonth]} ${String(tDay).padStart(2, "0")}`; }
 
-/* ---------- calendar range building ---------- */
-function buildMonthDays(y, m, geo) {
-  const first = new Date(y, m - 1, 1);
-  const startWeekday = first.getDay();
-  const dim = new Date(y, m, 0).getDate();
-  const cells = [];
-  for (let i = 0; i < startWeekday; i++) cells.push(null);
-  for (let d = 1; d <= dim; d++) cells.push({ y, m, d });
-  while (cells.length % 7 !== 0) cells.push(null);
-  return cells;
-}
-
 /* Build the day map for [rangeStart, rangeEnd] — uses the worker if available,
    falls back to main-thread computeDay. Returns a Map<iso, day>. */
 async function buildDayMap(rangeStart, rangeEnd, geo, janmaNakshatra, tz) {
@@ -609,81 +597,12 @@ async function render() {
   for (const ecl of solarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Solar eclipse${ecl.total ? " (total)" : ecl.annular ? " (annular)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
   for (const ecl of lunarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Lunar eclipse${ecl.total ? " (total)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
 
-  // render grid
-  $("cal").innerHTML = "";
-  const grid = document.createElement("div");
-  grid.className = "calendar";
-  grid.innerHTML = DOW.map((x) => `<div class="dow">${x}</div>`).join("");
-  for (const cell of buildMonthDays(y0, m0, geo)) {
-    if (!cell) { grid.insertAdjacentHTML("beforeend", '<div class="cell other"></div>'); continue; }
-    grid.appendChild(renderCell(cell, dayMap, flagMap, windowsByDay));
-  }
-  $("cal").appendChild(grid);
-
+  // full-month table (one row per day; select a row to expand its detail)
   renderMonthEvents(dayMap, flagMap, windowsByDay);
-  renderLegend();
   if (muhComputed) renderMuhurta(dayMap); // only via "Compute Muhurta" (owner request 2026-08-13)
-  $("monthEvTitle").textContent = `Key events — ${title}`;
-
-  // day detail
-  const sel = $("cal").querySelector(".cell.selected");
-  if (sel) { $("dayDetailCard").hidden = false; showDetail(sel.dataset.iso, dayMap, flagMap, windowsByDay); }
-  else { $("dayDetailCard").hidden = true; }
+  $("monthEvTitle").querySelector("span").textContent = title;
 }
 
-function renderCell(cell, dayMap, flagMap, windowsByDay) {
-  const { y, m, d } = cell;
-  const iso = ymdToISO(y, m, d);
-  const day = dayMap.get(iso);
-  if (!day) return document.createElement("div");
-  const el = document.createElement("div");
-  el.className = "cell" + (iso === todayISO() ? " today" : "") + (day.vara === 0 || day.vara === 6 ? " weekend" : "");
-  el.dataset.iso = iso;
-  if (iso === view.selected) el.classList.add("selected");
-
-  const ws = windowsByDay.get(iso) || [];
-  const coarse = ws.filter((w) => w.kind === "coarse");
-  const peak = ws.filter((w) => w.kind === "peak");
-  let bar = "";
-  if (coarse.length || peak.length) {
-    const dayStart = swe.julday(y, m, d, -TZ_IST);
-    const dayEnd = swe.julday(y, m, d, 24 - TZ_IST);
-    const dayLen = dayEnd - dayStart;
-    let coarseLeft = 0, coarseW = 0, peakLeft = 0, peakW = 0;
-    if (coarse.length) { const c = coarse[0]; const cs = Math.max(dayStart, c.start), ce = Math.min(dayEnd, c.end); coarseLeft = (cs - dayStart) / dayLen * 100; coarseW = (ce - cs) / dayLen * 100; }
-    if (peak.length) { const p = peak[0]; const ps = Math.max(dayStart, p.start), pe = Math.min(dayEnd, p.end); peakLeft = (ps - dayStart) / dayLen * 100; peakW = (pe - ps) / dayLen * 100; }
-    bar = `<div class="bar coarse" style="left:${coarseLeft}%;width:${Math.min(100 - coarseLeft, coarseW)}%">${peakW > 0 ? `<div class="peak" style="left:${peakLeft - coarseLeft}%;width:${Math.min(100, peakW)}%"></div>` : ""}</div>`;
-  }
-
-  const dots = dayDots(day, iso, flagMap);
-
-  el.innerHTML = `
-    <span class="num ${iso === todayISO() ? "today" : ""}">${d}</span>
-    <div class="tm">${dayLabelTamil(day.tMonth, day.tDay)}</div>
-    <div class="tithi">${day.tithi.paksha === "Shukla" ? "Shu" : "Kr"} ${TITHI_NAMES[day.tithi.index]}</div>
-    <div class="dots">${dots}</div>
-    ${bar}`;
-  el.addEventListener("click", () => { view.selected = iso; save(LS.view, view); render(); });
-  return el;
-}
-
-/* category dots for a day cell: moon, eclipse, festival */
-function dayDots(day, iso, flagMap) {
-  const cats = [];
-  if (day.tithi.amavasya || day.tithi.purnima) cats.push("moon");
-  if (flagMap.has(iso) && flagMap.get(iso).key === "ecl") cats.push("eclipse");
-  const moonN = day.moonNakshatra;
-  for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) { cats.push("festival"); break; }
-  return cats.slice(0, 4).map((c) => `<span class="dot ${c}"></span>`).join("");
-}
-
-const CAT_LABEL = { moon: "Moon", eclipse: "Eclipse", festival: "Festival" };
-
-/* phase-2 muhurta table (above calendar): only Shubh muhurtas for the focused
-   sub-activity/task (verdict chips EXCELLENT/GOOD). Uses the §2.6 v1.0 scoring engine
-   with calendar-field pushdown + time-bounded verdicts. */
-/* Lay-language reason buckets for a rejected (non-Shubh) day — makes the "why"
-   traceable for non-astrologers. Keys are displayed via REJ_LABEL below. */
 const REJ_LABEL = {
   bhadra: "Bhadra — the Vishti karana with the Moon in a harmful sign (Karka/Simha/Tula/Meena)",
   nakshatra: "the Moon was in a nakshatra not ideal for this activity",
@@ -795,54 +714,81 @@ function renderMuhurta(dayMap) {
   }
 }
 
-/* month key-events table (right panel): one row per flagged day */
+/* Full-month table: one row per day (tithi/nakshatra/kalam/events). Selecting a
+   row expands an inline day-detail row (sunrise/sunset + full windows/periods),
+   merging the former day-detail card into the calendar. */
 function renderMonthEvents(dayMap, flagMap, windowsByDay) {
   const tbody = $("monthEvents");
   tbody.innerHTML = "";
   const days = [...dayMap.values()].sort((a, b) => (a.iso < b.iso ? -1 : 1));
+  const chip = (cls, label, title = "") => `<span class="chip ${cls}"${title ? ` title="${title}"` : ""}>${label}</span>`;
   let rows = 0;
   for (const day of days) {
     const { y, m, d } = isoToYMD(day.iso);
-    const entries = [];
-    const ws = windowsByDay.get(day.iso) || [];
-    if (ws.some((w) => w.kind === "coarse")) entries.push({ cat: "chandrashtama", name: "Chandrashtama (coarse)", sub: "avoid new ventures" });
-    if (ws.some((w) => w.kind === "peak")) entries.push({ cat: "chandrashtama", name: "Chandrashtama (peak)", sub: "avoid — most inauspicious" });
-    if (day.tithi.amavasya) entries.push({ cat: "moon", name: "Amavasya (new moon)", sub: "" });
-    if (day.tithi.purnima) entries.push({ cat: "moon", name: "Purnima (full moon)", sub: "" });
-    if (day.tDay === 1) entries.push({ cat: "sankranti", name: `${TAMIL_MONTH[day.tMonth]} 1 — sankranti`, sub: "Tamil month begins" });
-    if (flagMap.has(day.iso)) {
-      const f = flagMap.get(day.iso);
-      if (f.key === "ecl") entries.push({ cat: "eclipse", name: f.name, sub: "" });
-    }
-    const moonN = day.moonNakshatra;
-    for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) entries.push({ cat: "festival", name: f.name, sub: "Tamil festival" });
-    if (!entries.length) continue;
     const dt = new Date(y, m - 1, d);
-    const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
-    const dateStr = `${dayName} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]} ${String(d).padStart(2, "0")}`;
-    for (const e of entries) {
-      rows++;
-      const sel = day.iso === view.selected ? " class=\"selected\"" : "";
-      tbody.insertAdjacentHTML("beforeend",
-        `<tr${sel} data-iso="${day.iso}"><td class="dt">${dateStr}</td><td><div class="ev-name">${e.name}</div>${e.sub ? `<div class="ev-sub">${e.sub}</div>` : ""}</td><td class="cat"><span class="chip ${e.cat}">${e.cat === "chandrashtama" ? "Chandra" : e.cat === "sankranti" ? "Sankranti" : CAT_LABEL[e.cat] || e.cat}</span></td></tr>`);
+    const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()];
+    const isToday = day.iso === todayISO();
+    const isSel = day.iso === view.selected;
+    const weekend = day.vara === 0 || day.vara === 6;
+
+    const ws = windowsByDay.get(day.iso) || [];
+    const coarse = ws.some((w) => w.kind === "coarse");
+    const peak = ws.some((w) => w.kind === "peak");
+    const chips = [];
+    if (coarse) chips.push(chip("chandra", "Chandra", "Chandrashtama — coarse"));
+    if (peak) chips.push(chip("chandra peak", "Chandra peak", "Chandrashtama — peak"));
+    if (day.tithi.amavasya) chips.push(chip("moon", "Amavasya"));
+    if (day.tithi.purnima) chips.push(chip("moon", "Purnima"));
+    if (day.tDay === 1) chips.push(chip("sankranti", "Sankranti", `${TAMIL_MONTH[day.tMonth]} 1 — Tamil month begins`));
+    if (flagMap.has(day.iso) && flagMap.get(day.iso).key === "ecl") chips.push(chip("eclipse", "Eclipse", flagMap.get(day.iso).name));
+    const moonN = day.moonNakshatra;
+    for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) chips.push(chip("festival", "Festival", f.name));
+    const evs = chips.length ? chips.join("") : `<span class="chip none">—</span>`;
+
+    const k = day.kalam;
+    const kalamTxt = k ? `R ${fmtHHMM(k.rahu.start)} · Y ${fmtHHMM(k.yama.start)} · G ${fmtHHMM(k.gulika.start)}` : "—";
+
+    const cls = `mrow${isSel ? " selected" : ""}${isToday ? " today" : ""}${weekend ? " weekend" : ""}`;
+    tbody.insertAdjacentHTML("beforeend",
+      `<tr class="${cls}" data-iso="${day.iso}">
+        <td class="dt" data-label="Date">${weekday} <span class="d-num">${d}</span></td>
+        <td data-label="Tithi">${day.tithi.name}</td>
+        <td data-label="Nakshatra">${NAKSHATRA[day.moonNakshatra]}</td>
+        <td class="kal" data-label="Kalam">${kalamTxt}</td>
+        <td class="evs" data-label="Events"><div class="evs-cell">${evs}</div></td>
+      </tr>`);
+    rows++;
+    if (isSel) {
+      tbody.insertAdjacentHTML("beforeend", `<tr class="mdetail" data-iso="${day.iso}"><td colspan="5">${dayDetailHTML(day, flagMap, windowsByDay)}</td></tr>`);
     }
   }
-  if (!rows) tbody.insertAdjacentHTML("beforeend", '<tr><td colspan="3"><div class="note">No flagged days in this range.</div></td></tr>');
+  if (!rows) tbody.insertAdjacentHTML("beforeend", '<tr><td colspan="5"><div class="note">No data for this range.</div></td></tr>');
+  // row click = select / toggle the day (re-render to expand or close its detail)
+  tbody.querySelectorAll(".mrow").forEach((tr) => tr.addEventListener("click", () => {
+    view.selected = tr.dataset.iso === view.selected ? "" : tr.dataset.iso;
+    save(LS.view, view);
+    render();
+  }));
 }
 
-/* legend swatches (chandrashtama bar + category dots) */
-function renderLegend() {
-  $("legend").innerHTML = `
-    <div class="item"><span class="swatch two"></span>Chandrashtama (orange coarse · red peak)</div>
-    <div class="item"><span class="swatch moon"></span>Moon phase</div>
-    <div class="item"><span class="swatch eclipse"></span>Eclipse</div>
-    <div class="item"><span class="swatch festival"></span>Festival</div>`;
-}
-
-function showDetail(iso, dayMap, flagMap, windowsByDay) {
-  const day = dayMap.get(iso);
-  if (!day) return;
-  $("detailTitle").textContent = dayLabel(iso);
+/* Inline day-detail (merged former day-detail card) rendered into the expanded
+   month-table row: sunrise/sunset + kalam strip + windows and festival periods. */
+function dayDetailHTML(day, flagMap, windowsByDay) {
+  const iso = day.iso;
+  const k = day.kalam;
+  const kal = k
+    ? `R ${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)} · Y ${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)} · G ${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}`
+    : "–";
+  const dt = new Date(day.y, day.m - 1, day.d);
+  const strip = `
+    <div class="sunset">
+      <div class="kv"><div class="k">Sunrise</div><div class="v">${day.rise ? fmtHHMM(day.rise) : "–"}</div></div>
+      <div class="kv"><div class="k">Sunset</div><div class="v">${day.set ? fmtHHMM(day.set) : "–"}</div></div>
+      <div class="kv"><div class="k">Tithi</div><div class="v">${day.tithi.name}</div></div>
+      <div class="kv"><div class="k">Rahu Kalam</div><div class="v">${kal}</div></div>
+      <div class="kv"><div class="k">Tamil date</div><div class="v">${dayLabelTamil(day.tMonth, day.tDay)}</div></div>
+      <div class="kv"><div class="k">Weekday</div><div class="v">${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()]}</div></div>
+    </div>`;
   const parts = [];
   const ws = windowsByDay.get(iso) || [];
   const coarse = ws.find((w) => w.kind === "coarse");
@@ -851,27 +797,17 @@ function showDetail(iso, dayMap, flagMap, windowsByDay) {
     const peakTxt = peak && peak.nakshatra != null ? ` · peak ${fmtHHMM(peak.start)}–${fmtHHMM(peak.end)} (${NAKSHATRA[peak.nakshatra]})` : "";
     parts.push(periodRow(I.cha, "Chandrashtama — coarse" + (peak ? " + peak" : ""), `${fmtHHMM(coarse.start)} → ${fmtHHMM(coarse.end)}${peakTxt}`, "bad", "AVOID"));
   }
-  const k = day.kalam;
-  if (k) {
-    $("rRahu").textContent = fmtHHMM(k.rahu.start) + "–" + fmtHHMM(k.rahu.end);
-    $("rYama").textContent = fmtHHMM(k.yama.start) + "–" + fmtHHMM(k.yama.end);
-    $("rGulika").textContent = fmtHHMM(k.gulika.start) + "–" + fmtHHMM(k.gulika.end);
-  } else {
-    $("rRahu").textContent = "–"; $("rYama").textContent = "–"; $("rGulika").textContent = "–";
-  }
   if (day.tithi.amavasya) parts.push(periodRow(I.ama, "Amavasya (new moon)", "All day", "per", "Moon"));
   if (day.tithi.purnima) parts.push(periodRow(I.pur, "Purnima (full moon)", "All day", "per", "Moon"));
   if (flagMap.has(iso)) {
     const f = flagMap.get(iso);
     if (f.key === "ecl") parts.push(periodRow(I.ecl, f.name, f.start ? `${fmtHHMM(f.start)} → ${fmtHHMM(f.end)}` : "All day", "per", "Eclipse"));
   }
-  // festivals
+  if (day.tDay === 1) parts.push(periodRow(I.san, `${TAMIL_MONTH[day.tMonth]} 1 — sankranti`, "Tamil month begins", "mut", "Sankranti"));
   const moonN = day.moonNakshatra;
   for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) parts.push(periodRow(I.fest, f.name, `${dayLabelTamil(day.tMonth, day.tDay)} · Tamil calendar`, "mut", "Festival"));
-  $("detail").innerHTML = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
-  $("rSunrise").textContent = day.rise ? fmtHHMM(day.rise) : "–";
-  $("rSunset").textContent = day.set ? fmtHHMM(day.set) : "–";
-  $("rTithi").textContent = `${day.tithi.paksha} ${day.tithi.name}`;
+  const body = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
+  return `<div class="detail">${strip}${body}</div>`;
 }
 
 /* Muhurta detail HTML for the accordion under the Muhurta table: score breakdown,
@@ -1116,13 +1052,12 @@ function nav(delta) {
 /* ---------- print / copy ---------- */
 function printView() { window.print(); }
 function copyDayEvents() {
-  const iso = view.selected;
-  const txt = document.getElementById("detail").innerText;
-  if (!iso || !txt) { alert("Select a day first."); return; }
-  const { y, m, d } = isoToYMD(iso);
+  const detail = document.querySelector(".monthtab tr.mdetail");
+  if (!view.selected || !detail) { alert("Select a day first."); return; }
+  const { y, m, d } = isoToYMD(view.selected);
   const dt = new Date(y, m - 1, d);
-  const label = `${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()]}, ${dayLabel(iso)}`;
-  const copyText = `${label}\n${txt}`;
+  const label = `${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()]}, ${dayLabel(view.selected)}`;
+  const copyText = `${label}\n${detail.innerText}`;
   navigator.clipboard.writeText(copyText).then(() => {
     const b = $("copyBtn");
     b.textContent = "Copied";

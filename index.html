@@ -55,34 +55,7 @@
   .kv .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft)}
   .kv .v{font-weight:600}
   .kv .v em{font-style:normal;color:var(--vermilion)}
-  .calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
-  .dow{text-align:center;font-size:13px;font-weight:600;color:var(--vermilion);letter-spacing:.08em;padding:6px 0;border-bottom:1px solid var(--line-faint)}
-  .cell{min-height:84px;aspect-ratio:1 / 1;background:var(--paper);border:1px solid var(--line-faint);padding:6px;position:relative;cursor:pointer;min-width:0;overflow:hidden}
-  .cell:hover{border-color:var(--gold)}
-  .cell.selected{border-color:var(--vermilion);outline:1px solid var(--vermilion)}
-  .cell.today{border-color:var(--vermilion)}
-  .cell.weekend{background:rgba(233,164,51,.12)}
-  .cell .num{font-size:16px;color:var(--ink)}
-  .cell .num.today{background:var(--vermilion);color:var(--paper);padding:1px 6px}
-  .cell.other{opacity:.4}
-  .cell .tm{font-size:11px;color:var(--ink-soft);font-weight:600}
-  .cell .tithi{font-size:11px;color:var(--gold);line-height:1.2}
-  .cell .dots{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
-  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(61,36,18,.35)}
-  .dot.chandra{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 3px,#FBB65C 3px 6px)}
-  .dot.moon{background:#262A4A}
-  .dot.eclipse{background:var(--saffron)}
-  .dot.festival{background:var(--gold-bright)}
-  .bar{position:absolute;left:3px;right:3px;bottom:3px;height:15px;overflow:hidden}
-  .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border:1px solid rgba(230,46,46,.45)}
-  .bar .peak{position:absolute;top:0;bottom:0;background:var(--chandra-peak)}
-  .layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"cal keys" "detail detail" "legend legend";gap:15px;align-items:start}
-  .layout > .card{min-width:0}
-  .cal-sec{grid-area:cal}
-  .keys-sec{grid-area:keys}
-  #dayDetailCard{grid-area:detail}
-  .legend-sec{grid-area:legend}
-  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .evtab td .ev-name{font-weight:600}
   .detail{display:grid;gap:6px}
   .sd-label{font-size:13px;font-weight:600;color:var(--vermilion);margin-bottom:6px}
   .period{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;border-left:3px solid var(--gold);background:var(--paper)}
@@ -94,14 +67,7 @@
   .tag.bad{background:var(--chandra-peak);color:#fff} .tag.mid{background:var(--saffron)}
   .tag.mut{background:var(--gold)} .tag.per{background:var(--night)}
   .sunset{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .legend{display:flex;flex-wrap:wrap;gap:14px}
-  .legend .item{display:flex;align-items:center;gap:7px;font-size:13px}
-  .swatch{width:18px;height:10px;display:inline-block;border:1px solid var(--line)}
-  .swatch.two{width:24px;background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 5px,#FBB65C 5px 10px);position:relative;overflow:hidden}
-  .swatch.two::after{content:"";position:absolute;top:0;bottom:0;right:0;width:45%;background:var(--chandra-peak)}
-  .swatch.moon{background:#262A4A}
-  .swatch.eclipse{background:var(--saffron)}
-  .swatch.festival{background:var(--gold-bright)}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .evtab{width:100%;border-collapse:collapse;font-size:13px}
   .evtab th,.evtab td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
   .evtab th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
@@ -110,6 +76,17 @@
   .evtab td.cat{white-space:nowrap}
   .evtab td .ev-name{font-weight:600}
   .evtab td .ev-sub{font-size:11px;color:var(--ink-soft)}
+  .monthtab .mrow{cursor:pointer}
+  .monthtab .mrow.weekend{background:rgba(233,164,51,.07)}
+  .monthtab .mrow td.dt{white-space:nowrap}
+  .monthtab .mrow.today td.dt .d-num{background:var(--vermilion);color:var(--paper);border-radius:2px;padding:0 4px}
+  .monthtab td.kal{white-space:nowrap;font-size:12px;color:var(--ink)}
+  .monthtab td.evs{white-space:normal}
+  .monthtab tr.mdetail td{background:var(--panel-b);padding:12px}
+  .monthtab tr.mdetail td .detail{max-width:760px}
+  .chip.sankranti{background:var(--vermilion)}
+  .chip.chandra.peak{background:var(--chandra-peak);color:#fff}
+  .chip.none{background:transparent;color:var(--ink-soft)}
   .chip{display:inline-block;font-size:9px;padding:1px 6px;border-radius:2px;color:var(--paper);letter-spacing:.05em;text-transform:uppercase}
   .chip.chandra{background:var(--chandra-coarse);color:#2b1505}
   .chip.moon{background:#262A4A}
@@ -189,11 +166,7 @@
     box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
   body.night .frame::before{border-color:var(--line)}
   body.night .frame::after{border-color:var(--line-faint)}
-  body.night .cell.weekend{background:rgba(201,162,39,.14)}
-  body.night .cell .tm{color:#c6bfa8}
-  body.night .bar.coarse{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 6px,#FBB65C 6px 12px);border-color:rgba(230,46,46,.5)}
   body.night .tag.per{background:#3D4678;color:var(--ink)}
-  body.night .dow{color:var(--gold-bright)}
   body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
   body.night .frame svg [fill="#3D2412"]{fill:var(--ink)}
@@ -211,8 +184,6 @@
   body.night .frame svg [fill="#F8F0DE"]{fill:var(--ink)}
   body.night .frame svg [stroke="#EFE4CC"]{stroke:var(--ink)}
   body.night .frame svg [fill="#EFE4CC"]{fill:var(--ink)}
-  body.night .dot.chandra{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 3px,#FBB65C 3px 6px)}
-  body.night .swatch.two{background:repeating-linear-gradient(45deg,var(--chandra-coarse) 0 5px,#FBB65C 5px 10px)}
   body.night .evtab td{border-color:#37305A}
   body.night .evtab tr.selected td{background:rgba(232,121,43,.14)}
   body.night .chip.festival{background:var(--gold-bright);color:#141835}
@@ -220,8 +191,7 @@
   body.night .muh-line .v{color:var(--ink)}
   body.night .muh-act{color:#c6bfa8}
   body.night .chip.verdict.Neutral{color:#141835}
-  @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}.layout{grid-template-columns:1fr;grid-template-areas:"cal" "detail" "legend" "keys"}}
-  @media(max-width:560px){.cell{min-height:60px}.cell .num{font-size:14px}.cell .tm{font-size:9px}.cell .tithi{font-size:8px}}
+  @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}}
   /* ---------- MOBILE ---------- */
   @media(max-width:640px){
     .page{padding:12px 10px 24px}
@@ -235,7 +205,6 @@
     .field input,.field select{font-size:16px;min-height:44px}
     .logo .mark{font-size:20px}
     h1{font-size:18px}
-    .layout{gap:10px;grid-template-columns:1fr;grid-template-areas:"cal" "detail" "legend" "keys"}
     .card{padding:12px}
     .sunset{gap:5px}
     .sunset .kv{padding:6px}
@@ -243,7 +212,18 @@
     .sunset .v{font-size:13px}
     .period{padding:8px 9px}
     .evtab{font-size:12px}
-    .evtab td.dt,.evtab td.cat{white-space:normal}
+    .evtab td.dt,.evtab td.cat,.evtab td.kal{white-space:normal}
+    .monthtab thead{display:none}
+    .monthtab tbody,.monthtab tr,.monthtab td{display:block;width:100%}
+    .monthtab tr.mrow{border:1px solid var(--line-faint);border-radius:6px;background:var(--paper);margin-bottom:8px;overflow:hidden}
+    .monthtab tr.mrow td{display:grid;grid-template-columns:96px 1fr;gap:2px 8px;padding:4px 10px;border:0}
+    .monthtab tr.mrow td.dt{white-space:normal}
+    .monthtab td::before{content:attr(data-label);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);line-height:1.4}
+    .monthtab td.evs .evs-cell{display:flex;flex-wrap:wrap;gap:4px}
+    .monthtab tr.mrow.selected{outline:1px solid var(--vermilion)}
+    .monthtab tr.mrow.selected td{background:rgba(217,116,39,.12)}
+    .monthtab tr.mdetail td{display:block;padding:8px 10px}
+    .monthtab tr.mdetail{display:block;margin-bottom:10px}
     .modal-ovl{padding:10px;align-items:flex-end}
     .modal-panel{max-height:85vh;width:100%}
     .modal-foot button{min-height:44px}
@@ -264,15 +244,9 @@
     body{background:#fff;color:#000;font-size:11px}
     .frame{border:1px solid #999;background:#fff;box-shadow:none;padding:10px}
     .frame::before,.frame::after{display:none}
-    .controls,#landing,#app,.legend,.note,.modal-ovl{display:none !important}
+    .controls,#landing,#app,.note,.modal-ovl{display:none !important}
     .card{border:1px solid #999;background:#fff;break-inside:avoid;padding:10px}
-    .layout{grid-template-columns:1fr;grid-template-areas:"cal" "detail" "legend" "keys";gap:10px}
-    .cell{min-height:48px;aspect-ratio:auto;background:#fff;border:1px solid #aaa;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .cell .num.today{background:#B13B2B;color:#fff}
-    .bar.coarse,.dot,.swatch,.chip,.swatch.two{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-    #dayDetailCard{display:none !important}
-    .dow{color:#000;border-color:#999}
-    .cell .tm,.cell .tithi{color:#444}
+    .chip{print-color-adjust:exact;-webkit-print-color-adjust:exact}
     .evtab{font-size:10px}
     .evtab th{color:#000}
     .evtab td,.evtab th{border-color:#999}
@@ -352,46 +326,21 @@
     </details>
   </section>
 
-  <div class="layout">
-    <section class="card cal-sec">
-      <div class="cal-head">
-        <div><span class="title" id="calTitle"></span><br><span class="tamil-year" id="calTamilYear"></span></div>
-      </div>
-      <div class="calendar" id="cal"></div>
-      <div class="note">Orange/red bar = chandrashtama (coarse + peak). Dots mark days with flagged events. Select a day for its detail. Legend below.</div>
-    </section>
-
-    <section class="card" id="dayDetailCard" hidden>
-      <h2 id="detailTitle" style="display:flex;justify-content:space-between;align-items:center">
-        <span>Select a day</span><button class="btn small ghost" id="copyBtn" type="button" title="Copy this day's events">Copy events</button>
-      </h2>
-      <div class="sunset" id="rhythm" style="margin-bottom:10px">
-        <div class="kv"><div class="k">Sunrise</div><div class="v" id="rSunrise">–</div></div>
-        <div class="kv"><div class="k">Sunset</div><div class="v" id="rSunset">–</div></div>
-        <div class="kv"><div class="k">Tithi</div><div class="v" id="rTithi">–</div></div>
-        <div class="kv"><div class="k">Rahu Kalam</div><div class="v" id="rRahu">–</div></div>
-        <div class="kv"><div class="k">Yama Ghatam</div><div class="v" id="rYama">–</div></div>
-        <div class="kv"><div class="k">Gulika Kalam</div><div class="v" id="rGulika">–</div></div>
-      </div>
-      <div class="detail" id="detail"></div>
-    </section>
-
-    <section class="card legend-sec">
-      <h2>Legend</h2>
-      <div class="legend" id="legend"></div>
-      <div class="note">Chandrashtama (bar): orange coarse rashi window · red peak star window. Dots: moon phases · eclipse · festival.</div>
-    </section>
-
-    <section class="card keys-sec">
-      <h2 id="monthEvTitle">Key events</h2>
-      <div class="table-wrap">
-      <table class="evtab">
-        <thead><tr><th>Date</th><th>Event</th><th>Type</th></tr></thead>
-        <tbody id="monthEvents"></tbody>
-      </table>
-      </div>
-    </section>
-  </div>
+  <section class="card" id="monthCard">
+    <h2 id="monthEvTitle" style="display:flex;justify-content:space-between;align-items:center">
+      <span>Month</span><button class="btn small ghost" id="copyBtn" type="button" title="Copy the selected day's events">Copy events</button>
+    </h2>
+    <div class="cal-head">
+      <span class="title" id="calTitle"></span><span class="tamil-year" id="calTamilYear"></span>
+    </div>
+    <div class="table-wrap">
+    <table class="evtab monthtab">
+      <thead><tr><th>Date</th><th>Tithi</th><th>Nakshatra</th><th>Kalam</th><th>Events</th></tr></thead>
+      <tbody id="monthEvents"></tbody>
+    </table>
+    </div>
+    <div class="note">Kalam shows start times (Rahu · Yama · Gulika). Select a row to expand the day: sunrise/sunset, full windows and festival periods.</div>
+  </section>
 
   <footer class="site-footer">
     <div class="disclaimer"><strong>Disclaimer</strong>This calendar is a personal muhurta aid generated locally from the Swiss Ephemeris and classical Muhurta Chintamani rules. It is provided for informational and cultural reference, not as professional astrological or religious advice. Panchang values vary by school, ayanamsa and location, and the classifications here may differ from the practice of your family pundit or temple. For dates that matter — marriage, travel, purchases, ceremonies — consult a qualified jyotishi and confirm against a trusted panchang.</div>
