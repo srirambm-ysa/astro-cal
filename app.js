@@ -47,6 +47,17 @@ const LEGACY_ACTIVITY = {
   vehicle: "ACT_TRV_VEHICLE_PURCHASE",
   travel: "ACT_TRV_PILGRIMAGE_YATRA",
 };
+
+/* ---------- Quick Selector Presets ---------- */
+const LS_PRESETS = "astro-cal-presets";
+const DEFAULT_PRESETS = [
+  { label: "Griha Pravesha", domain: "DOM_REAL_ESTATE_CONSTRUCTION", sub: "SUB_OCCUPANCY_LEASING", task: "ACT_REAL_GRIHA_PRAVESHA_NEW" },
+  { label: "Vehicle Purchase", domain: "DOM_TRAVEL_TOURISM", sub: "SUB_VEHICLE_OPERATIONS", task: "ACT_TRV_VEHICLE_PURCHASE" },
+  { label: "Marriage", domain: "DOM_SAMSKARAS", sub: "SUB_NUPTIAL_UNION", task: "ACT_SAM_VIVAHA_MARRIAGE" },
+  { label: "Land Purchase", domain: "DOM_REAL_ESTATE_CONSTRUCTION", sub: "SUB_SITE_ACQUISITION", task: "ACT_REAL_LAND_PURCHASE" },
+  { label: "New Venture", domain: "DOM_STARTUPS", sub: "SUB_ENTITY_FOUNDING", task: "ACT_STARTUP_INCORPORATION" },
+  { label: "Pilgrimage", domain: "DOM_TRAVEL_TOURISM", sub: "SUB_PILGRIMAGE_LEISURE", task: "ACT_TRV_PILGRIMAGE_YATRA" },
+];
 let TAX = null;
 
 /* Focused activity for scoring: current selection (with legacy migration), else Griha Pravesha. */
@@ -1084,7 +1095,113 @@ function computeBirth() {
   render();
 }
 
-/* ---------- init ---------- */
+/* ---------- Quick Selector Presets (chip logic) ---------- */
+function loadCustomPresets() {
+  try { return JSON.parse(localStorage.getItem(LS_PRESETS)) || []; } catch { return []; }
+}
+function saveCustomPresets(arr) {
+  localStorage.setItem(LS_PRESETS, JSON.stringify(arr));
+}
+function allPresets() {
+  return [...DEFAULT_PRESETS, ...loadCustomPresets()];
+}
+
+/* Render chip buttons into #presetChips. Each chip carries data-domain/sub/task.
+   Active state = matches current dropdown values. Custom chips get an × dismiss. */
+function renderPresetChips() {
+  const wrap = $("presetChips");
+  if (!wrap) return;
+  const muhDomain = $("muhDomain");
+  const muhSub = $("muhSub");
+  const muhTask = $("muhTask");
+  const curDomain = muhDomain.value;
+  const curSub = muhSub.value;
+  const curTask = muhTask.value;
+
+  const presets = allPresets();
+  wrap.innerHTML = "";
+  presets.forEach((p, i) => {
+    const isActive = p.domain === curDomain && p.sub === curSub && p.task === curTask;
+    const isCustom = i >= DEFAULT_PRESETS.length;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "preset-chip" + (isActive ? " active" : "");
+    btn.dataset.domain = p.domain;
+    btn.dataset.sub = p.sub;
+    btn.dataset.task = p.task;
+    const lbl = document.createTextNode(p.label);
+    btn.appendChild(lbl);
+    if (isCustom) {
+      const x = document.createElement("span");
+      x.className = "pc-x";
+      x.dataset.idx = String(i - DEFAULT_PRESETS.length);
+      x.innerHTML = "&times;";
+      btn.appendChild(x);
+    }
+    btn.addEventListener("click", (e) => {
+      /* If the × was clicked, remove the custom preset instead of applying */
+      const x = e.target.closest(".pc-x");
+      if (x) {
+        e.stopPropagation();
+        const idx = parseInt(x.dataset.idx, 10);
+        const customs = loadCustomPresets();
+        customs.splice(idx, 1);
+        saveCustomPresets(customs);
+        renderPresetChips();
+        return;
+      }
+      applyPreset(p);
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+/* Apply a preset: set all 3 dropdowns through the cascade, sync state, refresh UI. */
+function applyPreset(preset) {
+  const muhDomain = $("muhDomain");
+  const muhSub = $("muhSub");
+  const muhTask = $("muhTask");
+
+  muhDomain.value = preset.domain;
+  /* Trigger cascade fill manually (same logic as the change listener) */
+  const subs = TAX.subDomains(preset.domain);
+  muhSub.innerHTML = '<option value="" disabled selected>Please select</option>';
+  subs.forEach((s) => muhSub.insertAdjacentHTML("beforeend", `<option value="${s.code}">${s.name}</option>`));
+  muhSub.value = preset.sub;
+
+  const tasks = TAX.activities(preset.domain, preset.sub);
+  muhTask.innerHTML = '<option value="" disabled selected>Please select</option>';
+  tasks.forEach((t) => muhTask.insertAdjacentHTML("beforeend", `<option value="${t.activity_id}">${t.activity_name}</option>`));
+  muhTask.value = preset.task;
+
+  /* Sync intent + UI */
+  view.activity = preset.task;
+  save(LS.view, view);
+  renderPresetChips();
+  refreshSourceBtn();
+  clearMuhurta();
+}
+
+/* Save the current dropdown state as a custom preset (prompt for label). */
+function promptSavePreset() {
+  const muhDomain = $("muhDomain");
+  const muhSub = $("muhSub");
+  const muhTask = $("muhTask");
+  if (!muhDomain.value || !muhSub.value || !muhTask.value) return;
+
+  const taskSel = $("muhTask");
+  const defaultLabel = taskSel.options[taskSel.selectedIndex]?.text || "Custom";
+  const label = prompt("Name this quick pick:", defaultLabel);
+  if (!label || !label.trim()) return;
+
+  const customs = loadCustomPresets();
+  /* Deduplicate: remove any custom preset with the same task id */
+  const filtered = customs.filter((c) => c.task !== muhTask.value);
+  filtered.push({ label: label.trim(), domain: muhDomain.value, sub: muhSub.value, task: muhTask.value });
+  saveCustomPresets(filtered);
+  renderPresetChips();
+}
+
 function applyCardShades() {
   let light = true;
   const cards = document.querySelectorAll(".card");
@@ -1171,8 +1288,17 @@ async function init() {
     view.activity = ""; save(LS.view, view);
     clearMuhurta();
     refreshSourceBtn();
+    renderPresetChips();
     $("muhCard").scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
+
+  /* Quick Selector Presets — chip rendering + save button */
+  renderPresetChips();
+  /* Re-render chips whenever any dropdown changes so active state stays in sync */
+  muhDomain.addEventListener("change", () => { renderPresetChips(); });
+  muhSub.addEventListener("change", () => { renderPresetChips(); });
+  muhTask.addEventListener("change", () => { renderPresetChips(); });
+  $("presetAdd").addEventListener("click", promptSavePreset);
 
   /* Classical source modal (§ owner request 2026-08-13) — instant provenance for the
      selected activity, no compute required. */
@@ -1219,6 +1345,7 @@ async function init() {
   }
   save(LS.view, view);
   refreshSourceBtn();
+  renderPresetChips();
 
   // populate selection mode selector (§2.6.7)
   const muhModeSel = $("muhMode");
