@@ -53,7 +53,6 @@ const LS_PRESETS = "astro-cal-presets";
 const DEFAULT_PRESETS = [
   { label: "Griha Pravesha", domain: "DOM_REAL_ESTATE_CONSTRUCTION", sub: "SUB_OCCUPANCY_LEASING", task: "ACT_REAL_GRIHA_PRAVESHA_NEW" },
   { label: "Vehicle Purchase", domain: "DOM_TRAVEL_TOURISM", sub: "SUB_VEHICLE_OPERATIONS", task: "ACT_TRV_VEHICLE_PURCHASE" },
-  { label: "Marriage", domain: "DOM_SAMSKARAS", sub: "SUB_NUPTIAL_UNION", task: "ACT_SAM_VIVAHA_MARRIAGE" },
   { label: "Land Purchase", domain: "DOM_REAL_ESTATE_CONSTRUCTION", sub: "SUB_SITE_ACQUISITION", task: "ACT_REAL_LAND_PURCHASE" },
   { label: "New Venture", domain: "DOM_STARTUPS", sub: "SUB_ENTITY_FOUNDING", task: "ACT_STARTUP_INCORPORATION" },
   { label: "Pilgrimage", domain: "DOM_TRAVEL_TOURISM", sub: "SUB_PILGRIMAGE_LEISURE", task: "ACT_TRV_PILGRIMAGE_YATRA" },

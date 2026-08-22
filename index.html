@@ -99,13 +99,13 @@
   .preset-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
   .preset-chip{
     display:inline-flex;align-items:center;gap:5px;
-    padding:5px 12px;border:1px solid var(--line);background:var(--paper);
+    padding:5px 14px;border:none;background:var(--panel-b);
     color:var(--ink);font-family:"Eczar",serif;font-size:13px;
-    cursor:pointer;border-radius:3px;transition:background .15s,border-color .15s,color .15s;
+    cursor:pointer;border-radius:999px;transition:background .15s,color .15s;
     white-space:nowrap;
   }
-  .preset-chip:hover{border-color:var(--gold);background:rgba(217,116,39,.07)}
-  .preset-chip.active{background:var(--vermilion);color:var(--paper);border-color:var(--vermilion);font-weight:600}
+  .preset-chip:hover{background:rgba(197,154,78,.2);color:var(--ink)}
+  .preset-chip.active{background:var(--vermilion);color:var(--paper);font-weight:600}
   .preset-chip .pc-x{
     display:inline-flex;align-items:center;justify-content:center;
     width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.12);
@@ -115,9 +115,9 @@
   .preset-chip.active .pc-x{background:rgba(255,255,255,.25)}
   .preset-add{
     display:inline-flex;align-items:center;gap:4px;
-    padding:5px 10px;border:1px dashed var(--line);background:transparent;
+    padding:5px 12px;border:1px dashed var(--line);background:transparent;
     color:var(--ink-soft);font-family:"Eczar",serif;font-size:12px;
-    cursor:pointer;border-radius:3px;transition:color .15s,border-color .15s;
+    cursor:pointer;border-radius:999px;transition:color .15s,border-color .15s;
   }
   .preset-add:hover{color:var(--vermilion);border-color:var(--vermilion)}
   .preset-add .pa-plus{font-size:14px;font-weight:600;line-height:1}
