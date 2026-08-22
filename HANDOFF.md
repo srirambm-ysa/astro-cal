@@ -4,7 +4,9 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-22 (Help pages + Variant 3 branding + vectors)
+Last updated: 2026-08-22 (Deploy + Catalog + Night mode + UI polish)
+
+**Session token count (this session · Deploy/Catalog/Night/UI):** REAL billed 8,030,219 (RAW 15,419,377 · 47.9% cache efficiency; 158 requests).
 
 **Session token count (current · help/vectors/branding session):** REAL billed 5,398,355
 (RAW 22,209,664 · 75.7% cache efficiency, 84.3% cache-hit share; 196 requests).
@@ -137,6 +139,23 @@ Last updated: 2026-08-22 (Help pages + Variant 3 branding + vectors)
   - Files: `index.html` (CSS lines 95-127, HTML lines 340-344, print rule), `app.js` (constants lines 51-62, chip functions lines 1098-1200, init wiring lines 1295-1301 + 1291 + 1349).
   - `node --check` clean; no test changes needed (UI-only, no engine logic).
 
+## Goal Accomplished (this session — 2026-08-22 evening · Deploy + Catalog + Night mode + UI polish · committed `46853d4`)
+- **Deployment to Cloudflare Worker**: Created `wrangler.toml` + `src/worker.mjs` with `assets = { directory = "./" }` config. Registered new worker `astro-cal` at `https://astro-cal.srirambm.workers.dev` — no existing workers/pages/sites touched. Pushed repo to `github.com/srirambm-ysa/astro-cal`.
+- **Activity Catalog**: `catalog.html` — standalone page with 140 activities searchable by keyword, collapsible accordion by domain (18 domains), sub-domain grouping, activity cards showing name/ID/intent/functional group/nakshatras/weekdays/hard blockers/source. Night mode toggle (persistent). Linked from Quick Picks area and help pages.
+- **Quick Selector Chips**: Marriage preset removed. Chips changed to oval shape (`border-radius: 999px`) with solid `var(--panel-b)` backfill, no border — visually distinct from toolbar ghost buttons.
+- **Kalam display fixed**: Month table now shows full label `Rahu: 07:30 · Yama: 09:00 · Gulika: 10:30` with start-only times. Day detail card broken into three separate labeled rows (Rahu Kalam / Yama Gandam / Gulikai) with ranges.
+- **Header rename**: Title changed to "Muhurtha" / "vedic calendar" (dropped "Panchang Ledger").
+- **Favicon added**: `help-muhurta.html`, `help-marriage.html`, `help-guna-milap.html` all got `favicon-calendar.svg`.
+- **Night mode → neutral black**: Switched from navy/blue (`#12162B` etc.) to true neutral black (`#0D0D0D` bg, `#1A1A1A` paper, `#222222` panels). Applied to all 7 HTML files + `vectors.css` (fallback hex values updated).
+- **Header overlap fix**: `.logo` gained `flex:1 1 100%` on all pages to force logo onto its own row — buttons always wrap below, never overlap the Ganesha/kalash in any mode.
+- **Worker handler committed**: `src/worker.mjs` fetch handler changed from 404 stub to `env.ASSETS.fetch(request)` (was only deployed, never committed).
+
+## Immediate Next Steps
+1. **UAT feedback (next session)** — user will return with minor changes after UAT. Likely CSS/UI tweaks.
+2. **PWA verification** — since deployment is live, test service worker registration, offline fallback, and mobile `add to home screen` behavior.
+3. **ICS export** — deferred; needs format/scope decision from owner.
+4. **Print-to-PDF audit** — deferred; re-verify print output for all pages on the live deployment.
+
 ## Goal Accomplished (this session — 2026-08-20 · rebrand + ocgraph + mobile-first + grid→table)
 - **Guna Milap rebrand** (committed `a8d40e9`): Alliance Filter → "॥ श्री ॥ Guna Milap — Compatibility Finder" across page/file/UI names + professional footers; engine API identifiers kept stable (owner decision). `docs/guna-milap-prd.md` is the spec; schema `guna-milap-whitelist-v1`; reuse `marriage.mjs#calculateAshtakoota`.
 - **ocgraph hardened** (committed `1493796` in D:\ocgraph): parser now supports `.mjs`/`.cjs` modules + inline HTML `<script type="module">` ES imports (IMPORTS edges); `.css` restored in `_JS_EXTENSIONS`; test fixture `helper.mjs`; **55/55 tests pass**; astro-cal DB rebuilt (27 files, 804 nodes, 971 edges). AGENTS.md Tier 2 updated.
@@ -153,16 +172,6 @@ Last updated: 2026-08-22 (Help pages + Variant 3 branding + vectors)
 - **Verified dual personal blockers (no off-by-one)**: `personalFilters()` iterates BOTH partners; **Ashtama Chandra** (day Moon in 8th rashi from birth) + **Naidhana Tara** (7th star) hard-REJECT the day. Cross-checked 0-based `day.moonRashi/moonNakshatra` (engine `rashiOf`/`nakshatraOf`) vs 1-based form inputs — formulas hit the correct house/star.
 - **Smoke test extended** → `tests/marriage-browser.mjs` **18/18** (button state machine, no Tier-2 leak pre-scan, progress % + text captured, reset after done, SHUBH 2026-11-25 dual-personal clear).
 - **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
-
-## Immediate Next Steps
-1. **Deployment discussion (next session)** — user wants to evaluate deployment options. Topics to cover: hosting (static/Netlify/GitHub Pages), CORS for swisseph WASM, privacy implications, URL structure.
-2. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
-   likely SIMPLIFY** — the month-table refactor (90b3e83) changed the printed surface again; re-verify print output
-   for all three pages; (b) **ICS export discussion** needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
-3. Optional: verify remaining `proof:"unverified"` verses against `muhurtha-chinthamani.pdf` (unchanged).
-4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
-   If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
-   preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
@@ -192,7 +201,7 @@ Last updated: 2026-08-22 (Help pages + Variant 3 branding + vectors)
 - **Month table (90b3e83)**: the full-month table is the single calendar surface now — no grid. `view.selected` (shared with the muhurta table) drives the inline `.mdetail` expand; nav to another month with a stale `view.selected` just renders no expanded row (safe). Mobile stacked cards rely on `td::before[data-label]` — new columns must add `data-label` or the label cell renders empty. Weekend tint uses `.mrow.weekend`; today uses `.mrow.today td.dt .d-num`. The muhurta table (`#muhurtas`, 4 cols) is separate and unaffected.
 - **Probe workflow**: mobile verification uses `node serve.cjs` (PORT env) + Playwright scripts at `C:\Users\Sony\AppData\Local\Temp\mobile-probe*.mjs` (360×800 isMobile hasTouch). New probes can be written per page; the key assertion is `document.documentElement.scrollWidth - clientWidth === 0`.
 - **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
-- **Working tree is CLEAN (2026-08-21)** — Quick Selector Chips committed as `b7646a0`. All prior session work also committed.
+- **Working tree is CLEAN (2026-08-22)** — all sessions committed including deploy, catalog, night mode, and UI polish. Last commit `46853d4`.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
