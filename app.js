@@ -756,7 +756,7 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     const evs = chips.length ? chips.join("") : `<span class="chip none">—</span>`;
 
     const k = day.kalam;
-    const kalamTxt = k ? `R ${fmtHHMM(k.rahu.start)} · Y ${fmtHHMM(k.yama.start)} · G ${fmtHHMM(k.gulika.start)}` : "—";
+    const kalamTxt = k ? `R ${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)} · Y ${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)} · G ${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}` : "—";
 
     const cls = `mrow${isSel ? " selected" : ""}${isToday ? " today" : ""}${weekend ? " weekend" : ""}`;
     tbody.insertAdjacentHTML("beforeend",
@@ -786,16 +786,15 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
 function dayDetailHTML(day, flagMap, windowsByDay) {
   const iso = day.iso;
   const k = day.kalam;
-  const kal = k
-    ? `R ${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)} · Y ${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)} · G ${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}`
-    : "–";
   const dt = new Date(day.y, day.m - 1, day.d);
   const strip = `
     <div class="sunset">
       <div class="kv"><div class="k">Sunrise</div><div class="v">${day.rise ? fmtHHMM(day.rise) : "–"}</div></div>
       <div class="kv"><div class="k">Sunset</div><div class="v">${day.set ? fmtHHMM(day.set) : "–"}</div></div>
       <div class="kv"><div class="k">Tithi</div><div class="v">${day.tithi.name}</div></div>
-      <div class="kv"><div class="k">Rahu Kalam</div><div class="v">${kal}</div></div>
+      ${k ? `<div class="kv"><div class="k">Rahu Kalam</div><div class="v">${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)}</div></div>
+      <div class="kv"><div class="k">Yama Gandam</div><div class="v">${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)}</div></div>
+      <div class="kv"><div class="k">Gulikai</div><div class="v">${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}</div></div>` : `<div class="kv"><div class="k">Kalam</div><div class="v">–</div></div>`}
       <div class="kv"><div class="k">Tamil date</div><div class="v">${dayLabelTamil(day.tMonth, day.tDay)}</div></div>
       <div class="kv"><div class="k">Weekday</div><div class="v">${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dt.getDay()]}</div></div>
     </div>`;
