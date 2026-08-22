@@ -32,7 +32,7 @@
   .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
   .frame::after{display:none}
   header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
-  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;flex:1 1 100%}
   .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
   h1{font-size:21px}
   .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
@@ -193,17 +193,17 @@
   .cal-head .title{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion)}
   .cal-head .tamil-year{font-size:12px;color:var(--ink-soft)}
   /* ---------- NIGHT MODE ---------- */
-  body.night{background:radial-gradient(1200px 700px at 80% -10%,rgba(35,42,82,.55) 0%,transparent 60%),#12162B;
-    --canvas:#12162B; --paper:#1D2242; --ink:#EFE4CC; --ink-soft:#A8A08C;
-    --panel-a:#2C3365; --panel-b:#232A55;
+  body.night{background:#0D0D0D;
+    --canvas:#0D0D0D; --paper:#1A1A1A; --ink:#E0E0E0; --ink-soft:#999999;
+    --panel-a:#222222; --panel-b:#2A2A2A;
     --saffron:#E8792B; --vermilion:#E25B4A; --gold:#C9A227; --gold-bright:#E4C45A;
-    --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
-  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
-    box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+    --night:#080808; --teal:#35B3B3; --line:#444444; --line-faint:#333333}
+  body.night .frame{background:rgba(26,26,26,.95);border-color:var(--gold);
+    box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(26,26,26,.5)}
   body.night .frame::before{border-color:var(--line-faint)}
   body.night .frame::after{display:none}
-  body.night .tag.per{background:#3D4678;color:var(--ink)}
-  body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
+  body.night .tag.per{background:#333333;color:var(--ink)}
+  body.night .field input,body.night .field select{background:#111111;color:var(--ink);border-color:var(--line)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
   body.night .frame svg [fill="#3D2412"]{fill:var(--ink)}
   body.night .frame svg [stroke="#B13B2B"]{stroke:var(--vermilion)}
@@ -214,19 +214,19 @@
   body.night .frame svg [fill="#D97427"]{fill:var(--saffron)}
   body.night .frame svg [stroke="#D3A94F"]{stroke:var(--gold-bright)}
   body.night .frame svg [fill="#D3A94F"]{fill:var(--gold-bright)}
-  body.night .frame svg [stroke="#262A4A"]{stroke:#3D4678}
-  body.night .frame svg [fill="#262A4A"]{fill:#3D4678}
+  body.night .frame svg [stroke="#262A4A"]{stroke:#333333}
+  body.night .frame svg [fill="#262A4A"]{fill:#333333}
   body.night .frame svg [stroke="#F8F0DE"]{stroke:var(--ink)}
   body.night .frame svg [fill="#F8F0DE"]{fill:var(--ink)}
   body.night .frame svg [stroke="#EFE4CC"]{stroke:var(--ink)}
   body.night .frame svg [fill="#EFE4CC"]{fill:var(--ink)}
-  body.night .evtab td{border-color:#37305A}
+  body.night .evtab td{border-color:#333333}
   body.night .evtab tr.selected td{background:rgba(232,121,43,.14)}
-  body.night .chip.festival{background:var(--gold-bright);color:#141835}
-  body.night .chip.moon{background:#3D4678}
+  body.night .chip.festival{background:var(--gold-bright);color:#111111}
+  body.night .chip.moon{background:#333333}
   body.night .muh-line .v{color:var(--ink)}
-  body.night .muh-act{color:#c6bfa8}
-  body.night .chip.verdict.Neutral{color:#141835}
+  body.night .muh-act{color:#aaaaaa}
+  body.night .chip.verdict.Neutral{color:#111111}
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}}
   /* ---------- MOBILE ---------- */
   @media(max-width:640px){
@@ -297,7 +297,7 @@
 <img class="frame-ganesha" src="assets/ganesha-219399.svg" alt="" aria-hidden="true" width="48">
 
   <header class="top">
-    <div class="logo"><span class="mark">॥ श्री ॥</span><h1>Muhurtha</h1><span class="sub">vedic calendar</span></div>
+    <div class="logo"><span class="mark">॥ श्री ॥</span><div><h1>Muhurtha</h1><span class="sub">vedic calendar</span></div></div>
     <div class="controls">
       <div class="range">
         <button class="nav" id="navPrev" title="Previous month">‹</button>

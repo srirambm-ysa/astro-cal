@@ -68,15 +68,15 @@ body.night .sacred-mark { }
 
 /* Night mode overrides */
 body.night .sacred-mark { }
-body.night .sacred-divider .sd-line { background: var(--line-faint, #37305A); }
+body.night .sacred-divider .sd-line { background: var(--line-faint, #333333); }
 body.night .sacred-divider .sd-icon { color: var(--gold, #C9A227); }
-body.night .sacred-footer-row { border-top-color: var(--line-faint, #37305A); }
+body.night .sacred-footer-row { border-top-color: var(--line-faint, #333333); }
 body.night .sacred-footer-row .sf-om { color: var(--vermilion, #E25B4A); }
 
 /* Mobile adjustments */
 @media(max-width:640px){
   .sacred-mark { width: 50px; top: 4px; right: 6px; }
-  .frame-ganesha { width: 36px; top: 6px; }
+  .frame-ganesha { display: none; }
   .sacred-divider { margin: 12px 0 8px; }
   .sacred-divider .sd-icon { font-size: 11px; }
   .sacred-footer-row { gap: 12px; }
