@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFEBE0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Activity Catalog — Muhurta Calendar</title>
+<link rel="icon" type="image/svg+xml" href="favicon-calendar.svg">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{max-width:960px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:28px 32px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 14px;border-bottom:1.5px solid var(--gold);margin-bottom:20px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--panel-b)}
+  .btn.small{padding:4px 10px;font-size:12px}
+  .search-row{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+  .search-row input{
+    flex:1;min-width:180px;
+    padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+    font-family:"Eczar",serif;font-size:14px;background:var(--paper);color:var(--ink);
+    outline:none;transition:border-color .15s;
+  }
+  .search-row input:focus{border-color:var(--gold)}
+  .search-row .count{font-size:12px;color:var(--ink-soft);white-space:nowrap}
+  .domain-section{margin-bottom:16px}
+  .domain-header{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 12px;background:var(--panel-b);border:1px solid var(--line-faint);
+    cursor:pointer;border-radius:3px;user-select:none;
+    font-family:"Rozha One",serif;font-size:15px;color:var(--vermilion);
+    transition:background .15s;
+  }
+  .domain-header:hover{background:rgba(197,154,78,.15)}
+  .domain-header .dh-arrow{font-size:11px;color:var(--gold);transition:transform .2s;flex:none}
+  .domain-header.open .dh-arrow{transform:rotate(90deg)}
+  .domain-header .dh-count{font-size:11px;color:var(--ink-soft);font-family:"Eczar",serif;font-weight:400;margin-left:auto}
+  .domain-body{display:none;padding:8px 0 4px 12px;border-left:2px solid var(--line-faint);margin-left:6px}
+  .domain-body.open{display:block}
+  .sub-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:10px 0 4px;font-weight:600}
+  .act-card{
+    padding:8px 10px;margin:4px 0;border:1px solid var(--line-faint);border-radius:3px;
+    background:var(--paper);font-size:13px;line-height:1.5;
+  }
+  .act-card .ac-name{font-weight:600;color:var(--ink);font-size:14px}
+  .act-card .ac-id{font-size:10px;color:var(--ink-soft);font-family:monospace;margin-left:6px}
+  .act-card .ac-intent{font-size:12px;color:var(--ink-soft);margin:2px 0 4px;font-style:italic}
+  .act-card .ac-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+  .act-card .ac-tag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:999px;letter-spacing:.03em;text-transform:uppercase;font-weight:600}
+  .act-card .ac-tag.group{background:var(--panel-b);color:var(--ink-soft)}
+  .act-card .ac-tag.nak{background:rgba(47,126,126,.12);color:var(--teal)}
+  .act-card .ac-tag.wd{background:rgba(217,107,39,.1);color:var(--saffron)}
+  .act-card .ac-tag.hb{background:rgba(184,58,42,.1);color:var(--vermilion)}
+  .act-card .ac-tag.src{background:rgba(197,154,78,.12);color:var(--gold-bright)}
+  .act-card.hidden{display:none}
+  .empty-state{padding:20px;text-align:center;color:var(--ink-soft);font-size:14px}
+  .site-footer{margin-top:12px;padding:14px 16px 12px;border:1px solid var(--line-faint);background:var(--panel-b)}
+  .site-footer .disclaimer{font-size:12px;color:var(--ink-soft);line-height:1.65;margin-bottom:10px}
+  .site-footer .disclaimer strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin-bottom:3px}
+  .site-footer .credit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-faint);padding-top:9px;font-size:12px}
+  .site-footer .credit .orn{color:var(--gold);font-family:"Rozha One",serif}
+  .site-footer .credit a{color:var(--vermilion);text-decoration:none;font-weight:600;letter-spacing:.02em}
+  .site-footer .credit a:hover{color:var(--saffron)}
+  body.night{background:#12162B;--canvas:#12162B;--paper:#1D2242;--ink:#EFE4CC;--ink-soft:#A8A08C;--panel-a:#2C3365;--panel-b:#232A55;--saffron:#E8792B;--vermilion:#E25B4A;--gold:#C9A227;--gold-bright:#E4C45A;--night:#0E1126;--teal:#35B3B3;--line:#8A6B2F;--line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .search-row input{background:var(--panel-a);color:var(--ink);border-color:var(--line)}
+  body.night .domain-header{background:var(--panel-a)}
+  body.night .act-card{background:var(--panel-a);border-color:var(--line)}
+  body.night .act-card .ac-tag.group{background:var(--panel-b);color:var(--ink-soft)}
+  body.night .site-footer .credit a{color:var(--gold-bright)}
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:16px}
+    header{gap:10px}
+    h1{font-size:18px}
+    .logo .mark{font-size:20px}
+    .domain-body{padding-left:8px}
+    .act-card{padding:6px 8px;font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="frame">
+
+<header>
+  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>Activity Catalog</h1><span class="sub">All 140 Muhurta Activities</span></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn ghost small" id="themeBtn" title="Toggle night mode">
+      <span id="themeIcon">🌙</span><span id="themeLabel">Night</span>
+    </button>
+    <a class="btn ghost" href="index.html">← Back</a>
+  </div>
+</header>
+
+<div class="search-row">
+  <input type="text" id="searchInput" placeholder="Search activities by name, intent, domain..." autocomplete="off">
+  <span class="count" id="countDisplay">140 activities</span>
+</div>
+
+<div id="catalogRoot"></div>
+
+<div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
+
+<footer class="site-footer">
+  <div class="disclaimer"><strong>Source</strong>All 140 activities come from <code>rules/activity_corpus.json</code> (Muhurta Chintamani — Ch. 2–6). Each activity includes its <strong>hard blockers</strong>, <strong>preferred nakshatras / weekdays</strong>, <strong>functional group</strong>, and <strong>tithi constraints</strong>. Search by name, intent, or domain code.</div>
+  <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+</footer>
+
+</div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+function friendlyName(code) {
+  if (!code) return "";
+  return code
+    .replace(/^(?:SUB_|DOM_|ACT_)/, "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+(function() {
+  const root = $("catalogRoot");
+  const searchInput = $("searchInput");
+  const countDisplay = $("countDisplay");
+  let corpus = null;
+  let allActCards = [];
+
+  fetch("./rules/activity_corpus.json").then(r => r.json()).then(data => {
+    corpus = data;
+    renderCatalog(data);
+  }).catch(err => {
+    root.innerHTML = `<div class="empty-state">Failed to load activity corpus: ${err.message}</div>`;
+  });
+
+  function renderCatalog(data) {
+    const { domains, activities } = data;
+    const byDomain = {};
+    const domainMeta = {};
+    domains.forEach(d => { domainMeta[d.domain] = d; byDomain[d.domain] = []; });
+    const domainOrder = domains.map(d => d.domain);
+
+    activities.forEach(a => {
+      if (!byDomain[a.domain]) byDomain[a.domain] = [];
+      byDomain[a.domain].push(a);
+    });
+
+    const domainNames = {};
+    domains.forEach(d => { domainNames[d.domain] = friendlyName(d.domain); });
+
+    let html = "";
+    domainOrder.forEach(dCode => {
+      const acts = byDomain[dCode] || [];
+      if (!acts.length) return;
+      const meta = domainMeta[dCode] || {};
+      const subGroups = {};
+      acts.forEach(a => {
+        if (!subGroups[a.sub_domain]) subGroups[a.sub_domain] = [];
+        subGroups[a.sub_domain].push(a);
+      });
+
+      html += `<div class="domain-section" data-domain="${dCode}">`;
+      html += `<div class="domain-header" role="button" tabindex="0">`;
+      html += `<span class="dh-arrow">▶</span> ${domainNames[dCode] || dCode}`;
+      html += `<span class="dh-count">${acts.length} activities</span>`;
+      html += `</div>`;
+      html += `<div class="domain-body">`;
+
+      Object.keys(subGroups).forEach(sdCode => {
+        const sdName = friendlyName(sdCode);
+        html += `<div class="sub-label">${sdName}</div>`;
+        subGroups[sdCode].forEach(a => {
+          const hbCodes = (a.hard_blockers || []).map(h => h.code.replace(/_ACTIVE$/,"").replace(/_/g," ").toLowerCase()).join(", ");
+          const nakNames = (a.baseline_constraints.allowed_nakshatras || []).map(n => n.replace(/_/g," ").toLowerCase()).join(", ");
+          const wdNames = (a.baseline_constraints.preferred_weekdays || []).map(d => d.charAt(0) + d.slice(1).toLowerCase()).join(", ");
+          const fg = a.baseline_constraints.functional_group || "";
+          const intent = a.intent || "";
+          const src = a.source || "";
+          html += `<div class="act-card" data-id="${a.activity_id}">`;
+          html += `<div class="ac-name">${a.activity_name}<span class="ac-id">${a.activity_id}</span></div>`;
+          if (intent) html += `<div class="ac-intent">${intent}</div>`;
+          html += `<div class="ac-tags">`;
+          if (fg) html += `<span class="ac-tag group">${fg}</span>`;
+          if (nakNames) html += `<span class="ac-tag nak">${nakNames}</span>`;
+          if (wdNames) html += `<span class="ac-tag wd">${wdNames}</span>`;
+          if (hbCodes) html += `<span class="ac-tag hb">✕ ${hbCodes}</span>`;
+          if (src) html += `<span class="ac-tag src">${src}</span>`;
+          html += `</div></div>`;
+        });
+      });
+
+      html += `</div></div>`;
+    });
+
+    root.innerHTML = html;
+
+    allActCards = [];
+    document.querySelectorAll(".act-card").forEach(el => {
+      const id = el.dataset.id;
+      const a = activities.find(x => x.activity_id === id);
+      if (a) { a._el = el; allActCards.push(a); }
+    });
+
+    document.querySelectorAll(".domain-header").forEach(hdr => {
+      hdr.addEventListener("click", () => {
+        const body = hdr.nextElementSibling;
+        const isOpen = body.classList.contains("open");
+        body.classList.toggle("open");
+        hdr.classList.toggle("open");
+      });
+    });
+
+    updateCount();
+    if (searchInput.value) filterCards(searchInput.value);
+  }
+
+  function filterCards(q) {
+    const needle = q.toLowerCase().trim();
+    let visible = 0;
+    let domainHasVisible = {};
+
+    allActCards.forEach(a => {
+      const hay = [a.activity_name, a.activity_id, a.intent, a.domain, a.sub_domain].join(" ").toLowerCase();
+      const match = !needle || hay.includes(needle);
+      a._el.classList.toggle("hidden", !match);
+      if (match) {
+        visible++;
+        domainHasVisible[a.domain] = true;
+      }
+    });
+
+    document.querySelectorAll(".domain-section").forEach(sec => {
+      const dCode = sec.dataset.domain;
+      const hasVis = domainHasVisible[dCode];
+      sec.style.display = (hasVis || !needle) ? "" : "none";
+    });
+
+    countDisplay.textContent = needle ? `${visible} of ${allActCards.length} activities` : `${allActCards.length} activities`;
+  }
+
+  function updateCount() {
+    const visible = document.querySelectorAll(".act-card:not(.hidden)").length;
+    countDisplay.textContent = `${visible} of ${allActCards.length} activities`;
+  }
+
+  searchInput.addEventListener("input", () => filterCards(searchInput.value));
+
+  /* Night mode */
+  const themeBtn = $("themeBtn");
+  const themeIcon = $("themeIcon");
+  const themeLabel = $("themeLabel");
+  function setNight(on) {
+    document.body.classList.toggle("night", on);
+    themeIcon.textContent = on ? "☀️" : "🌙";
+    themeLabel.textContent = on ? "Day" : "Night";
+    try { localStorage.setItem("astro-cal-catalog-night", on ? "1" : "0"); } catch {}
+  }
+  if (themeBtn) {
+    const saved = (localStorage.getItem("astro-cal-catalog-night") === "1");
+    setNight(saved);
+    themeBtn.addEventListener("click", () => setNight(!document.body.classList.contains("night")));
+  }
+})();
+</script>
+</body>
+</html>
