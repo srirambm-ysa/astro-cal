@@ -4,10 +4,22 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-21 (Quick Selector Chips for Muhurta dropdowns)
+Last updated: 2026-08-22 (Help pages + Variant 3 branding + vectors)
 
-**Session token count (current · Quick Selector Chips session):** REAL billed 393,732
-(RAW 3,077,834 · 87.2% cache efficiency, 97.2% cache-hit share; 43 requests).
+**Session token count (current · help/vectors/branding session):** REAL billed 5,398,355
+(RAW 22,209,664 · 75.7% cache efficiency, 84.3% cache-hit share; 196 requests).
+
+## Goal Accomplished (this session — 2026-08-22 · Help pages + Variant 3 design + vector elements · committed `9d16ec1`)
+- **Design direction**: Reviewed 3 Gemini mockups (Temple Pothi, Raja Jyotisha, Vedic Modernist). Selected **Variant 3 (Vedic Modernist)** — cream canvas `#FAF8F5`, refined ink `#2C241D`, brighter vermilion `#B83A2A`, warmer gold `#C59A4E`. Simplified `.frame` from triple to clean single hairline border.
+- **Vector elements**: Created `vectors.css` with Ganesha (centered top of frame) + Kalash (top-right full opacity) positioning. Ganesha uses `ganesha-219399.svg` (multi-color from Openclipart). Kalash uses `kalash-2-175432.svg`. Both applied consistently to `index.html`, `marriage.html`, `guna-milap.html`. Removed extra footer SVG icons — only ॐ remains.
+- **Help pages**: Created 3 standalone help pages using same Variant 3 theme:
+  - `help-muhurta.html` — general muhurta calendar usage (4 steps, verdict key, modes explained)
+  - `help-marriage.html` — Ashtakoota 8-koota breakdown, Nadi/Bhakoot dosha + parihara, Stage 2 date search
+  - `help-guna-milap.html` — alliance pre-screening, ranking logic, tier labels, workflow
+- Each help page cross-links to the other two in a "Related Pages" section.
+- **? Help links** added as ghost buttons in headers of all 3 main pages (index→help-muhurta, marriage→help-marriage, guna-milap→help-guna-milap).
+- **Cleanup**: Removed `assets/ganesha.svg` (line-art version), cleaned up `ganesha-219399.svg` (added viewBox, removed inkscape metadata junk).
+- **Tests**: All 96 tests pass (Marriage 51 + Alliance 45). Committed clean working tree.
 
 ## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
 - **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
@@ -143,8 +155,7 @@ Last updated: 2026-08-21 (Quick Selector Chips for Muhurta dropdowns)
 - **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
 
 ## Immediate Next Steps
-0. **All astro-cal work from this session is COMMITTED** (`b7646a0`). Working tree clean.
-1. Owner's "few more minor tweaks" in `marriage.html` / guna-milap pages — collect at session start (owner deferred; not specified this session).
+1. **Deployment discussion (next session)** — user wants to evaluate deployment options. Topics to cover: hosting (static/Netlify/GitHub Pages), CORS for swisseph WASM, privacy implications, URL structure.
 2. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
    likely SIMPLIFY** — the month-table refactor (90b3e83) changed the printed surface again; re-verify print output
    for all three pages; (b) **ICS export discussion** needed: export **only Shubh muhurta days**, format/scope decision required before implementing.
@@ -152,9 +163,6 @@ Last updated: 2026-08-21 (Quick Selector Chips for Muhurta dropdowns)
 4. **Calibrate Soft/Personal band (open):** Personal lands 1-4/month (strict subset of Full).
    If the owner wants more Personal days, tune impersonal T2 weights / `PERSONAL_SHUBH` — must
    preserve the Personal ⊆ Full ⊆ Soft construction (see `muhurtha_debug.md` addendum, lever #2).
-5. **Visual polish on the new month table (open, optional)**: consider grouping rows by week (weekday header bands) or
-   adding a mini in-row chandrashtama bar; current chips + expandable detail are functional but plain.
-6. Consider ocgraph cross-page edges for the month table (app.js now renders the table; IMPORTS already cover index.html→app.js).
 
 ## Architectural Decisions
 - **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
