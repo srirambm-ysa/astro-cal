@@ -756,7 +756,7 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     const evs = chips.length ? chips.join("") : `<span class="chip none">—</span>`;
 
     const k = day.kalam;
-    const kalamTxt = k ? `R ${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)} · Y ${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)} · G ${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}` : "—";
+    const kalamTxt = k ? `Rahu: ${fmtHHMM(k.rahu.start)} · Yama: ${fmtHHMM(k.yama.start)} · Gulika: ${fmtHHMM(k.gulika.start)}` : "—";
 
     const cls = `mrow${isSel ? " selected" : ""}${isToday ? " today" : ""}${weekend ? " weekend" : ""}`;
     tbody.insertAdjacentHTML("beforeend",
