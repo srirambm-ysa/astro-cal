@@ -4,10 +4,10 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month table)
+Last updated: 2026-08-21 (Quick Selector Chips for Muhurta dropdowns)
 
-**Session token count (current · mobile overhaul session):** REAL billed 5,470,257
-(RAW 35,464,881 · 84.6% cache efficiency, 94.4% cache-hit share; 302 requests).
+**Session token count (current · Quick Selector Chips session):** REAL billed 393,732
+(RAW 3,077,834 · 87.2% cache efficiency, 97.2% cache-hit share; 43 requests).
 
 ## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
 - **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
@@ -115,6 +115,16 @@ Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month t
 - **Verified**: `npm test` 45/45 alliance (full suite green) + 14/14 Playwright browser
   checks on `alliance-filter.html` (load, compute, render, expand koota, badge styling).
 
+## Goal Accomplished (this session — 2026-08-21 · Quick Selector Chips for Muhurta dropdowns · committed `b7646a0`)
+- **Quick Selector Chips** (`index.html` + `app.js`): preset chip row above the Muhurta Domain/Activity/Task cascading dropdowns, per `docs/calendar-quick-selector-chips.md`.
+  - 6 default presets: Griha Pravesha, Vehicle Purchase, Marriage, Land Purchase, New Venture, Pilgrimage — mapped to real `activity_id` values from corpus.
+  - Custom presets: "+ Save" button prompts for label, deduplicates by task id, persists to `localStorage` key `astro-cal-presets`. Custom chips get × dismiss.
+  - Active state: chip highlights in vermilion when its preset matches current dropdown values.
+  - Click behavior: fills all 3 dropdowns through the cascade (no auto-compute, consistent with existing UX).
+  - CSS: uses theme variables (adapts to night mode automatically), hidden in print, 44px mobile touch targets.
+  - Files: `index.html` (CSS lines 95-127, HTML lines 340-344, print rule), `app.js` (constants lines 51-62, chip functions lines 1098-1200, init wiring lines 1295-1301 + 1291 + 1349).
+  - `node --check` clean; no test changes needed (UI-only, no engine logic).
+
 ## Goal Accomplished (this session — 2026-08-20 · rebrand + ocgraph + mobile-first + grid→table)
 - **Guna Milap rebrand** (committed `a8d40e9`): Alliance Filter → "॥ श्री ॥ Guna Milap — Compatibility Finder" across page/file/UI names + professional footers; engine API identifiers kept stable (owner decision). `docs/guna-milap-prd.md` is the spec; schema `guna-milap-whitelist-v1`; reuse `marriage.mjs#calculateAshtakoota`.
 - **ocgraph hardened** (committed `1493796` in D:\ocgraph): parser now supports `.mjs`/`.cjs` modules + inline HTML `<script type="module">` ES imports (IMPORTS edges); `.css` restored in `_JS_EXTENSIONS`; test fixture `helper.mjs`; **55/55 tests pass**; astro-cal DB rebuilt (27 files, 804 nodes, 971 edges). AGENTS.md Tier 2 updated.
@@ -133,7 +143,7 @@ Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month t
 - **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
 
 ## Immediate Next Steps
-0. **All astro-cal + ocgraph work from this session is COMMITTED** (`a8d40e9`, `bb6d809`, `90b3e83` in astro-cal; `1493796` in ocgraph). Working tree clean.
+0. **All astro-cal work from this session is COMMITTED** (`b7646a0`). Working tree clean.
 1. Owner's "few more minor tweaks" in `marriage.html` / guna-milap pages — collect at session start (owner deferred; not specified this session).
 2. **NEXT PHASE (owner, deferred — do not start without owner)**: (a) **Audit print-to-PDF end-to-end and
    likely SIMPLIFY** — the month-table refactor (90b3e83) changed the printed surface again; re-verify print output
@@ -174,7 +184,7 @@ Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month t
 - **Month table (90b3e83)**: the full-month table is the single calendar surface now — no grid. `view.selected` (shared with the muhurta table) drives the inline `.mdetail` expand; nav to another month with a stale `view.selected` just renders no expanded row (safe). Mobile stacked cards rely on `td::before[data-label]` — new columns must add `data-label` or the label cell renders empty. Weekend tint uses `.mrow.weekend`; today uses `.mrow.today td.dt .d-num`. The muhurta table (`#muhurtas`, 4 cols) is separate and unaffected.
 - **Probe workflow**: mobile verification uses `node serve.cjs` (PORT env) + Playwright scripts at `C:\Users\Sony\AppData\Local\Temp\mobile-probe*.mjs` (360×800 isMobile hasTouch). New probes can be written per page; the key assertion is `document.documentElement.scrollWidth - clientWidth === 0`.
 - **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
-- **Working tree is CLEAN (2026-08-20)** — all session work committed. Previously dirty state (Vivaha marriage UX, worker files) was committed earlier as `1409b2b`; `marriage.worker.js` + `worker-client.mjs` shipped with it.
+- **Working tree is CLEAN (2026-08-21)** — Quick Selector Chips committed as `b7646a0`. All prior session work also committed.
 
 ## Pointer
 - Master session log: `D:\knowledge-base\HANDOFF.md`
@@ -184,3 +194,17 @@ Last updated: 2026-08-20 (mobile-first overhaul + calendar grid → full-month t
 - Provenance registry: `reference/provenance_registry.json` · Build tool: `tools/build_provenance.js`
 - Debug guide: `debugging-tips.md` · Provenance proposal: `need_for_provenance_adding.md`
 - Old corpus archive: `reference/archive/250_rule_muhurta_engine/`
+
+
+## Crash guard (ocguard)
+- **Kicked at**: 2026-08-21T12:18:28.562Z
+- **Session**: ses_fdbe3545bffeHOgBR1vZALmmYW
+- **Error**: {"name":"APIError","data":{"message":"Insufficient balance. Manage your billing here: https://opencode.ai/workspace/wrk_01KY9DRSMQ0PC05P610JBWRTFR/billing","statusCode":401,"isRetryable":false,"responseHeaders":{"cf-placement":"remote-ORD","cf-ray":"a2e9949a1cfda33c-SEA","connection":"keep-alive","c
+- **Resume**: re-open this project and run `/resume`; work state was captured in ocmem.
+
+
+## Crash guard (ocguard)
+- **Kicked at**: 2026-08-22T06:50:13.287Z
+- **Session**: ses_fd7d0413affeFf7d2weLewus12
+- **Error**: {"name":"APIError","data":{"message":"Insufficient balance. Manage your billing here: https://opencode.ai/workspace/wrk_01KY9DRSMQ0PC05P610JBWRTFR/billing","statusCode":401,"isRetryable":false,"responseHeaders":{"cf-placement":"remote-ORD","cf-ray":"a2eff127990adfd2-PDX","connection":"keep-alive","c
+- **Resume**: re-open this project and run `/resume`; work state was captured in ocmem.

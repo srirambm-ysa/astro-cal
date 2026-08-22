@@ -10,13 +10,14 @@
 <title>Muhurta Calendar — Vedic Panchang Ledger</title>
 <link rel="icon" type="image/svg+xml" href="favicon-calendar.svg">
 <link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
 <style>
   :root{
-    --canvas:#EFEBE0; --paper:#FFFFFF; --ink:#3D2412; --ink-soft:#7a5a44;
-    --panel-a:#FFFFFF; --panel-b:#F1EEE5;
-    --saffron:#D97427; --vermilion:#B13B2B; --gold:#B98A3E; --gold-bright:#D3A94F;
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
     --night:#262A4A; --teal:#2F7E7E;
-    --line:#C8A86E; --line-faint:#E2D3AE;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
     --chandra-coarse:#F78C1B; --chandra-peak:#E62E2E;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -27,9 +28,9 @@
   h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
   .page{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:24px 26px 30px}
   .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);
-    padding:18px;box-shadow:0 1px 0 rgba(185,138,62,.4),inset 0 0 0 1px rgba(255,255,255,.5)}
-  .frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
-  .frame::after{content:"";position:absolute;inset:9px;border:1px solid var(--line-faint);pointer-events:none}
+    padding:18px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  .frame::after{display:none}
   header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
   .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
@@ -197,8 +198,8 @@
     --night:#0E1126; --teal:#35B3B3; --line:#8A6B2F; --line-faint:#37305A}
   body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);
     box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
-  body.night .frame::before{border-color:var(--line)}
-  body.night .frame::after{border-color:var(--line-faint)}
+  body.night .frame::before{border-color:var(--line-faint)}
+  body.night .frame::after{display:none}
   body.night .tag.per{background:#3D4678;color:var(--ink)}
   body.night .field input,body.night .field select{background:#141835;color:var(--ink);border-color:var(--line)}
   body.night .frame svg [stroke="#3D2412"]{stroke:var(--ink)}
@@ -290,6 +291,8 @@
 <body>
 <div class="page">
 <div class="frame">
+<img class="sacred-mark" src="assets/kalash-2-175432.svg" alt="" aria-hidden="true" width="72">
+<img class="frame-ganesha" src="assets/ganesha-219399.svg" alt="" aria-hidden="true" width="48">
 
   <header class="top">
     <div class="logo"><span class="mark">॥ श्री ॥</span><h1>Muhurta Calendar</h1><span class="sub">Vedic Panchang Ledger</span></div>
@@ -308,6 +311,7 @@
       <a class="btn ghost" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
       <button class="btn" id="printBtn">Print / PDF</button>
       <button class="btn" id="icsBtn">Download ICS</button>
+      <a class="btn ghost" href="help-muhurta.html" style="text-decoration:none;font-size:13px">? Help</a>
     </div>
   </header>
 
@@ -334,6 +338,8 @@
     </h2>
     <div class="profile" id="profile"></div>
   </section>
+
+  <div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
 
   <section class="card" id="muhCard">
     <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span><button class="btn small ghost" id="srcBtn" type="button" disabled title="Select a domain, activity and sub-activity first"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Source</button></span></h2>
@@ -364,6 +370,8 @@
     </details>
   </section>
 
+  <div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ ॐ ॥</span><span class="sd-line"></span></div>
+
   <section class="card" id="monthCard">
     <h2 id="monthEvTitle" style="display:flex;justify-content:space-between;align-items:center">
       <span>Month</span><button class="btn small ghost" id="copyBtn" type="button" title="Copy the selected day's events">Copy events</button>
@@ -382,6 +390,9 @@
 
   <footer class="site-footer">
     <div class="disclaimer"><strong>Disclaimer</strong>This calendar is a personal muhurta aid generated locally from the Swiss Ephemeris and classical Muhurta Chintamani rules. It is provided for informational and cultural reference, not as professional astrological or religious advice. Panchang values vary by school, ayanamsa and location, and the classifications here may differ from the practice of your family pundit or temple. For dates that matter — marriage, travel, purchases, ceremonies — consult a qualified jyotishi and confirm against a trusted panchang.</div>
+    <div class="sacred-footer-row" aria-hidden="true">
+      <span class="sf-om">ॐ</span>
+    </div>
     <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
   </footer>
 

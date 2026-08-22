@@ -1,0 +1,84 @@
+/* Sacred decorative elements for Astro-Cal */
+
+.frame-ganesha {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sacred-mark {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 72px;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.night .frame-ganesha { }
+body.night .sacred-mark { }
+
+/* Sacred dividers between sections */
+.sacred-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 10px;
+  user-select: none;
+}
+.sacred-divider .sd-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line-faint, #E2D3AE);
+}
+.sacred-divider .sd-icon {
+  font-family: "Rozha One", Georgia, serif;
+  font-size: 13px;
+  color: var(--gold, #B98A3E);
+  letter-spacing: 0.1em;
+  flex: none;
+  opacity: 0.7;
+}
+
+/* Sacred footer icon row */
+.sacred-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 14px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line-faint, #E2D3AE);
+  user-select: none;
+}
+.sacred-footer-row .sf-om {
+  font-family: "Rozha One", Georgia, serif;
+  font-size: 18px;
+  color: var(--vermilion, #B13B2B);
+  opacity: 0.5;
+  line-height: 1;
+  flex: none;
+}
+
+/* Night mode overrides */
+body.night .sacred-mark { }
+body.night .sacred-divider .sd-line { background: var(--line-faint, #37305A); }
+body.night .sacred-divider .sd-icon { color: var(--gold, #C9A227); }
+body.night .sacred-footer-row { border-top-color: var(--line-faint, #37305A); }
+body.night .sacred-footer-row .sf-om { color: var(--vermilion, #E25B4A); }
+
+/* Mobile adjustments */
+@media(max-width:640px){
+  .sacred-mark { width: 50px; top: 4px; right: 6px; }
+  .frame-ganesha { width: 36px; top: 6px; }
+  .sacred-divider { margin: 12px 0 8px; }
+  .sacred-divider .sd-icon { font-size: 11px; }
+  .sacred-footer-row { gap: 12px; }
+  .sacred-footer-row .sf-om { font-size: 15px; }
+}

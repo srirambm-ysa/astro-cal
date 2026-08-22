@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Help — Vivaha Muhurta & Ashtakoota Matching</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{max-width:900px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:28px 32px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 14px;border-bottom:1.5px solid var(--gold);margin-bottom:20px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--panel-b)}
+  section{margin-bottom:28px}
+  h2{font-size:17px;color:var(--vermilion);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px}
+  h3{font-size:14px;color:var(--ink);margin:18px 0 6px}
+  p{margin-bottom:10px;color:var(--ink)}
+  ul{margin:0 0 14px 20px}
+  ul li{margin-bottom:4px}
+  table.quick-ref{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  table.quick-ref th,table.quick-ref td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
+  table.quick-ref th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--panel-b)}
+  table.quick-ref td.num{text-align:center;font-weight:600}
+  .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .tag.pass{background:var(--teal);color:#fff}
+  .tag.fail{background:var(--vermilion);color:#fff}
+  .tag.dosha{background:var(--saffron);color:#2b1505}
+  .note-card{background:var(--panel-b);border-left:3px solid var(--gold);padding:14px 16px;margin:12px 0;font-size:13.5px;color:var(--ink-soft);border-radius:0 3px 3px 0}
+  .note-card strong{color:var(--ink)}
+  body.night{background:#12162B;--canvas:#12162B;--paper:#1D2242;--ink:#EFE4CC;--ink-soft:#A8A08C;--panel-a:#2C3365;--panel-b:#232A55;--saffron:#E8792B;--vermilion:#E25B4A;--gold:#C9A227;--gold-bright:#E4C45A;--night:#0E1126;--teal:#35B3B3;--line:#8A6B2F;--line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .note-card{background:#2C3365;border-left-color:var(--gold)}
+  body.night .btn.ghost:hover{background:#2C3365}
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:16px}
+    header{gap:10px}
+    h1{font-size:18px}
+    .logo .mark{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="frame">
+
+<header>
+  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>How to Use</h1><span class="sub">Vivaha Muhurta — Matchmaking & Shubh Wedding Dates</span></div>
+  <a class="btn ghost" href="marriage.html">← Back to Vivaha</a>
+</header>
+
+<section>
+<h2>What This Tool Does</h2>
+<p>This tool performs <strong>two-stage marriage eligibility</strong> per <em>Muhurta Chintamani</em>, Chapter 6 (Vivaha Prakarana):</p>
+<ol>
+  <li><strong>Stage 1 — Ashtakoota (36-guna) Matchmaking:</strong> Compares the Nakshatra, Rashi and Pada of the Groom and Bride across 8 Kootas totalling 36 points. Checks for classical cancelling conditions (Parihara) if Nadi or Bhakoot score zero.</li>
+  <li><strong>Stage 2 — Wedding Date Search:</strong> If the couple is compatible, scans the target calendar window for Shubh Vivaha dates — filtering through universal Hard Blockers (combust Jupiter/Venus, Bhadra, Vivaha Doshas) and dual personal filters (Tara Bala &amp; Chandra Bala for <em>both</em> partners).</li>
+</ol>
+</section>
+
+<section>
+<h2>The 8 Kootas (Ashtakoota)</h2>
+<p>Each Koota tests a different dimension of compatibility. The total score is out of <strong>36 Gunas</strong>:</p>
+<table class="quick-ref">
+  <thead><tr><th>#</th><th>Koota</th><th>Score</th><th>What It Tests</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td><strong>Varna</strong></td><td class="num">1</td><td>Spiritual & egotistical compatibility — Brahmin / Kshatriya / Vaishya / Shudra</td></tr>
+    <tr><td class="num">2</td><td><strong>Vashya</strong></td><td class="num">2</td><td>Mutual control & influence in the relationship</td></tr>
+    <tr><td class="num">3</td><td><strong>Tara</strong></td><td class="num">3</td><td>Health, destiny and mutual longevity (star counting)</td></tr>
+    <tr><td class="num">4</td><td><strong>Yoni</strong></td><td class="num">4</td><td>Sexual compatibility and physical attraction (animal type)</td></tr>
+    <tr><td class="num">5</td><td><strong>Maitri</strong></td><td class="num">5</td><td>Psychological friendship — are the Rashi lords friends?</td></tr>
+    <tr><td class="num">6</td><td><strong>Gana</strong></td><td class="num">6</td><td>Temperament — Deva (divine), Manushya (human), Rakshasa (demonic)</td></tr>
+    <tr><td class="num">7</td><td><strong>Bhakoot</strong></td><td class="num">7</td><td>Family prosperity, emotional harmony & growth (Rashi distance)</td></tr>
+    <tr><td class="num">8</td><td><strong>Nadi</strong></td><td class="num">8</td><td>Genetic compatibility, health & progeny (Adi / Madhya / Antya)</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>The Hard Blockers</h2>
+
+<h3>Nadi Dosha</h3>
+<p>If both partners share the <strong>same Nadi</strong> (Adi, Madhya or Antya), the Nadi score drops to 0 and the match is blocked <em>unless</em> one of these classical Pariharas applies:</p>
+<ul>
+  <li><strong>Same Rashi, different Nakshatras</strong></li>
+  <li><strong>Same Nakshatra, different Rashis</strong> (spanning a Rashi boundary)</li>
+  <li><strong>Same Nakshatra, different Padas</strong> (quarter distinction)</li>
+  <li><strong>Rashi Lord friendship</strong> — the lords of both Moon signs are friends</li>
+</ul>
+<p>If canceled, the full 8 Nadi points are restored. If <em>uncanceled</em>, the match is <strong>hard blocked</strong> regardless of total score.</p>
+
+<h3>Bhakoot Dosha</h3>
+<p>Occurs when the couple's Rashis are <strong>2-12</strong>, <strong>5-9</strong>, or <strong>6-8</strong> positions apart. Cancelled if the Rashi lords are identical or mutual friends. If uncanceled, the match is <strong>hard blocked</strong>.</p>
+
+<div class="note-card"><strong>Important:</strong> A hard-blocked match means wedding dates <em>cannot</em> be generated for this combination per classical guidelines. The tool will show a clear message explaining why.</div>
+</section>
+
+<section>
+<h2>Eligibility Thresholds</h2>
+<p>To proceed to Stage 2 (date search), the couple must satisfy <strong>both</strong> conditions:</p>
+<ol>
+  <li><span class="tag pass">PASS</span> No uncanceled Nadi or Bhakoot Dosha</li>
+  <li><span class="tag pass">PASS</span> Total Guna score <strong>≥ 18 / 36</strong></li>
+</ol>
+<p>Scores 25+ are considered strong matches. Scores 18–24 are borderline but eligible.</p>
+</section>
+
+<section>
+<h2>Stage 2: Wedding Date Search</h2>
+<p>Once the couple passes Stage 1, click <strong>Find Shubh Dates</strong> to scan the target window. The engine checks:</p>
+
+<h3>Universal Marriage Hard Blockers</h3>
+<ul>
+  <li><strong>Asta Guru / Asta Shukra</strong> — Jupiter or Venus combust (absolute zero tolerance)</li>
+  <li><strong>Bhadra in Mrityu Loka</strong> — active Bhadra on Earth</li>
+  <li><strong>4 Major Vivaha Doshas</strong> — Latta (planetary kick), Jamitra (7th house malefic), Pata (Vyatipata/Vaidhriti yoga), Ekargala (solar-lunar imbalance)</li>
+  <li><strong>Month eligibility</strong> — Sun-sign region masks (Aadi, Margazhi, etc. excluded per regional practice)</li>
+</ul>
+
+<h3>Dual Personal Filters</h3>
+<p>Tara Bala and Chandra Bala are evaluated for <strong>both</strong> the Groom and Bride. If either partner suffers <strong>Naidhana Tara</strong> (7th star) or <strong>Ashtama Chandra</strong> (Moon in 8th from birth sign), that date is rejected.</p>
+
+<h3>Scoring</h3>
+<p>Each surviving slot receives a quality score out of 100. Slots with score ≥ 80 are labelled <span class="tag pass">Shubh</span>, 65–79 are <span class="tag pass">Neutral</span>, and below 65 are <span class="tag fail">Ashubh</span>. The top-ranked Shubh dates and their time windows are displayed.</p>
+</section>
+
+<section>
+<h2>Inputs Explained</h2>
+<table class="quick-ref">
+  <thead><tr><th>Field</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Nakshatra</strong></td><td>Birth lunar mansion (1–27). The fundamental input for all 8 Kootas.</td></tr>
+    <tr><td><strong>Rashi</strong></td><td>Moon sign (1–12). Auto-filled from Nakshatra but can be corrected for stars spanning two rashis (e.g. Krittika spans Aries & Taurus).</td></tr>
+    <tr><td><strong>Pada</strong></td><td>Quarter of the Nakshatra (1–4). Used as a tie-breaker for Nadi Pada Bheda Parihara. Default to 1 if unknown.</td></tr>
+    <tr><td><strong>From / To</strong></td><td>The calendar window to search for wedding dates. Defaults to current month + 6 months ahead.</td></tr>
+    <tr><td><strong>Region</strong></td><td>Sun-sign month eligibility mask per regional practice. Controls which solar months are considered eligible for marriage.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>Recommended Workflow</h2>
+<ol>
+  <li><strong>Enter both partners' details</strong> — Nakshatra, Rashi, Pada</li>
+  <li><strong>Click "Calculate Compatibility"</strong> — reviews the 36-guna breakdown, dosha status and parihara details</li>
+  <li><strong>If eligible</strong> — click "Find Shubh Dates" to scan the target window for wedding dates</li>
+  <li><strong>Review the results</strong> — ranked Shubh dates with time windows, quality badges, and classical provenance</li>
+</ol>
+<div class="note-card"><strong>Tip:</strong> If the match fails Stage 1, the classical verse citation is shown so you can understand <em>why</em>. This is not a final verdict — consult a qualified jyotishi for a complete chart analysis.</div>
+</section>
+
+<section>
+<h2>Limitations</h2>
+<ul>
+  <li>This tool uses only Nakshatra, Rashi and Pada — it does <strong>not</strong> evaluate full birth charts (planet positions, houses, aspects).</li>
+  <li>Ashtakoota is one of several classical matchmaking systems. Some traditions weigh the 8 Kootas differently.</li>
+  <li>Panchanga values, ayanamsa (Lahiri), and month rules vary by school. Always confirm with a trusted panchanga.</li>
+  <li>For the actual wedding ceremony, consult a qualified jyotishi for a complete Muhurta including Lagna selection.</li>
+  <li>All computation runs <strong>locally in your browser</strong> via the Swiss Ephemeris — no data leaves your machine.</li>
+</ul>
+</section>
+
+<section>
+<h2>Related Pages</h2>
+<ul>
+  <li><a href="help-muhurta.html" style="color:var(--vermilion);font-weight:600">📖 Muhurta Calendar Help</a> — General activity-based muhurta (non-marriage)</li>
+  <li><a href="help-guna-milap.html" style="color:var(--vermilion);font-weight:600">🔍 Guna Milap Help</a> — Pre-screening compatibility whitelist for one person</li>
+</ul>
+</section>
+
+<div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
+
+<p style="text-align:center;font-size:13px;color:var(--ink-soft)"><a href="marriage.html" style="color:var(--vermilion);text-decoration:none;font-weight:600">← Back to Vivaha Muhurta</a></p>
+
+</div>
+</div>
+</body>
+</html>

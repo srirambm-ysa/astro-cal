@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Help — Guna Milap (Compatibility Finder)</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
+    font-size:15px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{max-width:900px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:28px 32px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 14px;border-bottom:1.5px solid var(--gold);margin-bottom:20px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--panel-b)}
+  section{margin-bottom:28px}
+  h2{font-size:17px;color:var(--vermilion);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px}
+  h3{font-size:14px;color:var(--ink);margin:18px 0 6px}
+  p{margin-bottom:10px;color:var(--ink)}
+  ul{margin:0 0 14px 20px}
+  ul li{margin-bottom:4px}
+  table.quick-ref{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  table.quick-ref th,table.quick-ref td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
+  table.quick-ref th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--panel-b)}
+  .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .tag.excellent{background:var(--teal);color:#fff}
+  .tag.good{background:var(--gold);color:#2b1505}
+  .tag.poor{background:var(--ink-soft);color:#fff}
+  .tag.marriage{background:var(--vermilion);color:#fff}
+  .note-card{background:var(--panel-b);border-left:3px solid var(--gold);padding:14px 16px;margin:12px 0;font-size:13.5px;color:var(--ink-soft);border-radius:0 3px 3px 0}
+  .note-card strong{color:var(--ink)}
+  body.night{background:#12162B;--canvas:#12162B;--paper:#1D2242;--ink:#EFE4CC;--ink-soft:#A8A08C;--panel-a:#2C3365;--panel-b:#232A55;--saffron:#E8792B;--vermilion:#E25B4A;--gold:#C9A227;--gold-bright:#E4C45A;--night:#0E1126;--teal:#35B3B3;--line:#8A6B2F;--line-faint:#37305A}
+  body.night .frame{background:rgba(18,22,43,.95);border-color:var(--gold);box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(18,22,43,.5)}
+  body.night .note-card{background:#2C3365;border-left-color:var(--gold)}
+  body.night .btn.ghost:hover{background:#2C3365}
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:16px}
+    header{gap:10px}
+    h1{font-size:18px}
+    .logo .mark{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="frame">
+
+<header>
+  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>How to Use</h1><span class="sub">Guna Milap — Compatibility Finder</span></div>
+  <a class="btn ghost" href="guna-milap.html">← Back to Guna Milap</a>
+</header>
+
+<section>
+<h2>What This Tool Does</h2>
+<p>Guna Milap is a <strong>pre-screening compatibility calculator</strong> (also called the Alliance Filter). Given <strong>one fixed person's</strong> birth Nakshatra, Rashi and Pada, it computes the <strong>ranked list of partner birth combinations</strong> that score best on the 36-guna Ashtakoota — without you having to manually enter each candidate pair.</p>
+<p>This is an <strong>inverse lookup</strong>: instead of testing pair-by-pair (which is what <em>Vivaha Muhurta</em> does), you define yourself as the anchor and the tool finds which partner nakshatra/rashi/pada combinations are astrologically compatible with you.</p>
+<div class="note-card"><strong>Use case:</strong> A match coordinator or parent who has N biodata profiles. Run Guna Milap once to get a whitelist of compatible birth combinations, then keep only those profiles whose birth data lands on a whitelist row. Then verify the shortlisted couples through <strong>Vivaha Muhurta</strong> for full date scanning.</div>
+</section>
+
+<section>
+<h2>Inputs</h2>
+<table class="quick-ref">
+  <thead><tr><th>Field</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Role</strong></td><td>Are you the Groom or the Bride? This does not change the scoring — it only labels the output table.</td></tr>
+    <tr><td><strong>Nakshatra</strong></td><td>Your birth lunar mansion (1–27). The anchor for all 8 Koota calculations.</td></tr>
+    <tr><td><strong>Rashi</strong></td><td>Your Moon sign (1–12). Auto-filled from Nakshatra; correctable for stars spanning two rashis.</td></tr>
+    <tr><td><strong>Pada</strong></td><td>Your quarter (1–4). Matters for Nadi Pada-Bheda Parihara when a candidate shares the same nakshatra.</td></tr>
+    <tr><td><strong>Show Up To</strong></td><td>How many ranked rows to display. Top 18 by default; "All" shows every compatible candidate.</td></tr>
+    <tr><td><strong>Min Score</strong></td><td>Minimum Guna score threshold. Classical minimum is 18. Higher thresholds (21, 26, 31) filter stronger matches only.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>How the Ranking Works</h2>
+<p>The engine generates all <strong>108 canonical Moon-pada positions</strong> (27 nakshatras × 4 padas), folded into <strong>36 valid (nakshatra, rashi) pairs</strong>. For each pair, it finds the <strong>best achievable score over valid padas</strong> (pada-agnostic — you do not need to choose a pada upfront; the tool tells you the recommended one).</p>
+<p>Rows are ranked by:</p>
+<ol>
+  <li><strong>Compatible first</strong> — Stage 1 pass (score ≥ 18, no open Nadi/Bhakoot dosha)</li>
+  <li><strong>Total score descending</strong> — highest Gunas first</li>
+  <li><strong>Tier label</strong> — Most Excellent > Excellent > Medium > Not Suitable</li>
+  <li><strong>Parihara count</strong> — Nadi/Bhakoot cancelled is better than open</li>
+  <li><strong>Lower dosha severity</strong></li>
+</ol>
+</section>
+
+<section>
+<h2>Understanding the Output</h2>
+
+<table class="quick-ref">
+  <thead><tr><th>Column</th><th>What It Shows</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Rank</strong></td><td>Position in the ranked list (1 = best match)</td></tr>
+    <tr><td><strong>Nakshatra</strong></td><td>The partner's birth nakshatra name and number</td></tr>
+    <tr><td><strong>Rashi</strong></td><td>The partner's Moon sign</td></tr>
+    <tr><td><strong>Best Pada</strong></td><td>The quarter that achieves the highest score. Use this when recording the partner's biodata.</td></tr>
+    <tr><td><strong>Score</strong></td><td>Total Guna score out of 36</td></tr>
+    <tr><td><strong>Tier</strong></td><td><span class="tag excellent">MOST_EXCELLENT</span> (31+) · <span class="tag excellent">EXCELLENT</span> (26–30) · <span class="tag good">MEDIUM</span> (18–25) · <span class="tag poor">NOT_SUITABLE</span> (&lt;18)</td></tr>
+    <tr><td><strong>Compatible</strong></td><td>✓ if the pair passes Stage 1 (eligible for Vivaha date search)</td></tr>
+    <tr><td><strong>Marriage Nakshatra</strong></td><td><span class="tag marriage">★</span> if the partner's nakshatra is among the 11 core marriage nakshatras (Mrigashira, Hasta, Moola, Anuradha, Magha, Rohini, Revati, Uttara Phalguni, Uttara Shadha, Uttara Bhadrapada, Swati) — a Stage-2 hint only</td></tr>
+  </tbody>
+</table>
+
+<h3>Tier Labels</h3>
+<ul>
+  <li><span class="tag excellent">MOST_EXCELLENT</span> — 31–36 Gunas. Exceptionally strong compatibility.</li>
+  <li><span class="tag excellent">EXCELLENT</span> — 26–30 Gunas. Very good match.</li>
+  <li><span class="tag good">MEDIUM</span> — 18–25 Gunas. Passes classical minimum. Acceptable.</li>
+  <li><span class="tag poor">NOT_SUITABLE</span> — Below 18 or uncanceled Nadi/Bhakoot dosha. Does not qualify.</li>
+</ul>
+</section>
+
+<section>
+<h2>The Koota Breakdown</h2>
+<p>Each row's score can be expanded to see all 8 Kootas: Varna (1), Vashya (2), Tara (3), Yoni (4), Maitri (5), Gana (6), Bhakoot (7), Nadi (8). Nadi and Bhakoot rows also show whether a Parihara (classical cancellation) was applied and the reason.</p>
+</section>
+
+<section>
+<h2>Typical Workflow</h2>
+<ol>
+  <li>Enter your <strong>own</strong> Nakshatra, Rashi and Pada</li>
+  <li>Click <strong>Compute Best Matches</strong></li>
+  <li>Review the <strong>Compatible Whitelist</strong> — all rows that pass Stage 1 eligibility</li>
+  <li>Cross-reference your candidate biodatas against the whitelist table</li>
+  <li>For promising pairs, open <strong>Vivaha Muhurta</strong> to run the full 2-stage check + date scan</li>
+</ol>
+<div class="note-card"><strong>Note:</strong> Guna Milap does <strong>not</strong> scan calendar dates. It is a birth-combination pre-filter. Once you shortlist a candidate, move to <strong>Vivaha Muhurta</strong> for the full marriage date search.</div>
+</section>
+
+<section>
+<h2>Limitations</h2>
+<ul>
+  <li>This tool evaluates only <strong>Nakshatra, Rashi and Pada</strong> — not the full birth chart.</li>
+  <li>The "best pada" is a computational optimum over valid quarters. If the actual partner has a different pada, the score may differ.</li>
+  <li>Ashtakoota is one system among several classical matchmaking traditions.</li>
+  <li>Use this as a <strong>shortlisting aid</strong>, not a final verdict. Always consult a qualified jyotishi.</li>
+  <li>All computation is <strong>local</strong> — no data leaves your browser.</li>
+</ul>
+</section>
+
+<section>
+<h2>Related Pages</h2>
+<ul>
+  <li><a href="marriage.html" style="color:var(--vermilion);font-weight:600">💍 Vivaha Muhurta</a> — Full 2-stage matchmaking + wedding date search for a specific couple</li>
+  <li><a href="help-muhurta.html" style="color:var(--vermilion);font-weight:600">📖 Muhurta Calendar Help</a> — General activity-based muhurta (non-marriage)</li>
+  <li><a href="help-marriage.html" style="color:var(--vermilion);font-weight:600">📖 Marriage Help</a> — Ashtakoota matching for a specific couple</li>
+</ul>
+</section>
+
+<div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
+
+<p style="text-align:center;font-size:13px;color:var(--ink-soft)"><a href="guna-milap.html" style="color:var(--vermilion);text-decoration:none;font-weight:600">← Back to Guna Milap</a></p>
+
+</div>
+</div>
+</body>
+</html>
