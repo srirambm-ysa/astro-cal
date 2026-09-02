@@ -4,7 +4,7 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-08-22 (Deploy + Catalog + Night mode + UI polish)
+Last updated: 2026-09-02 (Gochara Monthly + Avoid Days invariant + TN holidays + Shaiva festivals)
 
 **Session token count (this session · Deploy/Catalog/Night/UI):** REAL billed 8,030,219 (RAW 15,419,377 · 47.9% cache efficiency; 158 requests).
 
@@ -151,10 +151,19 @@ Last updated: 2026-08-22 (Deploy + Catalog + Night mode + UI polish)
 - **Worker handler committed**: `src/worker.mjs` fetch handler changed from 404 stub to `env.ASSETS.fetch(request)` (was only deployed, never committed).
 
 ## Immediate Next Steps
-1. **UAT feedback (next session)** — user will return with minor changes after UAT. Likely CSS/UI tweaks.
-2. **PWA verification** — since deployment is live, test service worker registration, offline fallback, and mobile `add to home screen` behavior.
-3. **ICS export** — deferred; needs format/scope decision from owner.
-4. **Print-to-PDF audit** — deferred; re-verify print output for all pages on the live deployment.
+1. **Deploy updated build** — push Gochara + Avoid Days + TN holidays + Shaiva Guru Pujas to Cloudflare Worker (auto-deploy on commit) and verify live.
+2. **Holiday capitals dropdown (deferred)** — add popular Tamil capitals quick-select (Chennai/Coimbatore/Madurai…) to set Current place lat/lon without typing, per TN-only bbox discussion.
+3. **PWA / ICS / Print audit (deferred)** — verify service worker offline, ICS export, print-to-PDF for new cards (Gochara/Avoid/Holiday).
+
+## Goal Accomplished (this session — 2026-09-02 · Gochara Monthly + TN holidays + Shaiva Guru Pujas · Gochara cards + Avoid invariant)
+
+- **Resume & close AC-TSK-0001/0003** — both done; board honest.
+- **Gochara proof & spec:** swisseph-wasm sidereal (Lahiri) rashi ingress scanner (step 0.1d + 18-iter bisection, Moon excluded). Scratch PoCs: 5 Sep 2026 ingresses (Venus 02/09, Mercury 07/09, Sun 17/09, Mars 18/09, Mercury 26/09). Spec docs/gochara_addition.md v0.2 with §0 INVARIANT: Chandrashtama/Avoid Days stays primary at top.
+- **Corpus & engine:** rules/gochara_rules.json 84 rows (BPHS 30-32 + vedha 36) + provenance 131 verses, gochara.mjs + tests 51 pass, Sep fixture ±15min.
+- **UI:** Avoid Days card (coarse+peak) + Gochara card (House/Tara/Vedha) — order now Avoid→Gochara→Muhurta→Month; label Place→Current place (sunrise & TN holidays). Living lat/lon is TN bbox gate, not birth city; direct janma nakshatra/rashi capture retained.
+- **Shaiva 9 core:** rules/shaiva_guru_pujas.json (Thiruvavaduthurai: Appar Chithirai Sadhayam, Sambandar Vaikasi Moolam, Sundarar Aadi Swathi, Manickavasagar Aani Magam, Tirumoolar Aippasi Asuvathi @ Jiva Samadhi, Sekkizhar Vaikasi Poosam, Vallalar Purattasi Chithirai, Thayumanavar Thai Visakam) wired into TAMIL_FESTIVALS.
+- **TN holidays:** rules/tn_holidays.json 24 NI holidays GO 708 + tn_bbox.json hull + Holiday chip (+2nd/4th Sat) only if inTN else disclaimer. Drik as validator only, local-first.
+- **Tasks done:** AC-TSK-0004/0005/0006/0007/0008/0009. npm test 310 pass. Working tree pending commit.
 
 ## Goal Accomplished (this session — 2026-08-20 · rebrand + ocgraph + mobile-first + grid→table)
 - **Guna Milap rebrand** (committed `a8d40e9`): Alliance Filter → "॥ श्री ॥ Guna Milap — Compatibility Finder" across page/file/UI names + professional footers; engine API identifiers kept stable (owner decision). `docs/guna-milap-prd.md` is the spec; schema `guna-milap-whitelist-v1`; reuse `marriage.mjs#calculateAshtakoota`.

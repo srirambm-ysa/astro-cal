@@ -1,0 +1,91 @@
+{
+  "schema": "shaiva-guru-puja-v1",
+  "source": "Thiruvavaduthurai Adheenam (Gomuktheeswarar Temple) + Periya Puranam tradition, cross-checked via Drik Panchang / Skanda News 2026 Tamil Panchangam",
+  "ayaNamsa": "Lahiri",
+  "provenance": "reference/provenance_registry.json chapter shaiva_siddhanta (to be added)",
+  "note": "Guru Pūjā observed on Tamil solar month (tMonth) + nakshatra (moon nakshatra at sunrise). Engine uses festivalMatches(tMonth, moonNakshatra). TN-only curated; other regions disclaimer applies (see tn_bbox).",
+  "entries": [
+    {
+      "key": "appar_guru_puja",
+      "name": "Appar (Tirunāvukkaracar) Guru Pūjā — Nalvar",
+      "aliases": ["Thirunavukkarasar"],
+      "tMonth": 0,
+      "tMonthName": "Chithirai",
+      "kind": "nakshatra",
+      "val": 23,
+      "valName": "Sadhayam (Shatabhisha)",
+      "source": "Thiruvavaduthurai / Periya Puranam — Chithirai Sadhayam; Skanda News 2026: Chithirai 28 May 11 2026"
+    },
+    {
+      "key": "sambandar_guru_puja",
+      "name": "Tirugnāna Sambandar Guru Pūjā — Nalvar",
+      "aliases": ["Sambandar", "Samandhar"],
+      "tMonth": 1,
+      "tMonthName": "Vaikasi",
+      "kind": "nakshatra",
+      "val": 18,
+      "valName": "Moolam (Mula)",
+      "source": "Thiruvavaduthurai / Periya Puranam — Vaikasi Moolam; Skanda News 2026: Vaikasi 19 Jun 2 2026"
+    },
+    {
+      "key": "sundarar_guru_puja",
+      "name": "Sundarar (Sundaramurthy) Guru Pūjā — Nalvar",
+      "tMonth": 3,
+      "tMonthName": "Aadi",
+      "kind": "nakshatra",
+      "val": 14,
+      "valName": "Swathi (Swati)",
+      "source": "Periya Puranam — Aadi Swathi; Skanda News 2026: Aadi 6 Jul 22 2026"
+    },
+    {
+      "key": "manickavasagar_guru_puja",
+      "name": "Māṇickavāsagar Guru Pūjā — Nalvar",
+      "tMonth": 2,
+      "tMonthName": "Aani",
+      "kind": "nakshatra",
+      "val": 9,
+      "valName": "Magam (Magha)",
+      "source": "Thiruvavaduthurai — Aani Magam; Skanda News 2026: Aani 6 Jun 20 2026"
+    },
+    {
+      "key": "tirumoolar_guru_puja",
+      "name": "Tirumoolar Guru Pūjā — 18 Siddhars / Nayanmar",
+      "tMonth": 6,
+      "tMonthName": "Aippasi",
+      "kind": "nakshatra",
+      "val": 0,
+      "valName": "Asuvathi (Ashwini)",
+      "source": "Thiruvavaduthurai Gomuktheeswarar Temple — Aippasi Asuvathi (Jeeva Samadhi); Dinamalar & CasualWalker: Aippasi Asuvathi annual; Skanda News 2026: Aippasi 9 Oct 26 2026"
+    },
+    {
+      "key": "sekkizhar_guru_puja",
+      "name": "Sekkizhar (Sekkilar) Guru Pūjā",
+      "tMonth": 1,
+      "tMonthName": "Vaikasi",
+      "kind": "nakshatra",
+      "val": 7,
+      "valName": "Poosam (Pushya)",
+      "source": "Periya Puranam author — Vaikasi Poosam; Skanda News 2026: Vaikasi 7 May 21 2026"
+    },
+    {
+      "key": "vallalar_guru_puja",
+      "name": "Vallalār (Ramalinga Adigal) Guru Pūjā / Jayanthi",
+      "tMonth": 5,
+      "tMonthName": "Purattasi",
+      "kind": "nakshatra",
+      "val": 13,
+      "valName": "Chithirai (Chitra)",
+      "source": "Vallalyaar.com / Thiruvavaduthurai lineage — Purattasi Chithirai (born Subhanu, Purattasi Chitra, 1823-10-05); observed as Purattasi Chithirai annually"
+    },
+    {
+      "key": "thayumanavar_guru_puja",
+      "name": "Thāyumānavar Guru Pūjā",
+      "tMonth": 9,
+      "tMonthName": "Thai",
+      "kind": "nakshatra",
+      "val": 15,
+      "valName": "Visakam (Vishakha)",
+      "source": "Tamil Siddha tradition — Thai Visakam; Skanda News 2026: Thai 16 Jan 30 2027 Visakam (Thayumanavar)"
+    }
+  ]
+}

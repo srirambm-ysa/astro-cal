@@ -5,9 +5,10 @@ const j = (p) => pathToFileURL(path.join(ROOT, p)).href;
 const { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST, DOW,
         YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } = await import(j("engine.js"));
 const { loadTaxonomy } = await import(j("taxonomy.js"));
+const { listMonthlyGochara } = await import(j("gochara.mjs"));
 const sandbox = { console, Math, Date, Number, String, Array, Object, JSON, Promise, Map, Set,
   setTimeout, clearTimeout, Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST, DOW,
-  YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP, loadTaxonomy,
+  YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP, loadTaxonomy, listMonthlyGochara, GOCHARA_RULES: { rules: [], vedhaTable: [] },
   navigator: { clipboard: { writeText: () => Promise.resolve() } },
   localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} } };
 sandbox.window = sandbox; sandbox.globalThis = sandbox; sandbox.Worker = undefined;
@@ -17,7 +18,12 @@ sandbox.document = { getElementById: () => null, querySelector: () => null,
 vm.createContext(sandbox);
 const stripped = appSrc
   .replace('import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,\n         YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";\n', "")
-  .replace('import { loadTaxonomy } from "./taxonomy.js";\n', "").replace("\ninit();\n", "");
+  .replace('import { loadTaxonomy } from "./taxonomy.js";\n', "")
+  .replace('import { listMonthlyGochara } from "./gochara.mjs";\n', "")
+  .replace('  try{ GOCHARA_RULES = await fetch("./rules/gochara_rules.json").then(r=>r.json()); }catch(e){ console.warn("gochara rules failed",e); }', '  GOCHARA_RULES = { rules: [], vedhaTable: [] };')
+  .replace('  try{ TN_HOLIDAYS = await fetch("./rules/tn_holidays.json").then(r=>r.json()); }catch(e){ console.warn("tn holidays failed",e); }', '  TN_HOLIDAYS = { holidays: [] };')
+  .replace('  try{ TN_BBOX = await fetch("./rules/tn_bbox.json").then(r=>r.json()); }catch(e){ console.warn("tn bbox failed",e); }', '  TN_BBOX = { bbox: {minLat:8.0,maxLat:13.6,minLon:76.1,maxLon:80.9} };')
+  .replace("\ninit();\n", "");
 vm.runInContext(stripped, sandbox, { filename: "app.js" });
 const e = await new Engine().init(); const TAX = await loadTaxonomy(); const geo = [80.27, 13.08, 0];
 

@@ -2,6 +2,7 @@
 import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,
          YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
 import { loadTaxonomy } from "./taxonomy.js";
+import { listMonthlyGochara } from "./gochara.mjs";
 
 const LS = {
   birth: "astro-cal-birth",
@@ -36,6 +37,15 @@ const TAMIL_FESTIVALS = [
   { key: "panguniuthiram", name: "Panguni Uthiram", tMonth: 11, kind: "nakshatra", val: 11 },
   { key: "aadiperukku", name: "Aadi Perukku", tMonth: 3, kind: "tamday", val: 18 },
   { key: "aavaniavittam", name: "Aavani Avittam", tMonth: 4, kind: "nakshatra", val: 22 },
+  // Shaiva Siddhanta — 9 core (Thiruvavaduthurai Adheenam, Skanda 2026 cross-check) — rules/shaiva_guru_pujas.json
+  { key: "appar_guru_puja", name: "Appar (Tirunāvukkuaracar) Guru Pūjā", tMonth: 0, kind: "nakshatra", val: 23 },
+  { key: "sambandar_guru_puja", name: "Sambandar Guru Pūjā", tMonth: 1, kind: "nakshatra", val: 18 },
+  { key: "sundarar_guru_puja", name: "Sundarar Guru Pūjā", tMonth: 3, kind: "nakshatra", val: 14 },
+  { key: "manickavasagar_guru_puja", name: "Māṇickavāsagar Guru Pūjā", tMonth: 2, kind: "nakshatra", val: 9 },
+  { key: "tirumoolar_guru_puja", name: "Tirumoolar Guru Pūjā", tMonth: 6, kind: "nakshatra", val: 0 },
+  { key: "sekkizhar_guru_puja", name: "Sekkizhar Guru Pūjā", tMonth: 1, kind: "nakshatra", val: 7 },
+  { key: "vallalar_guru_puja", name: "Vallalār Guru Pūjā", tMonth: 5, kind: "nakshatra", val: 13 },
+  { key: "thayumanavar_guru_puja", name: "Thāyumānavar Guru Pūjā", tMonth: 9, kind: "nakshatra", val: 15 },
 ];
 
 /* ---------- phase 2: muhurta activity selection (rules/activity_corpus.json) ---------- */
@@ -58,6 +68,9 @@ const DEFAULT_PRESETS = [
   { label: "Pilgrimage", domain: "DOM_TRAVEL_TOURISM", sub: "SUB_PILGRIMAGE_LEISURE", task: "ACT_TRV_PILGRIMAGE_YATRA" },
 ];
 let TAX = null;
+let GOCHARA_RULES = null;
+let TN_HOLIDAYS = null;
+let TN_BBOX = null;
 
 /* Focused activity for scoring: current selection (with legacy migration), else Griha Pravesha. */
 function currentAct() {
@@ -522,6 +535,23 @@ function festivalMatches(f, tm, moonNakshatra, tithiIndex, tDay) {
   if (f.kind === "tamday") return tDay === f.val;
   return false;
 }
+function isInTN(lat, lon){
+  const b = TN_BBOX?.bbox || {minLat:8.0,maxLat:13.6,minLon:76.1,maxLon:80.9};
+  return lat>=b.minLat && lat<=b.maxLat && lon>=b.minLon && lon<=b.maxLon;
+}
+function getTNHoliday(iso){
+  if(!TN_HOLIDAYS?.holidays) return null;
+  return TN_HOLIDAYS.holidays.find(h=>h.date===iso) || null;
+}
+function isSecondOrFourthSaturday(y,m,d){
+  const dt=new Date(y,m-1,d);
+  if(dt.getDay()!==6) return false;
+  const week=Math.ceil(d/7); // 1..5; 2nd=2, 4th=4 precisely for month start Sun-Sat variation? Use count of Saturdays
+  // count Saturdays so far in month
+  let sats=0;
+  for(let i=1;i<=d;i++) if(new Date(y,m-1,i).getDay()===6) sats++;
+  return sats===2 || sats===4;
+}
 
 /* ---------- day computation ---------- */
 // Delegates to Engine.computeDay (single source of truth for astronomical +
@@ -556,7 +586,14 @@ async function buildDayMap(rangeStart, rangeEnd, geo, janmaNakshatra, tz) {
 
 /* ---------- render ---------- */
 async function render() {
-  if (!birth) return;
+  // Gochara impersonal fallback even without birth (docs/gochara_addition.md §3)
+  if (!birth) {
+    const { y: ay2, m: am2 } = isoToYMD(view.anchor);
+    if(swe && GOCHARA_RULES) renderGochara(ay2, am2);
+    else if($("gocharaBody")) $("gocharaBody").innerHTML=`<tr><td colspan="7" class="note">Enter birth details to see personalised house & tārā. Without birth, shows impersonal ingress list once calendar loads.</td></tr>`;
+    const ac=$("avoidCard"); if(ac) ac.hidden=false;
+    return;
+  }
   const geo = [birth.lon, birth.lat, 0];
   const { y: ay, m: am, d: ad } = isoToYMD(view.anchor);
   const anchor = new Date(ay, am - 1, ad);
@@ -609,6 +646,8 @@ async function render() {
 
   // full-month table (one row per day; select a row to expand its detail)
   renderMonthEvents(dayMap, flagMap, windowsByDay);
+  renderAvoidDays(chandraWindows);
+  renderGochara(y0, m0);
   if (muhComputed) renderMuhurta(dayMap); // only via "Compute Muhurta" (owner request 2026-08-13)
   $("monthEvTitle").querySelector("span").textContent = title;
 }
@@ -752,7 +791,14 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     if (day.tDay === 1) chips.push(chip("sankranti", "Sankranti", `${TAMIL_MONTH[day.tMonth]} 1 — Tamil month begins`));
     if (flagMap.has(day.iso) && flagMap.get(day.iso).key === "ecl") chips.push(chip("eclipse", "Eclipse", flagMap.get(day.iso).name));
     const moonN = day.moonNakshatra;
-    for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) chips.push(chip("festival", "Festival", f.name));
+    for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) chips.push(chip("festival", f.name, f.name));
+    // TN holidays — local, TN-only (bbox gate). No All-India DB, disclaimer via month header when outside TN.
+    const inTN = birth ? isInTN(birth.lat, birth.lon) : false;
+    if(inTN){
+      const hol=getTNHoliday(day.iso);
+      if(hol) chips.push(chip("holiday", hol.name, hol.name + (hol.kind==='bank_only'?' (banks only)':'')));
+      else if(isSecondOrFourthSaturday(y,m,d)) chips.push(chip("holiday", "Bank holiday (2nd/4th Sat)", "RBI second/fourth Saturday — banks closed"));
+    }
     const evs = chips.length ? chips.join("") : `<span class="chip none">—</span>`;
 
     const k = day.kalam;
@@ -773,6 +819,11 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     }
   }
   if (!rows) tbody.insertAdjacentHTML("beforeend", '<tr><td colspan="5"><div class="note">No data for this range.</div></td></tr>');
+  const tnNote=$("tnHolidayNote");
+  if(tnNote){
+    if(birth && !isInTN(birth.lat, birth.lon)) tnNote.style.display="block";
+    else tnNote.style.display="none";
+  }
   // row click = select / toggle the day (re-render to expand or close its detail)
   tbody.querySelectorAll(".mrow").forEach((tr) => tr.addEventListener("click", () => {
     view.selected = tr.dataset.iso === view.selected ? "" : tr.dataset.iso;
@@ -817,6 +868,78 @@ function dayDetailHTML(day, flagMap, windowsByDay) {
   for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) parts.push(periodRow(I.fest, f.name, `${dayLabelTamil(day.tMonth, day.tDay)} · Tamil calendar`, "mut", "Festival"));
   const body = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
   return `<div class="detail">${strip}${body}</div>`;
+}
+
+/* ---------- Avoid Days (Chandrashtama) — invariant top strip (docs/gochara_addition.md §0) ---------- */
+function renderAvoidDays(windows){
+  const card=$("avoidCard"), body=$("avoidBody");
+  if(!card || !body) return;
+  if(!birth || !windows || !windows.length){
+    card.hidden=false;
+    body.innerHTML = birth ? '<span class="note">No Chandrashtama this month — clear for important initiations.</span>' : 'Enter birth details to see your Avoid Days.';
+    return;
+  }
+  card.hidden=false;
+  // Group by coarse windows (deduplicate overlapping peak inside coarse)
+  const coarse=windows.filter(w=>w.kind==="coarse");
+  if(!coarse.length){
+    body.innerHTML='<span class="note">No Avoid Days this month.</span>'; return;
+  }
+  const rows=coarse.map(w=>{
+    const s=timeIST(w.start), e=timeIST(w.end);
+    const peak=windows.find(p=>p.kind==="peak" && p.start>=w.start && p.end<=w.end);
+    const peakTxt=peak ? ` · peak ${timeIST(peak.start).hhmm}→${timeIST(peak.end).hhmm} (${NAKSHATRA[peak.nakshatra]})` : "";
+    return `<div class="period" style="border-left-color:var(--chandra-peak)"><div class="l"><span class="chip chandra">Avoid</span><span class="t">${s.ymd} ${s.hhmm} → ${e.ymd} ${e.hhmm}</span><span class="tt">${RASHI[w.rashi]}${peakTxt}</span></div></div>`;
+  }).join("");
+  body.innerHTML = rows + `<div class="note" style="margin-top:6px">Chandrashtama = Moon in 8th rashi from janma rāśi (${RASHI[birth.rashi]}) + peak nakshatra ${(birth.nakshatra+16)%27+1} ${NAKSHATRA[(birth.nakshatra+16)%27]}. Avoid important initiations other than routine during these windows.</div>`;
+}
+
+/* ---------- Gochara — monthly transits (docs/gochara_addition.md) ---------- */
+function renderGochara(year, month){
+  const card=$("gocharaCard"), body=$("gocharaBody"), meta=$("gocharaMeta"), vedhaNote=$("gocharaVedhaNote"), title=$("gocharaTitle");
+  if(!card || !body) return;
+  const mName=["January","February","March","April","May","June","July","August","September","October","November","December"][month-1];
+  if(title) title.querySelector("span").textContent = `Gochara — ${mName} ${year}${birth ? ` · for ${RASHI[birth.rashi]} (${birth.rashi+1})` : ""}`;
+  if(!swe || !GOCHARA_RULES){
+    body.innerHTML=`<tr><td colspan="7" class="note">Loading gochara…</td></tr>`; return;
+  }
+  const birthArg = birth ? { rashi: birth.rashi, nakshatra: birth.nakshatra } : null;
+  const rows = listMonthlyGochara(year, month, birthArg, swe, GOCHARA_RULES);
+  if(!rows.length){
+    body.innerHTML=`<tr><td colspan="7" class="note">No rashi ingress this month (planets stay put).</td></tr>`;
+    if(meta) meta.textContent = birthArg ? "No transits — steady month for your rāśi." : "No transits this month.";
+    if(vedhaNote) vedhaNote.style.display="none";
+    return;
+  }
+  const fmtHouse = (h)=> h ? `<span class="chip house">${h}th</span>` : `<span class="chip none">—</span>`;
+  const fmtEffect = (eff, vedha)=> {
+    if(!eff) return `<span class="chip none">—</span>`;
+    const cls = eff==="shubha" ? "shubha" : eff==="ashubha" ? "ashubha" : "madhyama";
+    const label = eff==="shubha" ? "Śubha" : eff==="ashubha" ? "Aśubha" : "Madhyama";
+    const vedhaTag = vedha ? ` <span class="chip gochara vedha" title="Vedha — obstructed">⚑ vedha</span>` : "";
+    return `<span class="chip gochara ${cls}">${label}</span>${vedhaTag}`;
+  };
+  const fmtTara = (tara)=>{
+    if(!tara) return `<span class="chip none">—</span>`;
+    const cls = tara.nature==="good" ? "good" : tara.nature==="bad" ? "bad" : "neutral";
+    const icon = tara.nature==="good" ? "✨" : tara.nature==="bad" ? "⚠️" : "—";
+    return `<span class="chip tara ${cls}" title="${tara.name} (${tara.number}) count ${tara.count}">${icon} ${tara.name}</span>`;
+  };
+  body.innerHTML = rows.map(r=>{
+    const house = fmtHouse(r.house);
+    const eff = fmtEffect(r.effect, r.vedhaBlocked);
+    const tara = fmtTara(r.tara);
+    const paraphrase = r.paraphrase ? `<span style="font-size:12px">${r.paraphrase}</span>${r.verseKey ? ` <a href="#" class="prov-link" data-verse="${r.verseKey}" style="font-size:10px;color:var(--gold)">[${r.verseKey}]</a>` : ""}` : `<span class="note">${r.fromRashiName}→${r.toRashiName}</span>`;
+    return `<tr><td class="dt" data-label="Date">${r.date}<br><span style="font-size:11px;color:var(--ink-soft)">${r.weekday.slice(0,3)} ${r.timeIST}</span></td><td data-label="Planet"><strong>${r.planet}</strong><br><span style="font-size:11px;color:var(--ink-soft)">${r.planetSanskrit}</span></td><td data-label="From → To">${r.fromRashiName} → ${r.toRashiName}<br><span style="font-size:11px;color:var(--ink-soft)">${r.transitNakName}</span></td><td data-label="House">${house}</td><td data-label="Effect">${eff}</td><td data-label="Tārā">${tara}</td><td data-label="Paraphrase">${paraphrase}</td></tr>`;
+  }).join("");
+  if(meta) meta.textContent = birthArg ? `${rows.length} transit${rows.length>1?"s":""} this month for janma rāśi ${RASHI[birth.rashi]} — house = from janma rāśi, tārā = from janma nakshatra ${NAKSHATRA[birth.nakshatra]}.` : `${rows.length} ingress${rows.length>1?"es":""} this month (impersonal — enter birth for house & tārā).`;
+  if(vedhaNote) vedhaNote.style.display = rows.some(r=>r.vedhaBlocked) ? "block" : "none";
+  // verse link handler (opens provenance modal if available)
+  body.querySelectorAll(".prov-link").forEach(a=> a.addEventListener("click", (e)=>{
+    e.preventDefault();
+    const vk=a.dataset.verse;
+    if(window.showProvenanceForVerse) window.showProvenanceForVerse(vk);
+  }));
 }
 
 /* Muhurta detail HTML for the accordion under the Muhurta table: score breakdown,
@@ -1218,6 +1341,9 @@ async function init() {
 
   // populate muhurta selection cascade: domain → activity (sub-domain) → sub-activity/task
   TAX = await loadTaxonomy();
+  try{ GOCHARA_RULES = await fetch("./rules/gochara_rules.json").then(r=>r.json()); }catch(e){ console.warn("gochara rules failed",e); }
+  try{ TN_HOLIDAYS = await fetch("./rules/tn_holidays.json").then(r=>r.json()); }catch(e){ console.warn("tn holidays failed",e); }
+  try{ TN_BBOX = await fetch("./rules/tn_bbox.json").then(r=>r.json()); }catch(e){ console.warn("tn bbox failed",e); }
   const muhDomain = $("muhDomain");
   const muhSub = $("muhSub");
   const muhTask = $("muhTask");
@@ -1375,6 +1501,13 @@ async function init() {
 
   $("computeBtn").addEventListener("click", computeBirth);
   $("editBirthBtn").addEventListener("click", () => { $("landing").hidden = false; openBirthForm(); });
+  const gInfo=$("gocharaInfoBtn"); if(gInfo) gInfo.addEventListener("click", ()=>{
+    const body=$("srcBody"), title=$("srcTitle"), modal=$("srcModal");
+    if(!body||!modal) return;
+    title.textContent="Gochara — classical source";
+    body.innerHTML=`<div class="prov-item"><div class="prov-ref">Bṛhat Parāśara Horā Śāstra Ch.30-32 · Sārāvalī / Phaladīpikā Ch.26</div><div class="prov-en">Gochara house favourability counted from janma rāśi (natal Moon). Each transit row shows the house (Candrabala) + Tārā (Sampat/Vipat…) — the two filters panchang users know. Vedha obstructs śubha when the vedha planet is in its vedha house at the same instant.</div><div class="prov-logic">Source files: rules/gochara_rules.json (84 rows) + reference/provenance_registry.json chapter gochara_bphs (131 verses). Moon excluded (2.5d cadence, owner 2026-09-02). No invented phala.</div></div>`;
+    modal.hidden=false;
+  });
   $("themeBtn").addEventListener("click", toggleTheme);
   $("navPrev").addEventListener("click", () => nav(-1));
   $("navNext").addEventListener("click", () => nav(1));

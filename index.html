@@ -93,6 +93,7 @@
   .chip.moon{background:#262A4A}
   .chip.eclipse{background:var(--saffron)}
   .chip.festival{background:var(--gold)}
+  .chip.holiday{background:var(--teal);color:#fff}
   /* ---------- PRESET CHIPS (Quick Selector) ---------- */
   .preset-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;padding:8px 0;border-bottom:1px solid var(--line-faint)}
   .preset-wrap .pw-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);flex:none}
@@ -132,6 +133,16 @@
   .chip.verdict.Shubh{background:var(--teal)}
   .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
   .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
+  .chip.gochara{font-size:9px;padding:1px 6px;border-radius:999px;font-weight:600;letter-spacing:.04em}
+  .chip.gochara.shubha{background:var(--teal);color:#fff}
+  .chip.gochara.madhyama{background:var(--gold);color:#2b1505}
+  .chip.gochara.ashubha{background:var(--chandra-peak);color:#fff}
+  .chip.gochara.vedha{background:repeating-linear-gradient(45deg,var(--teal),var(--teal) 4px,rgba(0,0,0,.12) 4px,rgba(0,0,0,.12) 8px);color:#fff;border:1px dashed var(--ink-soft)}
+  .chip.tara{font-size:9px;padding:1px 6px;border-radius:999px}
+  .chip.tara.good{background:#E6F3EC;color:#1B5E2B;border:1px solid #A7D8B8}
+  .chip.tara.bad{background:#FDE8E8;color:#8B1A1A;border:1px solid #F5A7A7}
+  .chip.tara.neutral{background:var(--panel-b);color:var(--ink-soft);border:1px solid var(--line)}
+  .chip.house{background:var(--panel-b);color:var(--ink);border:1px solid var(--line);font-size:10px;padding:1px 6px;border-radius:999px}
   .muh-act{font-size:11px;text-transform:none;letter-spacing:.03em;color:var(--ink-soft);font-family:"Eczar",serif}
   .tbwnd{font-size:9px;color:var(--vermilion);font-weight:600;white-space:nowrap}
   .muh-line.t1 .v{color:var(--chandra-peak)}
@@ -319,11 +330,11 @@
 
   <section class="card" id="landing">
     <h2>॥ श्री ॥</h2>
-    <p>Pick your janma nakshatra (birth star) to generate your Vedic muhurta calendar — chandrashtama, moon phases, eclipses, and daily inauspicious windows. Rashi is filled from the nakshatra and can be corrected for stars that span two rashis. Location is used only for sunrise/sunset timings. All computation is local and private.</p>
+    <p>Pick your janma nakshatra (birth star) to generate your Vedic muhurta calendar — chandrashtama, moon phases, eclipses, and daily inauspicious windows. Rashi is filled from the nakshatra and can be corrected for stars that span two rashis. Current place is used for sunrise/sunset timings and Tamil Nadu festival/holiday chips (other regions: disclaimer, data not curated). All computation is local and private.</p>
     <div class="form" id="birthForm">
       <div class="field"><div class="k">Janma Nakshatra</div><select id="bNakshatra"></select></div>
       <div class="field"><div class="k">Janma Rashi</div><select id="bRashi"></select></div>
-      <div class="field"><div class="k">Place</div><input type="text" id="bPlace" value="Chennai" placeholder="Place name"></div>
+      <div class="field"><div class="k">Current place (sunrise & TN holidays)</div><input type="text" id="bPlace" value="Chennai" placeholder="Place name"></div>
       <div class="field"><div class="k">Latitude</div><input type="number" id="bLat" step="0.0001" value="13.0827"></div>
       <div class="field"><div class="k">Longitude</div><input type="number" id="bLon" step="0.0001" value="80.2707"></div>
       <div class="field"><div class="k">Timezone offset (hours)</div><input type="number" id="bTz" step="0.5" value="5.5"></div>
@@ -339,6 +350,37 @@
       </button>
     </h2>
     <div class="profile" id="profile"></div>
+  </section>
+
+  <!-- Avoid Days — Ashtama Chandra (Chandrashtama) — invariant, always at top (docs/gochara_addition.md §0) -->
+  <section class="card" id="avoidCard" hidden>
+    <h2 style="display:flex;justify-content:space-between;align-items:center">
+      <span>⚠ Avoid Days — Ashtama Chandra (Chandrashtama)</span>
+      <span class="sd-label" style="font-size:10px;letter-spacing:.08em">avoid important initiations other than routine</span>
+    </h2>
+    <div id="avoidBody" class="note">Enter birth details to see your Avoid Days.</div>
+    <div id="avoidLegend" class="note" style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="chip chandra">Coarse · 8th rashi (~2.25d)</span>
+      <span class="chip chandra peak">Peak · chandrashtama nakshatra (~24h)</span>
+      <span style="font-size:11px;color:var(--ink-soft)">Two-tone bar: coarse light + peak dark — same as calendar chips.</span>
+    </div>
+  </section>
+
+  <!-- Gochara — monthly transits (Moon-excluded) — below Avoid Days, above Muhurta conceptually (docs/gochara_addition.md §0/§8) -->
+  <section class="card" id="gocharaCard">
+    <h2 id="gocharaTitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <span>Gochara — monthly transits</span>
+      <button class="btn small ghost" id="gocharaInfoBtn" type="button" title="Classical source">ⓘ Source</button>
+    </h2>
+    <div id="gocharaMeta" class="note" style="margin-bottom:8px">Enter birth details to see personalised house &amp; tārā for each transit. Without birth, shows impersonal ingress list.</div>
+    <div class="table-wrap">
+      <table class="evtab" id="gocharaTable">
+        <thead><tr><th>Date</th><th>Planet</th><th>From → To</th><th>House</th><th>Effect</th><th>Tārā</th><th>Paraphrase</th></tr></thead>
+        <tbody id="gocharaBody"><tr><td colspan="7" class="note">Loading transits…</td></tr></tbody>
+      </table>
+    </div>
+    <div class="note" id="gocharaVedhaNote" style="margin-top:6px;display:none">⚑ <em>vedha</em> — śubha is obstructed when the vedha planet is in its vedha house at the same instant (BPHS Gochara-adhyāya).</div>
+    <div class="note" style="margin-top:6px;font-size:11px">Classical indication per <em>Bṛhat Parāśara Horā Śāstra</em> Ch.30-32 / <em>Sārāvalī</em>; not financial/medical advice. Consult a paṇḍita for personal decisions.</div>
   </section>
 
   <div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
@@ -388,6 +430,7 @@
     </table>
     </div>
     <div class="note">Kalam shows start times (Rahu · Yama · Gulika). Select a row to expand the day: sunrise/sunset, full windows and festival periods.</div>
+    <div id="tnHolidayNote" class="note" style="display:none;margin-top:6px;font-size:11px;color:var(--ink-soft)">Current place is outside Tamil Nadu — festival/holiday chips are curated for Tamil Nadu only (other regions: data not curated). National fixed holidays still shown where they coincide.</div>
   </section>
 
   <footer class="site-footer">

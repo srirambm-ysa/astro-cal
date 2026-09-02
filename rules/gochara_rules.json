@@ -1,0 +1,1560 @@
+{
+  "schema": "gochara-rules-v1",
+  "ayaNamsa": "Lahiri",
+  "generated": "2026-09-02",
+  "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 + Sārāvalī / Phaladīpikā (house favourability from janma rāśi) — Vedha per Gochara-adhyāya",
+  "principle": "Every row carries verseKey resolvable in reference/provenance_registry.json chapter gochara_bphs; Vedha encoded separately; no invented phala.",
+  "rules": [
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 1th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding self, health and vigour; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 2th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding wealth, family and speech; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 9,
+        "appliesWhen": "If Saturn transits 9th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 3th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — vigour and success regarding courage, siblings and short journeys. Classical: honour and overcoming opposition.",
+      "verseKey": "GOCHARA_SUN_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 4th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding home, mother and comfort; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 5th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding intellect, children and mantra; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 12,
+        "appliesWhen": "If Saturn transits 12th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 6th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — vigour and success regarding enemies, disease and competition. Classical: honour and overcoming opposition.",
+      "verseKey": "GOCHARA_SUN_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 7th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding partnership and contracts; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 8th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding longevity, obstacles and research; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 9th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding fortune, dharma and long travel; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 4,
+        "appliesWhen": "If Saturn transits 4th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 10th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — vigour and success regarding karma, status and work. Classical: honour and overcoming opposition.",
+      "verseKey": "GOCHARA_SUN_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Saturn transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — vigour and success regarding gains, friends and fulfilment. Classical: honour and overcoming opposition.",
+      "verseKey": "GOCHARA_SUN_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Sun",
+      "planetSanskrit": "Sūrya",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Sūrya in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — strain regarding loss, expense and retreat; avoid heat, haste and over-exertion.",
+      "verseKey": "GOCHARA_SUN_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Saturn transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 1th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding self, health and vigour.",
+      "verseKey": "GOCHARA_MOON_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 2th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding wealth, family and speech; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 9,
+        "appliesWhen": "If Saturn transits 9th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 3th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding courage, siblings and short journeys.",
+      "verseKey": "GOCHARA_MOON_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 4th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding home, mother and comfort; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 5th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding intellect, children and mantra; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 12,
+        "appliesWhen": "If Saturn transits 12th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 6th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding enemies, disease and competition.",
+      "verseKey": "GOCHARA_MOON_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 2,
+        "appliesWhen": "If Saturn transits 2th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 7th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding partnership and contracts.",
+      "verseKey": "GOCHARA_MOON_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 8th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding longevity, obstacles and research; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 9th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding fortune, dharma and long travel; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 4,
+        "appliesWhen": "If Saturn transits 4th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 10th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding karma, status and work.",
+      "verseKey": "GOCHARA_MOON_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 8,
+        "appliesWhen": "If Saturn transits 8th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — ease and well-being regarding gains, friends and fulfilment.",
+      "verseKey": "GOCHARA_MOON_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Moon",
+      "planetSanskrit": "Candra",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Candra in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — restlessness regarding loss, expense and retreat; keep routine, avoid hasty decisions.",
+      "verseKey": "GOCHARA_MOON_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 1th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding self, health and vigour; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 2th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding wealth, family and speech; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 9,
+        "appliesWhen": "If Saturn transits 9th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 3th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — courage and gain regarding courage, siblings and short journeys; competitors recede.",
+      "verseKey": "GOCHARA_MARS_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 4th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding home, mother and comfort; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 5th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding intellect, children and mantra; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 12,
+        "appliesWhen": "If Saturn transits 12th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 6th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — courage and gain regarding enemies, disease and competition; competitors recede.",
+      "verseKey": "GOCHARA_MARS_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 7th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding partnership and contracts; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 8th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding longevity, obstacles and research; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 9th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding fortune, dharma and long travel; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 10th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding karma, status and work; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Saturn transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — courage and gain regarding gains, friends and fulfilment; competitors recede.",
+      "verseKey": "GOCHARA_MARS_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mars",
+      "planetSanskrit": "Maṅgala",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Maṅgala in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — friction regarding loss, expense and retreat; act with restraint.",
+      "verseKey": "GOCHARA_MARS_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 1th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding self, health and vigour; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Mars",
+        "vedhaHouse": 8,
+        "appliesWhen": "If Mars transits 8th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 2th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding wealth, family and speech.",
+      "verseKey": "GOCHARA_MERCURY_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 3th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding courage, siblings and short journeys; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Moon",
+        "vedhaHouse": 10,
+        "appliesWhen": "If Moon transits 10th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 4th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding home, mother and comfort.",
+      "verseKey": "GOCHARA_MERCURY_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 5th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding intellect, children and mantra; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Mars",
+        "vedhaHouse": 12,
+        "appliesWhen": "If Mars transits 12th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 6th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding enemies, disease and competition.",
+      "verseKey": "GOCHARA_MERCURY_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 7th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding partnership and contracts; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Moon",
+        "vedhaHouse": 2,
+        "appliesWhen": "If Moon transits 2th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 8th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding longevity, obstacles and research.",
+      "verseKey": "GOCHARA_MERCURY_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 9th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding fortune, dharma and long travel; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Moon",
+        "vedhaHouse": 4,
+        "appliesWhen": "If Moon transits 4th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 10th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding karma, status and work.",
+      "verseKey": "GOCHARA_MERCURY_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Moon",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Moon transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — clarity and communication regarding gains, friends and fulfilment.",
+      "verseKey": "GOCHARA_MERCURY_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Mercury",
+      "planetSanskrit": "Budha",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Budha in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — scattered thought regarding loss, expense and retreat; double-check agreements.",
+      "verseKey": "GOCHARA_MERCURY_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 1th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding self, health and vigour; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Venus",
+        "vedhaHouse": 8,
+        "appliesWhen": "If Venus transits 8th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 2th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — growth and protection regarding wealth, family and speech; counsel bears fruit.",
+      "verseKey": "GOCHARA_JUPITER_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 3th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding courage, siblings and short journeys; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 4th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding home, mother and comfort; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Venus",
+        "vedhaHouse": 11,
+        "appliesWhen": "If Venus transits 11th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 5th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — growth and protection regarding intellect, children and mantra; counsel bears fruit.",
+      "verseKey": "GOCHARA_JUPITER_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 6th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding enemies, disease and competition; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Venus",
+        "vedhaHouse": 1,
+        "appliesWhen": "If Venus transits 1th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 7th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — growth and protection regarding partnership and contracts; counsel bears fruit.",
+      "verseKey": "GOCHARA_JUPITER_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 8th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding longevity, obstacles and research; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Venus",
+        "vedhaHouse": 3,
+        "appliesWhen": "If Venus transits 3th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 9th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — growth and protection regarding fortune, dharma and long travel; counsel bears fruit.",
+      "verseKey": "GOCHARA_JUPITER_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 10th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding karma, status and work; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Venus",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Venus transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — growth and protection regarding gains, friends and fulfilment; counsel bears fruit.",
+      "verseKey": "GOCHARA_JUPITER_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Jupiter",
+      "planetSanskrit": "Guru",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Guru in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — expectations exceed results regarding loss, expense and retreat; stay measured.",
+      "verseKey": "GOCHARA_JUPITER_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 7,
+        "appliesWhen": "If Saturn transits 7th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 1th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding self, health and vigour.",
+      "verseKey": "GOCHARA_VENUS_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 8,
+        "appliesWhen": "If Saturn transits 8th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 2th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding wealth, family and speech.",
+      "verseKey": "GOCHARA_VENUS_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 9,
+        "appliesWhen": "If Saturn transits 9th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 3th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding courage, siblings and short journeys.",
+      "verseKey": "GOCHARA_VENUS_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 10,
+        "appliesWhen": "If Saturn transits 10th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 4th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding home, mother and comfort.",
+      "verseKey": "GOCHARA_VENUS_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 11,
+        "appliesWhen": "If Saturn transits 11th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 5th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding intellect, children and mantra.",
+      "verseKey": "GOCHARA_VENUS_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 6th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — over-indulgence or discord regarding enemies, disease and competition; keep moderation.",
+      "verseKey": "GOCHARA_VENUS_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 7th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — over-indulgence or discord regarding partnership and contracts; keep moderation.",
+      "verseKey": "GOCHARA_VENUS_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 2,
+        "appliesWhen": "If Saturn transits 2th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 8th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding longevity, obstacles and research.",
+      "verseKey": "GOCHARA_VENUS_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 3,
+        "appliesWhen": "If Saturn transits 3th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 9th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding fortune, dharma and long travel.",
+      "verseKey": "GOCHARA_VENUS_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 10th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — over-indulgence or discord regarding karma, status and work; keep moderation.",
+      "verseKey": "GOCHARA_VENUS_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Saturn transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding gains, friends and fulfilment.",
+      "verseKey": "GOCHARA_VENUS_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Venus",
+      "planetSanskrit": "Śukra",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Saturn",
+        "vedhaHouse": 6,
+        "appliesWhen": "If Saturn transits 6th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śukra in 12th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — comfort and harmony regarding loss, expense and retreat.",
+      "verseKey": "GOCHARA_VENUS_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 1,
+      "houseMeaning": "self, health and vigour",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 1th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding self, health and vigour; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H1",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 2,
+      "houseMeaning": "wealth, family and speech",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 2th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding wealth, family and speech; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H2",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 3,
+      "houseMeaning": "courage, siblings and short journeys",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Sun",
+        "vedhaHouse": 9,
+        "appliesWhen": "If Sun transits 9th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 3th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — steady progress regarding courage, siblings and short journeys; effort is rewarded, debts clear.",
+      "verseKey": "GOCHARA_SATURN_H3",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 4,
+      "houseMeaning": "home, mother and comfort",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 4th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding home, mother and comfort; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H4",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 5,
+      "houseMeaning": "intellect, children and mantra",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 5th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding intellect, children and mantra; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H5",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 6,
+      "houseMeaning": "enemies, disease and competition",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Sun",
+        "vedhaHouse": 12,
+        "appliesWhen": "If Sun transits 12th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 6th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — steady progress regarding enemies, disease and competition; effort is rewarded, debts clear.",
+      "verseKey": "GOCHARA_SATURN_H6",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 7,
+      "houseMeaning": "partnership and contracts",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 7th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding partnership and contracts; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H7",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 8,
+      "houseMeaning": "longevity, obstacles and research",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 8th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding longevity, obstacles and research; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H8",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 9,
+      "houseMeaning": "fortune, dharma and long travel",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 9th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding fortune, dharma and long travel; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H9",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 10,
+      "houseMeaning": "karma, status and work",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 10th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding karma, status and work; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H10",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 11,
+      "houseMeaning": "gains, friends and fulfilment",
+      "effect": "shubha",
+      "vedha": {
+        "vedhaBy": "Sun",
+        "vedhaHouse": 5,
+        "appliesWhen": "If Sun transits 5th from janma rāśi at the same time, this shubha is obstructed (Vedha)."
+      },
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 11th from Candra (janma rāśi)",
+      "translation": "Counted as śubha (favourable) in this house from janma rāśi.",
+      "paraphrase": "Favourable — steady progress regarding gains, friends and fulfilment; effort is rewarded, debts clear.",
+      "verseKey": "GOCHARA_SATURN_H11",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    },
+    {
+      "planet": "Saturn",
+      "planetSanskrit": "Śani",
+      "house": 12,
+      "houseMeaning": "loss, expense and retreat",
+      "effect": "ashubha",
+      "vedha": null,
+      "classical_text": "BPHS Gochara-adhyāya — Śani in 12th from Candra (janma rāśi)",
+      "translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi.",
+      "paraphrase": "Caution — delay and pressure regarding loss, expense and retreat; patience and steady work help.",
+      "verseKey": "GOCHARA_SATURN_H12",
+      "source": "Bṛhat Parāśara Horā Śāstra Ch.30-32 (Gochara), corroborated by Sārāvalī / Phaladīpikā Ch.26",
+      "proof": "unverified"
+    }
+  ],
+  "vedhaTable": [
+    {
+      "planet": "Sun",
+      "house": 3,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 9
+    },
+    {
+      "planet": "Sun",
+      "house": 6,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 12
+    },
+    {
+      "planet": "Sun",
+      "house": 10,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 4
+    },
+    {
+      "planet": "Sun",
+      "house": 11,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Moon",
+      "house": 1,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Moon",
+      "house": 3,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 9
+    },
+    {
+      "planet": "Moon",
+      "house": 6,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 12
+    },
+    {
+      "planet": "Moon",
+      "house": 7,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 2
+    },
+    {
+      "planet": "Moon",
+      "house": 10,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 4
+    },
+    {
+      "planet": "Moon",
+      "house": 11,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 8
+    },
+    {
+      "planet": "Mars",
+      "house": 3,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 9
+    },
+    {
+      "planet": "Mars",
+      "house": 6,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 12
+    },
+    {
+      "planet": "Mars",
+      "house": 11,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Mercury",
+      "house": 2,
+      "vedhaBy": "Mars",
+      "vedhaHouse": 8
+    },
+    {
+      "planet": "Mercury",
+      "house": 4,
+      "vedhaBy": "Moon",
+      "vedhaHouse": 10
+    },
+    {
+      "planet": "Mercury",
+      "house": 6,
+      "vedhaBy": "Mars",
+      "vedhaHouse": 12
+    },
+    {
+      "planet": "Mercury",
+      "house": 8,
+      "vedhaBy": "Moon",
+      "vedhaHouse": 2
+    },
+    {
+      "planet": "Mercury",
+      "house": 10,
+      "vedhaBy": "Moon",
+      "vedhaHouse": 4
+    },
+    {
+      "planet": "Mercury",
+      "house": 11,
+      "vedhaBy": "Moon",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Jupiter",
+      "house": 2,
+      "vedhaBy": "Venus",
+      "vedhaHouse": 8
+    },
+    {
+      "planet": "Jupiter",
+      "house": 5,
+      "vedhaBy": "Venus",
+      "vedhaHouse": 11
+    },
+    {
+      "planet": "Jupiter",
+      "house": 7,
+      "vedhaBy": "Venus",
+      "vedhaHouse": 1
+    },
+    {
+      "planet": "Jupiter",
+      "house": 9,
+      "vedhaBy": "Venus",
+      "vedhaHouse": 3
+    },
+    {
+      "planet": "Jupiter",
+      "house": 11,
+      "vedhaBy": "Venus",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Venus",
+      "house": 1,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 7
+    },
+    {
+      "planet": "Venus",
+      "house": 2,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 8
+    },
+    {
+      "planet": "Venus",
+      "house": 3,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 9
+    },
+    {
+      "planet": "Venus",
+      "house": 4,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 10
+    },
+    {
+      "planet": "Venus",
+      "house": 5,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 11
+    },
+    {
+      "planet": "Venus",
+      "house": 8,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 2
+    },
+    {
+      "planet": "Venus",
+      "house": 9,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 3
+    },
+    {
+      "planet": "Venus",
+      "house": 11,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 5
+    },
+    {
+      "planet": "Venus",
+      "house": 12,
+      "vedhaBy": "Saturn",
+      "vedhaHouse": 6
+    },
+    {
+      "planet": "Saturn",
+      "house": 3,
+      "vedhaBy": "Sun",
+      "vedhaHouse": 9
+    },
+    {
+      "planet": "Saturn",
+      "house": 6,
+      "vedhaBy": "Sun",
+      "vedhaHouse": 12
+    },
+    {
+      "planet": "Saturn",
+      "house": 11,
+      "vedhaBy": "Sun",
+      "vedhaHouse": 5
+    }
+  ],
+  "documentedButNotImplemented": [
+    "ashtakavarga",
+    "sade_sati",
+    "kantaka_shani",
+    "nakshatra_pada_gochara",
+    "dasha_phala"
+  ],
+  "counts": {
+    "planets": 7,
+    "houses": 12,
+    "totalRows": 84,
+    "vedhaRows": 36
+  }
+}

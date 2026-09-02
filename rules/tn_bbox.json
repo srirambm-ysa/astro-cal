@@ -1,0 +1,7 @@
+{
+  "schema": "tn-bbox-v1",
+  "region": "Tamil Nadu",
+  "note": "Approx hull for inTN gate (Current place). Local, no reverse-geocode API. Other regions: disclaimer.",
+  "bbox": { "minLat": 8.0, "maxLat": 13.6, "minLon": 76.1, "maxLon": 80.9 },
+  "source": "OpenStreetMap TN administrative boundary simplified; validated against Chennai 13.08/80.27, Coimbatore 11.01/76.96, Madurai 9.92/78.12 inside; Delhi 28.6/77.2 outside."
+}
