@@ -2,7 +2,7 @@
 import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,
          YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
 import { loadTaxonomy } from "./taxonomy.js";
-import { listMonthlyGochara } from "./gochara.mjs";
+import { listMonthlyGochara, gocharaForBirth } from "./gochara.mjs";
 import { getVerseOfDay, dayOfYear } from "./tirumandiram.mjs";
 
 const LS = {
@@ -624,6 +624,12 @@ async function buildDayMap(rangeStart, rangeEnd, geo, janmaNakshatra, tz) {
 
 /* ---------- render ---------- */
 async function render() {
+  // Always render daily heroes (impersonal fallback) even without birth
+  try{ renderPanchangDigest(); }catch(e){ console.warn("panchang digest",e); }
+  try{ renderNityaHero(); }catch(e){ console.warn("nitya hero",e); }
+  try{ renderPulse(); }catch(e){ console.warn("pulse",e); }
+  try{ renderGocharaPulse(); }catch(e){ console.warn("gochara pulse",e); }
+  if (swe) renderVerseCard();
   // Gochara impersonal fallback even without birth (docs/gochara_addition.md §3)
   if (!birth) {
     const { y: ay2, m: am2 } = isoToYMD(view.anchor);
@@ -682,6 +688,11 @@ async function render() {
   for (const ecl of solarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Solar eclipse${ecl.total ? " (total)" : ecl.annular ? " (annular)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
   for (const ecl of lunarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Lunar eclipse${ecl.total ? " (total)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
 
+  // daily heroes with full month context (re-render with dayMap-backed detail)
+  try{ renderPanchangDigest(); }catch(e){ console.warn("panchang digest+",e); }
+  try{ renderNityaHero(); }catch(e){ console.warn("nitya hero+",e); }
+  try{ renderPulse(); }catch(e){ console.warn("pulse+",e); }
+  try{ renderGocharaPulse(); }catch(e){ console.warn("gochara pulse+",e); }
   // full-month table (one row per day; select a row to expand its detail)
   renderMonthEvents(dayMap, flagMap, windowsByDay);
   renderAvoidDays(chandraWindows);
@@ -1050,6 +1061,314 @@ function renderVerseCard(){
     <div class="verse-en">${verse.en}</div>
     <div class="verse-cite">— Tirumandiram ${verse.n} · ${tantraLabel} · ${verse.sec} · <a href="https://tirumandiram.in/#/read/${verse.n}" target="_blank" rel="noopener" style="color:var(--vermilion)">Read commentary ↗</a></div>
   `;
+}
+
+/* ---------- Helpers: IST today ---------- */
+function istToday(){
+  const now = new Date(Date.now() + 19800000);
+  const y = now.getUTCFullYear(), m = now.getUTCMonth()+1, d = now.getUTCDate();
+  const p = (n) => String(n).padStart(2,"0");
+  return { y, m, d, iso: `${y}-${p(m)}-${p(d)}`, weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(y,m-1,d).getDay()] };
+}
+
+/* ---------- A — Daily Panchang Digest (hero) ---------- */
+function renderPanchangDigest(){
+  const card=$("panchangCard"), body=$("panchangBody"), meta=$("panchangMeta");
+  if(!card || !body) return;
+  if(!swe){ body.innerHTML=`<div class="note">Loading Panchang…</div>`; return; }
+  const t = istToday();
+  const geo = birth ? [birth.lon, birth.lat, 0] : [80.2707, 13.0827, 0]; // Chennai fallback when no birth
+  const tz = birth ? (birth.tz || TZ_IST) : TZ_IST;
+  const janma = birth ? birth.nakshatra : null;
+  let day;
+  try{ day = swe.computeDay(t.y, t.m, t.d, geo, janma, tz); }catch(e){ body.innerHTML=`<div class="note">Panchang unavailable.</div>`; return; }
+  const dt = new Date(t.y, t.m-1, t.d);
+  const wd = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dt.getDay()];
+  const tamilYear = day.tamilYear;
+  const tithiTxt = `${day.tithi.paksha} ${day.tithi.name}`;
+  const nakTxt = NAKSHATRA[day.moonNakshatra];
+  const taraTxt = day.tara ? `${TARA_NAMES[day.tara.number-1]} (${day.tara.number}) · ${TARA_NATURE[day.tara.number-1]}` : "— (set janma nakshatra)";
+  const taraChip = day.tara ? `<span class="chip tara ${TARA_NATURE[day.tara.number-1]==="good"?"good":TARA_NATURE[day.tara.number-1]==="bad"?"bad":"neutral"}" style="font-size:10px">${TARA_NATURE[day.tara.number-1]==="good"?"✨":TARA_NATURE[day.tara.number-1]==="bad"?"⚠️":"—"} ${TARA_NAMES[day.tara.number-1]}</span>` : "";
+  const k = day.kalam;
+  const rahuTxt = k ? `${fmtHHMM(k.rahu.start)}–${fmtHHMM(k.rahu.end)}` : "—";
+  const yamaTxt = k ? `${fmtHHMM(k.yama.start)}–${fmtHHMM(k.yama.end)}` : "—";
+  const gulikaTxt = k ? `${fmtHHMM(k.gulika.start)}–${fmtHHMM(k.gulika.end)}` : "—";
+  const sunriseTxt = day.rise ? fmtHHMM(day.rise) : "—";
+  const sunsetTxt = day.set ? fmtHHMM(day.set) : "—";
+  let abhijitTxt = "—";
+  if(day.rise && day.set){
+    const noon = (day.rise + day.set)/2;
+    const abS = noon - 0.01667, abE = noon + 0.01667;
+    abhijitTxt = `${fmtHHMM(abS)}–${fmtHHMM(abE)}`;
+  }
+  // Chandrashtama badge for today
+  let chandraBadge = '<span class="chip none">—</span>';
+  let chandraNote = "";
+  if(birth){
+    const janmaR = { nakshatra: birth.nakshatra, rashi: birth.rashi };
+    const tStart = swe.julday(t.y, t.m, t.d, 0);
+    const tEnd = swe.julday(t.y, t.m, t.d, 24 - tz) + 0.5;
+    const wins = swe.chandrashtama(janmaR, tStart, tEnd, geo);
+    const coarse = wins.find(w=>w.kind==="coarse");
+    const peak = wins.find(w=>w.kind==="peak");
+    if(peak) chandraBadge = `<span class="chip chandra peak">Peak · ${NAKSHATRA[peak.nakshatra]}</span>`;
+    else if(coarse) chandraBadge = `<span class="chip chandra">Coarse · ${RASHI[coarse.rashi]}</span>`;
+    else chandraBadge = `<span class="chip" style="background:var(--teal);color:#fff">Clear</span>`;
+    if(peak) chandraNote = `Peak ${fmtHHMM(peak.start)}→${fmtHHMM(peak.end)}`;
+    else if(coarse) chandraNote = `Coarse ${fmtHHMM(coarse.start)}→${fmtHHMM(coarse.end)}`;
+  } else {
+    chandraBadge = '<span class="chip none">Set janma to see</span>';
+  }
+  const bhadraTxt = day.bhadra ? (day.bhadra.loka==="mrityu" && !day.bhadra.inPuchha ? `<span class="chip" style="background:var(--chandra-peak);color:#fff">Bhadra · Mrityu</span>` : day.bhadra.inPuchha ? `<span class="chip" style="background:var(--teal);color:#fff">Bhadra Puchha (usable)</span>` : `<span class="chip none">Bhadra harmless</span>`) : '<span class="chip none">No Vishti</span>';
+  if(meta) meta.textContent = `${t.iso} · ${wd} · ${dayLabelTamil(day.tMonth, day.tDay)} · ${tamilYear.name}`;
+  body.innerHTML = `
+    <div class="panchang-grid">
+      <div class="kv"><div class="k">Tithi</div><div class="v">${tithiTxt}<br><small>${TITHI_NAMES[day.tithiIndex]} · idx ${day.tithiIndex}</small></div></div>
+      <div class="kv"><div class="k">Nakshatra</div><div class="v">${nakTxt} ${taraChip}<br><small>Tara: ${taraTxt}</small></div></div>
+      <div class="kv"><div class="k">Yoga</div><div class="v">${YOGA_NAMES[day.yoga.index]}<br><small>${day.yogaBan && day.yogaBan.banned ? '⚠️ '+day.yogaBan.reason : '—'}</small></div></div>
+      <div class="kv"><div class="k">Karana</div><div class="v">${KARANA_NAMES[day.karana.index]}<br><small>${day.bhadra ? (day.bhadra.inMukha?'Mukha (avoid)':day.bhadra.inPuchha?'Puchha (ok)':'') : ''}</small></div></div>
+      <div class="kv"><div class="k">Sunrise · Sunset</div><div class="v">${sunriseTxt} · ${sunsetTxt}</div></div>
+      <div class="kv"><div class="k">Tamil</div><div class="v">${dayLabelTamil(day.tMonth, day.tDay)}<br><small>${TAMIL_MONTH[day.tMonth]} · ${tamilYear.name} (${tamilYear.index})</small></div></div>
+      <div class="kv"><div class="k">Chandrashtama</div><div class="v">${chandraBadge}<br><small>${chandraNote || '—'}</small></div></div>
+      <div class="kv"><div class="k">Bhadra</div><div class="v">${bhadraTxt}</div></div>
+    </div>
+    <div class="panchang-abhijit"><span><strong>Rahu</strong> ${rahuTxt} · <strong>Yama</strong> ${yamaTxt} · <strong>Gulika</strong> ${gulikaTxt}</span><span><strong>Abhijit</strong> ${abhijitTxt}</span></div>
+  `;
+}
+
+/* ---------- B — Daily Nitya Sadhana (hero) ---------- */
+function renderNityaHero(){
+  const card=$("nityaCard"), body=$("nityaBody"), meta=$("nityaMeta");
+  if(!card || !body) return;
+  if(!swe || !NITYA_DEVIS){ body.innerHTML=`<div class="note">Loading Nitya…</div>`; return; }
+  const t = istToday();
+  const geo = birth ? [birth.lon, birth.lat, 0] : [80.2707, 13.0827, 0];
+  const tz = birth ? (birth.tz || TZ_IST) : TZ_IST;
+  const day = swe.computeDay(t.y, t.m, t.d, geo, birth ? birth.nakshatra : null, tz);
+  const nitya = nityaForDay(day);
+  if(!nitya){ body.innerHTML=`<div class="note">Nitya not available today.</div>`; return; }
+  const paksha = day.tithi.paksha || (day.tithi.index>=15?"Krishna":"Shukla");
+  const isMaha = nitya.key==="maha_tripura_sundari";
+  const mantraEsc = String(nitya.mantraTarpana||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const dhyanaLink = nitya.dhyanaRef ? `<a href="https://stotranidhi.com/en/nitya-devi-dhyana-shloka-in-english/" target="_blank" rel="noopener" class="nitya-link">dhyāna śloka ↗</a>` : "";
+  if(meta) meta.textContent = `${t.iso} · Tithi ${day.tithi.name} (${paksha}) · ${isMaha?"Amṛtā kalā — Bindu":"kalā "+nitya.kalaName}`;
+  body.innerHTML = `
+    <div class="nitya-hero-head"><span class="nitya-hero-name">${nitya.display}</span><span class="nitya-hero-sub">${nitya.deviName}${nitya.tamilName && nitya.tamilName!==nitya.display? " · "+nitya.tamilName:""}</span>${isMaha?'<span class="chip nitya" style="font-size:10px">Mahā Nityā</span>':""}</div>
+    <div class="nitya-hero-grid">
+      <div class="kv"><div class="k">Kalā</div><div class="v">${nitya.kalaName}</div></div>
+      <div class="kv"><div class="k">Bīja</div><div class="v" lang="sa">${nitya.bija}</div></div>
+      <div class="kv"><div class="k">Pakṣa</div><div class="v">${paksha}</div></div>
+      <div class="kv"><div class="k">Tithi</div><div class="v">${day.tithi.name}</div></div>
+    </div>
+    <div class="nitya-hero-mantra">
+      <div class="nitya-mantra-wrap" style="margin-left:0"><div class="mantra" lang="sa">${mantraEsc}</div><button class="copy-btn" data-mantra="${mantraEsc.replace(/"/g,'&quot;')}" aria-label="Copy Nitya mantra">Copy</button></div>
+      <div class="diksa-footnote" style="margin-left:0">ⓘ Śrī Vidyā Nitya vidyās are traditionally dīkṣā-bound. These mantras appear here as public-domain Tantrarāja transcriptions for study. Please chant or practise only as your own guru instructs. ${dhyanaLink}</div>
+    </div>
+  `;
+  body.querySelectorAll(".copy-btn").forEach(btn=> btn.addEventListener("click", async (e)=>{
+    e.stopPropagation();
+    const raw = btn.getAttribute("data-mantra")||"";
+    const txt = raw.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+    try{ await navigator.clipboard.writeText(txt); }catch(err){ const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");}catch(_e){} ta.remove(); }
+    const prev=btn.textContent; btn.textContent="Copied"; setTimeout(()=> btn.textContent=prev, 1200);
+  }));
+}
+
+/* ---------- C — Upcoming 7-day Pulse ---------- */
+function pulseChipForDay(day, y,m,d){
+  const chips=[];
+  const chip=(cls,label,title="")=> `<span class="chip ${cls}"${title?` title="${title}"`:""}>${label}</span>`;
+  // Tithi-based
+  const idx = day.tithiIndex;
+  if(idx===10||idx===25) chips.push(chip("festival","Ekadashi","Ekadashi — fast"));
+  if(idx===12||idx===27) chips.push(chip("festival","Pradosham","Trayodashi — Pradosha"));
+  if(idx===29) chips.push(chip("moon","Amavasya"));
+  if(idx===14) chips.push(chip("moon","Purnima"));
+  // Tamil festivals
+  const moonN=day.moonNakshatra;
+  for(const f of TAMIL_FESTIVALS) if(festivalMatches(f, day.tMonth, moonN, idx, day.tDay)) chips.push(chip("festival", f.name, f.name));
+  // Siddhar
+  if(SIDDHAR_PUJAS && SIDDHAR_PUJAS.entries){
+    for(const f of SIDDHAR_PUJAS.entries) if(isSiddharMatch(f, day, y,m,d)) chips.push(chip("siddhar", f.name, f.display||f.name));
+  }
+  // TN holidays (gated)
+  if(birth && isInTN(birth.lat, birth.lon)){
+    const iso = `${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const hol=getTNHoliday(iso);
+    if(hol) chips.push(chip("holiday", hol.name, hol.name));
+    else if(isSecondOrFourthSaturday(y,m,d)) chips.push(chip("holiday","Bank holiday (2nd/4th Sat)"));
+  }
+  // Chandrashtama peek (peak gets priority)
+  if(birth){
+    const geo=[birth.lon, birth.lat, 0];
+    const tStart=swe.julday(y,m,d,0), tEnd=swe.julday(y,m,d,24-5.5)+0.5;
+    const wins=swe.chandrashtama({nakshatra:birth.nakshatra,rashi:birth.rashi}, tStart, tEnd, geo);
+    if(wins.some(w=>w.kind==="peak")) chips.push(chip("chandra peak","Chandra peak"));
+    else if(wins.some(w=>w.kind==="coarse")) chips.push(chip("chandra","Chandra"));
+  }
+  if(!chips.length) chips.push(chip("none","—"));
+  return chips.join("");
+}
+function renderPulse(){
+  const card=$("pulseCard"), body=$("pulseBody"), meta=$("pulseMeta");
+  if(!card || !body) return;
+  if(!swe){ body.innerHTML=`<div class="note">Loading upcoming events…</div>`; return; }
+  const t = istToday();
+  const start = new Date(Date.UTC(t.y, t.m-1, t.d));
+  const rows=[];
+  const geo = birth ? [birth.lon, birth.lat, 0] : [80.2707,13.0827,0];
+  const tz = birth ? (birth.tz||TZ_IST) : TZ_IST;
+  const janma = birth ? birth.nakshatra : null;
+  for(let i=0;i<7;i++){
+    const dt=new Date(start); dt.setUTCDate(start.getUTCDate()+i);
+    const y=dt.getUTCFullYear(), m=dt.getUTCMonth()+1, d=dt.getUTCDate();
+    const day=swe.computeDay(y,m,d, geo, janma, tz);
+    const wd=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(y,m-1,d).getDay()];
+    const isToday=i===0;
+    const tamil = `${dayLabelTamil(day.tMonth, day.tDay)}`;
+    const nitya=nityaForDay(day);
+    const nityaTag = nitya ? `<span class="chip nitya" title="${nitya.display}">${nitya.display}</span>` : "";
+    const chips = pulseChipForDay(day,y,m,d);
+    rows.push(`<div class="pulse-row${isToday?" today":""}"><div class="pulse-date">${wd} ${String(d).padStart(2,"0")}<small>${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}</small><span class="pulse-tamil">${tamil} · ${day.tithi.name}</span>${nityaTag?`<div style="margin-top:4px">${nityaTag}</div>`:""}</div><div><div class="pulse-chips">${chips}</div><div class="note" style="font-size:11px;margin-top:4px">${NAKSHATRA[day.moonNakshatra]} · ${YOGA_NAMES[day.yoga.index]} · ${KARANA_NAMES[day.karana.index]}</div></div></div>`);
+  }
+  if(meta){
+    const end=new Date(start); end.setUTCDate(start.getUTCDate()+6);
+    const p=(n)=>String(n).padStart(2,"0");
+    meta.textContent=`${t.iso} → ${end.getUTCFullYear()}-${p(end.getUTCMonth()+1)}-${p(end.getUTCDate())}`;
+  }
+  body.innerHTML=`<div class="pulse-list">${rows.join("")}</div>`;
+}
+
+/* ---------- D — Today's Gochara Pulse (daily Chandrabala + Tara) ---------- */
+function renderGocharaPulse(){
+  const card=$("gocharaPulseCard"), body=$("gocharaPulseBody"), meta=$("gocharaPulseMeta");
+  if(!card || !body) return;
+  if(!swe){ body.innerHTML=`<div class="note">Loading Gochara pulse…</div>`; return; }
+  const t = istToday();
+  const geo = birth ? [birth.lon, birth.lat, 0] : [80.2707, 13.0827, 0];
+  const tz = birth ? (birth.tz||TZ_IST) : TZ_IST;
+  const day = swe.computeDay(t.y, t.m, t.d, geo, birth ? birth.nakshatra : null, tz);
+  const moonRashiName = RASHI[day.moonRashi];
+  const moonNakName = NAKSHATRA[day.moonNakshatra];
+  if(meta) meta.textContent = `${t.iso} · ${moonRashiName} · ${moonNakName}`;
+  if(!birth){
+    body.innerHTML = `
+      <div class="gochara-pulse-grid">
+        <div class="kv"><div class="k">Transit Moon</div><div class="v">${moonRashiName}<br><small>${moonNakName} — set janma to see house</small></div></div>
+        <div class="kv"><div class="k">Tārā</div><div class="v">—<br><small>set janma nakshatra to see Tara</small></div></div>
+      </div>
+      <div class="gochara-pulse-note">Enter your janma nakshatra &amp; rāśi to see today’s Chandrabala (Moon house from janma) and Tārā. Without birth, only the transit Moon rāśi/nakshatra is shown.</div>
+    `;
+    return;
+  }
+  // Build a fake transit for Moon to reuse gocharaForBirth (house/effect/vedha/tara)
+  const fakeTransit = {
+    planet: "Moon",
+    planetSanskrit: "Candra",
+    toRashi: day.moonRashi,
+    transitNak: day.moonNakshatra,
+    jd: day.rise || swe.julday(t.y, t.m, t.d, 12 - tz),
+  };
+  let row = null;
+  try{
+    if(GOCHARA_RULES) row = gocharaForBirth(fakeTransit, { rashi: birth.rashi, nakshatra: birth.nakshatra }, GOCHARA_RULES, swe);
+  }catch(e){ console.warn("gochara pulse", e); }
+  const house = row ? row.house : ((day.moonRashi - birth.rashi + 12)%12)+1;
+  const effect = row ? row.effect : null;
+  const vedhaBlocked = row ? row.vedhaBlocked : false;
+  const paraphrase = row ? row.paraphrase : null;
+  const tara = row ? row.tara : (day.tara ? { number: day.tara.number, name: TARA_NAMES[day.tara.number-1], nature: TARA_NATURE[day.tara.number-1], count: day.tara.count } : null);
+  const houseChip = (()=> {
+    if(!effect) return `<span class="chip none">—</span>`;
+    const cls = effect==="shubha" ? "shubha" : effect==="ashubha" ? "ashubha" : "madhyama";
+    const label = effect==="shubha" ? "Śubha" : effect==="ashubha" ? "Aśubha" : "Madhyama";
+    const vedhaTag = vedhaBlocked ? ` <span class="chip gochara vedha" title="Vedha — obstructed">⚑ vedha</span>` : "";
+    return `<span class="chip gochara ${cls}">${label}</span>${vedhaTag}`;
+  })();
+  const taraChip = (()=> {
+    if(!tara) return `<span class="chip none">—</span>`;
+    const cls = tara.nature==="good" ? "good" : tara.nature==="bad" ? "bad" : "neutral";
+    const icon = tara.nature==="good" ? "✨" : tara.nature==="bad" ? "⚠️" : "—";
+    return `<span class="chip tara ${cls}">${icon} ${tara.name} (${tara.number})</span>`;
+  })();
+  const houseNote = vedhaBlocked ? "Vedha — śubha obstructed by vedha planet" : (effect==="shubha" ? "Favourable" : effect==="ashubha" ? "Caution — keep routine" : "");
+  const taraNote = tara ? `${tara.name} — ${tara.nature==="good"?"favourable": tara.nature==="bad"?"avoid important initiations": "neutral"} (count ${tara.count})` : "";
+  const paraphraseTxt = paraphrase ? paraphrase : (effect==="shubha" ? "Classical: ease and well-being in this house." : effect==="ashubha" ? "Classical: restlessness; avoid hasty steps." : "");
+  const noteCls = effect==="shubha" && !vedhaBlocked ? "shubha" : effect==="ashubha" || tara?.nature==="bad" ? "ashubha" : "";
+  // Dual-chip till: compute next rashi/nakshatra before next sunrise so chip itself shows till/from
+  let nextHouseInfo=null, nextTaraInfo=null, rashiEnd=null, nakEnd=null, sunriseJD=null, nextRise=null;
+  try{
+    sunriseJD = day.rise || swe.julday(t.y, t.m, t.d, 12 - tz);
+    try{
+      const tom = new Date(Date.UTC(t.y, t.m-1, t.d)); tom.setUTCDate(tom.getUTCDate()+1);
+      const y2=tom.getUTCFullYear(), m2=tom.getUTCMonth()+1, d2=tom.getUTCDate();
+      const pr = swe.sunriseSunset(y2,m2,d2, geo);
+      nextRise = pr && pr.rise ? pr.rise : sunriseJD + 1;
+    }catch{ nextRise = sunriseJD + 1; }
+    const seMoon = swe.swe && swe.swe.SE_MOON != null ? swe.swe.SE_MOON : 1;
+    const rashiTarget = ((day.moonRashi+1)%12)*30;
+    rashiEnd = swe.crossingForward(sunriseJD, seMoon, rashiTarget, 0.02, 2000);
+    if(rashiEnd && rashiEnd < nextRise){
+      const nextRashi = (day.moonRashi+1)%12;
+      const nextRashiName = RASHI[nextRashi];
+      const nextHouse = ((nextRashi - birth.rashi + 12)%12)+1;
+      let nextEffect=null, nextVedha=false;
+      try{ const nr = gocharaForBirth({planet:"Moon", toRashi: nextRashi, transitNak: day.moonNakshatra, jd: rashiEnd+0.001}, {rashi: birth.rashi, nakshatra: birth.nakshatra}, GOCHARA_RULES, swe); nextEffect=nr.effect; nextVedha=nr.vedhaBlocked; }catch{}
+      nextHouseInfo = { nextRashi, nextRashiName, nextHouse, nextEffect, nextVedha, hh: fmtHHMM(rashiEnd), jd: rashiEnd };
+    }
+    nakEnd = swe.nakshatraEnd(sunriseJD);
+    if(nakEnd && nakEnd < nextRise){
+      const nextNak = (day.moonNakshatra+1)%27;
+      const nextNakName = NAKSHATRA[nextNak];
+      const tb = swe.taraBala(birth.nakshatra, nextNak);
+      const tname = TARA_NAMES[tb.number-1]; const tnature = TARA_NATURE[tb.number-1];
+      const sameAsRashi = rashiEnd && Math.abs(nakEnd - rashiEnd) < 0.02;
+      if(!sameAsRashi) nextTaraInfo = { nextNak, nextNakName, tname, tnature, tb, hh: fmtHHMM(nakEnd), jd: nakEnd };
+      else if(nextHouseInfo) { nextHouseInfo.nextNakName = nextNakName; nextHouseInfo.tname = tname; nextHouseInfo.tnature = tnature; }
+    }
+  }catch(e){ console.warn("till calc", e); }
+  // build dual chips
+  let houseChipHTML = houseChip;
+  let houseSmall = `${moonNakName} · ${houseNote}`;
+  if(nextHouseInfo){
+    const cls2 = nextHouseInfo.nextEffect==="shubha" ? "shubha" : nextHouseInfo.nextEffect==="ashubha" ? "ashubha" : "madhyama";
+    const label2 = nextHouseInfo.nextEffect==="shubha" ? "Śubha" : nextHouseInfo.nextEffect==="ashubha" ? "Aśubha" : "Madhyama";
+    const vedha2 = nextHouseInfo.nextVedha ? ` <span class="chip gochara vedha" title="Vedha — obstructed">⚑ vedha</span>` : "";
+    const nextChip = `<span class="chip gochara ${cls2}">${label2}</span>${vedha2}`;
+    houseChipHTML = `<span style="display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center">${houseChip} <span style="font-size:10px;color:var(--ink-soft)">till ${nextHouseInfo.hh}</span> <span style="color:var(--ink-soft)">→</span> ${nextChip} <span style="font-size:10px;color:var(--ink-soft)">from ${nextHouseInfo.hh} · ${nextHouseInfo.nextRashiName} ${nextHouseInfo.nextHouse}th${nextHouseInfo.nextNakName ? " · "+nextHouseInfo.nextNakName : ""}</span></span>`;
+    // if still ashubha, make it explicit
+    if(nextHouseInfo.nextEffect==="ashubha" && effect==="ashubha") houseSmall = `${moonRashiName} ${house}th Aśubha till ${nextHouseInfo.hh} · still Aśubha after (${nextHouseInfo.nextRashiName} ${nextHouseInfo.nextHouse}th)`;
+    else houseSmall = `${moonRashiName} ${house}th till ${nextHouseInfo.hh} → ${nextHouseInfo.nextRashiName} ${nextHouseInfo.nextHouse}th`;
+  }
+  let taraChipHTML = taraChip;
+  let taraSmall = taraNote;
+  if(nextTaraInfo){
+    const cls2 = nextTaraInfo.tnature==="good" ? "good" : nextTaraInfo.tnature==="bad" ? "bad" : "neutral";
+    const icon2 = nextTaraInfo.tnature==="good" ? "✨" : nextTaraInfo.tnature==="bad" ? "⚠️" : "—";
+    const nextChip2 = `<span class="chip tara ${cls2}">${icon2} ${nextTaraInfo.tname} (${nextTaraInfo.tb.number})</span>`;
+    taraChipHTML = `<span style="display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center">${taraChip} <span style="font-size:10px;color:var(--ink-soft)">till ${nextTaraInfo.hh}</span> <span style="color:var(--ink-soft)">→</span> ${nextChip2} <span style="font-size:10px;color:var(--ink-soft)">from ${nextTaraInfo.hh}</span></span>`;
+    taraSmall = `${tara.name} till ${nextTaraInfo.hh} → ${nextTaraInfo.tname} ${nextTaraInfo.tnature==="good"?"favourable": nextTaraInfo.tnature==="bad"?"avoid":"neutral"}`;
+  }
+  let tillHTML = "";
+  if(nextHouseInfo || nextTaraInfo){
+    const lines=[];
+    if(nextHouseInfo) lines.push(`House: ${moonRashiName} ${house}th → ${nextHouseInfo.nextRashiName} ${nextHouseInfo.nextHouse}th at ${nextHouseInfo.hh} IST`);
+    if(nextTaraInfo) lines.push(`Tara: ${moonNakName} → ${nextTaraInfo.nextNakName} at ${nextTaraInfo.hh} IST`);
+    tillHTML = `<div class="note" style="margin-top:6px;font-size:11px;line-height:1.5;border-left:2px solid var(--line);padding-left:8px">${lines.join(" · ")}<br><span style="color:var(--ink-soft)">Panchang day = sunrise→sunrise; times above are precise Moon transit clears.</span></div>`;
+  }
+  body.innerHTML = `
+    <div class="gochara-pulse-grid">
+      <div class="kv"><div class="k">Transit Moon — ${moonRashiName} <span style="font-weight:400;color:var(--ink-soft)">at sunrise</span></div><div class="v">${house}th from janma ${RASHI[birth.rashi]}<br>${houseChipHTML}<small>${houseSmall}</small></div></div>
+      <div class="kv"><div class="k">Tārā — ${tara ? tara.name : "—"} <span style="font-weight:400;color:var(--ink-soft)">at sunrise</span></div><div class="v">${taraChipHTML}<small>${taraSmall}</small></div></div>
+    </div>
+    <div class="gochara-pulse-note ${noteCls}">${paraphraseTxt}${row?.verseKey ? ` <a href="#" data-verse="${row.verseKey}" class="prov-link" style="font-size:11px;color:var(--gold)">[${row.verseKey}]</a>` : ""}${vedhaBlocked ? " · ⚑ vedha active — śubha downgraded." : ""}</div>
+    ${tillHTML}
+  `;
+  body.querySelectorAll(".prov-link").forEach(a=> a.addEventListener("click", (e)=>{
+    e.preventDefault();
+    const vk=a.dataset.verse;
+    if(window.showProvenanceForVerse) window.showProvenanceForVerse(vk);
+  }));
 }
 
 /* City quick-selector — SimpleMaps 382 + GeoNames fallback */
@@ -1775,6 +2094,9 @@ async function init() {
     $("bTz").value = birth.tz;
     $("landing").hidden = true;
     render();
+  } else {
+    // impersonal: still render daily heroes + verse + gochara
+    try{ render(); }catch(e){ console.warn("initial render",e); }
   }
 }
 

@@ -111,6 +111,41 @@
   .verse-en{font-size:13px;line-height:1.6;color:var(--ink);border-left:3px solid var(--gold);padding-left:10px;margin-bottom:4px}
   .verse-cite{font-size:11px;color:var(--ink-soft);margin-top:4px}
   @media(max-width:640px){ .verse-tamil{font-size:16px} }
+  /* ---------- A · Daily Panchang Digest (hero) ---------- */
+  .panchang-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .panchang-grid .kv{border:1px solid var(--line-faint);background:var(--panel-b);padding:8px 10px;border-radius:4px}
+  .panchang-grid .kv .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px}
+  .panchang-grid .kv .v{font-size:13px;font-weight:600;line-height:1.35}
+  .panchang-grid .kv .v small{font-weight:400;color:var(--ink-soft);font-size:11px}
+  .panchang-abhijit{margin-top:8px;padding:8px 10px;border-left:3px solid var(--teal);background:var(--panel-b);font-size:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  /* ---------- B · Daily Nitya Sadhana (hero) ---------- */
+  .nitya-hero-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .nitya-hero-name{font-family:"Rozha One",serif;font-size:18px;color:var(--vermilion)}
+  .nitya-hero-sub{font-size:12px;color:var(--ink-soft)}
+  .nitya-hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:8px 0}
+  .nitya-hero-grid .kv{border:1px solid var(--line-faint);background:var(--panel-b);padding:6px 10px;border-radius:4px;text-align:center}
+  .nitya-hero-grid .kv .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .nitya-hero-grid .kv .v{font-size:13px;font-weight:600;margin-top:2px}
+  .nitya-hero-mantra{margin-top:8px}
+  /* ---------- C · Upcoming 7-day Pulse ---------- */
+  .pulse-list{display:grid;gap:6px}
+  .pulse-row{display:grid;grid-template-columns:92px 1fr;gap:8px;padding:8px 10px;border:1px solid var(--line-faint);background:var(--paper);border-radius:4px;align-items:start}
+  .pulse-row.today{border-color:var(--vermilion);background:rgba(184,58,42,.06)}
+  .pulse-date{font-weight:600;font-size:12px;color:var(--vermilion);line-height:1.3}
+  .pulse-date small{font-weight:400;color:var(--ink-soft);display:block;font-size:11px}
+  .pulse-tamil{font-size:11px;color:var(--ink-soft)}
+  .pulse-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+  @media(max-width:640px){ .pulse-row{grid-template-columns:1fr} .pulse-date{display:flex;gap:8px;align-items:baseline} .pulse-date small{display:inline} }
+  /* ---------- D · Today's Gochara Pulse (daily Moon Chandrabala + Tara) ---------- */
+  .gochara-pulse-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .gochara-pulse-grid .kv{border:1px solid var(--line-faint);background:var(--panel-b);padding:10px;border-radius:4px}
+  .gochara-pulse-grid .kv .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+  .gochara-pulse-grid .kv .v{font-size:13px;font-weight:600;line-height:1.4}
+  .gochara-pulse-grid .kv .v small{font-weight:400;color:var(--ink-soft);font-size:11px;display:block;margin-top:2px}
+  .gochara-pulse-note{margin-top:8px;padding:8px 10px;border-left:3px solid var(--gold);background:var(--paper);font-size:12px;line-height:1.5}
+  .gochara-pulse-note.ashubha{border-left-color:var(--chandra-peak)}
+  .gochara-pulse-note.shubha{border-left-color:var(--teal)}
+  @media(max-width:640px){ .gochara-pulse-grid{grid-template-columns:1fr} }
   /* ---------- CITY QUICK-SELECTOR ---------- */
   .city-selector{grid-column:1/-1}
   .city-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
@@ -408,6 +443,25 @@
     </div>
   </section>
 
+  <!-- A — Daily Panchang Digest (hero · capsule of engine.computeDay) -->
+  <section class="card" id="panchangCard">
+    <h2 id="panchangTitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>☀️ Today — Panchang</span>
+      <span class="note" id="panchangMeta" style="font-size:11px;color:var(--ink-soft)"></span>
+    </h2>
+    <div id="panchangBody"><div class="note">Loading Panchang…</div></div>
+    <div class="note" style="margin-top:8px;font-size:11px">Panchang at sunrise; Rahu/Yama/Gulika are day segments. Abhijit ≈ 48 min around true solar noon. Chandrashtama &amp; Tara need janma nakshatra.</div>
+  </section>
+
+  <!-- B — Daily Nitya Sadhana (large · lifts nitya.mjs from table cell) -->
+  <section class="card" id="nityaCard">
+    <h2 id="nityaTitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>🔱 Today — Nitya Sadhana</span>
+      <span class="note" id="nityaMeta" style="font-size:11px;color:var(--ink-soft)"></span>
+    </h2>
+    <div id="nityaBody"><div class="note">Loading Nitya…</div></div>
+  </section>
+
   <!-- Tirumandiram — Verse of the Day (daily return driver; uses tirumandiram_daily.json) -->
   <section class="card" id="verseCard">
     <h2 id="verseTitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px">
@@ -424,6 +478,26 @@
       <button class="btn small ghost" id="verseNext" type="button" title="Next verse">Next ›</button>
     </div>
     <div class="note" style="margin-top:8px;font-size:11px">Daily verse from <em>Tirumandiram</em> (Thirumoolar, 3047 verses). Curated 365-verse rotation — one per calendar day. Source: <a href="https://tirumandiram.in" target="_blank" rel="noopener" style="color:var(--vermilion)">tirumandiram.in</a>. Full commentary there.</div>
+  </section>
+
+  <!-- C — Upcoming 7-day Pulse (weekly planning · scan dayMap+7) -->
+  <section class="card" id="pulseCard">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>🗓 Next 7 days — Upcoming</span>
+      <span class="note" id="pulseMeta" style="font-size:11px;color:var(--ink-soft)"></span>
+    </h2>
+    <div id="pulseBody"><div class="note">Loading upcoming events…</div></div>
+    <div class="note" style="margin-top:6px;font-size:11px">Pradosham = Trayodashi · Ekadashi · Amavasya/Purnima · Tamil festivals &amp; Siddhar pujas flagged per sunrise. Plan ahead.</div>
+  </section>
+
+  <!-- D — Today's Gochara Pulse (daily Chandrabala + Tara) -->
+  <section class="card" id="gocharaPulseCard">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>🌙 Today's Gochara Pulse</span>
+      <span class="note" id="gocharaPulseMeta" style="font-size:11px;color:var(--ink-soft)"></span>
+    </h2>
+    <div id="gocharaPulseBody"><div class="note">Loading Gochara pulse…</div></div>
+    <div class="note" style="margin-top:6px;font-size:11px">Daily Chandrabala (Moon house from janma rāśi) + Tārā (nakshatra count). Classical per <em>BPHS Ch.30-32</em>; Moon is the daily clock. Set janma to see personal house.</div>
   </section>
 
   <!-- Gochara — monthly transits (Moon-excluded) — below Avoid Days, above Muhurta conceptually (docs/gochara_addition.md §0/§8) -->

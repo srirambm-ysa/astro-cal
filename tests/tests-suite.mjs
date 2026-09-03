@@ -19,6 +19,7 @@ vm.createContext(sandbox);
 const stripped = appSrc
   .replace('import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, timeIST,\n         YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";\n', "")
   .replace('import { loadTaxonomy } from "./taxonomy.js";\n', "")
+  .replace('import { listMonthlyGochara, gocharaForBirth } from "./gochara.mjs";\n', "")
   .replace('import { listMonthlyGochara } from "./gochara.mjs";\n', "")
   .replace('import { getVerseOfDay, dayOfYear } from "./tirumandiram.mjs";\n', "")
   .replace('  try{ GOCHARA_RULES = await fetch("./rules/gochara_rules.json").then(r=>r.json()); }catch(e){ console.warn("gochara rules failed",e); }', '  GOCHARA_RULES = { rules: [], vedhaTable: [] };')
