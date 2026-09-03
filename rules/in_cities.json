@@ -1,0 +1,3095 @@
+{
+  "schema": "in-cities-v1",
+  "provenance": {
+    "source": "SimpleMaps in-cities 354 MIT (https://simplemaps.com/data/in-cities) + GeoNames IN.zip fallback curated (2026-09-03)",
+    "date": "2026-09-03",
+    "license": "SimpleMaps MIT · GeoNames CC-BY 4.0",
+    "rows": 382,
+    "rawSimpleMaps": 354,
+    "fallbackAdded": 28,
+    "note": "Tamil Nadu 49 raw + 28 fallback district/pilgrim towns; admin_name normalized (diacritics removed)"
+  },
+  "entries": [
+    {
+      "city": "Mumbai",
+      "city_ascii": "Mumbai",
+      "admin_name": "Maharashtra",
+      "lat": 19.0758,
+      "lng": 72.8775,
+      "population": 24973000,
+      "capital": "admin"
+    },
+    {
+      "city": "Kolkata",
+      "city_ascii": "Kolkata",
+      "admin_name": "West Bengal",
+      "lat": 22.5675,
+      "lng": 88.37,
+      "population": 21747000,
+      "capital": "admin"
+    },
+    {
+      "city": "Delhi",
+      "city_ascii": "Delhi",
+      "admin_name": "Delhi",
+      "lat": 28.66,
+      "lng": 77.23,
+      "population": 16349831,
+      "capital": "admin"
+    },
+    {
+      "city": "Chennai",
+      "city_ascii": "Chennai",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0825,
+      "lng": 80.275,
+      "population": 12395000,
+      "capital": "admin"
+    },
+    {
+      "city": "Bangalore",
+      "city_ascii": "Bangalore",
+      "admin_name": "Karnataka",
+      "lat": 12.9791,
+      "lng": 77.5913,
+      "population": 10456000,
+      "capital": "admin"
+    },
+    {
+      "city": "Ahmedabad",
+      "city_ascii": "Ahmedabad",
+      "admin_name": "Gujarat",
+      "lat": 23.0219,
+      "lng": 72.5797,
+      "population": 9272670,
+      "capital": "minor"
+    },
+    {
+      "city": "Pune",
+      "city_ascii": "Pune",
+      "admin_name": "Maharashtra",
+      "lat": 18.5211,
+      "lng": 73.8553,
+      "population": 8231000
+    },
+    {
+      "city": "Hyderabad",
+      "city_ascii": "Hyderabad",
+      "admin_name": "Telangana",
+      "lat": 17.3617,
+      "lng": 78.4747,
+      "population": 7677018,
+      "capital": "admin"
+    },
+    {
+      "city": "Surat",
+      "city_ascii": "Surat",
+      "admin_name": "Gujarat",
+      "lat": 21.205,
+      "lng": 72.84,
+      "population": 6538000
+    },
+    {
+      "city": "Prayagraj",
+      "city_ascii": "Prayagraj",
+      "admin_name": "Uttar Pradesh",
+      "lat": 25.45,
+      "lng": 81.85,
+      "population": 5954391
+    },
+    {
+      "city": "Kanpur",
+      "city_ascii": "Kanpur",
+      "admin_name": "Gujarat",
+      "lat": 24.285,
+      "lng": 72.6933,
+      "population": 5230000
+    },
+    {
+      "city": "Kanpur",
+      "city_ascii": "Kanpur",
+      "admin_name": "Uttar Pradesh",
+      "lat": 26.4725,
+      "lng": 80.3311,
+      "population": 4581268
+    },
+    {
+      "city": "Belahi",
+      "city_ascii": "Belahi",
+      "admin_name": "Bihar",
+      "lat": 25.7167,
+      "lng": 86.4,
+      "population": 4487379
+    },
+    {
+      "city": "Vadodara",
+      "city_ascii": "Vadodara",
+      "admin_name": "Gujarat",
+      "lat": 22.3,
+      "lng": 73.2,
+      "population": 3500000
+    },
+    {
+      "city": "Nadampalaiyam",
+      "city_ascii": "Nadampalaiyam",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.1793,
+      "lng": 77.376,
+      "population": 3458045
+    },
+    {
+      "city": "Lucknow",
+      "city_ascii": "Lucknow",
+      "admin_name": "Uttar Pradesh",
+      "lat": 26.847,
+      "lng": 80.947,
+      "population": 3382000,
+      "capital": "admin"
+    },
+    {
+      "city": "Kannankulam",
+      "city_ascii": "Kannankulam",
+      "admin_name": "Kerala",
+      "lat": 10.4799,
+      "lng": 76.1131,
+      "population": 3243170
+    },
+    {
+      "city": "Mahuakheraganj",
+      "city_ascii": "Mahuakheraganj",
+      "admin_name": "Uttarakhand",
+      "lat": 29.13,
+      "lng": 78.95,
+      "population": 3198982
+    },
+    {
+      "city": "Nagla",
+      "city_ascii": "Nagla",
+      "admin_name": "Uttarakhand",
+      "lat": 29.01,
+      "lng": 79.51,
+      "population": 3198982
+    },
+    {
+      "city": "Jaipur",
+      "city_ascii": "Jaipur",
+      "admin_name": "Rajasthan",
+      "lat": 26.915,
+      "lng": 75.82,
+      "population": 3073350,
+      "capital": "admin"
+    },
+    {
+      "city": "Kottarassheri",
+      "city_ascii": "Kottarassheri",
+      "admin_name": "Kerala",
+      "lat": 10.6167,
+      "lng": 76.5333,
+      "population": 2952254
+    },
+    {
+      "city": "Attadappa",
+      "city_ascii": "Attadappa",
+      "admin_name": "Kerala",
+      "lat": 11.85,
+      "lng": 75.4167,
+      "population": 2615266
+    },
+    {
+      "city": "Barmhan Kalan",
+      "city_ascii": "Barmhan Kalan",
+      "admin_name": "Madhya Pradesh",
+      "lat": 23.0333,
+      "lng": 79.0167,
+      "population": 2537000
+    },
+    {
+      "city": "Gorakhpur",
+      "city_ascii": "Gorakhpur",
+      "admin_name": "Chhattisgarh",
+      "lat": 22.1688,
+      "lng": 81.6042,
+      "population": 2500000
+    },
+    {
+      "city": "Nagpur",
+      "city_ascii": "Nagpur",
+      "admin_name": "Maharashtra",
+      "lat": 21.1497,
+      "lng": 79.0806,
+      "population": 2405665
+    },
+    {
+      "city": "Guwahati",
+      "city_ascii": "Guwahati",
+      "admin_name": "Assam",
+      "lat": 26.1806,
+      "lng": 91.7502,
+      "population": 2376654
+    },
+    {
+      "city": "Ghaziabad",
+      "city_ascii": "Ghaziabad",
+      "admin_name": "Uttar Pradesh",
+      "lat": 28.6667,
+      "lng": 77.4167,
+      "population": 2375820
+    },
+    {
+      "city": "Coimbatore",
+      "city_ascii": "Coimbatore",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.0008,
+      "lng": 76.9633,
+      "population": 2136916
+    },
+    {
+      "city": "Patna",
+      "city_ascii": "Patna",
+      "admin_name": "Bihar",
+      "lat": 25.61,
+      "lng": 85.1414,
+      "population": 2046652,
+      "capital": "admin"
+    },
+    {
+      "city": "Rajkot",
+      "city_ascii": "Rajkot",
+      "admin_name": "Gujarat",
+      "lat": 22.2969,
+      "lng": 70.7984,
+      "population": 2043000
+    },
+    {
+      "city": "Vishakhapatnam",
+      "city_ascii": "Vishakhapatnam",
+      "admin_name": "Andhra Pradesh",
+      "lat": 17.6939,
+      "lng": 83.2922,
+      "population": 2035922
+    },
+    {
+      "city": "Indore",
+      "city_ascii": "Indore",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.7186,
+      "lng": 75.855,
+      "population": 1994397
+    },
+    {
+      "city": "Abhepur",
+      "city_ascii": "Abhepur",
+      "admin_name": "Punjab",
+      "lat": 30.6667,
+      "lng": 76.8333,
+      "population": 1895686
+    },
+    {
+      "city": "Gumanwala",
+      "city_ascii": "Gumanwala",
+      "admin_name": "Uttarakhand",
+      "lat": 29.9333,
+      "lng": 77.9,
+      "population": 1890422
+    },
+    {
+      "city": "Thane",
+      "city_ascii": "Thane",
+      "admin_name": "Maharashtra",
+      "lat": 19.18,
+      "lng": 72.9633,
+      "population": 1886941
+    },
+    {
+      "city": "Bhopal",
+      "city_ascii": "Bhopal",
+      "admin_name": "Madhya Pradesh",
+      "lat": 23.25,
+      "lng": 77.4167,
+      "population": 1798218,
+      "capital": "admin"
+    },
+    {
+      "city": "Agra",
+      "city_ascii": "Agra",
+      "admin_name": "Uttar Pradesh",
+      "lat": 27.18,
+      "lng": 78.02,
+      "population": 1760285
+    },
+    {
+      "city": "Peyanvilai",
+      "city_ascii": "Peyanvilai",
+      "admin_name": "Tamil Nadu",
+      "lat": 8.5674,
+      "lng": 78.1046,
+      "population": 1750176
+    },
+    {
+      "city": "Pimpri-Chinchwad",
+      "city_ascii": "Pimpri-Chinchwad",
+      "admin_name": "Maharashtra",
+      "lat": 18.6278,
+      "lng": 73.8131,
+      "population": 1729320
+    },
+    {
+      "city": "Harbatpur",
+      "city_ascii": "Harbatpur",
+      "admin_name": "Uttarakhand",
+      "lat": 30.45,
+      "lng": 77.73,
+      "population": 1696694
+    },
+    {
+      "city": "Saundhonwali",
+      "city_ascii": "Saundhonwali",
+      "admin_name": "Uttarakhand",
+      "lat": 30.3331,
+      "lng": 77.9608,
+      "population": 1696694
+    },
+    {
+      "city": "Ludhiana",
+      "city_ascii": "Ludhiana",
+      "admin_name": "Punjab",
+      "lat": 30.9083,
+      "lng": 75.8486,
+      "population": 1618879
+    },
+    {
+      "city": "Meerut",
+      "city_ascii": "Meerut",
+      "admin_name": "Uttar Pradesh",
+      "lat": 28.98,
+      "lng": 77.7064,
+      "population": 1571434
+    },
+    {
+      "city": "Madurai",
+      "city_ascii": "Madurai",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.9197,
+      "lng": 78.1194,
+      "population": 1561129,
+      "capital": "minor"
+    },
+    {
+      "city": "Nasik",
+      "city_ascii": "Nasik",
+      "admin_name": "Maharashtra",
+      "lat": 20,
+      "lng": 73.7833,
+      "population": 1486053
+    },
+    {
+      "city": "Faridabad",
+      "city_ascii": "Faridabad",
+      "admin_name": "Haryana",
+      "lat": 28.4167,
+      "lng": 77.3,
+      "population": 1404653
+    },
+    {
+      "city": "Madarpur",
+      "city_ascii": "Madarpur",
+      "admin_name": "Bihar",
+      "lat": 26.227,
+      "lng": 84.6746,
+      "population": 1367765
+    },
+    {
+      "city": "Najafgarh",
+      "city_ascii": "Najafgarh",
+      "admin_name": "Delhi",
+      "lat": 28.6125,
+      "lng": 76.9847,
+      "population": 1365152
+    },
+    {
+      "city": "Jabalpur",
+      "city_ascii": "Jabalpur",
+      "admin_name": "Madhya Pradesh",
+      "lat": 23.1667,
+      "lng": 79.9333,
+      "population": 1267564
+    },
+    {
+      "city": "Kamalwaganja Gaur",
+      "city_ascii": "Kamalwaganja Gaur",
+      "admin_name": "Uttarakhand",
+      "lat": 29.2117,
+      "lng": 79.4654,
+      "population": 1260078
+    },
+    {
+      "city": "Madanpur",
+      "city_ascii": "Madanpur",
+      "admin_name": "Uttarakhand",
+      "lat": 29.326,
+      "lng": 79.1537,
+      "population": 1260078
+    },
+    {
+      "city": "Kalyan",
+      "city_ascii": "Kalyan",
+      "admin_name": "Maharashtra",
+      "lat": 19.25,
+      "lng": 73.15,
+      "population": 1246381
+    },
+    {
+      "city": "Asansol",
+      "city_ascii": "Asansol",
+      "admin_name": "West Bengal",
+      "lat": 23.6833,
+      "lng": 86.9667,
+      "population": 1243414
+    },
+    {
+      "city": "Vijayavada",
+      "city_ascii": "Vijayavada",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.5167,
+      "lng": 80.6167,
+      "population": 1230000
+    },
+    {
+      "city": "Vasai-Virar",
+      "city_ascii": "Vasai-Virar",
+      "admin_name": "Maharashtra",
+      "lat": 19.47,
+      "lng": 72.8,
+      "population": 1221233
+    },
+    {
+      "city": "Varanasi",
+      "city_ascii": "Varanasi",
+      "admin_name": "Uttar Pradesh",
+      "lat": 25.3189,
+      "lng": 83.0128,
+      "population": 1198491
+    },
+    {
+      "city": "Kalleli",
+      "city_ascii": "Kalleli",
+      "admin_name": "Kerala",
+      "lat": 9.2,
+      "lng": 76.8833,
+      "population": 1197412
+    },
+    {
+      "city": "Srinagar",
+      "city_ascii": "Srinagar",
+      "admin_name": "Jammu and Kashmir",
+      "lat": 34.0911,
+      "lng": 74.8061,
+      "population": 1180570,
+      "capital": "admin"
+    },
+    {
+      "city": "Aurangabad",
+      "city_ascii": "Aurangabad",
+      "admin_name": "Maharashtra",
+      "lat": 19.88,
+      "lng": 75.32,
+      "population": 1175116
+    },
+    {
+      "city": "Dhanbad",
+      "city_ascii": "Dhanbad",
+      "admin_name": "Jharkhand",
+      "lat": 23.7928,
+      "lng": 86.435,
+      "population": 1162472
+    },
+    {
+      "city": "Amritsar",
+      "city_ascii": "Amritsar",
+      "admin_name": "Punjab",
+      "lat": 31.6269,
+      "lng": 74.877,
+      "population": 1159227
+    },
+    {
+      "city": "Haora",
+      "city_ascii": "Haora",
+      "admin_name": "West Bengal",
+      "lat": 22.58,
+      "lng": 88.3294,
+      "population": 1077075
+    },
+    {
+      "city": "Ranchi",
+      "city_ascii": "Ranchi",
+      "admin_name": "Jharkhand",
+      "lat": 23.3556,
+      "lng": 85.3347,
+      "population": 1073440,
+      "capital": "admin"
+    },
+    {
+      "city": "Gwalior",
+      "city_ascii": "Gwalior",
+      "admin_name": "Madhya Pradesh",
+      "lat": 26.2125,
+      "lng": 78.1775,
+      "population": 1069276
+    },
+    {
+      "city": "Jodhpur",
+      "city_ascii": "Jodhpur",
+      "admin_name": "Rajasthan",
+      "lat": 26.2944,
+      "lng": 73.0278,
+      "population": 1033918
+    },
+    {
+      "city": "Chandigarh",
+      "city_ascii": "Chandigarh",
+      "admin_name": "Chandigarh",
+      "lat": 30.7364,
+      "lng": 76.7883,
+      "population": 1026459,
+      "capital": "admin"
+    },
+    {
+      "city": "Raipur",
+      "city_ascii": "Raipur",
+      "admin_name": "Chhattisgarh",
+      "lat": 21.2379,
+      "lng": 81.6337,
+      "population": 1010087,
+      "capital": "admin"
+    },
+    {
+      "city": "Warangal",
+      "city_ascii": "Warangal",
+      "admin_name": "Telangana",
+      "lat": 17.9756,
+      "lng": 79.6011,
+      "population": 1005938
+    },
+    {
+      "city": "Kota",
+      "city_ascii": "Kota",
+      "admin_name": "Rajasthan",
+      "lat": 25.18,
+      "lng": 75.83,
+      "population": 1001694
+    },
+    {
+      "city": "Tiruchirappalli",
+      "city_ascii": "Tiruchirappalli",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.8269,
+      "lng": 78.6928,
+      "population": 916857
+    },
+    {
+      "city": "Gurgaon",
+      "city_ascii": "Gurgaon",
+      "admin_name": "Haryana",
+      "lat": 28.4667,
+      "lng": 77.0333,
+      "population": 876824
+    },
+    {
+      "city": "Bhubaneshwar",
+      "city_ascii": "Bhubaneshwar",
+      "admin_name": "Odisha",
+      "lat": 20.295,
+      "lng": 85.825,
+      "population": 837737,
+      "capital": "admin"
+    },
+    {
+      "city": "Bhayandar",
+      "city_ascii": "Bhayandar",
+      "admin_name": "Maharashtra",
+      "lat": 19.3,
+      "lng": 72.85,
+      "population": 814655
+    },
+    {
+      "city": "Narela",
+      "city_ascii": "Narela",
+      "admin_name": "Delhi",
+      "lat": 28.85,
+      "lng": 77.1,
+      "population": 809913
+    },
+    {
+      "city": "Thiruvananthapuram",
+      "city_ascii": "Thiruvananthapuram",
+      "admin_name": "Kerala",
+      "lat": 8.4875,
+      "lng": 76.9525,
+      "population": 743691,
+      "capital": "admin"
+    },
+    {
+      "city": "Dispur",
+      "city_ascii": "Dispur",
+      "admin_name": "Assam",
+      "lat": 26.15,
+      "lng": 91.77,
+      "population": 734577,
+      "capital": "admin"
+    },
+    {
+      "city": "Saharanpur",
+      "city_ascii": "Saharanpur",
+      "admin_name": "Uttar Pradesh",
+      "lat": 29.964,
+      "lng": 77.546,
+      "population": 705478
+    },
+    {
+      "city": "Avadi",
+      "city_ascii": "Avadi",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.1147,
+      "lng": 80.1098,
+      "population": 695000
+    },
+    {
+      "city": "Salem",
+      "city_ascii": "Salem",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.65,
+      "lng": 78.1667,
+      "population": 693236
+    },
+    {
+      "city": "Kochi",
+      "city_ascii": "Kochi",
+      "admin_name": "Kerala",
+      "lat": 9.9667,
+      "lng": 76.2833,
+      "population": 677381
+    },
+    {
+      "city": "Guntur",
+      "city_ascii": "Guntur",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.3,
+      "lng": 80.45,
+      "population": 670073
+    },
+    {
+      "city": "Jamshedpur",
+      "city_ascii": "Jamshedpur",
+      "admin_name": "Jharkhand",
+      "lat": 22.8,
+      "lng": 86.1833,
+      "population": 629659
+    },
+    {
+      "city": "Raurkela",
+      "city_ascii": "Raurkela",
+      "admin_name": "Odisha",
+      "lat": 22.2492,
+      "lng": 84.8828,
+      "population": 552970
+    },
+    {
+      "city": "Surappattu",
+      "city_ascii": "Surappattu",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.3359,
+      "lng": 79.8726,
+      "population": 517589
+    },
+    {
+      "city": "Loni",
+      "city_ascii": "Loni",
+      "admin_name": "Uttar Pradesh",
+      "lat": 28.75,
+      "lng": 77.28,
+      "population": 516082
+    },
+    {
+      "city": "Ulhasnagar",
+      "city_ascii": "Ulhasnagar",
+      "admin_name": "Maharashtra",
+      "lat": 19.2167,
+      "lng": 73.15,
+      "population": 506098
+    },
+    {
+      "city": "Vellore",
+      "city_ascii": "Vellore",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.9165,
+      "lng": 79.1325,
+      "population": 484690
+    },
+    {
+      "city": "Tirunelveli",
+      "city_ascii": "Tirunelveli",
+      "admin_name": "Tamil Nadu",
+      "lat": 8.7139,
+      "lng": 77.7567,
+      "population": 474838
+    },
+    {
+      "city": "Gaya",
+      "city_ascii": "Gaya",
+      "admin_name": "Bihar",
+      "lat": 24.75,
+      "lng": 85.0167,
+      "population": 474093
+    },
+    {
+      "city": "Ambattur",
+      "city_ascii": "Ambattur",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0983,
+      "lng": 80.1622,
+      "population": 466205
+    },
+    {
+      "city": "Tiruppur",
+      "city_ascii": "Tiruppur",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.1085,
+      "lng": 77.3411,
+      "population": 444543
+    },
+    {
+      "city": "Thoothukudi",
+      "city_ascii": "Thoothukudi",
+      "admin_name": "Tamil Nadu",
+      "lat": 8.7642,
+      "lng": 78.1348,
+      "population": 410760
+    },
+    {
+      "city": "Salt Lake City",
+      "city_ascii": "Salt Lake City",
+      "admin_name": "West Bengal",
+      "lat": 22.61,
+      "lng": 88.4,
+      "population": 403316
+    },
+    {
+      "city": "Munro Turuttu",
+      "city_ascii": "Munro Turuttu",
+      "admin_name": "Kerala",
+      "lat": 8.9884,
+      "lng": 76.5737,
+      "population": 397419
+    },
+    {
+      "city": "Quilon",
+      "city_ascii": "Quilon",
+      "admin_name": "Kerala",
+      "lat": 8.8853,
+      "lng": 76.5864,
+      "population": 397419
+    },
+    {
+      "city": "Bhatpara",
+      "city_ascii": "Bhatpara",
+      "admin_name": "West Bengal",
+      "lat": 22.8664,
+      "lng": 88.4011,
+      "population": 386019
+    },
+    {
+      "city": "Kakinada",
+      "city_ascii": "Kakinada",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.9333,
+      "lng": 82.2167,
+      "population": 384182
+    },
+    {
+      "city": "Panihati",
+      "city_ascii": "Panihati",
+      "admin_name": "West Bengal",
+      "lat": 22.69,
+      "lng": 88.37,
+      "population": 377347
+    },
+    {
+      "city": "Brahmapur",
+      "city_ascii": "Brahmapur",
+      "admin_name": "Odisha",
+      "lat": 19.32,
+      "lng": 84.78,
+      "population": 355823
+    },
+    {
+      "city": "Rajahmundry",
+      "city_ascii": "Rajahmundry",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.9833,
+      "lng": 81.7833,
+      "population": 341831
+    },
+    {
+      "city": "Muzaffarpur",
+      "city_ascii": "Muzaffarpur",
+      "admin_name": "Bihar",
+      "lat": 26.12,
+      "lng": 85.3833,
+      "population": 333200
+    },
+    {
+      "city": "Kamarhati",
+      "city_ascii": "Kamarhati",
+      "admin_name": "West Bengal",
+      "lat": 22.67,
+      "lng": 88.37,
+      "population": 330211
+    },
+    {
+      "city": "Kulti",
+      "city_ascii": "Kulti",
+      "admin_name": "West Bengal",
+      "lat": 23.73,
+      "lng": 86.8399,
+      "population": 313809
+    },
+    {
+      "city": "Oulgaret",
+      "city_ascii": "Oulgaret",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.957,
+      "lng": 79.7737,
+      "population": 300104
+    },
+    {
+      "city": "Yelahanka",
+      "city_ascii": "Yelahanka",
+      "admin_name": "Karnataka",
+      "lat": 13.1139,
+      "lng": 77.5983,
+      "population": 300000
+    },
+    {
+      "city": "Darbhanga",
+      "city_ascii": "Darbhanga",
+      "admin_name": "Bihar",
+      "lat": 26.157,
+      "lng": 85.8995,
+      "population": 296039
+    },
+    {
+      "city": "Chunchura",
+      "city_ascii": "Chunchura",
+      "admin_name": "West Bengal",
+      "lat": 22.8956,
+      "lng": 88.4025,
+      "population": 288090
+    },
+    {
+      "city": "Imphal",
+      "city_ascii": "Imphal",
+      "admin_name": "Manipur",
+      "lat": 24.82,
+      "lng": 93.95,
+      "population": 268243,
+      "capital": "admin"
+    },
+    {
+      "city": "Arrah",
+      "city_ascii": "Arrah",
+      "admin_name": "Bihar",
+      "lat": 25.5631,
+      "lng": 84.6711,
+      "population": 261430
+    },
+    {
+      "city": "Amarnath",
+      "city_ascii": "Amarnath",
+      "admin_name": "Maharashtra",
+      "lat": 19.209,
+      "lng": 73.186,
+      "population": 253475
+    },
+    {
+      "city": "Begusarai",
+      "city_ascii": "Begusarai",
+      "admin_name": "Bihar",
+      "lat": 25.42,
+      "lng": 86.13,
+      "population": 252008
+    },
+    {
+      "city": "New Delhi",
+      "city_ascii": "New Delhi",
+      "admin_name": "Delhi",
+      "lat": 28.6139,
+      "lng": 77.2089,
+      "population": 249998,
+      "capital": "primary"
+    },
+    {
+      "city": "Tiruvottiyur",
+      "city_ascii": "Tiruvottiyur",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.1667,
+      "lng": 80.3,
+      "population": 249446
+    },
+    {
+      "city": "Puducherry",
+      "city_ascii": "Puducherry",
+      "admin_name": "Puducherry",
+      "lat": 11.93,
+      "lng": 79.83,
+      "population": 244377,
+      "capital": "admin"
+    },
+    {
+      "city": "Alleppey",
+      "city_ascii": "Alleppey",
+      "admin_name": "Kerala",
+      "lat": 9.4978,
+      "lng": 76.3286,
+      "population": 240991
+    },
+    {
+      "city": "Katihar",
+      "city_ascii": "Katihar",
+      "admin_name": "Bihar",
+      "lat": 25.5385,
+      "lng": 87.5704,
+      "population": 240565
+    },
+    {
+      "city": "Alwal",
+      "city_ascii": "Alwal",
+      "admin_name": "Telangana",
+      "lat": 17.503,
+      "lng": 78.507,
+      "population": 240000
+    },
+    {
+      "city": "Wapi",
+      "city_ascii": "Wapi",
+      "admin_name": "Gujarat",
+      "lat": 20.3667,
+      "lng": 72.9,
+      "population": 230000
+    },
+    {
+      "city": "Thanjavur",
+      "city_ascii": "Thanjavur",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.787,
+      "lng": 79.1378,
+      "population": 222943
+    },
+    {
+      "city": "Pallavaram",
+      "city_ascii": "Pallavaram",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.9677,
+      "lng": 80.1581,
+      "population": 215417
+    },
+    {
+      "city": "Secunderabad",
+      "city_ascii": "Secunderabad",
+      "admin_name": "Telangana",
+      "lat": 17.45,
+      "lng": 78.5,
+      "population": 213698
+    },
+    {
+      "city": "Chapra",
+      "city_ascii": "Chapra",
+      "admin_name": "Bihar",
+      "lat": 25.7808,
+      "lng": 84.7308,
+      "population": 212955
+    },
+    {
+      "city": "Kharagpur",
+      "city_ascii": "Kharagpur",
+      "admin_name": "West Bengal",
+      "lat": 22.3302,
+      "lng": 87.3237,
+      "population": 207604
+    },
+    {
+      "city": "Dindigul",
+      "city_ascii": "Dindigul",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.3673,
+      "lng": 77.9803,
+      "population": 207327
+    },
+    {
+      "city": "Shimla",
+      "city_ascii": "Shimla",
+      "admin_name": "Himachal Pradesh",
+      "lat": 31.1033,
+      "lng": 77.1722,
+      "population": 206575,
+      "capital": "admin"
+    },
+    {
+      "city": "Nangloi Jat",
+      "city_ascii": "Nangloi Jat",
+      "admin_name": "Delhi",
+      "lat": 28.6833,
+      "lng": 77.0667,
+      "population": 205596
+    },
+    {
+      "city": "Puri",
+      "city_ascii": "Puri",
+      "admin_name": "Odisha",
+      "lat": 19.8,
+      "lng": 85.8167,
+      "population": 201026
+    },
+    {
+      "city": "Baharampur",
+      "city_ascii": "Baharampur",
+      "admin_name": "West Bengal",
+      "lat": 24.1,
+      "lng": 88.25,
+      "population": 195223
+    },
+    {
+      "city": "Murtazabad",
+      "city_ascii": "Murtazabad",
+      "admin_name": "Uttar Pradesh",
+      "lat": 28.7111,
+      "lng": 77.2688,
+      "population": 189117
+    },
+    {
+      "city": "Ittikara",
+      "city_ascii": "Ittikara",
+      "admin_name": "Kerala",
+      "lat": 8.8633,
+      "lng": 76.6972,
+      "population": 185008
+    },
+    {
+      "city": "Dinapore",
+      "city_ascii": "Dinapore",
+      "admin_name": "Bihar",
+      "lat": 25.6333,
+      "lng": 85.05,
+      "population": 182241
+    },
+    {
+      "city": "Tambaram",
+      "city_ascii": "Tambaram",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.831,
+      "lng": 80.0459,
+      "population": 182071
+    },
+    {
+      "city": "Shrirampur",
+      "city_ascii": "Shrirampur",
+      "admin_name": "West Bengal",
+      "lat": 22.75,
+      "lng": 88.34,
+      "population": 181842
+    },
+    {
+      "city": "Hugli",
+      "city_ascii": "Hugli",
+      "admin_name": "West Bengal",
+      "lat": 22.9089,
+      "lng": 88.3967,
+      "population": 179931
+    },
+    {
+      "city": "Vypin",
+      "city_ascii": "Vypin",
+      "admin_name": "Kerala",
+      "lat": 9.9833,
+      "lng": 76.2417,
+      "population": 176567
+    },
+    {
+      "city": "Mauli",
+      "city_ascii": "Mauli",
+      "admin_name": "Punjab",
+      "lat": 30.7194,
+      "lng": 76.7181,
+      "population": 176152
+    },
+    {
+      "city": "Cuddalore",
+      "city_ascii": "Cuddalore",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.748,
+      "lng": 79.7714,
+      "population": 173676
+    },
+    {
+      "city": "Chandannagar",
+      "city_ascii": "Chandannagar",
+      "admin_name": "West Bengal",
+      "lat": 22.8671,
+      "lng": 88.3674,
+      "population": 166867
+    },
+    {
+      "city": "Kanchipuram",
+      "city_ascii": "Kanchipuram",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.8342,
+      "lng": 79.7036,
+      "population": 164265
+    },
+    {
+      "city": "Sultanpur Mazra",
+      "city_ascii": "Sultanpur Mazra",
+      "admin_name": "Delhi",
+      "lat": 28.6906,
+      "lng": 77.0778,
+      "population": 163716
+    },
+    {
+      "city": "Erode",
+      "city_ascii": "Erode",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.341,
+      "lng": 77.7172,
+      "population": 157101
+    },
+    {
+      "city": "Krishnanagar",
+      "city_ascii": "Krishnanagar",
+      "admin_name": "West Bengal",
+      "lat": 23.4,
+      "lng": 88.5,
+      "population": 153062
+    },
+    {
+      "city": "Barakpur",
+      "city_ascii": "Barakpur",
+      "admin_name": "West Bengal",
+      "lat": 22.7642,
+      "lng": 88.3776,
+      "population": 152783
+    },
+    {
+      "city": "Bhalswa Jahangirpur",
+      "city_ascii": "Bhalswa Jahangirpur",
+      "admin_name": "Delhi",
+      "lat": 28.7354,
+      "lng": 77.1638,
+      "population": 151427
+    },
+    {
+      "city": "Hajipur",
+      "city_ascii": "Hajipur",
+      "admin_name": "Bihar",
+      "lat": 25.68,
+      "lng": 85.22,
+      "population": 147688
+    },
+    {
+      "city": "Tiruvannamalai",
+      "city_ascii": "Tiruvannamalai",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.2253,
+      "lng": 79.0747,
+      "population": 144683
+    },
+    {
+      "city": "Shillong",
+      "city_ascii": "Shillong",
+      "admin_name": "Meghalaya",
+      "lat": 25.5744,
+      "lng": 91.8789,
+      "population": 143229,
+      "capital": "admin"
+    },
+    {
+      "city": "Malkajgiri",
+      "city_ascii": "Malkajgiri",
+      "admin_name": "Telangana",
+      "lat": 17.4483,
+      "lng": 78.5292,
+      "population": 141175
+    },
+    {
+      "city": "Kumbakonam",
+      "city_ascii": "Kumbakonam",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.9621,
+      "lng": 79.388,
+      "population": 140056
+    },
+    {
+      "city": "Dehri",
+      "city_ascii": "Dehri",
+      "admin_name": "Bihar",
+      "lat": 24.87,
+      "lng": 84.18,
+      "population": 137231
+    },
+    {
+      "city": "Dalupura",
+      "city_ascii": "Dalupura",
+      "admin_name": "Delhi",
+      "lat": 28.6067,
+      "lng": 77.3189,
+      "population": 132628
+    },
+    {
+      "city": "Rajapalayam",
+      "city_ascii": "Rajapalayam",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.4511,
+      "lng": 77.556,
+      "population": 130119
+    },
+    {
+      "city": "Mandoli",
+      "city_ascii": "Mandoli",
+      "admin_name": "Delhi",
+      "lat": 28.7075,
+      "lng": 77.3003,
+      "population": 120417
+    },
+    {
+      "city": "Balasore",
+      "city_ascii": "Balasore",
+      "admin_name": "Odisha",
+      "lat": 21.5033,
+      "lng": 86.925,
+      "population": 118162
+    },
+    {
+      "city": "Baripada",
+      "city_ascii": "Baripada",
+      "admin_name": "Odisha",
+      "lat": 21.935,
+      "lng": 86.7214,
+      "population": 116874
+    },
+    {
+      "city": "Titagarh",
+      "city_ascii": "Titagarh",
+      "admin_name": "West Bengal",
+      "lat": 22.74,
+      "lng": 88.37,
+      "population": 116541
+    },
+    {
+      "city": "Dam Dam",
+      "city_ascii": "Dam Dam",
+      "admin_name": "West Bengal",
+      "lat": 22.637,
+      "lng": 88.4121,
+      "population": 114786
+    },
+    {
+      "city": "Kalianpur",
+      "city_ascii": "Kalianpur",
+      "admin_name": "Uttar Pradesh",
+      "lat": 26.5191,
+      "lng": 80.2498,
+      "population": 112014
+    },
+    {
+      "city": "Delhi Cantonment",
+      "city_ascii": "Delhi Cantonment",
+      "admin_name": "Delhi",
+      "lat": 28.5903,
+      "lng": 77.1319,
+      "population": 110351
+    },
+    {
+      "city": "Khardah",
+      "city_ascii": "Khardah",
+      "admin_name": "West Bengal",
+      "lat": 22.72,
+      "lng": 88.38,
+      "population": 108496
+    },
+    {
+      "city": "Sitamarhi",
+      "city_ascii": "Sitamarhi",
+      "admin_name": "Bihar",
+      "lat": 26.6,
+      "lng": 85.48,
+      "population": 106093
+    },
+    {
+      "city": "Jamalpur",
+      "city_ascii": "Jamalpur",
+      "admin_name": "Bihar",
+      "lat": 25.3,
+      "lng": 86.5,
+      "population": 105221
+    },
+    {
+      "city": "Bansbaria",
+      "city_ascii": "Bansbaria",
+      "admin_name": "West Bengal",
+      "lat": 22.97,
+      "lng": 88.4,
+      "population": 103920
+    },
+    {
+      "city": "Nagapattinam",
+      "city_ascii": "Nagapattinam",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.7656,
+      "lng": 79.8447,
+      "population": 102905
+    },
+    {
+      "city": "Villupuram",
+      "city_ascii": "Villupuram",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.9401,
+      "lng": 79.486,
+      "population": 96091
+    },
+    {
+      "city": "Dhulian",
+      "city_ascii": "Dhulian",
+      "admin_name": "West Bengal",
+      "lat": 24.68,
+      "lng": 87.97,
+      "population": 95706
+    },
+    {
+      "city": "Tiruchengode",
+      "city_ascii": "Tiruchengode",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.3772,
+      "lng": 77.8936,
+      "population": 95000
+    },
+    {
+      "city": "Theni",
+      "city_ascii": "Theni",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.0104,
+      "lng": 77.4768,
+      "population": 94453
+    },
+    {
+      "city": "Tripunittura",
+      "city_ascii": "Tripunittura",
+      "admin_name": "Kerala",
+      "lat": 9.9487,
+      "lng": 76.3464,
+      "population": 92521
+    },
+    {
+      "city": "Udagamandalam",
+      "city_ascii": "Udagamandalam",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.4086,
+      "lng": 76.693,
+      "population": 88430
+    },
+    {
+      "city": "Brajarajnagar",
+      "city_ascii": "Brajarajnagar",
+      "admin_name": "Odisha",
+      "lat": 21.82,
+      "lng": 83.92,
+      "population": 80403
+    },
+    {
+      "city": "Baj Baj",
+      "city_ascii": "Baj Baj",
+      "admin_name": "West Bengal",
+      "lat": 22.4737,
+      "lng": 88.1739,
+      "population": 76837
+    },
+    {
+      "city": "Krishnagiri",
+      "city_ascii": "Krishnagiri",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.5186,
+      "lng": 78.214,
+      "population": 71635
+    },
+    {
+      "city": "Kalamasseri",
+      "city_ascii": "Kalamasseri",
+      "admin_name": "Kerala",
+      "lat": 10.0614,
+      "lng": 76.3263,
+      "population": 70776
+    },
+    {
+      "city": "Karur",
+      "city_ascii": "Karur",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.9602,
+      "lng": 78.0766,
+      "population": 70588
+    },
+    {
+      "city": "Palani",
+      "city_ascii": "Palani",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.4506,
+      "lng": 77.521,
+      "population": 70467
+    },
+    {
+      "city": "Dharmapuri",
+      "city_ascii": "Dharmapuri",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.1269,
+      "lng": 78.1582,
+      "population": 68767
+    },
+    {
+      "city": "Siuri",
+      "city_ascii": "Siuri",
+      "admin_name": "West Bengal",
+      "lat": 23.9167,
+      "lng": 87.5333,
+      "population": 67864
+    },
+    {
+      "city": "Tamluk",
+      "city_ascii": "Tamluk",
+      "admin_name": "West Bengal",
+      "lat": 22.3,
+      "lng": 87.9167,
+      "population": 65306
+    },
+    {
+      "city": "Chidambaram",
+      "city_ascii": "Chidambaram",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.399,
+      "lng": 79.693,
+      "population": 62153
+    },
+    {
+      "city": "Ramanathapuram",
+      "city_ascii": "Ramanathapuram",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.3636,
+      "lng": 78.8395,
+      "population": 61202
+    },
+    {
+      "city": "Poonamallee",
+      "city_ascii": "Poonamallee",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0465,
+      "lng": 80.11,
+      "population": 56237
+    },
+    {
+      "city": "Namakkal",
+      "city_ascii": "Namakkal",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.219,
+      "lng": 78.1674,
+      "population": 55212
+    },
+    {
+      "city": "Nerkunram",
+      "city_ascii": "Nerkunram",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0619,
+      "lng": 80.2094,
+      "population": 52570
+    },
+    {
+      "city": "Tirupparangunram",
+      "city_ascii": "Tirupparangunram",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.8815,
+      "lng": 78.0731,
+      "population": 51543
+    },
+    {
+      "city": "Rameswaram",
+      "city_ascii": "Rameswaram",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.2876,
+      "lng": 79.3129,
+      "population": 44856
+    },
+    {
+      "city": "Daman",
+      "city_ascii": "Daman",
+      "admin_name": "Dadra and Nagar Haveli and Daman and Diu",
+      "lat": 20.4169,
+      "lng": 72.834,
+      "population": 44282,
+      "capital": "admin"
+    },
+    {
+      "city": "Diamond Harbour",
+      "city_ascii": "Diamond Harbour",
+      "admin_name": "West Bengal",
+      "lat": 22.1927,
+      "lng": 88.1895,
+      "population": 41802
+    },
+    {
+      "city": "Kendraparha",
+      "city_ascii": "Kendraparha",
+      "admin_name": "Odisha",
+      "lat": 20.5,
+      "lng": 86.4167,
+      "population": 41404
+    },
+    {
+      "city": "Sivaganga",
+      "city_ascii": "Sivaganga",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.8433,
+      "lng": 78.4809,
+      "population": 40298
+    },
+    {
+      "city": "Mayyanad",
+      "city_ascii": "Mayyanad",
+      "admin_name": "Kerala",
+      "lat": 8.8389,
+      "lng": 76.6467,
+      "population": 40039
+    },
+    {
+      "city": "Pujali",
+      "city_ascii": "Pujali",
+      "admin_name": "West Bengal",
+      "lat": 22.4601,
+      "lng": 88.134,
+      "population": 37047
+    },
+    {
+      "city": "Srirangam",
+      "city_ascii": "Srirangam",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.862,
+      "lng": 78.6837,
+      "population": 36000
+    },
+    {
+      "city": "Perunad",
+      "city_ascii": "Perunad",
+      "admin_name": "Kerala",
+      "lat": 8.9563,
+      "lng": 76.64,
+      "population": 35173
+    },
+    {
+      "city": "Khagaul",
+      "city_ascii": "Khagaul",
+      "admin_name": "Bihar",
+      "lat": 25.58,
+      "lng": 85.05,
+      "population": 34364
+    },
+    {
+      "city": "Edappalli",
+      "city_ascii": "Edappalli",
+      "admin_name": "Kerala",
+      "lat": 9.8167,
+      "lng": 76.3,
+      "population": 33829
+    },
+    {
+      "city": "Mannanchori",
+      "city_ascii": "Mannanchori",
+      "admin_name": "Kerala",
+      "lat": 9.5764,
+      "lng": 76.3481,
+      "population": 32139
+    },
+    {
+      "city": "Dharampur",
+      "city_ascii": "Dharampur",
+      "admin_name": "Haryana",
+      "lat": 28.6,
+      "lng": 76.99,
+      "population": 30856
+    },
+    {
+      "city": "Sankrail",
+      "city_ascii": "Sankrail",
+      "admin_name": "West Bengal",
+      "lat": 22.57,
+      "lng": 88.24,
+      "population": 29114
+    },
+    {
+      "city": "Kantai",
+      "city_ascii": "Kantai",
+      "admin_name": "Bihar",
+      "lat": 26.2142,
+      "lng": 85.2975,
+      "population": 27549
+    },
+    {
+      "city": "Nasriganj",
+      "city_ascii": "Nasriganj",
+      "admin_name": "Bihar",
+      "lat": 25.05,
+      "lng": 84.3333,
+      "population": 27490
+    },
+    {
+      "city": "Elangunnapuzha",
+      "city_ascii": "Elangunnapuzha",
+      "admin_name": "Kerala",
+      "lat": 10.0167,
+      "lng": 76.2167,
+      "population": 26997
+    },
+    {
+      "city": "Dalsingh Sarai",
+      "city_ascii": "Dalsingh Sarai",
+      "admin_name": "Bihar",
+      "lat": 25.668,
+      "lng": 85.8364,
+      "population": 26658
+    },
+    {
+      "city": "Panchla",
+      "city_ascii": "Panchla",
+      "admin_name": "West Bengal",
+      "lat": 22.54,
+      "lng": 88.14,
+      "population": 26432
+    },
+    {
+      "city": "Vayakkalattu",
+      "city_ascii": "Vayakkalattu",
+      "admin_name": "Kerala",
+      "lat": 8.5285,
+      "lng": 77.1035,
+      "population": 26384
+    },
+    {
+      "city": "Koelwar",
+      "city_ascii": "Koelwar",
+      "admin_name": "Bihar",
+      "lat": 25.5805,
+      "lng": 84.7975,
+      "population": 26304
+    },
+    {
+      "city": "Baruni",
+      "city_ascii": "Baruni",
+      "admin_name": "Bihar",
+      "lat": 25.4751,
+      "lng": 85.9681,
+      "population": 26117
+    },
+    {
+      "city": "Kola",
+      "city_ascii": "Kola",
+      "admin_name": "West Bengal",
+      "lat": 22.43,
+      "lng": 87.87,
+      "population": 25191
+    },
+    {
+      "city": "Sahibpur Kamal",
+      "city_ascii": "Sahibpur Kamal",
+      "admin_name": "Bihar",
+      "lat": 25.4167,
+      "lng": 86.3901,
+      "population": 25128
+    },
+    {
+      "city": "Ayirurpara",
+      "city_ascii": "Ayirurpara",
+      "admin_name": "Kerala",
+      "lat": 8.503,
+      "lng": 76.9522,
+      "population": 25000
+    },
+    {
+      "city": "Edavanakad",
+      "city_ascii": "Edavanakad",
+      "admin_name": "Kerala",
+      "lat": 10.015,
+      "lng": 76.22,
+      "population": 24856
+    },
+    {
+      "city": "Maharajgani",
+      "city_ascii": "Maharajgani",
+      "admin_name": "Bihar",
+      "lat": 26.1075,
+      "lng": 84.5025,
+      "population": 24282
+    },
+    {
+      "city": "Madangir",
+      "city_ascii": "Madangir",
+      "admin_name": "Delhi",
+      "lat": 28.57,
+      "lng": 77.23,
+      "population": 23448
+    },
+    {
+      "city": "Madappalli",
+      "city_ascii": "Madappalli",
+      "admin_name": "Kerala",
+      "lat": 9.0833,
+      "lng": 76.5333,
+      "population": 23341
+    },
+    {
+      "city": "Mulampilli",
+      "city_ascii": "Mulampilli",
+      "admin_name": "Kerala",
+      "lat": 10.1083,
+      "lng": 76.4167,
+      "population": 23272
+    },
+    {
+      "city": "Kanyakumari",
+      "city_ascii": "Kanyakumari",
+      "admin_name": "Tamil Nadu",
+      "lat": 8.0883,
+      "lng": 77.5385,
+      "population": 22453
+    },
+    {
+      "city": "Peringuzha",
+      "city_ascii": "Peringuzha",
+      "admin_name": "Kerala",
+      "lat": 9.9667,
+      "lng": 76.4167,
+      "population": 22378
+    },
+    {
+      "city": "Pampur",
+      "city_ascii": "Pampur",
+      "admin_name": "Jammu and Kashmir",
+      "lat": 34.02,
+      "lng": 74.93,
+      "population": 21680
+    },
+    {
+      "city": "Kanke",
+      "city_ascii": "Kanke",
+      "admin_name": "Jharkhand",
+      "lat": 23.4348,
+      "lng": 85.3206,
+      "population": 21650
+    },
+    {
+      "city": "Raja Pakar",
+      "city_ascii": "Raja Pakar",
+      "admin_name": "Bihar",
+      "lat": 25.735,
+      "lng": 85.3376,
+      "population": 21644
+    },
+    {
+      "city": "Palliman",
+      "city_ascii": "Palliman",
+      "admin_name": "Kerala",
+      "lat": 8.9,
+      "lng": 76.7139,
+      "population": 20677
+    },
+    {
+      "city": "Kandakkadava",
+      "city_ascii": "Kandakkadava",
+      "admin_name": "Kerala",
+      "lat": 9.7,
+      "lng": 76.3,
+      "population": 20487
+    },
+    {
+      "city": "Sohana",
+      "city_ascii": "Sohana",
+      "admin_name": "Punjab",
+      "lat": 30.6833,
+      "lng": 76.7,
+      "population": 20000
+    },
+    {
+      "city": "Khizrpur",
+      "city_ascii": "Khizrpur",
+      "admin_name": "Punjab",
+      "lat": 30.5843,
+      "lng": 76.7572,
+      "population": 19817
+    },
+    {
+      "city": "Anghad",
+      "city_ascii": "Anghad",
+      "admin_name": "Gujarat",
+      "lat": 22.3913,
+      "lng": 72.9946,
+      "population": 19805
+    },
+    {
+      "city": "Oruvadalkotta",
+      "city_ascii": "Oruvadalkotta",
+      "admin_name": "Kerala",
+      "lat": 8.4778,
+      "lng": 77.1347,
+      "population": 19345
+    },
+    {
+      "city": "Dumra",
+      "city_ascii": "Dumra",
+      "admin_name": "Bihar",
+      "lat": 26.5671,
+      "lng": 85.5204,
+      "population": 19186
+    },
+    {
+      "city": "Perunturuttu",
+      "city_ascii": "Perunturuttu",
+      "admin_name": "Kerala",
+      "lat": 9.6333,
+      "lng": 76.5667,
+      "population": 18691
+    },
+    {
+      "city": "Dumjor",
+      "city_ascii": "Dumjor",
+      "admin_name": "West Bengal",
+      "lat": 22.64,
+      "lng": 88.22,
+      "population": 18433
+    },
+    {
+      "city": "Mannara",
+      "city_ascii": "Mannara",
+      "admin_name": "Kerala",
+      "lat": 8.5614,
+      "lng": 77.1263,
+      "population": 18343
+    },
+    {
+      "city": "Ulao",
+      "city_ascii": "Ulao",
+      "admin_name": "Bihar",
+      "lat": 25.4165,
+      "lng": 86.0936,
+      "population": 18020
+    },
+    {
+      "city": "Vandalur",
+      "city_ascii": "Vandalur",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.8924,
+      "lng": 80.0808,
+      "population": 17655
+    },
+    {
+      "city": "Lakhnaur",
+      "city_ascii": "Lakhnaur",
+      "admin_name": "Bihar",
+      "lat": 26.202,
+      "lng": 86.309,
+      "population": 17442
+    },
+    {
+      "city": "Cherakara",
+      "city_ascii": "Cherakara",
+      "admin_name": "Kerala",
+      "lat": 8.9,
+      "lng": 76.5833,
+      "population": 17342
+    },
+    {
+      "city": "Usmanpur",
+      "city_ascii": "Usmanpur",
+      "admin_name": "Jharkhand",
+      "lat": 24.7367,
+      "lng": 87.8676,
+      "population": 17085
+    },
+    {
+      "city": "Khusropur",
+      "city_ascii": "Khusropur",
+      "admin_name": "Bihar",
+      "lat": 25.4817,
+      "lng": 85.3849,
+      "population": 16109
+    },
+    {
+      "city": "Valavakattumula",
+      "city_ascii": "Valavakattumula",
+      "admin_name": "Kerala",
+      "lat": 9.98,
+      "lng": 76.52,
+      "population": 15966
+    },
+    {
+      "city": "Tillor Khurd",
+      "city_ascii": "Tillor Khurd",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.617,
+      "lng": 75.948,
+      "population": 15000
+    },
+    {
+      "city": "Garhpura",
+      "city_ascii": "Garhpura",
+      "admin_name": "Bihar",
+      "lat": 25.6638,
+      "lng": 86.1818,
+      "population": 14741
+    },
+    {
+      "city": "Tonakkal",
+      "city_ascii": "Tonakkal",
+      "admin_name": "Kerala",
+      "lat": 8.6312,
+      "lng": 76.9555,
+      "population": 13567
+    },
+    {
+      "city": "Jamira",
+      "city_ascii": "Jamira",
+      "admin_name": "Bihar",
+      "lat": 25.5535,
+      "lng": 84.7063,
+      "population": 13469
+    },
+    {
+      "city": "Dundigal",
+      "city_ascii": "Dundigal",
+      "admin_name": "Telangana",
+      "lat": 17.5781,
+      "lng": 78.4288,
+      "population": 13465
+    },
+    {
+      "city": "Ayodhyapattanam",
+      "city_ascii": "Ayodhyapattanam",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.6755,
+      "lng": 78.2409,
+      "population": 13122
+    },
+    {
+      "city": "Neykkarappatti",
+      "city_ascii": "Neykkarappatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.6225,
+      "lng": 78.1058,
+      "population": 13027
+    },
+    {
+      "city": "Bandlaguda",
+      "city_ascii": "Bandlaguda",
+      "admin_name": "Telangana",
+      "lat": 17.3543,
+      "lng": 78.3853,
+      "population": 12734
+    },
+    {
+      "city": "Bakhtawarpur",
+      "city_ascii": "Bakhtawarpur",
+      "admin_name": "Delhi",
+      "lat": 28.8233,
+      "lng": 77.1717,
+      "population": 12716
+    },
+    {
+      "city": "Desri",
+      "city_ascii": "Desri",
+      "admin_name": "Bihar",
+      "lat": 25.6691,
+      "lng": 85.4082,
+      "population": 12324
+    },
+    {
+      "city": "Mugalivakkam",
+      "city_ascii": "Mugalivakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0205,
+      "lng": 80.1653,
+      "population": 12083
+    },
+    {
+      "city": "Khanpur",
+      "city_ascii": "Khanpur",
+      "admin_name": "Bihar",
+      "lat": 25.8572,
+      "lng": 85.933,
+      "population": 12066
+    },
+    {
+      "city": "Perumbakkam",
+      "city_ascii": "Perumbakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0133,
+      "lng": 80.143,
+      "population": 11551
+    },
+    {
+      "city": "Pakkam",
+      "city_ascii": "Pakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.1436,
+      "lng": 80.028,
+      "population": 11509
+    },
+    {
+      "city": "Manappakkam",
+      "city_ascii": "Manappakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0108,
+      "lng": 80.1686,
+      "population": 11358
+    },
+    {
+      "city": "Akola",
+      "city_ascii": "Akola",
+      "admin_name": "Uttar Pradesh",
+      "lat": 27.0655,
+      "lng": 77.8808,
+      "population": 11351
+    },
+    {
+      "city": "Chhabila",
+      "city_ascii": "Chhabila",
+      "admin_name": "Bihar",
+      "lat": 26.2477,
+      "lng": 85.9927,
+      "population": 11054
+    },
+    {
+      "city": "Bagnan",
+      "city_ascii": "Bagnan",
+      "admin_name": "West Bengal",
+      "lat": 22.47,
+      "lng": 87.97,
+      "population": 10996
+    },
+    {
+      "city": "Nao Kothi",
+      "city_ascii": "Nao Kothi",
+      "admin_name": "Bihar",
+      "lat": 25.5196,
+      "lng": 86.1954,
+      "population": 10946
+    },
+    {
+      "city": "Nirkunnam",
+      "city_ascii": "Nirkunnam",
+      "admin_name": "Kerala",
+      "lat": 9.35,
+      "lng": 76.5167,
+      "population": 10770
+    },
+    {
+      "city": "Panamarattuppatti",
+      "city_ascii": "Panamarattuppatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.562,
+      "lng": 78.1649,
+      "population": 10725
+    },
+    {
+      "city": "Begampur",
+      "city_ascii": "Begampur",
+      "admin_name": "West Bengal",
+      "lat": 22.74,
+      "lng": 88.24,
+      "population": 10487
+    },
+    {
+      "city": "Nipania",
+      "city_ascii": "Nipania",
+      "admin_name": "Bihar",
+      "lat": 21.85,
+      "lng": 82.0333,
+      "population": 10000
+    },
+    {
+      "city": "Bhawanipur",
+      "city_ascii": "Bhawanipur",
+      "admin_name": "Bihar",
+      "lat": 26.2385,
+      "lng": 86.0995,
+      "population": 9971
+    },
+    {
+      "city": "Perumbalam",
+      "city_ascii": "Perumbalam",
+      "admin_name": "Kerala",
+      "lat": 9.8462,
+      "lng": 76.3591,
+      "population": 9733
+    },
+    {
+      "city": "Masar",
+      "city_ascii": "Masar",
+      "admin_name": "Bihar",
+      "lat": 25.5577,
+      "lng": 84.5767,
+      "population": 9613
+    },
+    {
+      "city": "Kondaparti",
+      "city_ascii": "Kondaparti",
+      "admin_name": "Telangana",
+      "lat": 17.9219,
+      "lng": 79.5373,
+      "population": 9551
+    },
+    {
+      "city": "Hesarghatta",
+      "city_ascii": "Hesarghatta",
+      "admin_name": "Karnataka",
+      "lat": 13.1391,
+      "lng": 77.4783,
+      "population": 9485
+    },
+    {
+      "city": "Mamidipalli",
+      "city_ascii": "Mamidipalli",
+      "admin_name": "Telangana",
+      "lat": 17.2516,
+      "lng": 78.4521,
+      "population": 9236
+    },
+    {
+      "city": "Bommayapalaiyam",
+      "city_ascii": "Bommayapalaiyam",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.9922,
+      "lng": 79.8499,
+      "population": 8796
+    },
+    {
+      "city": "Kampel",
+      "city_ascii": "Kampel",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.6167,
+      "lng": 76.05,
+      "population": 8780
+    },
+    {
+      "city": "Mahadipur",
+      "city_ascii": "Mahadipur",
+      "admin_name": "West Bengal",
+      "lat": 24.8566,
+      "lng": 88.1248,
+      "population": 8638
+    },
+    {
+      "city": "Gundur",
+      "city_ascii": "Gundur",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.7339,
+      "lng": 78.7184,
+      "population": 8587
+    },
+    {
+      "city": "Pachrukhi",
+      "city_ascii": "Pachrukhi",
+      "admin_name": "Bihar",
+      "lat": 26.1593,
+      "lng": 84.4087,
+      "population": 8508
+    },
+    {
+      "city": "Mannivakkam",
+      "city_ascii": "Mannivakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.8884,
+      "lng": 80.0641,
+      "population": 8424
+    },
+    {
+      "city": "Palasgachi",
+      "city_ascii": "Palasgachi",
+      "admin_name": "West Bengal",
+      "lat": 24.9833,
+      "lng": 87.9,
+      "population": 8303
+    },
+    {
+      "city": "Singhaul",
+      "city_ascii": "Singhaul",
+      "admin_name": "Bihar",
+      "lat": 25.4375,
+      "lng": 86.1,
+      "population": 8286
+    },
+    {
+      "city": "Raghunandanpur",
+      "city_ascii": "Raghunandanpur",
+      "admin_name": "West Bengal",
+      "lat": 24.468,
+      "lng": 88.054,
+      "population": 8005
+    },
+    {
+      "city": "Hariladih",
+      "city_ascii": "Hariladih",
+      "admin_name": "Jharkhand",
+      "lat": 23.7333,
+      "lng": 86.4,
+      "population": 7917
+    },
+    {
+      "city": "Pahleza",
+      "city_ascii": "Pahleza",
+      "admin_name": "Bihar",
+      "lat": 24.9378,
+      "lng": 84.1467,
+      "population": 7888
+    },
+    {
+      "city": "Madnaikanhalli",
+      "city_ascii": "Madnaikanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.0626,
+      "lng": 77.4642,
+      "population": 7805
+    },
+    {
+      "city": "Bhabat",
+      "city_ascii": "Bhabat",
+      "admin_name": "Punjab",
+      "lat": 30.658,
+      "lng": 76.8065,
+      "population": 7743
+    },
+    {
+      "city": "Pithauria",
+      "city_ascii": "Pithauria",
+      "admin_name": "Jharkhand",
+      "lat": 23.518,
+      "lng": 85.2918,
+      "population": 7674
+    },
+    {
+      "city": "Hilora",
+      "city_ascii": "Hilora",
+      "admin_name": "West Bengal",
+      "lat": 24.5055,
+      "lng": 87.9661,
+      "population": 7667
+    },
+    {
+      "city": "Mevalurkuppam",
+      "city_ascii": "Mevalurkuppam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.032,
+      "lng": 79.9995,
+      "population": 7653
+    },
+    {
+      "city": "Bagalur",
+      "city_ascii": "Bagalur",
+      "admin_name": "Karnataka",
+      "lat": 13.1328,
+      "lng": 77.6685,
+      "population": 7519
+    },
+    {
+      "city": "Palavedu",
+      "city_ascii": "Palavedu",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.1547,
+      "lng": 80.0694,
+      "population": 7467
+    },
+    {
+      "city": "Kismatpur",
+      "city_ascii": "Kismatpur",
+      "admin_name": "Telangana",
+      "lat": 17.3333,
+      "lng": 78.4,
+      "population": 7288
+    },
+    {
+      "city": "Kadiganahalli",
+      "city_ascii": "Kadiganahalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1687,
+      "lng": 77.6283,
+      "population": 7225
+    },
+    {
+      "city": "Ballalpur",
+      "city_ascii": "Ballalpur",
+      "admin_name": "West Bengal",
+      "lat": 24.7386,
+      "lng": 87.9083,
+      "population": 7217
+    },
+    {
+      "city": "Narpatnagar",
+      "city_ascii": "Narpatnagar",
+      "admin_name": "Bihar",
+      "lat": 26.1987,
+      "lng": 86.0426,
+      "population": 7186
+    },
+    {
+      "city": "Dhanas",
+      "city_ascii": "Dhanas",
+      "admin_name": "Chandigarh",
+      "lat": 30.7688,
+      "lng": 76.7541,
+      "population": 7094
+    },
+    {
+      "city": "Jajigram",
+      "city_ascii": "Jajigram",
+      "admin_name": "West Bengal",
+      "lat": 24.4724,
+      "lng": 87.9589,
+      "population": 6977
+    },
+    {
+      "city": "Imamnagar",
+      "city_ascii": "Imamnagar",
+      "admin_name": "West Bengal",
+      "lat": 24.745,
+      "lng": 87.9247,
+      "population": 6933
+    },
+    {
+      "city": "Mogalcherla",
+      "city_ascii": "Mogalcherla",
+      "admin_name": "Telangana",
+      "lat": 18.0093,
+      "lng": 79.6613,
+      "population": 6922
+    },
+    {
+      "city": "Virapandi",
+      "city_ascii": "Virapandi",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.5757,
+      "lng": 78.0729,
+      "population": 6862
+    },
+    {
+      "city": "Sahdai Buzurg",
+      "city_ascii": "Sahdai Buzurg",
+      "admin_name": "Bihar",
+      "lat": 25.6622,
+      "lng": 85.4597,
+      "population": 6823
+    },
+    {
+      "city": "Valasaiyur",
+      "city_ascii": "Valasaiyur",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.7044,
+      "lng": 78.2513,
+      "population": 6565
+    },
+    {
+      "city": "Jogta",
+      "city_ascii": "Jogta",
+      "admin_name": "Bihar",
+      "lat": 25.4884,
+      "lng": 84.7055,
+      "population": 6498
+    },
+    {
+      "city": "Shivni",
+      "city_ascii": "Shivni",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.671,
+      "lng": 76.1391,
+      "population": 6432
+    },
+    {
+      "city": "Daryapur Kalan",
+      "city_ascii": "Daryapur Kalan",
+      "admin_name": "Delhi",
+      "lat": 28.7614,
+      "lng": 76.9842,
+      "population": 6310
+    },
+    {
+      "city": "Sakhara",
+      "city_ascii": "Sakhara",
+      "admin_name": "Bihar",
+      "lat": 24.9091,
+      "lng": 84.1584,
+      "population": 6256
+    },
+    {
+      "city": "Hasanpur",
+      "city_ascii": "Hasanpur",
+      "admin_name": "Bihar",
+      "lat": 25.7079,
+      "lng": 86.192,
+      "population": 6177
+    },
+    {
+      "city": "Dignagar",
+      "city_ascii": "Dignagar",
+      "admin_name": "West Bengal",
+      "lat": 23.3283,
+      "lng": 88.4469,
+      "population": 6023
+    },
+    {
+      "city": "Gangauli",
+      "city_ascii": "Gangauli",
+      "admin_name": "Bihar",
+      "lat": 24.9361,
+      "lng": 84.1728,
+      "population": 5943
+    },
+    {
+      "city": "Giddha",
+      "city_ascii": "Giddha",
+      "admin_name": "Bihar",
+      "lat": 25.588,
+      "lng": 84.7472,
+      "population": 5728
+    },
+    {
+      "city": "Valaiyankulam",
+      "city_ascii": "Valaiyankulam",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.8082,
+      "lng": 78.094,
+      "population": 5712
+    },
+    {
+      "city": "Muria",
+      "city_ascii": "Muria",
+      "admin_name": "Bihar",
+      "lat": 26.2028,
+      "lng": 86.0083,
+      "population": 5594
+    },
+    {
+      "city": "Pipalda",
+      "city_ascii": "Pipalda",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.5973,
+      "lng": 76.0415,
+      "population": 5579
+    },
+    {
+      "city": "Sitanagaram",
+      "city_ascii": "Sitanagaram",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.2403,
+      "lng": 80.5817,
+      "population": 5447
+    },
+    {
+      "city": "Kuttambakkam",
+      "city_ascii": "Kuttambakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0569,
+      "lng": 80.0275,
+      "population": 5217
+    },
+    {
+      "city": "Kambarasampettai",
+      "city_ascii": "Kambarasampettai",
+      "admin_name": "Tamil Nadu",
+      "lat": 10.8496,
+      "lng": 78.6754,
+      "population": 5178
+    },
+    {
+      "city": "Sukkainpatti",
+      "city_ascii": "Sukkainpatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.7156,
+      "lng": 78.2626,
+      "population": 5138
+    },
+    {
+      "city": "Bayandhalli",
+      "city_ascii": "Bayandhalli",
+      "admin_name": "Karnataka",
+      "lat": 12.9779,
+      "lng": 77.5688,
+      "population": 5118
+    },
+    {
+      "city": "Bahlolpur",
+      "city_ascii": "Bahlolpur",
+      "admin_name": "Chandigarh",
+      "lat": 30.759,
+      "lng": 76.7034,
+      "population": 4993
+    },
+    {
+      "city": "Sondekoppa",
+      "city_ascii": "Sondekoppa",
+      "admin_name": "Karnataka",
+      "lat": 13,
+      "lng": 77.3667,
+      "population": 4866
+    },
+    {
+      "city": "Manauli",
+      "city_ascii": "Manauli",
+      "admin_name": "Punjab",
+      "lat": 30.6444,
+      "lng": 76.7217,
+      "population": 4843
+    },
+    {
+      "city": "Parappatti",
+      "city_ascii": "Parappatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.5853,
+      "lng": 78.1281,
+      "population": 4837
+    },
+    {
+      "city": "Vellanur",
+      "city_ascii": "Vellanur",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.15,
+      "lng": 80.1,
+      "population": 4825
+    },
+    {
+      "city": "Sursi",
+      "city_ascii": "Sursi",
+      "admin_name": "Gujarat",
+      "lat": 22.3888,
+      "lng": 72.813,
+      "population": 4771
+    },
+    {
+      "city": "Babura",
+      "city_ascii": "Babura",
+      "admin_name": "Bihar",
+      "lat": 25.0851,
+      "lng": 87.1092,
+      "population": 4755
+    },
+    {
+      "city": "Patacudapah",
+      "city_ascii": "Patacudapah",
+      "admin_name": "Andhra Pradesh",
+      "lat": 14.4986,
+      "lng": 78.8335,
+      "population": 4730
+    },
+    {
+      "city": "Madavar",
+      "city_ascii": "Madavar",
+      "admin_name": "Karnataka",
+      "lat": 13.0525,
+      "lng": 77.4732,
+      "population": 4678
+    },
+    {
+      "city": "Kadabgeri",
+      "city_ascii": "Kadabgeri",
+      "admin_name": "Karnataka",
+      "lat": 12.9965,
+      "lng": 77.4331,
+      "population": 4573
+    },
+    {
+      "city": "Keshopur",
+      "city_ascii": "Keshopur",
+      "admin_name": "Bihar",
+      "lat": 25.5148,
+      "lng": 84.67,
+      "population": 4559
+    },
+    {
+      "city": "Basavanhalli",
+      "city_ascii": "Basavanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1104,
+      "lng": 77.3877,
+      "population": 4510
+    },
+    {
+      "city": "Putlampalle",
+      "city_ascii": "Putlampalle",
+      "admin_name": "Andhra Pradesh",
+      "lat": 14.4522,
+      "lng": 78.8511,
+      "population": 4490
+    },
+    {
+      "city": "Manchirevula",
+      "city_ascii": "Manchirevula",
+      "admin_name": "Telangana",
+      "lat": 17.3833,
+      "lng": 78.35,
+      "population": 4459
+    },
+    {
+      "city": "Tippampatti",
+      "city_ascii": "Tippampatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.568,
+      "lng": 78.2014,
+      "population": 4411
+    },
+    {
+      "city": "Nanmangalam",
+      "city_ascii": "Nanmangalam",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.9381,
+      "lng": 80.1753,
+      "population": 4386
+    },
+    {
+      "city": "Tildanga",
+      "city_ascii": "Tildanga",
+      "admin_name": "West Bengal",
+      "lat": 24.7893,
+      "lng": 87.8765,
+      "population": 4378
+    },
+    {
+      "city": "Togan",
+      "city_ascii": "Togan",
+      "admin_name": "Chandigarh",
+      "lat": 30.7699,
+      "lng": 76.7336,
+      "population": 4197
+    },
+    {
+      "city": "Ambapuram",
+      "city_ascii": "Ambapuram",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.599,
+      "lng": 80.8949,
+      "population": 4110
+    },
+    {
+      "city": "Gobardhanpur",
+      "city_ascii": "Gobardhanpur",
+      "admin_name": "Bihar",
+      "lat": 24.9493,
+      "lng": 84.1603,
+      "population": 4080
+    },
+    {
+      "city": "Kair",
+      "city_ascii": "Kair",
+      "admin_name": "Delhi",
+      "lat": 28.6158,
+      "lng": 76.91,
+      "population": 4074
+    },
+    {
+      "city": "Pallippatti",
+      "city_ascii": "Pallippatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.7011,
+      "lng": 78.2428,
+      "population": 4066
+    },
+    {
+      "city": "Kumbalam",
+      "city_ascii": "Kumbalam",
+      "admin_name": "Kerala",
+      "lat": 8.992,
+      "lng": 76.6621,
+      "population": 4000
+    },
+    {
+      "city": "Sonnappanhalli",
+      "city_ascii": "Sonnappanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1557,
+      "lng": 77.6179,
+      "population": 3996
+    },
+    {
+      "city": "Chanditala",
+      "city_ascii": "Chanditala",
+      "admin_name": "West Bengal",
+      "lat": 22.6909,
+      "lng": 88.2662,
+      "population": 3984
+    },
+    {
+      "city": "Agaram",
+      "city_ascii": "Agaram",
+      "admin_name": "Tamil Nadu",
+      "lat": 13.0397,
+      "lng": 80.0808,
+      "population": 3949
+    },
+    {
+      "city": "Patapadu",
+      "city_ascii": "Patapadu",
+      "admin_name": "Andhra Pradesh",
+      "lat": 16.5781,
+      "lng": 80.6652,
+      "population": 3933
+    },
+    {
+      "city": "Andauli",
+      "city_ascii": "Andauli",
+      "admin_name": "Bihar",
+      "lat": 26.0846,
+      "lng": 86.2105,
+      "population": 3894
+    },
+    {
+      "city": "Pallappatti",
+      "city_ascii": "Pallappatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.6604,
+      "lng": 78.1369,
+      "population": 3879
+    },
+    {
+      "city": "Baniara",
+      "city_ascii": "Baniara",
+      "admin_name": "West Bengal",
+      "lat": 22.6008,
+      "lng": 88.2121,
+      "population": 3834
+    },
+    {
+      "city": "Doddajivanhalli",
+      "city_ascii": "Doddajivanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.0086,
+      "lng": 77.6143,
+      "population": 3792
+    },
+    {
+      "city": "Kolapakkam",
+      "city_ascii": "Kolapakkam",
+      "admin_name": "Tamil Nadu",
+      "lat": 12.9142,
+      "lng": 80.2294,
+      "population": 3729
+    },
+    {
+      "city": "Permi",
+      "city_ascii": "Permi",
+      "admin_name": "Madhya Pradesh",
+      "lat": 22.6204,
+      "lng": 76.1126,
+      "population": 3697
+    },
+    {
+      "city": "Kullampatti",
+      "city_ascii": "Kullampatti",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.6922,
+      "lng": 78.26,
+      "population": 3632
+    },
+    {
+      "city": "Gorwa",
+      "city_ascii": "Gorwa",
+      "admin_name": "Gujarat",
+      "lat": 22.5066,
+      "lng": 72.9155,
+      "population": 3569
+    },
+    {
+      "city": "Dialpura",
+      "city_ascii": "Dialpura",
+      "admin_name": "Punjab",
+      "lat": 30.6395,
+      "lng": 76.7867,
+      "population": 3556
+    },
+    {
+      "city": "Kasiam",
+      "city_ascii": "Kasiam",
+      "admin_name": "Bihar",
+      "lat": 26.1862,
+      "lng": 86.311,
+      "population": 3480
+    },
+    {
+      "city": "Takkolu",
+      "city_ascii": "Takkolu",
+      "admin_name": "Andhra Pradesh",
+      "lat": 14.4855,
+      "lng": 78.8797,
+      "population": 3465
+    },
+    {
+      "city": "Bhainsaha",
+      "city_ascii": "Bhainsaha",
+      "admin_name": "Bihar",
+      "lat": 24.8951,
+      "lng": 84.1557,
+      "population": 3454
+    },
+    {
+      "city": "Panaiyur",
+      "city_ascii": "Panaiyur",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.8762,
+      "lng": 78.1564,
+      "population": 3454
+    },
+    {
+      "city": "Deuriya",
+      "city_ascii": "Deuriya",
+      "admin_name": "Bihar",
+      "lat": 24.953,
+      "lng": 84.1401,
+      "population": 3439
+    },
+    {
+      "city": "Solankuruni",
+      "city_ascii": "Solankuruni",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.8067,
+      "lng": 78.1198,
+      "population": 3422
+    },
+    {
+      "city": "Mamnoli",
+      "city_ascii": "Mamnoli",
+      "admin_name": "Maharashtra",
+      "lat": 19.2404,
+      "lng": 73.045,
+      "population": 3421
+    },
+    {
+      "city": "Jaladipur",
+      "city_ascii": "Jaladipur",
+      "admin_name": "West Bengal",
+      "lat": 24.6356,
+      "lng": 87.9902,
+      "population": 3319
+    },
+    {
+      "city": "Berkap",
+      "city_ascii": "Berkap",
+      "admin_name": "Bihar",
+      "lat": 24.9444,
+      "lng": 84.2143,
+      "population": 3272
+    },
+    {
+      "city": "Wattinagulapalli",
+      "city_ascii": "Wattinagulapalli",
+      "admin_name": "Telangana",
+      "lat": 17.4179,
+      "lng": 78.293,
+      "population": 3245
+    },
+    {
+      "city": "Himayatsagar",
+      "city_ascii": "Himayatsagar",
+      "admin_name": "Telangana",
+      "lat": 17.3399,
+      "lng": 78.3631,
+      "population": 3244
+    },
+    {
+      "city": "Huttanhalli",
+      "city_ascii": "Huttanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1651,
+      "lng": 77.6512,
+      "population": 3240
+    },
+    {
+      "city": "Suara",
+      "city_ascii": "Suara",
+      "admin_name": "Bihar",
+      "lat": 25.0361,
+      "lng": 84.262,
+      "population": 3234
+    },
+    {
+      "city": "Dahaur",
+      "city_ascii": "Dahaur",
+      "admin_name": "Bihar",
+      "lat": 24.9146,
+      "lng": 84.136,
+      "population": 3186
+    },
+    {
+      "city": "Katar",
+      "city_ascii": "Katar",
+      "admin_name": "Bihar",
+      "lat": 24.8818,
+      "lng": 84.1511,
+      "population": 3149
+    },
+    {
+      "city": "Sotur",
+      "city_ascii": "Sotur",
+      "admin_name": "Jammu and Kashmir",
+      "lat": 34.0403,
+      "lng": 75.0738,
+      "population": 3115
+    },
+    {
+      "city": "Vajarhalli",
+      "city_ascii": "Vajarhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1022,
+      "lng": 77.4111,
+      "population": 3009
+    },
+    {
+      "city": "Cachohalli",
+      "city_ascii": "Cachohalli",
+      "admin_name": "Karnataka",
+      "lat": 13.001,
+      "lng": 77.4717,
+      "population": 2946
+    },
+    {
+      "city": "Kasgatpur",
+      "city_ascii": "Kasgatpur",
+      "admin_name": "Karnataka",
+      "lat": 13.1101,
+      "lng": 77.5045,
+      "population": 2852
+    },
+    {
+      "city": "Ranipur",
+      "city_ascii": "Ranipur",
+      "admin_name": "West Bengal",
+      "lat": 24.7442,
+      "lng": 87.8686,
+      "population": 2844
+    },
+    {
+      "city": "Bhagwanpur",
+      "city_ascii": "Bhagwanpur",
+      "admin_name": "Bihar",
+      "lat": 25.8601,
+      "lng": 85.2997,
+      "population": 2840
+    },
+    {
+      "city": "Gagilapur",
+      "city_ascii": "Gagilapur",
+      "admin_name": "Telangana",
+      "lat": 17.6,
+      "lng": 78.4,
+      "population": 2832
+    },
+    {
+      "city": "Kitanelli",
+      "city_ascii": "Kitanelli",
+      "admin_name": "Karnataka",
+      "lat": 13.0095,
+      "lng": 77.4191,
+      "population": 2827
+    },
+    {
+      "city": "Bartala",
+      "city_ascii": "Bartala",
+      "admin_name": "West Bengal",
+      "lat": 24.7082,
+      "lng": 87.9555,
+      "population": 2814
+    },
+    {
+      "city": "Tendua Dusadhi",
+      "city_ascii": "Tendua Dusadhi",
+      "admin_name": "Bihar",
+      "lat": 24.9427,
+      "lng": 84.1299,
+      "population": 2770
+    },
+    {
+      "city": "Dhurali",
+      "city_ascii": "Dhurali",
+      "admin_name": "Punjab",
+      "lat": 30.6432,
+      "lng": 76.7032,
+      "population": 2691
+    },
+    {
+      "city": "Sikdarpur",
+      "city_ascii": "Sikdarpur",
+      "admin_name": "West Bengal",
+      "lat": 24.6463,
+      "lng": 87.9781,
+      "population": 2691
+    },
+    {
+      "city": "Chinnanur",
+      "city_ascii": "Chinnanur",
+      "admin_name": "Tamil Nadu",
+      "lat": 11.6875,
+      "lng": 78.2262,
+      "population": 2688
+    },
+    {
+      "city": "Bendravadi",
+      "city_ascii": "Bendravadi",
+      "admin_name": "Karnataka",
+      "lat": 12.3636,
+      "lng": 76.9137,
+      "population": 2684
+    },
+    {
+      "city": "Nedumadurai",
+      "city_ascii": "Nedumadurai",
+      "admin_name": "Tamil Nadu",
+      "lat": 9.7959,
+      "lng": 78.0867,
+      "population": 2593
+    },
+    {
+      "city": "Kodagihalli",
+      "city_ascii": "Kodagihalli",
+      "admin_name": "Karnataka",
+      "lat": 12.9771,
+      "lng": 77.4651,
+      "population": 2585
+    },
+    {
+      "city": "Mota Mazra",
+      "city_ascii": "Mota Mazra",
+      "admin_name": "Punjab",
+      "lat": 30.6214,
+      "lng": 76.725,
+      "population": 2563
+    },
+    {
+      "city": "Mailanhalli",
+      "city_ascii": "Mailanhalli",
+      "admin_name": "Karnataka",
+      "lat": 13.1863,
+      "lng": 77.6963,
+      "population": 2543
+    },
+    {
+      "city": "Bhagwatpur Patera",
+      "city_ascii": "Bhagwatpur Patera",
+      "admin_name": "Bihar",
+      "lat": 25.858,
+      "lng": 85.296,
+      "population": 2508
+    },
+    {
+      "city": "Jotsema",
+      "city_ascii": "Jotsema",
+      "admin_name": "Nagaland",
+      "lat": 25.6736,
+      "lng": 94.0625,
+      "population": 2458
+    }
+  ]
+}

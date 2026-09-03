@@ -4,233 +4,36 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-09-02 (Gochara Monthly + Avoid Days invariant + TN holidays + Shaiva festivals)
+Last updated: 2026-09-03 (Weather/City Research + Tirumandiram Verse-of-Day + City Quick-Selector)
 
-**Session token count (this session · Deploy/Catalog/Night/UI):** REAL billed 8,030,219 (RAW 15,419,377 · 47.9% cache efficiency; 158 requests).
+**Session token count (this session):** see master log.
 
-**Session token count (current · help/vectors/branding session):** REAL billed 5,398,355
-(RAW 22,209,664 · 75.7% cache efficiency, 84.3% cache-hit share; 196 requests).
+## Goal Accomplished (this session — 2026-09-03)
 
-## Goal Accomplished (this session — 2026-08-22 · Help pages + Variant 3 design + vector elements · committed `9d16ec1`)
-- **Design direction**: Reviewed 3 Gemini mockups (Temple Pothi, Raja Jyotisha, Vedic Modernist). Selected **Variant 3 (Vedic Modernist)** — cream canvas `#FAF8F5`, refined ink `#2C241D`, brighter vermilion `#B83A2A`, warmer gold `#C59A4E`. Simplified `.frame` from triple to clean single hairline border.
-- **Vector elements**: Created `vectors.css` with Ganesha (centered top of frame) + Kalash (top-right full opacity) positioning. Ganesha uses `ganesha-219399.svg` (multi-color from Openclipart). Kalash uses `kalash-2-175432.svg`. Both applied consistently to `index.html`, `marriage.html`, `guna-milap.html`. Removed extra footer SVG icons — only ॐ remains.
-- **Help pages**: Created 3 standalone help pages using same Variant 3 theme:
-  - `help-muhurta.html` — general muhurta calendar usage (4 steps, verdict key, modes explained)
-  - `help-marriage.html` — Ashtakoota 8-koota breakdown, Nadi/Bhakoot dosha + parihara, Stage 2 date search
-  - `help-guna-milap.html` — alliance pre-screening, ranking logic, tier labels, workflow
-- Each help page cross-links to the other two in a "Related Pages" section.
-- **? Help links** added as ghost buttons in headers of all 3 main pages (index→help-muhurta, marriage→help-marriage, guna-milap→help-guna-milap).
-- **Cleanup**: Removed `assets/ganesha.svg` (line-art version), cleaned up `ganesha-219399.svg` (added viewBox, removed inkscape metadata junk).
-- **Tests**: All 96 tests pass (Marriage 51 + Alliance 45). Committed clean working tree.
-
-## Goal Accomplished (2026-08-13 · Vivaha marriage module — Ashtakoota matchmaking + muhurta engine · committed `ac11e22`)
-- **Phase A — OCR verify** Ch.6 of *Muhurta Chintamani* (`reference/archive/vivaha/ch6_text.txt`, PDF pp.149–227); confirmed docs' "Chapter 3, Slokas 38–52" citations are fabricated — real source is Chapter 6.
-- **Phase B — Rules:** `rules/marriage_rules.json` (schema `marriage-rules-v1`), fully self-contained (no reads of `activity_corpus.json`/`taxonomy.js`; day filters copied+source-corrected). 16 verseKeys resolve; source-corrected 7 docs bugs (Bhakoot bad offsets [1,4,5]; Tara auspicious remainders [1,2,4,6,8,0]; verified Graha Maitri matrix; only 3 source-attested Nadi pariharas; 11 marriage nakshatras incl. MOOLA; 6 Paata yogas; Ekargala Moon-star-odd-count rule). ~21 non-core doshas documented-but-not-implemented.
-- **Phase C — Additive engine.js helpers ONLY:** `ascendant()`, `planetPosition(s)()`, `sunNakshatra()` inserted before the DAY COMPUTATION section. No other engine changes.
-- **Phase D — Engine + UI:** `marriage.mjs` (pure Stage-1 `calculateAshtakoota` w/ 8-koota breakdown + pariharas → Stage-2 Vivaha doshas Latta/Jamitra/Paata/Ekargala + Sun+Moon-Lagna removal + day filters + dual personal filters (Naidhana Tara / Ashtama Chandra) + scoring + scan, fail-fast `skippedStage2` gating) and `marriage.html` two-tier UI (guna meter, parihara pills, provenance, ranked SHUBH dates w/ dosha audit). Browser-validated via Playwright (ELIGIBLE 29/36, SHUBH 2026-11-25 @87 w/ Jamitra removal).
-- **Phase E — Tests:** `tests/marriage-tests.mjs` (37 assertions, 0 fail) + `tests/marriage-browser.mjs` (8 browser checks). `npm test` runs both suites.
-- **Provenance:** registry extended with `ch6_vivaha` chapter + 17 confirmed verse entries; `LATTA_DOSHA_ACTIVE` upgraded unverified→confirmed. `tools/build_provenance.js` green (140 activities, 46 verse entries).
-- **Alliance filter work is scoped but NOT built yet**: PRD drafted (`docs/alliance-filter-prd.md`); engine/UI/tests deferred to next session. Fixed-person ranked best-match calculator reusing `calculateAshtakoota` over 108 valid birth profiles.
-
-## Goal Accomplished (this session — 2026-08-13 · calendar/UI polish + lay "why rejected" · committed `61b336d`)
-- **Calendar cells** enlarged to square (60→84px min-height, `aspect-ratio:1/1`, print `auto`), full
-  Devanagari tithi names (`.slice(0,6)` removed), weekend shading `.cell.weekend` (day saffron / night gold tint).
-- **Dual-color scheme**: CSS vars `--panel-a/--panel-b` (day `#FFFFFF`/`#F1EEE5`, night `#2C3365`/`#232A55`);
-  `applyCardShades()` alternates panels in page order starting light at `#app`; cream literals → `var(--paper)`/`var(--panel-a)`.
-- **Header**: month/year now in cal-head (`#calTitle` Rozha One vermilion) above Tamil year; persona chip
-  `#persona` (`★ Ashwini · Mesha`); edit moved into Birth profile (`#editBirthBtn`).
-- **Muhurta dropdowns**: `Please select` placeholder + compute validation + clear reset.
-- **Classical Foundation**: governing verses in `<details open>` (chapter·verse, `.prov-sans` Devanagari via
-  **Eczar** — "Noto Sans Devanagari" was never loaded — English, applied logic, caveat). 139/140 activities have verses.
-- **Source modal** (`#srcBtn`, disabled till all 3 selects set): provenance body (basis badge, chapter +
-  rationale, all confirmed verses, integrity note) + copyable citation; close ×/Esc/backdrop; hidden in print.
-- **Lay "why rejected"**: `rejectedReasons()` + `REJ_LABEL`/`REJ_ORDER` bucket every non-Shubh day
-  (nakshatra/tithi/krishna/karana/bhadra/hard/vara/tara/chandra/score) into a `rejCounts` Map; ONE `.muhwhy`
-  footer row after the table (or after the "No Shubh days" note). Verified via real `scoreMuhurta` in node
-  (Higher Studies / Krittika / Aug 2026 → clean lay sentence). `node --check` + `npm test` (151/9/143/7) green.
-- **Committed everything accumulated** (15 files, +1794/−180): includes prior sessions' engine tweak,
-  `serve.js→serve.cjs`, `tests/` + docs, `package.json`.
-
-## Goal Accomplished (2026-08-13 · personal-mode supersession per `what-is-personal-mode.md`)
-- **`what-is-personal-mode.md` is the authoritative spec** for Personal-mode data generation;
-  it supersedes the conflicting `PRD §2.6.7.3` "independent rhythm" wording, the
-  `browser-testing-behavior.md` 85/65 thresholds, and the "design tension" left open in
-  `muhurtha_debug.md`. Personal = compatibility layer `(Base) AND (Tara Bala) AND (Chandra Bala)`.
-- **Owner decisions:** Option A (Personal ⊆ **Full**, base ≥ 80) · Full/Soft become **0% personal**
-  (tara removed from the universal base) with doc thresholds `FULL=80/MADHYAMA=65/SOFT=60/PERSONAL=75`
-  · reject ALL bad tara (Vipat/Pratyari/Vadha = 3rd/5th/7th).
-- **Implemented:** `engine.js` day object gains `moonRashi`; `app.js` `scoreMuhurta` now computes
-  Chandra Bala (favourable {1,3,6,7,10,11}+15, unfavourable {4,12}−10, **8th house = Ashtama
-  Chandra → REJECT**), Option-A personal pipeline (`personalMetrics` returned, `Shubh ≥ 75`),
-  non-personal sections carry zero personal weight.
-- **Caught by the harness:** scores 70-79 leaked "Shubh" via `verdictToChip(GOOD)` in both the
-  sub-Full personal branch and bad-tara 70-79 days → personal now enforces `chip` explicitly
-  (`≥65 → Neutral` else `Ashubh` below the Full cutoff). Also fixed a latent showDetail bug
-  (`v.tara.number` never existed on the return → `day.tara.number`).
-- **Harness moved into repo** (`tests/tests-suite.mjs`, `tests/mode-summary.mjs`, `package.json`
-  `test`/`modes`). **INV 151/151 · BND 9/9 · OVR 143/143 · PRS 7/7** (PRS-02 Ashtama now real).
-
-## ACCEPTANCE CRITERION (owner) — mem_1786465597914_18jf1
-- Muhurta table shows **only Shubh days** — still true.
-- Per activity: **at most 3-5 Shubh days per month** for Full/Personal — holds (2026-08 full/soft/
-  personal: Griha 2/4/1 · Startup 2/8/1 · Mortgage 1/1/1; Sep Griha 4/11/1; Jan Griha 4/8/1).
-  `Personal ⊆ Full ⊆ Soft` holds on every month×activity. Soft (≥60) remains intentionally looser
-  than the band — calibration lever, not a defect (see `muhurtha_debug.md` addendum).
-
-## Goal Accomplished (this session — 2026-08-12 · mode-pipeline testing fix + mode invariant tests)
-- **Validated the structural "mode inversion" bug** from `browser-testing-behavior.md` empirically:
-  Soft always returned 0 Shubh (it wiped t2/t3 → max score 60 → never a Shubh chip), and
-  Personal was a wildcard 9–14 days (it kept only tara → any good-tara day Shubh regardless
-  of nakshatra/tithi/vara fit). Both broke `Count(Full) <= Count(Soft)` and `Personal ⊆ Soft`.
-- **Fixed `scoreMuhurta`** to the owner-approved "unified base score + thresholds" design:
-  - one universal base score computed from ALL tiers for every mode (INV-03);
-  - universal hard blockers (T1) REJECT in all three modes (INV-02) — overrides never touch T1
-    (structural guard `OVERRIDE_TARGETS` never lists tier `t1`, verified OVR-STRUCT);
-  - mode selects the Shubh cut on that same score: `FULL_SHUBH=70` (unchanged full output),
-    `SOFT_SHUBH=60` so `Full ⊆ Soft` (INV-01), `PERSONAL` must first pass Soft then rejects
-    on bad tara (Naidhana/Vipat/Prahari) → `Personal ⊆ Soft` (PRS-01/02/03).
-  - **Latent bug caught by the test**: the return hardcoded `chip: verdictToChip(verdict)`,
-    silently overwriting the per-mode chip → reverted to propagate the computed `chip`.
-- **Hard-blocker-first phase unchanged** → leak-harness Tests A/B/C (13/13, 2/2, 4/4) still green;
-  no regression to full-mode verdicts (Aug Griha/Startup/Mortgage = 2/5/1, as before).
-- Added `muhurtha_debug.md` (artifacts + next steps) and test harnesses in Temp/opencan
-  (`tests-suite.mjs`: INV/BND/OVR/PRS).
-
-## ACCEPTANCE CRITERION (owner) — mem_1786465597914_18jf1
-- Muhurta table shows **only Shubh days** — done this session.
-- Per activity: **at most 3-5 Shubh days per month**, across every mode (full/soft/personal). Aug-2026
-  full-mode: Griha 2 Shubh, Startup 5 Shubh, Mortgage 1 Shubh — **within the 3-5 band**.
-  NOTE (2026-08-12 testing session): full mode was left unchanged and still validates 2/5/1
-  for Aug; Soft and Personal now correctly form a superset/subset of full (see
-  `muhurtha_debug.md`). The strict "3-5 across every mode" band is only met for Aug full-mode;
-  Soft (>=60) and Personal are intentionally looser (Soft ⊇ Full, Personal ⊂ Soft) and exceed 5
-  for e.g. Startup (soft=10). That band is now a *calibration* task (next steps), not a
-  structural defect — all mode invariants pass.
-
-## Goal Accomplished (2026-08-13 · Alliance Filter — best-match calculator per `docs/alliance-filter-prd.md`)
-- **`alliance-filter.mjs`**: pure module with `generateValidProfiles()` (108 canonical Moon-pada positions from 360/27° nakshatra spans), `computeAllianceWhitelist(input, rules, opts)` (pada-agnostic best per 36 valid nak×rashi pairs; ranking by isCompatible → marriageNakshatraFirst → totalScore → tier → parihara count → dosha severity), `toCSV()` and `toJSON()` exporters. Reuses `marriage.mjs#calculateAshtakoota`; validates fixed-person input for nakshatra/rashi/pada consistency.
-- **`alliance-filter.html`**: fixed-person form (role, nakshatra, rashi, pada + "Show Up To" / min-score options), Tier 1 compatible-whitelist summary, Tier 2 ranked table showing **only compatible** profiles with marriage-nakshatra matches first, per-row 8-koota breakdown shown as a full-width row below, dosha/parihara pills, marriage-nakshatra flag, JSON/CSV export + browser print-to-PDF.
-- **Navigation**: added "🔍 Alliance Filter" link in `marriage.html` header.
-- **Tests**: `tests/alliance-filter-tests.mjs` (45 assertions, 0 fail) covering valid-profile generation, whitelist ranking, bride/groom roles, input validation, CSV/JSON export, score integration against `calculateAshtakoota`, min-score filter, and marriage-nakshatra preference sort. Wired into `npm test` via `package.json` (`test:alliance` also available).
-
-## Goal Accomplished (this session — 2026-08-14 · Alliance Filter UI polish · committed `34e167b`)
-- **Fixed tier badge class mismatch**: `tierBadge()` emitted `most-excellent`/`not-suitable`
-  classes but CSS defined `.badge.most`/`.badge.poor` → MOST_EXCELLENT/NOT_SUITABLE rows
-  rendered unstyled. Renamed CSS classes to match.
-- **Added `@media print` block** (mirrors `index.html`): clean print-to-PDF — hides form,
-  header, actions, progress, notes + `<details>`; exact print colors for badges/pills/koota.
-- **Recommended Match banner** atop Tier 2: best compatible row (pair / score / tier /
-  marriage-nak flag / dosha pills).
-- **Fixed "Top Tier" stat** in Tier 1: was picking most-frequent tier, now highest present.
-- **Merged redundant columns**: table's "Doshas" + "Pariharas" were duplicates (compatible
-  rows always have `hasNadiDosha=false`, so the dosha column showed only "OK"); one column
-  now reports canceled-parihara state directly. Removed dead `pariharaPills()`.
-- **Calc button guarded** until rules load; added Muhurta Calendar (`index.html`) nav link.
-- **Verified**: `npm test` 45/45 alliance (full suite green) + 14/14 Playwright browser
-  checks on `alliance-filter.html` (load, compute, render, expand koota, badge styling).
-
-## Goal Accomplished (this session — 2026-08-21 · Quick Selector Chips for Muhurta dropdowns · committed `b7646a0`)
-- **Quick Selector Chips** (`index.html` + `app.js`): preset chip row above the Muhurta Domain/Activity/Task cascading dropdowns, per `docs/calendar-quick-selector-chips.md`.
-  - 6 default presets: Griha Pravesha, Vehicle Purchase, Marriage, Land Purchase, New Venture, Pilgrimage — mapped to real `activity_id` values from corpus.
-  - Custom presets: "+ Save" button prompts for label, deduplicates by task id, persists to `localStorage` key `astro-cal-presets`. Custom chips get × dismiss.
-  - Active state: chip highlights in vermilion when its preset matches current dropdown values.
-  - Click behavior: fills all 3 dropdowns through the cascade (no auto-compute, consistent with existing UX).
-  - CSS: uses theme variables (adapts to night mode automatically), hidden in print, 44px mobile touch targets.
-  - Files: `index.html` (CSS lines 95-127, HTML lines 340-344, print rule), `app.js` (constants lines 51-62, chip functions lines 1098-1200, init wiring lines 1295-1301 + 1291 + 1349).
-  - `node --check` clean; no test changes needed (UI-only, no engine logic).
-
-## Goal Accomplished (this session — 2026-08-22 evening · Deploy + Catalog + Night mode + UI polish · committed `46853d4`)
-- **Deployment to Cloudflare Worker**: Created `wrangler.toml` + `src/worker.mjs` with `assets = { directory = "./" }` config. Registered new worker `astro-cal` at `https://astro-cal.srirambm.workers.dev` — no existing workers/pages/sites touched. Pushed repo to `github.com/srirambm-ysa/astro-cal`.
-- **Activity Catalog**: `catalog.html` — standalone page with 140 activities searchable by keyword, collapsible accordion by domain (18 domains), sub-domain grouping, activity cards showing name/ID/intent/functional group/nakshatras/weekdays/hard blockers/source. Night mode toggle (persistent). Linked from Quick Picks area and help pages.
-- **Quick Selector Chips**: Marriage preset removed. Chips changed to oval shape (`border-radius: 999px`) with solid `var(--panel-b)` backfill, no border — visually distinct from toolbar ghost buttons.
-- **Kalam display fixed**: Month table now shows full label `Rahu: 07:30 · Yama: 09:00 · Gulika: 10:30` with start-only times. Day detail card broken into three separate labeled rows (Rahu Kalam / Yama Gandam / Gulikai) with ranges.
-- **Header rename**: Title changed to "Muhurtha" / "vedic calendar" (dropped "Panchang Ledger").
-- **Favicon added**: `help-muhurta.html`, `help-marriage.html`, `help-guna-milap.html` all got `favicon-calendar.svg`.
-- **Night mode → neutral black**: Switched from navy/blue (`#12162B` etc.) to true neutral black (`#0D0D0D` bg, `#1A1A1A` paper, `#222222` panels). Applied to all 7 HTML files + `vectors.css` (fallback hex values updated).
-- **Header overlap fix**: `.logo` gained `flex:1 1 100%` on all pages to force logo onto its own row — buttons always wrap below, never overlap the Ganesha/kalash in any mode.
-- **Worker handler committed**: `src/worker.mjs` fetch handler changed from 404 stub to `env.ASSETS.fetch(request)` (was only deployed, never committed).
+- **Weather & City Research — locked `docs/weather-and-city-research.md:1`:** evaluated GeoNames IN.zip (19 cols, CC-BY 4.0, 15 MB raw, noisy) vs SimpleMaps in-cities 354 MIT (25 KB, clean `city/admin_name/lat/lng`). Locked **Q1 GO SimpleMaps primary + GeoNames fallback**, **Q2-Q4 weather DROPPED** — panchang gives seasonal only (Garbha 195d Ch.21, Pravasaṇa droṇa Ch.23, Sadyovarṣaṇa Ch.28, Ārdrā Praveśa Jun 22 + Nāḍī, IMD normals) — no honest 3-day offline forecast; no network dependency added; city attribution in footer.
+- **Tirumandiram — Verse of the Day (daily return driver):** 3047 verses `D:\tirumandiram\output\verse-*.json:1` → curated `rules/tirumandiram_daily.json:1` 365 entries `tirumandiram-daily-v1` (evenly sampled, `dayOfYear % 365` IST). Helper `tirumandiram.mjs:1` `getVerseOfDay`. Card between Avoid → Gochara `index.html:389` (Tamil pre-wrap + transliteration + English + Copy/Prev/Next + tirumandiram.in ↗), wired `app.js:1028` fetch + render. Tests `tests/tirumandiram-tests.mjs:1` 10 pass (Jan1→1, Dec31→365, Sep3→2046).
+- **City Quick-Selector:** `rules/in_cities.json:1` `in-cities-v1` 382 rows (354 SimpleMaps + 28 TN district/pilgrim fallback — Palani/Kanchipuram/Tiruvannamalai/Rameswaram etc., 67 KB). Searchable combobox + 5 chips Chennai/Coimbatore/Madurai/Tiruchirappalli/Salem `index.html:367` above Current place; autofills `bPlace/bLat/bLon/bTz` (`app.js:1085` `cityMatches/renderCityDropdown/applyCity/initCitySelector`), manual lat/lon stays editable. Footer credit `index.html:496` (SimpleMaps MIT + GeoNames CC-BY 4.0 · 382). Tests `tests/city-tests.mjs:1` 21 pass, `npm test` green (INV 151 + BND 9 + OVR 143 + PRS 7 + marriage 51 + guna-milap 45 + gochara 51 + nitya 15 + tirumandiram 10 + city 21).
+- **Pipeline doc:** `docs/enhancements-pipeline.md:1` single source for return drivers (2 shipped / 4 queued). See table — next is Daily Panchang Digest + Daily Nitya hero.
 
 ## Immediate Next Steps
-1. **Deploy updated build** — push Gochara + Avoid Days + TN holidays + Shaiva Guru Pujas to Cloudflare Worker (auto-deploy on commit) and verify live.
-2. **Holiday capitals dropdown (deferred)** — add popular Tamil capitals quick-select (Chennai/Coimbatore/Madurai…) to set Current place lat/lon without typing, per TN-only bbox discussion.
-3. **PWA / ICS / Print audit (deferred)** — verify service worker offline, ICS export, print-to-PDF for new cards (Gochara/Avoid/Holiday).
 
-## Goal Accomplished (this session — 2026-09-02 · Gochara Monthly + TN holidays + Shaiva Guru Pujas · Gochara cards + Avoid invariant)
-
-- **Resume & close AC-TSK-0001/0003** — both done; board honest.
-- **Gochara proof & spec:** swisseph-wasm sidereal (Lahiri) rashi ingress scanner (step 0.1d + 18-iter bisection, Moon excluded). Scratch PoCs: 5 Sep 2026 ingresses (Venus 02/09, Mercury 07/09, Sun 17/09, Mars 18/09, Mercury 26/09). Spec docs/gochara_addition.md v0.2 with §0 INVARIANT: Chandrashtama/Avoid Days stays primary at top.
-- **Corpus & engine:** rules/gochara_rules.json 84 rows (BPHS 30-32 + vedha 36) + provenance 131 verses, gochara.mjs + tests 51 pass, Sep fixture ±15min.
-- **UI:** Avoid Days card (coarse+peak) + Gochara card (House/Tara/Vedha) — order now Avoid→Gochara→Muhurta→Month; label Place→Current place (sunrise & TN holidays). Living lat/lon is TN bbox gate, not birth city; direct janma nakshatra/rashi capture retained.
-- **Shaiva 9 core:** rules/shaiva_guru_pujas.json (Thiruvavaduthurai: Appar Chithirai Sadhayam, Sambandar Vaikasi Moolam, Sundarar Aadi Swathi, Manickavasagar Aani Magam, Tirumoolar Aippasi Asuvathi @ Jiva Samadhi, Sekkizhar Vaikasi Poosam, Vallalar Purattasi Chithirai, Thayumanavar Thai Visakam) wired into TAMIL_FESTIVALS.
-- **TN holidays:** rules/tn_holidays.json 24 NI holidays GO 708 + tn_bbox.json hull + Holiday chip (+2nd/4th Sat) only if inTN else disclaimer. Drik as validator only, local-first.
-- **Tasks done:** AC-TSK-0004/0005/0006/0007/0008/0009. npm test 310 pass. Working tree pending commit.
-
-## Goal Accomplished (this session — 2026-08-20 · rebrand + ocgraph + mobile-first + grid→table)
-- **Guna Milap rebrand** (committed `a8d40e9`): Alliance Filter → "॥ श्री ॥ Guna Milap — Compatibility Finder" across page/file/UI names + professional footers; engine API identifiers kept stable (owner decision). `docs/guna-milap-prd.md` is the spec; schema `guna-milap-whitelist-v1`; reuse `marriage.mjs#calculateAshtakoota`.
-- **ocgraph hardened** (committed `1493796` in D:\ocgraph): parser now supports `.mjs`/`.cjs` modules + inline HTML `<script type="module">` ES imports (IMPORTS edges); `.css` restored in `_JS_EXTENSIONS`; test fixture `helper.mjs`; **55/55 tests pass**; astro-cal DB rebuilt (27 files, 804 nodes, 971 edges). AGENTS.md Tier 2 updated.
-- **Mobile-first responsive overhaul** (committed `bb6d809`): all 3 pages got `viewport-fit=cover` + theme-color + PWA meta, ≥44px touch targets, 16px inputs, compact panchang strip (sunrise/sunset/tithi + rahu/yama/gulika in one 6-cell rhythm grid), `minmax(0,1fr)` layout + `.table-wrap` scroll for muhurta/key-event tables, guna-milap `.rank-table` stacked cards, marriage `.date-table` wrapper. **Personal events + shraddha removed** from index.html (stateless/privacy — localStorage now only theme+birth+view); personal-*mode* scoring untouched.
-- **Calendar grid → full-month table** (committed `90b3e83`): grid cells overlapped on narrow widths; removed `.calendar/.cell/.dot/.bar/.swatch/.legend` + the day-detail card. One row per day (Date | Tithi | Nakshatra | Kalam | Events chips); selecting a row expands an inline `.mdetail` row merging the former day card (sunrise/sunset, full kalam ranges, period rows); mobile stacks rows into labeled cards. Copy button reads the expanded row.
-- **Verification**: `node --check` clean; `npm test` all green (Marriage 51 + Alliance 45 + INV/BND/OVR/PRS suites); Playwright probes at 360×800 (overX=0 everywhere, full row count, expand/collapse works) and 1280 desktop (real table, columns intact).
-- **Task board**: astro-cal AC-TSK-0001 + AC-TSK-0003 remain in_progress (carry forward). No owner-confirmed completions this session.
-
-## Goal Accomplished (this session — 2026-08-14 · Vivaha marriage UX: night mode · worker · region mask · two-step flow)
-- **Night mode** in `marriage.html` (parity with index/alliance-filter; shared `astro-cal-theme` key, `body.night`).
-- **Slowness fix**: off-thread day computation via Web Worker — **`marriage.worker.js` + `worker-client.mjs`** (untracked, new); falls back to main-thread `scanWeddingWindow` when worker/wasm unavailable. Progress callback yields per processed day.
-- **Region preset + Saur Maasa mask**: `region` select feeds `rules.monthEligibility` presets (in `rules/marriage_rules.json`); Sun in an excluded month hard-rejects the day. Universal exclusions Aadi/Ashada + Margazhi/Dhanurmasa; strict classical additionally excludes Aavani/Purattasi/Aippasi/Panguni.
-- **Two-step UI** (`marriage.html`): **Calculate Compatibility** (Stage 1 Ashtakoota only — reviewable, fail-fast alert on ineligible) then enabled **Find Shubh Dates** (re-verifies compatibility, then scans). Editing any natal field re-disables the date search. Progress bar shows `% + "Computing dates… please wait (N / M days)"`, auto-reset after done.
-- **Verified dual personal blockers (no off-by-one)**: `personalFilters()` iterates BOTH partners; **Ashtama Chandra** (day Moon in 8th rashi from birth) + **Naidhana Tara** (7th star) hard-REJECT the day. Cross-checked 0-based `day.moonRashi/moonNakshatra` (engine `rashiOf`/`nakshatraOf`) vs 1-based form inputs — formulas hit the correct house/star.
-- **Smoke test extended** → `tests/marriage-browser.mjs` **18/18** (button state machine, no Tier-2 leak pre-scan, progress % + text captured, reset after done, SHUBH 2026-11-25 dual-personal clear).
-- **UNCOMMITTED — all of the above sits in the working tree**: modified `marriage.html`, `marriage.mjs`, `rules/marriage_rules.json`, `reference/provenance_registry.json`, `tests/marriage-browser.mjs`, `tests/marriage-tests.mjs`; untracked `marriage.worker.js`, `worker-client.mjs`.
-
-## Architectural Decisions
-- **Hard blockers first, overrides after, overrides can NEVER touch T1** (debugging-tips §1/§2).
-- **Provenance = registry joined at runtime**, NOT embedded in corpus (avoids 140× verse duplication and
-  `build_corpus.js` whitelist stripping). `provenance` corpus key stays as tier label; new data is
-  `classical`/`verse_refs`.
-- **Basis tiers**: `classical` (categorical confirmed verse) | `functional_group` (Ch.2 nakshatra class) |
-  `formula` (panchanga math → vedic_panchang.pdf). `BHADRA_EARTH_ACTIVE` excluded from categorical
-  promotion (it is universal). No `synthesized_analogy` tier — owner can't pundit-review, so modern
-  activities are marked functional_group/formula honestly.
-- **Authority for Bhadra Loka**: Sanskrit Sloka 46 > OCR English edition (variant documented in registry
-  `meta.variants`).
+1. **Commit & deploy** — new assets: `rules/in_cities.json`, `rules/tirumandiram_daily.json`, `tirumandiram.mjs`, `docs/weather-and-city-research.md`, `docs/enhancements-pipeline.md` + edits `app.js`, `index.html`, `package.json`, `tests/*`. Run `precommit-review` → `commit-release` → `npx wrangler deploy`. Verify live verse card + city search `mad→Madurai` + chips.
+2. **Next build (return per LOC): A+B as “Today” hero — Daily Panchang Digest + Daily Nitya Sadhana** (pure offline, zero deps). Place `Avoid → (A+B) → Verse → Gochara`. Then C (Upcoming 7-day Pulse) → D (Today’s Gochara Pulse) → F (Pradosha/Ekadashi push via D:\notif hub + ICS). Order per `docs/enhancements-pipeline.md`.
+3. **PWA / ICS / Print audit** for new cards (Gochara/Avoid/Nitya/Holiday/Verse/City) — deferred.
+4. **wrangler.toml allowlist** — `assets: ./` leaks 1053 files; cap with allowlist (`assets` + `rules` + `reference`) after cap `in_cities.json` 67KB + `tirumandiram_daily.json` 340KB.
 
 ## Watch Outs
-- **Loka variant documented, not silently rewritten**: engine + PRD + classical_rule_architecture_mc.md
-  now all say `[3,4,6,11]`; OCR archive (`reference/archive/250_rule_muhurta_engine/`) still says
-  Aquarius — leave untouched, provenance registry records the dispute.
-- **YAMA_GHANTA_ACTIVE + BHADRA_EARTH_ACTIVE are intentionally unmapped** in `toMuhurta` (Yama Ghanta is
-  sub-day, can't score day-granular; Bhadra handled by the universal engine matrix) — `INTENTIONALLY_UNMAPPED`
-  list silences the warning.
-- **Soft mode still rejects hard-blocker days** (T1 → score 0) — intended per debugging-tips; soft only
-  relaxes T2/T3. Personal also rejects hard-blocker days (T1 inherited) plus bad tara / Ashtama Chandra.
-- Harness scripts now live in **repo** `tests/` (`tests-suite.mjs`, `mode-summary.mjs`; `package.json`
-  `npm test` / `npm run modes`). Older leaked harness copies remain in `C:\Users\Sony\AppData\Local\Temp\opencode\`
-  (`leak-harness.mjs`, `verify-tests.mjs`, `verify-provenance.mjs`, `verify-modes.mjs`) — not committed.
-- **Drive backup**: OK 2026-08-13 (the 2026-08-12 `invalid_grant` was resolved by reconnecting rclone; `ocmem-sync.ps1` now completes). NEXT-PHASE topics (print-to-PDF audit + ICS export) are owner-deferred — see Immediate Next Steps #2.
-- **Month table (90b3e83)**: the full-month table is the single calendar surface now — no grid. `view.selected` (shared with the muhurta table) drives the inline `.mdetail` expand; nav to another month with a stale `view.selected` just renders no expanded row (safe). Mobile stacked cards rely on `td::before[data-label]` — new columns must add `data-label` or the label cell renders empty. Weekend tint uses `.mrow.weekend`; today uses `.mrow.today td.dt .d-num`. The muhurta table (`#muhurtas`, 4 cols) is separate and unaffected.
-- **Probe workflow**: mobile verification uses `node serve.cjs` (PORT env) + Playwright scripts at `C:\Users\Sony\AppData\Local\Temp\mobile-probe*.mjs` (360×800 isMobile hasTouch). New probes can be written per page; the key assertion is `document.documentElement.scrollWidth - clientWidth === 0`.
-- **Marriage module**: `marriage.html`/`marriage.mjs` import swisseph via `engine.js` — the browser smoke used a real engine init, so swisseph-wasm must keep loading under `node serve.cjs`. The ~21 documented-but-not-implemented doshas are logged in `rules/marriage_rules.json` (`documentedButNotImplemented`) with `isImplemented:false` so a future dosha pass can claim them; they do not affect current scoring. `docs/` remains untracked (pre-existing match-making spec `.md`s, not authored this session — leave for owner to stage).
-- **Working tree is CLEAN (2026-08-22)** — all sessions committed including deploy, catalog, night mode, and UI polish. Last commit `46853d4`.
+
+- `rules/in_cities.json` diacritics normalized (Nādampālaiyam→Nadampalaiyam, Trichinopoly→Tiruchirappalli); keep `city_ascii` for search, `city` for display.
+- City picker is autofill-only — user must still press `Compute calendar`; manual lat/lon override stays.
+- Verse rotation `dayOfYear` IST (`Date.UTC+5:30`); leap Dec 31 wraps to verse 1 (`tirumandiram.mjs:5`).
+- Keep `docs/weather-and-city-research.md` + `rules/in_cities.json` in sync; `docs/enhancements-pipeline.md` is the live queue — update together.
+- `wrangler.toml:4` assets `./` leak + new 340KB tirumandiram — allowlist before next big asset.
 
 ## Pointer
+
 - Master session log: `D:\knowledge-base\HANDOFF.md`
+- Research: `D:\astro-cal\docs\weather-and-city-research.md` · Pipeline: `D:\astro-cal\docs\enhancements-pipeline.md`
 - Project card: `D:\knowledge-base\projects\apps\astro-cal.md`
-- Task board: `node D:\knowledge-base\tools\task.js list` · PRD: [`D:\astro-cal\PRD.md`](file:///D:/astro-cal/PRD.md)
-- Corpus: `rules/activity_corpus.json` · Resolver: `taxonomy.js` · Build tool: `tools/build_corpus.js`
-- Provenance registry: `reference/provenance_registry.json` · Build tool: `tools/build_provenance.js`
-- Debug guide: `debugging-tips.md` · Provenance proposal: `need_for_provenance_adding.md`
-- Old corpus archive: `reference/archive/250_rule_muhurta_engine/`
-
-
-## Crash guard (ocguard)
-- **Kicked at**: 2026-08-21T12:18:28.562Z
-- **Session**: ses_fdbe3545bffeHOgBR1vZALmmYW
-- **Error**: {"name":"APIError","data":{"message":"Insufficient balance. Manage your billing here: https://opencode.ai/workspace/wrk_01KY9DRSMQ0PC05P610JBWRTFR/billing","statusCode":401,"isRetryable":false,"responseHeaders":{"cf-placement":"remote-ORD","cf-ray":"a2e9949a1cfda33c-SEA","connection":"keep-alive","c
-- **Resume**: re-open this project and run `/resume`; work state was captured in ocmem.
-
-
-## Crash guard (ocguard)
-- **Kicked at**: 2026-08-22T06:50:13.287Z
-- **Session**: ses_fd7d0413affeFf7d2weLewus12
-- **Error**: {"name":"APIError","data":{"message":"Insufficient balance. Manage your billing here: https://opencode.ai/workspace/wrk_01KY9DRSMQ0PC05P610JBWRTFR/billing","statusCode":401,"isRetryable":false,"responseHeaders":{"cf-placement":"remote-ORD","cf-ray":"a2eff127990adfd2-PDX","connection":"keep-alive","c
-- **Resume**: re-open this project and run `/resume`; work state was captured in ocmem.
+- Task board: `node D:\knowledge-base\tools\task.js list` · PRD: `D:\astro-cal\PRD.md`
+- Live: `https://astro-cal.srirambm.workers.dev` · Worker: `src/worker.mjs` · Wrangler: `wrangler.toml`

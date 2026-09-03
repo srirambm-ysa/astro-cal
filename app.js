@@ -3,6 +3,7 @@ import { Engine, RASHI, TAMIL_MONTH, NAKSHATRA, TITHI_NAMES, TAMIL_YEARS_60, tim
          YOGA_NAMES, KARANA_NAMES, TARA_NAMES, TARA_NATURE, NAKSHATRA_GROUP } from "./engine.js";
 import { loadTaxonomy } from "./taxonomy.js";
 import { listMonthlyGochara } from "./gochara.mjs";
+import { getVerseOfDay, dayOfYear } from "./tirumandiram.mjs";
 
 const LS = {
   birth: "astro-cal-birth",
@@ -26,6 +27,7 @@ const I = {
   fest: '<svg viewBox="0 0 24 24" fill="none" stroke="#D97427" stroke-width="1.6"><path d="M12 3l1.2 3 3 1.2-3 1.2L12 11.4l-1.2-3-3-1.2 3-1.2L12 3z" fill="#D97427" opacity=".35"/><circle cx="12" cy="12" r="8" stroke="#D97427" stroke-dasharray="3 2"/></svg>',
   san: '<svg viewBox="0 0 24 24" fill="none" stroke="#B13B2B" stroke-width="1.7"><path d="M12 3v18M3 12h18" opacity=".5"/><circle cx="12" cy="12" r="6" fill="#B13B2B" opacity=".2"/><circle cx="12" cy="12" r="3.4" fill="#B13B2B"/></svg>',
   cha: '<svg viewBox="0 0 24 24" fill="none" stroke="#B13B2B" stroke-width="1.7"><path d="M12 3a9 9 0 0 1 0 18z" fill="#B13B2B" opacity=".25"/><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>',
+  nitya: '<svg viewBox="0 0 24 24" fill="none" stroke="#A84B4B" stroke-width="1.6"><path d="M12 3l2.2 3.5 3.5.5-2.5 2.5.6 3.5-3.8-2-3.8 2 .6-3.5-2.5-2.5 3.5-.5L12 3z" fill="#A84B4B" opacity=".22"/><circle cx="12" cy="12" r="3.2" fill="#A84B4B"/></svg>',
 };
 
 /* ---------- built-in Tamil festivals (always computed on the Tamil solar calendar) ---------- */
@@ -71,6 +73,13 @@ let TAX = null;
 let GOCHARA_RULES = null;
 let TN_HOLIDAYS = null;
 let TN_BBOX = null;
+let SIDDHAR_PUJAS = null;
+let NITYA_DEVIS = null;
+let NITYA_BY_KEY = null;
+let TIRUMANDIRAM = null;
+let verseOffset = 0; // 0=today, +1=tomorrow verse, -1=yesterday
+let IN_CITIES = null;
+const QUICK_CITIES = ["Chennai","Coimbatore","Madurai","Tiruchirappalli","Salem"];
 
 /* Focused activity for scoring: current selection (with legacy migration), else Griha Pravesha. */
 function currentAct() {
@@ -529,11 +538,40 @@ function load(key, fallback) { try { const v = localStorage.getItem(key); return
 
 /* ---------- festival day matching ---------- */
 function festivalMatches(f, tm, moonNakshatra, tithiIndex, tDay) {
+  if (f.kind === "fixed") return false; // fixed Gregorian handled via dayMatchesFixed
   if (f.tMonth !== tm) return false;
   if (f.kind === "nakshatra") return moonNakshatra === f.val;
   if (f.kind === "tithi") return tithiIndex === f.val;
   if (f.kind === "tamday") return tDay === f.val;
   return false;
+}
+function dayMatchesFixed(f, m, d) {
+  return f.kind === "fixed" && f.month === m && f.day === d;
+}
+function isSiddharMatch(f, day, y, m, d) {
+  if (f.kind === "fixed") return dayMatchesFixed(f, m, d);
+  return festivalMatches(f, day.tMonth, day.moonNakshatra, day.tithiIndex, day.tDay);
+}
+/* ---------- Sodashi Tithi Nitya helpers (pedagogic Kṛṣṇa-forward, Śukla-reverse) ---------- */
+function nityaForTithiIndex(idx) {
+  if (!NITYA_DEVIS || !NITYA_DEVIS.entries || NITYA_DEVIS.entries.length < 16) return null;
+  const entries = NITYA_DEVIS.entries;
+  const maha = entries[15] || entries.find(e => e.key === 'maha_tripura_sundari');
+  if (idx === 14 || idx === 29) return maha; // Pūrṇimā / Amāvāsyā → Mahā
+  const k = ((idx % 15) + 15) % 15;
+  const isKrishna = idx >= 15;
+  if (isKrishna) return entries[k]; // Kṛṣṇa-forward 0→Kāmeśvarī
+  return entries[14 - k]; // Śukla-reverse 0→Citrā
+}
+function nityaForDay(day) {
+  if (!day || day.tithi == null) return null;
+  const idx = day.tithi.index != null ? day.tithi.index : (day.tithiIndex != null ? day.tithiIndex : null);
+  if (idx == null) return null;
+  return nityaForTithiIndex(idx);
+}
+function isMahaNitya(day) {
+  const e = nityaForDay(day);
+  return !!(e && e.key === 'maha_tripura_sundari');
 }
 function isInTN(lat, lon){
   const b = TN_BBOX?.bbox || {minLat:8.0,maxLat:13.6,minLon:76.1,maxLon:80.9};
@@ -792,6 +830,10 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     if (flagMap.has(day.iso) && flagMap.get(day.iso).key === "ecl") chips.push(chip("eclipse", "Eclipse", flagMap.get(day.iso).name));
     const moonN = day.moonNakshatra;
     for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) chips.push(chip("festival", f.name, f.name));
+    // Siddhar / Mahaan layer — true purpose (rules/siddhar_pujas.json + built-ins)
+    if (SIDDHAR_PUJAS && SIDDHAR_PUJAS.entries) {
+      for (const f of SIDDHAR_PUJAS.entries) if (isSiddharMatch(f, day, y, m, d)) chips.push(chip("siddhar", f.name, f.display ? `${f.name} · ${f.display}` : f.name));
+    }
     // TN holidays — local, TN-only (bbox gate). No All-India DB, disclaimer via month header when outside TN.
     const inTN = birth ? isInTN(birth.lat, birth.lon) : false;
     if(inTN){
@@ -804,11 +846,16 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     const k = day.kalam;
     const kalamTxt = k ? `Rahu: ${fmtHHMM(k.rahu.start)} · Yama: ${fmtHHMM(k.yama.start)} · Gulika: ${fmtHHMM(k.gulika.start)}` : "—";
 
+    const nitya = nityaForDay(day);
+    const tithiCell = nitya
+      ? `${day.tithi.name} <span class="nitya-inline" title="Nitya: ${nitya.display} · ${nitya.kalaName} kalā · bīja ${nitya.bija}">· ${nitya.display}</span>`
+      : day.tithi.name;
+    const tithiAria = nitya ? `Tithi ${day.tithi.name}, Nitya ${nitya.display}` : `Tithi ${day.tithi.name}`;
     const cls = `mrow${isSel ? " selected" : ""}${isToday ? " today" : ""}${weekend ? " weekend" : ""}`;
     tbody.insertAdjacentHTML("beforeend",
       `<tr class="${cls}" data-iso="${day.iso}">
         <td class="dt" data-label="Date">${weekday} <span class="d-num">${d}</span></td>
-        <td data-label="Tithi">${day.tithi.name}</td>
+        <td data-label="Tithi" aria-label="${tithiAria}">${tithiCell}</td>
         <td data-label="Nakshatra">${NAKSHATRA[day.moonNakshatra]}</td>
         <td class="kal" data-label="Kalam">${kalamTxt}</td>
         <td class="evs" data-label="Events"><div class="evs-cell">${evs}</div></td>
@@ -829,6 +876,20 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     view.selected = tr.dataset.iso === view.selected ? "" : tr.dataset.iso;
     save(LS.view, view);
     render();
+  }));
+  // copy mantra buttons inside expanded detail row
+  tbody.querySelectorAll(".copy-btn").forEach((btn) => btn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const raw = btn.getAttribute("data-mantra") || "";
+    const txt = raw.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+    try { await navigator.clipboard.writeText(txt); } catch(err) {
+      const ta = document.createElement("textarea");
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch(_e) {}
+      ta.remove();
+    }
+    const prev = btn.textContent;
+    btn.textContent = "Copied"; setTimeout(()=> btn.textContent = prev, 1200);
   }));
 }
 
@@ -866,6 +927,28 @@ function dayDetailHTML(day, flagMap, windowsByDay) {
   if (day.tDay === 1) parts.push(periodRow(I.san, `${TAMIL_MONTH[day.tMonth]} 1 — sankranti`, "Tamil month begins", "mut", "Sankranti"));
   const moonN = day.moonNakshatra;
   for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) parts.push(periodRow(I.fest, f.name, `${dayLabelTamil(day.tMonth, day.tDay)} · Tamil calendar`, "mut", "Festival"));
+  if (SIDDHAR_PUJAS && SIDDHAR_PUJAS.entries) {
+    const { y: yy, m: mm, d: dd } = isoToYMD(day.iso);
+    for (const f of SIDDHAR_PUJAS.entries) if (isSiddharMatch(f, day, yy, mm, dd)) parts.push(periodRow(I.san, f.name, f.display ? `${f.display} · Siddhar` : `Siddhar · ${dayLabelTamil(day.tMonth, day.tDay)}`, "mut", "Siddhar"));
+  }
+  // Sodashi Tithi Nitya — always on (lunar, sunrise-anchored)
+  const nitya = nityaForDay(day);
+  if (nitya) {
+    const paksha = day.tithi.paksha || (day.tithi.index >= 15 ? "Krishna" : "Shukla");
+    const kalaBija = `${nitya.kalaName} kalā · bīja ${nitya.bija} · ${paksha}`;
+    const mantraEsc = String(nitya.mantraTarpana).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    const dhyanaLink = nitya.dhyanaRef ? ` · <a href="https://stotranidhi.com/en/nitya-devi-dhyana-shloka-in-english/" target="_blank" rel="noopener" class="nitya-link">dhyāna</a>` : "";
+    const nityaTitle = `${nitya.display} — ${nitya.deviName !== nitya.display ? nitya.deviName : nitya.tamilName}`;
+    const mantraBlock = `<div class="nitya-mantra-wrap">`
+      + `<div class="mantra" lang="sa">${mantraEsc}</div>`
+      + `<button class="copy-btn" data-mantra="${mantraEsc.replace(/"/g,'&quot;')}" aria-label="Copy Nitya mantra">Copy</button>`
+      + `</div>`;
+    const footer = `<div class="diksa-footnote">ⓘ Śrī Vidyā Nitya vidyās are traditionally dīkṣā-bound. These mantras appear here as public-domain Tantrarāja transcriptions for study. Please chant or practise only as your own guru instructs.</div>`;
+    parts.push(
+      periodRow(I.nitya, nityaTitle, kalaBija + dhyanaLink, "mut", "Nitya")
+      + mantraBlock + footer
+    );
+  }
   const body = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
   return `<div class="detail">${strip}${body}</div>`;
 }
@@ -940,6 +1023,120 @@ function renderGochara(year, month){
     const vk=a.dataset.verse;
     if(window.showProvenanceForVerse) window.showProvenanceForVerse(vk);
   }));
+}
+
+/* Tirumandiram — Verse of the Day (daily return driver) */
+function renderVerseCard(){
+  const card=$("verseCard"), body=$("verseBody"), meta=$("verseMeta"), openLink=$("verseOpen");
+  if(!card || !body) return;
+  if(!TIRUMANDIRAM || !TIRUMANDIRAM.entries){
+    body.innerHTML=`<div class="note">Loading Tirumandiram verses…</div>`;
+    return;
+  }
+  // IST today + offset (for Prev/Next browsing)
+  const now = new Date(Date.now() + 19800000); // UTC+5:30
+  // apply offset in days
+  now.setUTCDate(now.getUTCDate() + verseOffset);
+  const y=now.getUTCFullYear(), m=now.getUTCMonth()+1, d=now.getUTCDate();
+  const verse = getVerseOfDay(y,m,d, TIRUMANDIRAM);
+  if(!verse){ body.innerHTML=`<div class="note">Verse not available.</div>`; return; }
+  const tantraLabel = verse.t===0 ? "Payiram" : `Tantra ${verse.t}`;
+  if(meta) meta.textContent = `${String(y).padStart(4,"0")}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")} · ${tantraLabel} · #${verse.n}`;
+  if(openLink) openLink.href = `https://tirumandiram.in/#/read/${verse.n}`;
+  body.innerHTML = `
+    <div class="verse-tag">${verse.sec}</div>
+    <div class="verse-tamil" lang="ta">${verse.ta}</div>
+    ${verse.tr ? `<div class="verse-tr">${verse.tr}</div>` : ""}
+    <div class="verse-en">${verse.en}</div>
+    <div class="verse-cite">— Tirumandiram ${verse.n} · ${tantraLabel} · ${verse.sec} · <a href="https://tirumandiram.in/#/read/${verse.n}" target="_blank" rel="noopener" style="color:var(--vermilion)">Read commentary ↗</a></div>
+  `;
+}
+
+/* City quick-selector — SimpleMaps 382 + GeoNames fallback */
+function cityMatches(q){
+  if(!IN_CITIES || !IN_CITIES.entries) return [];
+  const s = q.trim().toLowerCase();
+  if(!s) return IN_CITIES.entries.slice(0,8);
+  return IN_CITIES.entries.filter(e=>{
+    return e.city_ascii.toLowerCase().includes(s) || e.city.toLowerCase().includes(s) || e.admin_name.toLowerCase().includes(s);
+  }).slice(0,12);
+}
+function renderCityChips(){
+  const wrap=$("cityChips");
+  if(!wrap || !IN_CITIES) return;
+  const curPlace = $("bPlace") ? $("bPlace").value.trim().toLowerCase() : "";
+  const curLat = $("bLat") ? parseFloat($("bLat").value) : NaN;
+  wrap.innerHTML="";
+  QUICK_CITIES.forEach(name=>{
+    const entry = IN_CITIES.entries.find(e=> e.city_ascii.toLowerCase()===name.toLowerCase());
+    if(!entry) return;
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="city-chip" + (curPlace===entry.city.toLowerCase() || Math.abs(curLat-entry.lat)<0.01 ? " active" : "");
+    btn.textContent=entry.city;
+    btn.title=`${entry.city}, ${entry.admin_name}`;
+    btn.addEventListener("click", ()=> applyCity(entry));
+    wrap.appendChild(btn);
+  });
+}
+function renderCityDropdown(q){
+  const dd=$("bCityDropdown");
+  if(!dd) return;
+  const list = cityMatches(q);
+  if(!list.length){ dd.hidden=true; dd.innerHTML=""; return; }
+  dd.innerHTML = list.map(e=> `<div class="city-opt" role="option" data-city="${e.city_ascii}" data-lat="${e.lat}" data-lng="${e.lng}" data-admin="${e.admin_name}"><span><strong>${e.city}</strong> <span class="c-admin">· ${e.admin_name}</span></span><span class="c-pop">${e.population? (e.population>1000000? (e.population/1000000).toFixed(1)+'M' : e.population>1000? Math.round(e.population/1000)+'k' : e.population) : ''}</span></div>`).join("");
+  dd.hidden=false;
+  dd.querySelectorAll(".city-opt").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const cityAscii=el.dataset.city;
+      const entry = IN_CITIES.entries.find(e=> e.city_ascii===cityAscii);
+      if(entry) applyCity(entry);
+    });
+  });
+}
+function applyCity(entry){
+  if(!entry) return;
+  const place=$("bPlace"), lat=$("bLat"), lon=$("bLon"), tz=$("bTz"), search=$("bCitySearch"), dd=$("bCityDropdown");
+  if(place) place.value = entry.city;
+  if(lat) lat.value = entry.lat.toFixed(4);
+  if(lon) lon.value = entry.lng.toFixed(4);
+  if(tz) tz.value = "5.5";
+  if(search) search.value = entry.city + " · " + entry.admin_name;
+  if(dd) dd.hidden=true;
+  renderCityChips();
+  // hint: user still needs to press Compute calendar (we don't auto-compute to avoid surprising nav)
+}
+
+function initCitySelector(){
+  const search=$("bCitySearch"), dd=$("bCityDropdown"), placeInput=$("bPlace");
+  if(!search || !dd) return;
+  renderCityChips();
+  // sync search box from saved place if matches a city
+  if(IN_CITIES && placeInput && placeInput.value){
+    const m = IN_CITIES.entries.find(e=> e.city.toLowerCase()===placeInput.value.trim().toLowerCase() || e.city_ascii.toLowerCase()===placeInput.value.trim().toLowerCase());
+    if(m) search.value = m.city + " · " + m.admin_name;
+  }
+  let t=null;
+  search.addEventListener("input", ()=>{
+    clearTimeout(t);
+    t=setTimeout(()=> renderCityDropdown(search.value), 120);
+  });
+  search.addEventListener("focus", ()=> renderCityDropdown(search.value));
+  search.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape"){ dd.hidden=true; }
+    if(e.key==="Enter"){
+      const first = dd.querySelector(".city-opt");
+      if(first && !dd.hidden){ first.click(); e.preventDefault(); }
+    }
+  });
+  document.addEventListener("click", (e)=>{
+    if(!search.contains(e.target) && !dd.contains(e.target)) dd.hidden=true;
+  });
+  // keep chips in sync when manual fields change
+  ["bPlace","bLat","bLon"].forEach(id=>{
+    const el=$(id);
+    if(el) el.addEventListener("input", renderCityChips);
+  });
 }
 
 /* Muhurta detail HTML for the accordion under the Muhurta table: score breakdown,
@@ -1154,6 +1351,15 @@ async function buildICS(startISO, endISO) {
     if (day.tithi.purnima) event("Purnima (full moon)", dateStr, { allday: true });
     const moonN = day.moonNakshatra;
     for (const f of TAMIL_FESTIVALS) if (festivalMatches(f, day.tMonth, moonN, day.tithiIndex, day.tDay)) event(f.name, dateStr, { allday: true });
+    if (SIDDHAR_PUJAS && SIDDHAR_PUJAS.entries) {
+      const { y, m, d } = isoToYMD(iso);
+      for (const f of SIDDHAR_PUJAS.entries) if (isSiddharMatch(f, day, y, m, d)) event(f.name, dateStr, { allday: true });
+    }
+    // Nitya Devi — one all-day trace per civil day
+    if (NITYA_DEVIS && day.tithi && day.tithi.index != null) {
+      const nitya = nityaForTithiIndex(day.tithi.index);
+      if (nitya) event(`Tithi: ${day.tithi.name} — Nitya: ${nitya.display}`, dateStr, { allday: true });
+    }
   }
   add("END:VCALENDAR");
   return lines.join("\r\n") + "\r\n";
@@ -1344,6 +1550,29 @@ async function init() {
   try{ GOCHARA_RULES = await fetch("./rules/gochara_rules.json").then(r=>r.json()); }catch(e){ console.warn("gochara rules failed",e); }
   try{ TN_HOLIDAYS = await fetch("./rules/tn_holidays.json").then(r=>r.json()); }catch(e){ console.warn("tn holidays failed",e); }
   try{ TN_BBOX = await fetch("./rules/tn_bbox.json").then(r=>r.json()); }catch(e){ console.warn("tn bbox failed",e); }
+  try{ SIDDHAR_PUJAS = await fetch("./rules/siddhar_pujas.json").then(r=>r.json()); }catch(e){ console.warn("siddhar pujas failed",e); }
+  try{
+    NITYA_DEVIS = await fetch("./rules/nitya_devis.json").then(r=>r.json());
+    if (NITYA_DEVIS && NITYA_DEVIS.entries) {
+      NITYA_BY_KEY = Object.fromEntries(NITYA_DEVIS.entries.map(e => [e.key, e]));
+    }
+  }catch(e){ console.warn("nitya devis failed",e); }
+  try{ TIRUMANDIRAM = await fetch("./rules/tirumandiram_daily.json").then(r=>r.json()); }catch(e){ console.warn("tirumandiram daily failed",e); }
+  renderVerseCard();
+  // verse card interactions
+  const vCopy=$("verseCopy"), vPrev=$("versePrev"), vNext=$("verseNext");
+  if(vCopy) vCopy.addEventListener("click", ()=>{
+    const body=$("verseBody");
+    const txt = body ? body.innerText : "";
+    if(!txt) return;
+    const done=()=>{ vCopy.textContent="Copied!"; setTimeout(()=>vCopy.textContent="Copy verse",1400); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done);
+    else { const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");}catch(e){} ta.remove(); done(); }
+  });
+  if(vPrev) vPrev.addEventListener("click", ()=>{ verseOffset--; renderVerseCard(); });
+  if(vNext) vNext.addEventListener("click", ()=>{ verseOffset++; renderVerseCard(); });
+  try{ IN_CITIES = await fetch("./rules/in_cities.json").then(r=>r.json()); }catch(e){ console.warn("in_cities failed",e); }
+  initCitySelector();
   const muhDomain = $("muhDomain");
   const muhSub = $("muhSub");
   const muhTask = $("muhTask");

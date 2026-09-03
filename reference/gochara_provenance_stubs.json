@@ -1,0 +1,842 @@
+{
+  "GOCHARA_SUN_H1": {
+    "label": "Sūrya in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding self, health and vigour; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 1th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H2": {
+    "label": "Sūrya in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding wealth, family and speech; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 2th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H3": {
+    "label": "Sūrya in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — vigour and success regarding courage, siblings and short journeys. Classical: honour and overcoming opposition.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 3th rāśi from janma rāśi is shubha. Vedha by Saturn in 9th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H4": {
+    "label": "Sūrya in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding home, mother and comfort; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 4th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H5": {
+    "label": "Sūrya in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding intellect, children and mantra; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 5th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H6": {
+    "label": "Sūrya in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — vigour and success regarding enemies, disease and competition. Classical: honour and overcoming opposition.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 6th rāśi from janma rāśi is shubha. Vedha by Saturn in 12th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H7": {
+    "label": "Sūrya in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding partnership and contracts; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 7th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H8": {
+    "label": "Sūrya in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding longevity, obstacles and research; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 8th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H9": {
+    "label": "Sūrya in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding fortune, dharma and long travel; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 9th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H10": {
+    "label": "Sūrya in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — vigour and success regarding karma, status and work. Classical: honour and overcoming opposition.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 10th rāśi from janma rāśi is shubha. Vedha by Saturn in 4th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H11": {
+    "label": "Sūrya in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — vigour and success regarding gains, friends and fulfilment. Classical: honour and overcoming opposition.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 11th rāśi from janma rāśi is shubha. Vedha by Saturn in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SUN_H12": {
+    "label": "Sūrya in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Sun H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — strain regarding loss, expense and retreat; avoid heat, haste and over-exertion.",
+    "applied_rule_logic": "Gochara house effect: Sun transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H1": {
+    "label": "Candra in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding self, health and vigour.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 1th rāśi from janma rāśi is shubha. Vedha by Saturn in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H2": {
+    "label": "Candra in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding wealth, family and speech; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 2th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H3": {
+    "label": "Candra in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding courage, siblings and short journeys.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 3th rāśi from janma rāśi is shubha. Vedha by Saturn in 9th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H4": {
+    "label": "Candra in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding home, mother and comfort; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 4th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H5": {
+    "label": "Candra in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding intellect, children and mantra; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 5th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H6": {
+    "label": "Candra in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding enemies, disease and competition.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 6th rāśi from janma rāśi is shubha. Vedha by Saturn in 12th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H7": {
+    "label": "Candra in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding partnership and contracts.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 7th rāśi from janma rāśi is shubha. Vedha by Saturn in 2th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H8": {
+    "label": "Candra in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding longevity, obstacles and research; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 8th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H9": {
+    "label": "Candra in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding fortune, dharma and long travel; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 9th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H10": {
+    "label": "Candra in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding karma, status and work.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 10th rāśi from janma rāśi is shubha. Vedha by Saturn in 4th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H11": {
+    "label": "Candra in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — ease and well-being regarding gains, friends and fulfilment.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 11th rāśi from janma rāśi is shubha. Vedha by Saturn in 8th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MOON_H12": {
+    "label": "Candra in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Moon H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — restlessness regarding loss, expense and retreat; keep routine, avoid hasty decisions.",
+    "applied_rule_logic": "Gochara house effect: Moon transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H1": {
+    "label": "Maṅgala in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding self, health and vigour; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 1th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H2": {
+    "label": "Maṅgala in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding wealth, family and speech; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 2th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H3": {
+    "label": "Maṅgala in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — courage and gain regarding courage, siblings and short journeys; competitors recede.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 3th rāśi from janma rāśi is shubha. Vedha by Saturn in 9th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H4": {
+    "label": "Maṅgala in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding home, mother and comfort; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 4th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H5": {
+    "label": "Maṅgala in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding intellect, children and mantra; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 5th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H6": {
+    "label": "Maṅgala in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — courage and gain regarding enemies, disease and competition; competitors recede.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 6th rāśi from janma rāśi is shubha. Vedha by Saturn in 12th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H7": {
+    "label": "Maṅgala in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding partnership and contracts; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 7th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H8": {
+    "label": "Maṅgala in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding longevity, obstacles and research; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 8th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H9": {
+    "label": "Maṅgala in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding fortune, dharma and long travel; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 9th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H10": {
+    "label": "Maṅgala in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding karma, status and work; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 10th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H11": {
+    "label": "Maṅgala in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — courage and gain regarding gains, friends and fulfilment; competitors recede.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 11th rāśi from janma rāśi is shubha. Vedha by Saturn in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MARS_H12": {
+    "label": "Maṅgala in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mars H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — friction regarding loss, expense and retreat; act with restraint.",
+    "applied_rule_logic": "Gochara house effect: Mars transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H1": {
+    "label": "Budha in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding self, health and vigour; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 1th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H2": {
+    "label": "Budha in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding wealth, family and speech.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 2th rāśi from janma rāśi is shubha. Vedha by Mars in 8th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H3": {
+    "label": "Budha in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding courage, siblings and short journeys; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 3th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H4": {
+    "label": "Budha in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding home, mother and comfort.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 4th rāśi from janma rāśi is shubha. Vedha by Moon in 10th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H5": {
+    "label": "Budha in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding intellect, children and mantra; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 5th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H6": {
+    "label": "Budha in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding enemies, disease and competition.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 6th rāśi from janma rāśi is shubha. Vedha by Mars in 12th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H7": {
+    "label": "Budha in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding partnership and contracts; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 7th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H8": {
+    "label": "Budha in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding longevity, obstacles and research.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 8th rāśi from janma rāśi is shubha. Vedha by Moon in 2th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H9": {
+    "label": "Budha in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding fortune, dharma and long travel; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 9th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H10": {
+    "label": "Budha in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding karma, status and work.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 10th rāśi from janma rāśi is shubha. Vedha by Moon in 4th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H11": {
+    "label": "Budha in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — clarity and communication regarding gains, friends and fulfilment.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 11th rāśi from janma rāśi is shubha. Vedha by Moon in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_MERCURY_H12": {
+    "label": "Budha in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Mercury H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — scattered thought regarding loss, expense and retreat; double-check agreements.",
+    "applied_rule_logic": "Gochara house effect: Mercury transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H1": {
+    "label": "Guru in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding self, health and vigour; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 1th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H2": {
+    "label": "Guru in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — growth and protection regarding wealth, family and speech; counsel bears fruit.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 2th rāśi from janma rāśi is shubha. Vedha by Venus in 8th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H3": {
+    "label": "Guru in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding courage, siblings and short journeys; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 3th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H4": {
+    "label": "Guru in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding home, mother and comfort; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 4th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H5": {
+    "label": "Guru in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — growth and protection regarding intellect, children and mantra; counsel bears fruit.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 5th rāśi from janma rāśi is shubha. Vedha by Venus in 11th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H6": {
+    "label": "Guru in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding enemies, disease and competition; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 6th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H7": {
+    "label": "Guru in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — growth and protection regarding partnership and contracts; counsel bears fruit.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 7th rāśi from janma rāśi is shubha. Vedha by Venus in 1th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H8": {
+    "label": "Guru in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding longevity, obstacles and research; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 8th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H9": {
+    "label": "Guru in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — growth and protection regarding fortune, dharma and long travel; counsel bears fruit.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 9th rāśi from janma rāśi is shubha. Vedha by Venus in 3th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H10": {
+    "label": "Guru in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding karma, status and work; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 10th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H11": {
+    "label": "Guru in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — growth and protection regarding gains, friends and fulfilment; counsel bears fruit.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 11th rāśi from janma rāśi is shubha. Vedha by Venus in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_JUPITER_H12": {
+    "label": "Guru in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Jupiter H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — expectations exceed results regarding loss, expense and retreat; stay measured.",
+    "applied_rule_logic": "Gochara house effect: Jupiter transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H1": {
+    "label": "Śukra in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding self, health and vigour.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 1th rāśi from janma rāśi is shubha. Vedha by Saturn in 7th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H2": {
+    "label": "Śukra in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding wealth, family and speech.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 2th rāśi from janma rāśi is shubha. Vedha by Saturn in 8th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H3": {
+    "label": "Śukra in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding courage, siblings and short journeys.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 3th rāśi from janma rāśi is shubha. Vedha by Saturn in 9th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H4": {
+    "label": "Śukra in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding home, mother and comfort.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 4th rāśi from janma rāśi is shubha. Vedha by Saturn in 10th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H5": {
+    "label": "Śukra in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding intellect, children and mantra.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 5th rāśi from janma rāśi is shubha. Vedha by Saturn in 11th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H6": {
+    "label": "Śukra in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — over-indulgence or discord regarding enemies, disease and competition; keep moderation.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 6th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H7": {
+    "label": "Śukra in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — over-indulgence or discord regarding partnership and contracts; keep moderation.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 7th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H8": {
+    "label": "Śukra in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding longevity, obstacles and research.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 8th rāśi from janma rāśi is shubha. Vedha by Saturn in 2th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H9": {
+    "label": "Śukra in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding fortune, dharma and long travel.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 9th rāśi from janma rāśi is shubha. Vedha by Saturn in 3th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H10": {
+    "label": "Śukra in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — over-indulgence or discord regarding karma, status and work; keep moderation.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 10th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H11": {
+    "label": "Śukra in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding gains, friends and fulfilment.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 11th rāśi from janma rāśi is shubha. Vedha by Saturn in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_VENUS_H12": {
+    "label": "Śukra in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Venus H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — comfort and harmony regarding loss, expense and retreat.",
+    "applied_rule_logic": "Gochara house effect: Venus transiting 12th rāśi from janma rāśi is shubha. Vedha by Saturn in 6th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H1": {
+    "label": "Śani in 1th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H1",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding self, health and vigour; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 1th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H2": {
+    "label": "Śani in 2th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H2",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding wealth, family and speech; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 2th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H3": {
+    "label": "Śani in 3th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H3",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — steady progress regarding courage, siblings and short journeys; effort is rewarded, debts clear.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 3th rāśi from janma rāśi is shubha. Vedha by Sun in 9th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H4": {
+    "label": "Śani in 4th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H4",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding home, mother and comfort; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 4th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H5": {
+    "label": "Śani in 5th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H5",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding intellect, children and mantra; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 5th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H6": {
+    "label": "Śani in 6th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H6",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — steady progress regarding enemies, disease and competition; effort is rewarded, debts clear.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 6th rāśi from janma rāśi is shubha. Vedha by Sun in 12th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H7": {
+    "label": "Śani in 7th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H7",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding partnership and contracts; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 7th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H8": {
+    "label": "Śani in 8th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H8",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding longevity, obstacles and research; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 8th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H9": {
+    "label": "Śani in 9th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H9",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding fortune, dharma and long travel; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 9th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H10": {
+    "label": "Śani in 10th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H10",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding karma, status and work; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 10th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H11": {
+    "label": "Śani in 11th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H11",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as śubha (favourable) in this house from janma rāśi. Favourable — steady progress regarding gains, friends and fulfilment; effort is rewarded, debts clear.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 11th rāśi from janma rāśi is shubha. Vedha by Sun in 5th obstructs śubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  },
+  "GOCHARA_SATURN_H12": {
+    "label": "Śani in 12th from Candra",
+    "chapter": "gochara_bphs",
+    "verse": "BPHS Gochara Saturn H12",
+    "sanskrit_sloka": null,
+    "english_translation": "Counted as aśubha/madhyama (unfavourable/indifferent) in this house from janma rāśi. Caution — delay and pressure regarding loss, expense and retreat; patience and steady work help.",
+    "applied_rule_logic": "Gochara house effect: Saturn transiting 12th rāśi from janma rāśi is ashubha.",
+    "basis": "classical",
+    "proof": "unverified"
+  }
+}

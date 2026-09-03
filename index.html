@@ -93,7 +93,40 @@
   .chip.moon{background:#262A4A}
   .chip.eclipse{background:var(--saffron)}
   .chip.festival{background:var(--gold)}
+  .chip.siddhar{background:#5B4A9A;color:#fff}
   .chip.holiday{background:var(--teal);color:#fff}
+  .chip.nitya{background:#A84B4B;color:#fff}
+  .nitya-inline{font-size:10px;color:var(--ink-faint);letter-spacing:.02em;white-space:nowrap}
+  .nitya-mantra-wrap{display:flex;gap:8px;align-items:flex-start;margin:6px 0 4px 36px}
+  .nitya-mantra-wrap .mantra{flex:1;font-family:ui-monospace,"Noto Sans Devanagari",monospace;font-size:11px;line-height:1.5;white-space:pre-wrap;word-break:break-word;background:var(--panel-b);border:1px solid var(--line-faint);border-radius:6px;padding:8px 10px}
+  .copy-btn{flex:none;font-size:11px;padding:6px 10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
+  .copy-btn:hover{background:var(--panel-b)}
+  .diksa-footnote{margin:4px 0 2px 36px;font-size:10px;color:var(--ink-faint);border-left:2px solid var(--line);padding-left:8px;line-height:1.4}
+  .nitya-link{color:var(--ink-faint);text-decoration:underline;text-underline-offset:2px}
+  /* Tirumandiram Verse of the Day */
+  .verse-body{padding:2px 0}
+  .verse-tag{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);padding:2px 7px;border-radius:999px;background:var(--panel-b);margin-bottom:8px}
+  .verse-tamil{font-family:"Noto Sans Tamil","Latha","Tamil Sangam MN",system-ui,serif;font-size:17px;line-height:1.8;color:var(--ink);white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
+  .verse-tr{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);white-space:pre-wrap;word-break:break-word;background:var(--panel-b);border:1px solid var(--line-faint);border-radius:6px;padding:7px 10px;margin-bottom:8px}
+  .verse-en{font-size:13px;line-height:1.6;color:var(--ink);border-left:3px solid var(--gold);padding-left:10px;margin-bottom:4px}
+  .verse-cite{font-size:11px;color:var(--ink-soft);margin-top:4px}
+  @media(max-width:640px){ .verse-tamil{font-size:16px} }
+  /* ---------- CITY QUICK-SELECTOR ---------- */
+  .city-selector{grid-column:1/-1}
+  .city-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+  .city-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border:1px solid var(--line);background:var(--panel-b);color:var(--ink);font-family:"Eczar",serif;font-size:12px;cursor:pointer;border-radius:999px;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+  .city-chip:hover{border-color:var(--gold);background:rgba(197,154,78,.12)}
+  .city-chip.active{background:var(--vermilion);color:var(--paper);border-color:var(--vermilion);font-weight:600}
+  .city-combo{position:relative}
+  .city-combo input{width:100%;font-family:"Eczar",serif;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:7px 10px}
+  .city-combo input:focus{outline:none;border-color:var(--gold)}
+  .city-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1px solid var(--line);border-top:none;max-height:240px;overflow:auto;z-index:20;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+  .city-dropdown[hidden]{display:none}
+  .city-dropdown .city-opt{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--line-faint)}
+  .city-dropdown .city-opt:hover, .city-dropdown .city-opt.focus{background:rgba(197,154,78,.12)}
+  .city-dropdown .city-opt .c-admin{font-size:11px;color:var(--ink-soft);white-space:nowrap}
+  .city-dropdown .city-opt .c-pop{font-size:10px;color:var(--ink-soft)}
+  @media(max-width:640px){ .city-chip{padding:6px 12px;font-size:14px;min-height:44px} .city-combo input{font-size:16px;min-height:44px} }
   /* ---------- PRESET CHIPS (Quick Selector) ---------- */
   .preset-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;padding:8px 0;border-bottom:1px solid var(--line-faint)}
   .preset-wrap .pw-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);flex:none}
@@ -334,6 +367,15 @@
     <div class="form" id="birthForm">
       <div class="field"><div class="k">Janma Nakshatra</div><select id="bNakshatra"></select></div>
       <div class="field"><div class="k">Janma Rashi</div><select id="bRashi"></select></div>
+      <div class="city-selector">
+        <div class="k">City quick-select — pick to autofill place & coordinates</div>
+        <div class="city-chips" id="cityChips"></div>
+        <div class="city-combo">
+          <input type="text" id="bCitySearch" placeholder="Search city (e.g. Madurai, Tirunelveli, Palani)…" autocomplete="off" aria-autocomplete="list" aria-controls="bCityDropdown">
+          <div id="bCityDropdown" class="city-dropdown" hidden role="listbox"></div>
+        </div>
+        <div class="note" style="margin-top:4px">Manual lat/lon stay editable as advanced override. Cities: 382 (SimpleMaps MIT + GeoNames CC-BY 4.0 fallback).</div>
+      </div>
       <div class="field"><div class="k">Current place (sunrise & TN holidays)</div><input type="text" id="bPlace" value="Chennai" placeholder="Place name"></div>
       <div class="field"><div class="k">Latitude</div><input type="number" id="bLat" step="0.0001" value="13.0827"></div>
       <div class="field"><div class="k">Longitude</div><input type="number" id="bLon" step="0.0001" value="80.2707"></div>
@@ -364,6 +406,24 @@
       <span class="chip chandra peak">Peak · chandrashtama nakshatra (~24h)</span>
       <span style="font-size:11px;color:var(--ink-soft)">Two-tone bar: coarse light + peak dark — same as calendar chips.</span>
     </div>
+  </section>
+
+  <!-- Tirumandiram — Verse of the Day (daily return driver; uses tirumandiram_daily.json) -->
+  <section class="card" id="verseCard">
+    <h2 id="verseTitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <span>📜 Tirumandiram — Verse of the Day</span>
+      <span class="note" id="verseMeta" style="font-size:11px;color:var(--ink-soft)"></span>
+    </h2>
+    <div id="verseBody" class="verse-body">
+      <div class="note">Loading verse…</div>
+    </div>
+    <div class="verse-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn small ghost" id="verseCopy" type="button">Copy verse</button>
+      <a class="btn small ghost" id="verseOpen" href="https://tirumandiram.in" target="_blank" rel="noopener" style="text-decoration:none">Read on tirumandiram.in ↗</a>
+      <button class="btn small ghost" id="versePrev" type="button" title="Previous verse">‹ Prev</button>
+      <button class="btn small ghost" id="verseNext" type="button" title="Next verse">Next ›</button>
+    </div>
+    <div class="note" style="margin-top:8px;font-size:11px">Daily verse from <em>Tirumandiram</em> (Thirumoolar, 3047 verses). Curated 365-verse rotation — one per calendar day. Source: <a href="https://tirumandiram.in" target="_blank" rel="noopener" style="color:var(--vermilion)">tirumandiram.in</a>. Full commentary there.</div>
   </section>
 
   <!-- Gochara — monthly transits (Moon-excluded) — below Avoid Days, above Muhurta conceptually (docs/gochara_addition.md §0/§8) -->
@@ -438,7 +498,7 @@
     <div class="sacred-footer-row" aria-hidden="true">
       <span class="sf-om">ॐ</span>
     </div>
-    <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+    <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a><span style="font-size:10px;color:var(--ink-soft)">Cities: SimpleMaps (<a href="https://simplemaps.com/data/in-cities" target="_blank" rel="noopener" style="color:var(--ink-soft);text-decoration:underline">MIT</a>) + GeoNames (<a href="https://www.geonames.org" target="_blank" rel="noopener" style="color:var(--ink-soft);text-decoration:underline">CC-BY 4.0</a>) · 382 cities · <a href="https://tirumandiram.in" target="_blank" rel="noopener" style="color:var(--ink-soft);text-decoration:underline">Tirumandiram</a></span></div>
   </footer>
 
 </div>
