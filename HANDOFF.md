@@ -4,38 +4,41 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-09-03 (A+B+C+D daily drivers + dual-chip Gochara fix)
+Last updated: 2026-09-06 (Key Days + Help split + Nitya tradition + deploy — READY)
 
-## Goal Accomplished (this session — 2026-09-03)
+## Goal Accomplished (this session — 2026-09-05/06)
 
-- **Weather & City Research — locked `docs/weather-and-city-research.md:1`:** SimpleMaps 354 MIT primary + GeoNames 28 fallback (382 rows `in-cities-v1`), weather DROPPED — no honest offline 3-day forecast.
-- **Tirumandiram + City shipped (prior):** `rules/tirumandiram_daily.json` 365 `tirumandiram-daily-v1` + `tirumandiram.mjs:1` + `rules/in_cities.json` 382 rows + `docs/enhancements-pipeline.md` pipeline (see `D:\knowledge-base\HANDOFF.md` prior entry).
-- **A — Daily Panchang Digest `index.html:389` `app.js:625` `engine.js:622`:** hero `Date·Tithi·Nakshatra·Yoga·Karana·Sunrise/Sunset·Rahu/Yama/Gulika·Abhijit·Chandrashtama` capsule of `computeDay`. IST `2026-09-03` Saptami·Krittika·Vyaghata.
-- **B — Daily Nitya Sadhana `index.html:396` `app.js:680` `nitya.mjs:1`:** lifts `nitya-devi-v1` 16 kalās from table cell to large card `Today — Nitya Śivadūtī · Manadā? kalā/bīja · copyable mantra` behind dikṣā note. Pedagogic Krishna-forward `Tvarita` invariant.
-- **C — Upcoming 7-day Pulse `index.html:410` `app.js:730`:** banner next 7 days `Pradosham/Ekadashi/Amavasya + Tamil festivals + Siddhar pujas` via `dayMap+7`, 7 rows with Nitya tag + chip set.
-- **D — Today’s Gochara Pulse `index.html:460` `app.js:1255` `gochara.mjs:1`:** daily `Transit Moon Chandrabala (house from janma) + Tara` via `gocharaForBirth` + `BPHS H1..12` + Vedha. Fix Kanya 8th: `Mesha→Vrishabha 07:26 IST` now **dual chips** `8th Aśubha till 07:26 → 9th Aśubha from 07:26` (no false “then OK”; `GOCHARA_MOON_H9` still aśubha) + Tara `till/from` before next sunrise `app.js:1298`. Impersonal fallback preserved.
-- **UI Review `docs/ui-review-1.md:1` discussed:** SVG chevrons, iconify copies, frameless ghost, left-border, hierarchy — classified micro vs structural. Deferred to next session per owner; F (`D:\notif` hub) stays deferred.
-- **Verification:** `npm test` green INV 151 + BND 9 + OVR 143 + PRS 7 + marriage 51 + guna-milap 45 + gochara 51 + nitya 15 + tirumandiram 10 + city 21; `node --check app.js` clean; serve `127.0.0.1:8124` order `Avoid→Panchang→Nitya→Verse→Pulse→GocharaPulse→Gochara`.
+- **Muhurta extraction fixed** `muhurta-scoring.mjs:356` missing `chapterDisplay()` → 0 Shubh → restored `FULL 5/Soft 12/Personal 2` for Sep 2026 Griha Pravesha (diagonostic `tests-suite:2-4` expected). Rewrote `muhurta-scoring.mjs:1` pure, bumped `?v=20260904e`. `muhurta.js:172` detail accordion + `data-iso` row select + `chapterDisplay/provItemHTML/classicalBlock/muhurtaDetailHTML` ported, `view.selected` persisted, preset chips `DEFAULT_PRESETS` restored, night CSS `classical-foundation/prov-item` added. Build `public/ 70`.
+- **Month on-demand tap fix** `app.js:938` row click called `render()` → same `monthKey` no re-render → `mdetail` never opened. Fixed `mrow` click → `if(dayMap) renderMonthEvents()+renderKeyDays() else render()`, and `render:713` re-sync when cached. `app.js?v=20260904h`.
+- **Key Lunar Days strip** `index.html:468` new card before Avoid Days: `Amavasya · Purnima · Janma Nakshatra` grid `3→1` mobile, `keyday highlight`, tap scrolls to `mrow` and selects. `app.js:1442 renderKeyDays()` scans `dayMap` for `tithi.amavasya/purnima` + `moonNakshatra===birth.nakshatra` (e.g. Sep 11/26/06). Night `chip.moon` dark-on-dark fixed `index.html:326` → `#34365E/#E0E0FF`; restores `Compute now` CTA for top-of-page instant load. `app.js?v=20260904k`.
+- **Calendar cleanup** removed `index.html:576 muhrCardLink` promo `Muhurta` block (now dedicated `muhurta.html`). Dashboard order now `Key Days → Avoid → Panchang → Nitya → Verse → 7-day → Gochara Pulse → Gochara → Month` (no muhurta card).
+- **Help split** created `help-calendar.html:1` (dashboard: Key Days, Avoid, Panchang, Nitya, Verse, Pulses, Gochara, Month table, City) → `index.html:436` now links there. Cleaned `help-muhurta.html:1` to muhurta-only (Domain/Activity/Mode/Table/Row details/Source/Presets, back to `muhurta.html`). Added `scripts/build-public.mjs:23` allowlist `help-calendar.html` → `public/ 70`.
+- **Nitya tradition swap** `nityas/nitya-mantras.txt:1` (16 blocks, without diacritics, Om prefix) applied verbatim to `rules/nitya_devis.json:20` in order — e.g. Nilapataka `Phrem Strum…` etc. `source` → `user tradition nityas/nitya-mantras.txt — 2026-09-06`; provenance registry deliberately not extended. Detail shows behind dīkṣā notice with Copy.
+- **Deploy** `wrangler deploy` → `1788206d-b44f-4831-b559-f8bc24e9acfd` https://astro-cal.srirambm.workers.dev — 27 assets uploaded.
+- Previous Nitya images + micro-icons still live (`nityas-webp` 4-8KB, header `icon-btn` 38px).
+
+## Architectural Decisions
+- Muhurta stays standalone `muhurta.html/muhurta.js/muhurta-scoring.mjs` sharing `LS.birth/view` — no taxonomy fetch in `index` (`hasMuhurta` guard `app.js:1925`).
+- Month table deferred via `IntersectionObserver 200px` + `monthPlaceholder` Compute button; `dayMap` cached `monthLoadState` — selection re-renders from cache, not full `render()`.
+- Key Days requires `dayMap`; shows `Compute now` → `loadMonthBtn.click()` to avoid scroll lag (user-requested).
+- Night `chip.moon/chandra` colors fixed for contrast; `keyday` highlight `rgba(197,154,78,.06)`.
+- Nitya mantras are informational, diacritic-free per lineage, shown only expanded.
 
 ## Immediate Next Steps
 
-1. **Deploy** `npx wrangler deploy` — verify live `Avoid→Panchang→Nitya→Verse→Pulse→GocharaPulse→Gochara` + Kanya 8th dual-chip `07:26` till/from.
-2. **Next session — UI polish pass** `docs/ui-review-1.md` — micro (SVG nav, clipboard icons, ghost→frameless, left-border) + structural (no bottom bar yet) as single pass after D.
-3. **F deferred** — Pradosha/Ekadashi push via `D:\notif` hub + ICS remains queued (cross-project).
-4. **wrangler.toml allowlist** — `assets: ./` leaks 1053 files; cap with allowlist after `in_cities.json` 67KB + `tirumandiram_daily.json` 340KB.
-5. **PWA/ICS/Print audit** for new cards (Panchang/Nitya/Pulse/GocharaPulse) — deferred to UI pass.
+1. Manual QA pending your nitya mantra check — confirm 16 strings as printed `nitya_devis.json:20` before final tag.
+2. Optional: tag release `git tag v1.x` + changelog if manual check passes; no code blockers.
+3. PWA/ICS/Print audit for new Key Days card deferred.
 
 ## Watch Outs
 
-- `wrangler.toml:4` assets `./` leak + 340KB tirumandiram — allowlist before next big asset.
-- `app.js:1298` GocharaPulse uses `swe.crossingForward` + `nakshatraEnd` to compute `till 07:26` before next sunrise; `GOCHARA_MOON_H9` is still aśubha — don’t claim “then OK” when house stays aśubha.
-- City `city_ascii` search key, `city` display; `dayOfYear %365` IST rotation; `mapping.convention: pedagogic-krishna-forward`.
-- Keep `docs/weather-and-city-research.md` + `docs/enhancements-pipeline.md` together; pipeline is live queue.
+- `wrangler.toml:4` `public/` allowlist closed — `npm run build` before `wrangler dev`; `help-calendar.html` now in allowlist.
+- `nitya_devis.json` mantras intentionally no `Namah` for Bhagamalini/Vahnivasini per your file — keep as written.
+- `app.js`/`muhurta.js` cache `?v=20260904k/g` + `serve.cjs:46 no-store` + `public/_headers` — bump together on next change.
 
 ## Pointer
 
 - Master session log: `D:\knowledge-base\HANDOFF.md`
-- Research: `D:\astro-cal\docs\weather-and-city-research.md` · Pipeline: `D:\astro-cal\docs\enhancements-pipeline.md` · UI review: `D:\astro-cal\docs\ui-review-1.md`
 - Project card: `D:\knowledge-base\projects\apps\astro-cal.md`
-- Task board: `node D:\knowledge-base\tools\task.js list` · PRD: `D:\astro-cal\PRD.md`
-- Live: `https://astro-cal.srirambm.workers.dev` · Worker: `src/worker.mjs` · Wrangler: `wrangler.toml`
+- PRD: `D:\astro-cal\PRD.md` · `what-is-personal-mode.md` · `docs/sodashi-tithi-nitya.md`
+- Live: `https://astro-cal.srirambm.workers.dev` · `public/ 70 files` · `serve.cjs http://127.0.0.1:8124/`

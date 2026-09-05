@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Eval — Kameshwari</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{--c:#FAF8F5;--p:#fff;--ink:#2C241D;--soft:#706357;--line:#D4C5AC;--faint:#E8E0D2;--gold:#C59A4E;--verm:#B83A2A}
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:"Eczar",serif;background:var(--c);color:var(--ink);padding:16px;line-height:1.5}
+  h1{font-family:"Rozha One",serif;font-weight:400;font-size:20px;color:var(--verm)} h2{font-family:"Rozha One",serif;font-weight:400;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--faint);padding-bottom:6px;margin:14px 0 10px}
+  .card{border:1px solid var(--faint);background:var(--p);padding:12px;margin-bottom:12px}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .col{flex:1 1 420px;border:1px solid var(--faint);background:#FFFCF6;padding:10px}
+  .col h3{font-family:"Rozha One",serif;font-size:14px;color:var(--verm);margin-bottom:6px}
+  .meta{font-size:11px;color:var(--soft);margin-bottom:8px}
+  .strip{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+  .strip figure{text-align:center}
+  .strip figcaption{font-size:10px;color:var(--soft);margin-top:3px}
+  .chip-demo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--faint);background:var(--p)}
+  .chip i{font-style:normal;font-size:9px;color:var(--soft)}
+  table{width:100%;border-collapse:collapse;font-size:12px} th,td{padding:5px 7px;border-bottom:1px solid var(--faint);text-align:left} th{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+  .good{color:#1B6B4A} .bad{color:var(--verm)} .mid{color:#8A6A2A}
+  .img-frame{border:1px solid var(--faint);background:#F4EFE6;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
+</style>
+</head>
+<body>
+<h1>Crop evaluation — Kāmēśvarī</h1>
+<p style="font-size:11px;color:var(--soft);margin-bottom:10px">Two candidates in <code>nityas-opt/</code> · tested at actual chip sizes (18–150 CSS px). Original full portrait is 719×960 for reference.</p>
+
+<div class="row">
+  <div class="col">
+    <h3>A · <code>kameshwari-crop.JPG</code> — 386×332 JPG est. crop</h3>
+    <p class="meta">18 KB · has text “Sri Kameshwari Nitya” top, faint Śrī Yantra background, 6-point yantra icon bottom-left, wide aspect. Source is low-res (386 px wide).</p>
+    <div style="display:flex;gap:12px;align-items:start">
+      <img src="nityas-opt/kameshwari-crop.JPG" alt="crop A" style="max-width:190px;border:1px solid #D4C5AC;background:#F4EFE6">
+      <div style="font-size:11px;color:var(--soft)">Pros: includes yantra context, halo visible.<br>Cons: text will be unreadable clutter at small size; background yantra adds noise; wide ⇒ horizontal padding or cropping on square chip.</div>
+    </div>
+  </div>
+  <div class="col">
+    <h3>B · <code>kameswari-crop-2.png</code> — 175×235 PNG est. crop</h3>
+    <p class="meta">54 KB · text “Kameshwari Nitya” bottom, no background yantra, tighter vertical portrait, higher contrast. Source is very low-res (175 px wide).</p>
+    <div style="display:flex;gap:12px;align-items:start">
+      <img src="nityas-opt/kameswari-crop-2.png" alt="crop B" style="max-width:130px;border:1px solid #D4C5AC;background:#F4EFE6">
+      <div style="font-size:11px;color:var(--soft)">Pros: tighter, cleaner, figure larger in frame.<br>Cons: text at bottom must be removed; 175 px wide → blur when upscaled to 128w/2×; vertical ⇒ letterboxing on square.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Chip legibility ladder (actual file rendered via CSS — not mocked)</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div>
+      <h3 style="font-size:12px;color:var(--soft);margin-bottom:6px">A · wide crop (386×332) at chip sizes</h3>
+      <div class="strip">
+        <figure><div class="img-frame" style="width:22px;height:22px;border-radius:50%"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>22 chip</figcaption></figure>
+        <figure><div class="img-frame" style="width:32px;height:32px;border-radius:50%"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>32</figcaption></figure>
+        <figure><div class="img-frame" style="width:48px;height:48px;border-radius:8px"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>48</figcaption></figure>
+        <figure><div class="img-frame" style="width:64px;height:64px;border-radius:8px"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>64</figcaption></figure>
+        <figure><div class="img-frame" style="width:96px;height:96px;border-radius:8px"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>96 hero</figcaption></figure>
+        <figure><div class="img-frame" style="width:150px;height:150px;border-radius:8px"><img src="nityas-opt/kameshwari-crop.JPG" style="width:100%;height:100%;object-fit:cover"></div><figcaption>150 detail</figcaption></figure>
+      </div>
+      <p style="font-size:11px;color:var(--soft);margin-top:6px">Note: text at top becomes 2–3 px illegible noise at 22–32; background yantra muddies at 22.</p>
+    </div>
+    <div>
+      <h3 style="font-size:12px;color:var(--soft);margin-bottom:6px">B · tight crop (175×235) at chip sizes</h3>
+      <div class="strip">
+        <figure><div class="img-frame" style="width:22px;height:22px;border-radius:50%"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>22 chip</figcaption></figure>
+        <figure><div class="img-frame" style="width:32px;height:32px;border-radius:50%"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>32</figcaption></figure>
+        <figure><div class="img-frame" style="width:48px;height:48px;border-radius:8px"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>48</figcaption></figure>
+        <figure><div class="img-frame" style="width:64px;height:64px;border-radius:8px"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>64</figcaption></figure>
+        <figure><div class="img-frame" style="width:96px;height:96px;border-radius:8px"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>96 hero</figcaption></figure>
+        <figure><div class="img-frame" style="width:150px;height:150px;border-radius:8px"><img src="nityas-opt/kameswari-crop-2.png" style="width:100%;height:100%;object-fit:cover"></div><figcaption>150 detail</figcaption></figure>
+      </div>
+      <p style="font-size:11px;color:var(--soft);margin-top:6px">Tighter ⇒ figure fills chip better at 22–48, but 96–150 is soft (source only 175 px wide). Text bottom also noisy at 22.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Calendar context — same 48 px pulse chip vs 96 px hero</h2>
+  <div class="row">
+    <div class="col">
+      <h3 style="font-size:11px;color:var(--soft)">48 px pulse row (the problematic size)</h3>
+      <div style="border:1px solid var(--faint);background:var(--p);padding:8px;display:flex;gap:8px;align-items:center">
+        <span style="font-size:12px;font-weight:600;color:var(--verm)">Tomorrow</span>
+        <span style="font-size:12px">Pradosham · Ekadashi</span>
+        <span class="chip" style="background:#A84B4B;color:#fff;border-color:#A84B4B"><img src="nityas-opt/kameshwari-crop.JPG" style="width:18px;height:18px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.7)"> Kāmeśvarī <i style="color:#FFDCC0">A 18</i></span>
+        <span class="chip" style="background:#A84B4B;color:#fff;border-color:#A84B4B"><img src="nityas-opt/kameswari-crop-2.png" style="width:18px;height:18px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.7)"> Kāmeśvarī <i style="color:#FFDCC0">B 18</i></span>
+      </div>
+      <p style="font-size:11px;color:var(--soft);margin-top:6px">18px circle crops to face — both become abstract at this size, B slightly better because figure larger. Recommendation: avoid image at 18px pulse; use <code>bīja · अं</code> or a dot instead.</p>
+    </div>
+    <div class="col">
+      <h3 style="font-size:11px;color:var(--soft)">96 px hero (Nitya Sadhana — the reverent size)</h3>
+      <div style="border:1px solid var(--faint);background:var(--p);padding:10px;display:flex;gap:10px;align-items:center">
+        <img src="nityas-opt/kameshwari-crop.JPG" style="width:96px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--faint);background:#F4EFE6">
+        <div>
+          <div style="font-family:'Rozha One',serif;color:var(--verm)">Today — Kāmeśvarī</div>
+          <div style="font-size:11px;color:var(--soft)">Manadā kalā · अं — B full height 719 px original at 96 also sharp for comparison:</div>
+          <img src="nityas/kameshwari.png" style="width:96px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--faint);margin-top:4px">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Verdict</h2>
+  <table>
+    <thead><tr><th>Criterion</th><th>A wide 386×332 JPG</th><th>B tight 175×235 PNG</th></tr></thead>
+    <tbody>
+      <tr><td>Resolution (retina headroom)</td><td class="mid">386 px — marginal for 256w retina, ok for 128w</td><td class="bad">175 px — insufficient, will blur at 96–150 (needs 512 source)</td></tr>
+      <tr><td>Chip 22–32 legibility</td><td class="bad">Poor — text + faint yantra become noise; figure small in frame</td><td class="mid">Better — figure fills frame, but text still noise</td></tr>
+      <tr><td>48–64 chip</td><td class="mid">OK if text removed; yantra background competes</td><td class="good">Cleaner — tighter crop reads better</td></tr>
+      <tr><td>96–150 hero</td><td class="mid">Usable but soft at 150 (upscale)</td><td class="bad">Soft/pixelated at 96–150</td></tr>
+      <tr><td>Text overlay</td><td class="bad">“Sri Kameshwari Nitya” top must be removed for calendar use</td><td class="bad">“Kameshwari Nitya” bottom must be removed</td></tr>
+      <tr><td>File quality</td><td class="mid">JPEG artifacts, 18 KB</td><td class="mid">PNG 54 KB, slightly cleaner but low-res</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;margin-top:8px">→ <b>Neither is production-ready at chip size without edits.</b> Best path: re-crop from the original 719×960 PNG at <b>higher resolution, no text, square 1:1 face-centered</b> (keep yantra icon if you want, but drop the caption text). B’s tighter framing is the right <em>idea</em> for chips; A’s context (halo + icon) is better for hero.</p>
+  <p style="font-size:12px;margin-top:4px">Suggested clean crop spec: <b>512×512 square</b> @ ~face (crown fully in, feet may crop), centered on face, solid <code>#F4EFE6</code> or transparent background (not the faint yantra plate), <b>no text</b>. Then we ship: <code>128w (~7 KB)</code> for chips + <code>256w (~25 KB)</code> for hero/detail (srcset). Total ~144–428 KB.</p>
+  <p style="font-size:11px;color:var(--soft);margin-top:6px">If you like B’s tightness, redo B from the original at 512px and remove bottom text — it will be sharp at 96–150. If you prefer A’s yantra plate, keep it but remove top text and increase to at least 512 wide.</p>
+</div>
+
+<div class="card" style="background:#FFFCF6;border-style:dashed">
+  <p style="font-size:12px">View live: <code>nitya.html</code> (full 16) and this file <code>nitya-crop-eval.html</code>. Both on <code>http://127.0.0.1:8124/nitya-crop-eval.html</code>.</p>
+</div>
+</body>
+</html>

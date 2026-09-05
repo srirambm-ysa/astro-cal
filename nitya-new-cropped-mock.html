@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitya — New Cropped 16 + Tirumoolar — Mock</title>
+<link rel="icon" href="favicon-calendar.svg">
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{ --canvas:#FAF8F5; --paper:#fff; --ink:#2C241D; --ink-soft:#706357; --line:#D4C5AC; --line-faint:#E8E0D2; --gold:#C59A4E; --vermilion:#B83A2A; --teal:#2F7E7E; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);line-height:1.55;padding:18px 14px}
+  h1,h2{font-family:"Rozha One",serif;font-weight:400}
+  h1{font-size:22px;color:var(--vermilion);margin-bottom:2px}
+  .sub{font-size:12px;color:var(--ink-soft);margin-bottom:14px}
+  .card{border:1px solid var(--line-faint);background:var(--paper);padding:14px;margin-bottom:14px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px}
+  .pill{display:inline-block;font-size:10px;padding:2px 8px;border:1px solid var(--line);background:var(--canvas);color:var(--ink-soft);border-radius:999px;margin:2px 4px 2px 0}
+  .note{font-size:11px;color:var(--ink-soft);margin-top:8px}
+  .warn{font-size:11px;color:#8B1A1A;background:#FDE8E8;border:1px solid #F5A7A7;padding:6px 10px;border-radius:6px;margin-top:8px}
+  .ok{font-size:11px;color:#1B5E2B;background:#E6F3EC;border:1px solid #A7D8B8;padding:6px 10px;border-radius:6px;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:5px 7px;border-bottom:1px solid var(--line-faint);text-align:left;vertical-align:top}
+  th{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  td.issue{color:#8B1A1A;font-size:11px}
+  td.good{color:#1B5E2B}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .devi{display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px;border:1px solid var(--line-faint);background:var(--paper);border-radius:6px;text-align:center}
+  .devi .frame{width:80px;height:80px;border-radius:8px;overflow:hidden;background:#F4EFE6;border:1px solid var(--line-faint);display:flex;align-items:center;justify-content:center}
+  .devi .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .devi .name{font-family:"Rozha One",serif;font-size:11px;line-height:1.2}
+  .devi .meta{font-size:9px;color:var(--ink-soft)}
+  .mock-row{border:1px solid var(--line-faint);background:var(--paper);padding:10px;display:flex;gap:10px;align-items:center;margin-bottom:8px;border-radius:6px}
+  .mock-row.hero{padding:12px}
+  .mock-row.hero img{border-radius:8px;border:1px solid var(--line-faint);background:#F4EFE6}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:999px;background:var(--paper);border:1px solid var(--line-faint)}
+  .chip.nitya{background:#A84B4B;color:#fff;border-color:#A84B4B}
+  .chip.siddhar{background:#5B4A9A;color:#fff;border-color:#5B4A9A}
+  .range-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+  .range-row input[type=range]{width:220px}
+  .range-row select{font-family:"Eczar",serif;font-size:12px;padding:5px 10px;border:1px solid var(--line);background:var(--paper)}
+  .compare{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .compare figure{flex:1 1 220px;border:1px solid var(--line-faint);padding:8px;background:var(--paper);text-align:center;border-radius:6px}
+  .compare img{max-width:100%;height:auto;border:1px solid var(--line-faint);background:#F4EFE6}
+  figcaption{font-size:10px;color:var(--ink-soft);margin-top:4px}
+  .verse-mock{border:1px solid var(--line-faint);background:var(--paper);padding:12px;border-radius:6px;display:flex;gap:14px;align-items:flex-start}
+  .verse-mock .tamil{font-family:"Noto Sans Tamil","Latha",serif;font-size:15px;line-height:1.8;white-space:pre-wrap}
+  @media(max-width:640px){ .compare{flex-direction:column} .verse-mock{flex-direction:column} }
+</style>
+</head>
+<body>
+<h1>🔱 Nitya — New Cropped 16 (verification + mock) · Tirumoolar</h1>
+<p class="sub">Folder <code>nityas-opt/new-cropped/*.png</code> (16) vs old <code>nityas/*.png</code> 719×960 + verse <code>thirumoolar_big.jpg</code> / <code>tirumoolar_small.jpg</code> · local preview only — not yet in <code>public/</code></p>
+
+<!-- ===== 1 VERIFICATION ===== -->
+<div class="card">
+  <h2>1 · Verification — are all 16 present?</h2>
+  <p class="ok">✔ Yes — 16/16 PNGs present. Total 843 KB (avg 52.7 KB). Filenames normalized below to corpus keys.</p>
+  <table>
+    <thead><tr><th>#</th><th>Corpus key</th><th>File</th><th>Size</th><th>Issue / note</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>kameshwari</code></td><td>kameshwari.png</td><td>157×189 54KB</td><td>caption + yantra present — clean, mild</td></tr>
+      <tr><td>2</td><td><code>bhagamalini</code></td><td>bhagamalini.png</td><td>145×188 55KB</td><td>caption + yantra</td></tr>
+      <tr><td>3</td><td><code>nityaklinna</code></td><td>nityaklinne.png</td><td>134×165 37KB</td><td>yantra + caption; yantra slightly cutoff bottom</td></tr>
+      <tr><td>4</td><td><code>bherunda</code></td><td>berunda.png</td><td>103×152 34KB</td><td class="issue">smallest 103px — 25% smaller than avg; spelling <code>berunda</code> ≠ <code>bherunda</code></td></tr>
+      <tr><td>5</td><td><code>vahnivasini</code></td><td>vanhivasini.png</td><td>144×162 42KB</td><td>caption + yantra</td></tr>
+      <tr><td>6</td><td><code>maha_vajreshwari</code></td><td>mahavajreswari.png</td><td>166×213 63KB</td><td>good framing</td></tr>
+      <tr><td>7</td><td><code>shivaduti</code></td><td>sivadooti.png</td><td>164×214 67KB</td><td>tallest 214px — most detailed</td></tr>
+      <tr><td>8</td><td><code>tvarita</code></td><td>tvarite.png</td><td>139×162 37KB</td><td class="issue">spelling <code>tvarite</code> ≠ <code>tvarita</code>; yantra present</td></tr>
+      <tr><td>9</td><td><code>kulasundari</code></td><td>kulasundari.png</td><td>141×188 59KB</td><td>clean</td></tr>
+      <tr><td>10</td><td><code>nitya</code></td><td>nitya.png</td><td>149×205 65KB</td><td>clean</td></tr>
+      <tr><td>11</td><td><code>nilapataka</code></td><td>nilapataka.png</td><td>152×202 67KB</td><td>clean</td></tr>
+      <tr><td>12</td><td><code>vijaya</code></td><td>vijaya.png</td><td>128×158 38KB</td><td class="issue">right edge clipped (arm truncated) — needs re-export 4px wider</td></tr>
+      <tr><td>13</td><td><code>sarvamangala</code></td><td>sarvamangala.png</td><td>146×188 58KB</td><td>clean</td></tr>
+      <tr><td>14</td><td><code>jvalamalini</code></td><td>jwalamalini.png</td><td>141×188 51KB</td><td class="issue">spelling <code>jwala</code> ≠ corpus <code>jvala</code></td></tr>
+      <tr><td>15</td><td><code>chitra</code></td><td>chitra.png</td><td>122×164 33KB</td><td>“Vichitra” caption — okay</td></tr>
+      <tr><td>16</td><td><code>maha_tripura_sundari</code></td><td>mahatripurasundari.png</td><td>184×210 83KB</td><td>largest — throne back extends; best of set</td></tr>
+    </tbody>
+  </table>
+  <div class="warn">⚠ Three naming mismatches to fix at ship: <code>berunda→bherunda</code>, <code>tvarite→tvarita</code>, <code>jwalamalini→jvalamalini</code>. One geometry fix: <code>vijaya.png</code> right-edge clip. All 16 have <b>English caption at bottom</b> (“Kameshwari Nitya”) + <b>small yantra inset</b> — at chip 22px these become illegible noise (see §3).</div>
+  <p class="note">Dimensions are small (103–184w) because these are crops from scanned prints, not renders. Old <code>nityas/*.png</code> were 719×960 but carried white-plate text too. These new crops are 4–8× smaller file size, but also 4× smaller pixel count. For reference old WebP-128 after ffmpeg was 6–8 KB each at 128px native (vs PNG 34–83 KB at 150px avg — PNGs are not yet optimized).</p>
+</div>
+
+<!-- ===== 2 GRID AT VARIABLE SIZE ===== -->
+<div class="card">
+  <h2>2 · Grid — new crops at display sizes <span id="szLabel" class="pill">80 px</span></h2>
+  <div class="range-row">
+    <label>Display size <input type="range" id="sz" min="24" max="180" value="80" step="4"> <span id="szVal">80</span> CSS px</label>
+    <label>Shape
+      <select id="shapeSel">
+        <option value="rounded" selected>Rounded rect 8px (hero)</option>
+        <option value="circle">Circle (chip)</option>
+        <option value="square">Square</option>
+      </select>
+    </label>
+    <span class="pill" id="info">new-cropped PNG · 103–184 px native</span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Slider shows what the *CSS box* looks like. Native pixels are 103–184w — above ~120 CSS the PNGs are upscaled and will soften (no 2× retina headroom). Compare to old high-res set in §4 which had 256/512 headroom.</p>
+</div>
+
+<!-- ===== 3 CALENDAR INTEGRATIONS USING NEW CROPS ===== -->
+<div class="card">
+  <h2>3 · Calendar integrations — using <code>new-cropped</code> PNGs (actual placements)</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+    <div>
+      <h3 style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">A · Month Tithi cell — inline chip (22–28 px) — TODAY's DEFAULT</h3>
+      <div class="mock-row" style="font-size:13px">
+        <span style="font-weight:600;color:var(--vermilion)">12 Tue</span>
+        <span>Śukla Pratipad · <span style="color:var(--ink-soft)">Citrā</span></span>
+        <span class="chip nitya" style="gap:4px"><img id="cellImg" src="nityas-opt/new-cropped/chitra.png" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.6)"> Citrā</span>
+      </div>
+      <p class="note">At 22px circular chip the bottom caption is ~3px tall — unreadable, just noise. Yantra inset becomes a 5px blur. <b>Recommendation: for chips use icon-only crop or no image (name-only).</b> Current live (<code>nitya.mjs:8</code>) is text-only — recommended to stay text-only for month cell.</p>
+
+      <h3 style="font-size:12px;color:var(--ink-soft);margin:10px 0 6px">C · 7-day Pulse — tiny badge (18 px) — NOT RECOMMENDED for portrait</h3>
+      <div class="mock-row" style="font-size:12px">
+        <span style="font-weight:600;color:var(--vermilion)">Tomorrow</span>
+        <span>Pradosham</span>
+        <span class="chip nitya"><img src="nityas-opt/new-cropped/kameshwari.png" alt="" style="width:18px;height:18px;border-radius:50%;object-fit:cover"> Kāmeśvarī</span>
+      </div>
+      <p class="note">18px = 18 physical pixels inside a border — face is ~8px. No devotional value; stays as text chip.</p>
+    </div>
+    <div>
+      <h3 style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">B · Today — Nitya Sadhana hero (mock, current card 96px)</h3>
+      <div class="mock-row hero" id="heroMock">
+        <img id="heroImg" src="nityas-opt/new-cropped/kameshwari.png" alt="" style="width:96px;height:96px;object-fit:cover;flex:none;border-radius:8px">
+        <div>
+          <div style="font-family:'Rozha One',serif;font-size:15px;color:var(--vermilion)">Today — Kāmeśvarī</div>
+          <div style="font-size:11px;color:var(--ink-soft)">Manadā kalā · bīja अं · Kṛṣṇa Pratipad</div>
+          <div style="font-size:11px;margin-top:4px;border-left:2px solid var(--line);padding-left:8px;color:var(--ink-soft)">Aiṃ Hrīṃ Śrīṃ Aṃ Aiṃ Sa Ka La Hrīṃ — vidyā preview</div>
+        </div>
+      </div>
+      <p class="note">★ <b>Best use of new crops.</b> 96px hero fills the Nitya card nicely. At 96 CSS the native 157×189 is downscaled — crisp enough. Background #F4EFE6 blends with page.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:12px;color:var(--ink-soft);margin:8px 0 6px">D · Detail / expanded table row (tap day → shows mantra) — 150 px</h3>
+  <div class="mock-row hero" style="align-items:flex-start">
+    <img id="detailImg" src="nityas-opt/new-cropped/kameshwari.png" alt="" style="width:150px;height:150px;object-fit:cover;border-radius:8px;border:1px solid var(--line-faint);background:#F4EFE6;flex:none">
+    <div style="flex:1">
+      <div style="font-family:'Rozha One',serif;color:var(--vermilion);font-size:14px">Kāmeśvarī — detail</div>
+      <div style="font-size:11px;color:var(--ink-soft);margin:2px 0">Manadā kalā · अं · Kṛṣṇa Pratipad · Cron: pedagogic Krishna-forward</div>
+      <div style="font-size:12px;background:var(--canvas);border:1px solid var(--line-faint);padding:8px 10px;border-radius:6px;white-space:pre-wrap;word-break:break-word;margin-top:6px">Aiṃ Hrīṃ Śrīṃ Aṃ Aiṃ Sa Ka La Hrīṃ Nityaklinne Madadrave Sauḥ Aṃ Kāmeśvarī Nityā Śrī Pādukāṃ Pūjayāmi Tarpayāmi Namaḥ</div>
+      <div style="font-size:10px;color:var(--ink-soft);border-left:2px solid var(--line);padding-left:8px;margin-top:6px">ⓘ Śrī Vidyā Nitya vidyās are traditionally dīkṣā-bound; display is public-domain transcription — chant only as your guru instructs.</div>
+    </div>
+  </div>
+  <p class="note">At 150 CSS the 157×189 source is 1:1 — edge of headroom. Faces stay legible; caption text is still small but sits below yantra. This is the largest we should display these files without blur (next slider up will soften visibly).</p>
+</div>
+
+<!-- ===== 4 OLD vs NEW ===== -->
+<div class="card">
+  <h2>4 · Old vs new — same 96px hero box</h2>
+  <div class="compare">
+    <figure>
+      <img src="nityas/kameshwari.png" alt="old png" style="width:96px;height:96px;object-fit:cover;border-radius:8px">
+      <figcaption>Old <code>nityas/kameshwari.png</code> 719×960 PNG (1.1 MB) scaled 96px — high-res but has large white plate underneath (wasted pixels). Needs crop to be icon-friendly.</figcaption>
+    </figure>
+    <figure>
+      <img src="nityas-opt/new-cropped/kameshwari.png" alt="new png" style="width:96px;height:96px;object-fit:cover;border-radius:8px">
+      <figcaption>New <code>new-cropped/kameshwari.png</code> 157×189 PNG (54 KB) at 96px — tight crop, yantra + caption still inline. 20× smaller file, nearly same visual at this box.</figcaption>
+    </figure>
+    <figure>
+      <img src="nityas-opt/new-cropped/vijaya.png" alt="vijaya new" style="width:96px;height:96px;object-fit:cover;border-radius:8px">
+      <figcaption>New <code>vijaya.png</code> 128×158 — clipped right edge visible at 96px (arm cut). Re-export wider.</figcaption>
+    </figure>
+  </div>
+  <div class="ok">★ Tradeoff: old set has resolution headroom (can go to 256 CSS retina crisp), new set is already optimized size but <b>cannot go retina 2× beyond ~120 CSS</b> without softening. For hero 96 + detail 150, new set is just enough; for a modal 200+ we'd need rescans or AI upscale.</div>
+</div>
+
+<!-- ===== 5 TIRUMOORAR ===== -->
+<div class="card">
+  <h2>5 · Tirumoolar — two images you supplied</h2>
+  <table>
+    <thead><tr><th>File</th><th>Pixels</th><th>KB</th><th>Shape</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td><code>thirumoolar_big.jpg</code></td><td>894×1207</td><td>410 KB JPEG</td><td>portrait 0.74</td><td>Full seated yogi, dark aura background, yellow dhoti, rudraksha — contemplative</td></tr>
+      <tr><td><code>tirumoolar_small.jpg</code></td><td>552×552</td><td>52 KB JPEG</td><td>square 1.0</td><td>Face/chest crop (nose to jata), tight — ready for circle/rounded chip</td></tr>
+    </tbody>
+  </table>
+
+  <div class="compare" style="margin-top:12px">
+    <figure>
+      <img src="nityas-opt/thirumoolar_big.jpg" alt="big" style="width:100%;max-width:260px;object-fit:cover;border-radius:8px">
+      <figcaption>Big — 894×1207 portrait full body · heavy (410 KB), detailed, needs compression</figcaption>
+    </figure>
+    <figure>
+      <img src="nityas-opt/tirumoolar_small.jpg" alt="small" style="width:180px;height:180px;object-fit:cover;border-radius:12px">
+      <figcaption>Small — 552×552 square face crop · 52 KB · ready</figcaption>
+    </figure>
+    <figure>
+      <img src="nityas-opt/tirumoolar_small.jpg" alt="circle" style="width:96px;height:96px;object-fit:cover;border-radius:50%">
+      <figcaption>Small at 96px circle (hero-style)</figcaption>
+    </figure>
+    <figure>
+      <img src="nityas-opt/tirumoolar_small.jpg" alt="chip" style="width:28px;height:28px;object-fit:cover;border-radius:50%">
+      <figcaption>Small at 28px circle (chip — still legible)</figcaption>
+    </figure>
+  </div>
+
+  <h3 style="font-size:13px;color:var(--vermilion);margin:14px 0 8px;font-family:'Rozha One',serif">Verse of the Day — two layout mocks</h3>
+
+  <p style="font-size:11px;color:var(--ink-soft);margin-bottom:8px">Mock A — Hero side image (current verse card + left image). Uses <b>small square 552</b> as 96px portrait inside verse card.</p>
+  <div class="verse-mock">
+    <img src="nityas-opt/tirumoolar_small.jpg" alt="Tirumoolar" style="width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line-faint);flex:none">
+    <div style="flex:1;min-width:0">
+      <span class="pill">Tantra 1 · Verse 1</span>
+      <div class="tamil" style="font-size:16px;margin:6px 0">அஞ்சும் அடக்கு அடக்கு என்பர் அறிவிலர்...</div>
+      <div style="font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);background:var(--canvas);border:1px solid var(--line-faint);padding:7px 10px;border-radius:6px">añcum aṭakku aṭakku eṉpar aṟivilar …</div>
+      <div style="font-size:13px;border-left:3px solid var(--gold);padding-left:10px;margin-top:8px">Those without wisdom say "control the five senses" — control lies in knowing the Self. — <em>Tirumandiram</em></div>
+      <div class="note" style="margin-top:8px">Image right beside text — keeps verse readable; at 96px the face is devotional, not dominating.</div>
+    </div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink-soft);margin:12px 0 8px">Mock B — Banner top (big image as wide banner) — uses <b>big portrait cropped to 16:7</b> (face stays centered). More ornamental, but competes with verse.</p>
+  <div style="border:1px solid var(--line-faint);background:var(--paper);border-radius:6px;overflow:hidden">
+    <div style="height:120px;overflow:hidden;background:#0D0D0D;display:flex;align-items:center;justify-content:center">
+      <img src="nityas-opt/thirumoolar_big.jpg" alt="big banner" style="width:100%;height:220px;object-fit:cover;object-position:center 28%">
+    </div>
+    <div style="padding:10px 12px">
+      <span class="pill">Tantra 3 · Verse 142</span>
+      <div class="tamil" style="font-size:15px;white-space:pre-wrap">யோகத்தின் அங்கம் இவை...</div>
+      <div style="font-size:13px;border-left:3px solid var(--gold);padding-left:10px;margin-top:6px">The limbs of yoga are …</div>
+    </div>
+  </div>
+  <p class="note">Banner crop loses legs and background but keeps beard + jata. At 120px tall it feels heavy; recommend <b>Mock A (96 square side)</b> as daily default and reserve big image for an expanded/“About Tirumoolar” affordance only.</p>
+
+  <div class="ok">Recommendation: ship <code>tirumoolar_small.jpg → tirumoolar-256.webp ~15–20 KB</code> as default hero accent (96px, lazy-loaded). Keep <code>thirumoolar_big.jpg</code> as optional detail (convert to 512w ~60 KB) linked via ⓘ or left out entirely to keep the verse card light. No image inside month/ICS — verse is daily only.</div>
+</div>
+
+<!-- ===== 6 RECOMMENDATION ===== -->
+<div class="card">
+  <h2>6 · What to ship — concise recommendation</h2>
+  <div class="warn"><b>You said you cannot find more images — so we ship these 16 as-is with minimal fixes.</b> Coverage is 16/16, so no missing Devi. Quality is “good enough for hero 96–150”, not for retina 2× or large modal.</div>
+  <table>
+    <thead><tr><th>Placement</th><th>File to ship</th><th>Display</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Month Tithi cell</td><td><i>none</i> (text only <code>· Kāmeśvarī</code> — current)</td><td>—</td><td class="good">Chip too small; caption becomes noise. Keep text-only.</td></tr>
+      <tr><td>Pulse chips</td><td><i>none</i></td><td>—</td><td>18px cannot show face — text chip only.</td></tr>
+      <tr><td><b>Today — Nitya hero</b></td><td><code>nityas-opt/new-cropped/*.webp 192w</code> (convert PNG→WebP 80)</td><td>96px hero</td><td>15–25 KB each (PNG 34–83 → WebP saves ~60%). Crisp at 96, ok at 150 detail via upscale 0.8×.</td></tr>
+      <tr><td>Expanded row (tap day)</td><td>same file lazy-loaded</td><td>140–150px</td><td>Native ~150 avg → no new file needed; lazy to avoid 16× upfront.</td></tr>
+      <tr><td><b>Verse of Day</b></td><td><code>tirumoolar_small 256w WebP</code></td><td>96px square/circle</td><td>Face crop already square; 15–20 KB.</td></tr>
+      <tr><td>Verse optional</td><td><code>thirumoolar_big 512w WebP</code> on demand</td><td>banner/modal</td><td>410 KB JPEG → 60–80 KB WebP; only if user taps ⓘ about Tirumoolar.</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Build step: <code>ffmpeg -i %in.png -vf scale=192:192:force_original_aspect_ratio=decrease,pad=192:192:(ow-iw)/2:(oh-ih)/2:color=#F4EFE6 -c:v libwebp -quality 80 -compression_level 6 %out.webp</code> — pads to square #F4EFE6 (page bg) so object-fit not needed; keeps aspect; then wire keys via <code>rules/nitya_devis.json</code> <code>icon: \"nityas-opt/new-cropped/{key}.webp\"</code> and render lazily. Or skip pad and use <code>object-fit:cover</code> on portrait — uses native crop tighter but circle will clip top of crown (current crops already have crown breathing room, so cover is ok).</p>
+  <p class="note">Exact mapping to wire (fix spellings at emit): berunda→bherunda, tvarite→tvarita, jwalamalini→jvalamalini, chitra file “Vichitra” is correct, nityaklinne→nityaklinna (corpus <code>nityaklinna</code>).</p>
+  <p class="note">Payload estimate: 16× ~18 KB = <b>~288 KB</b> if all heroes shipped upfront; lazy single-hero (today's only) is <b>~18 KB</b> per day — preferred. Month table stays 0 KB extra.</p>
+</div>
+
+<div class="card">
+  <h2>How to test this page</h2>
+  <p class="note">Serve locally: <code>node serve.cjs</code> → <code>http://127.0.0.1:8124/nitya-new-cropped-mock.html</code></p>
+  <p class="note">Adjust slider §2 to see hero 96 vs detail 150. Check §3 for the three real card shapes. If 96 feels too small/large for devotional tone, note the CSS px and I'll wire that exact value into <code>app.js</code> + <code>index.html</code> before shipping to <code>public/</code>.</p>
+</div>
+
+<script>
+const FILES = [
+  ["kameshwari","Kāmeśvarī","kameshwari.png"],
+  ["bhagamalini","Bhagamālinī","bhagamalini.png"],
+  ["nityaklinna","Nityaklinnā","nityaklinne.png"],
+  ["bherunda","Bheruṇḍā","berunda.png"],
+  ["vahnivasini","Vahnivāsinī","vanhivasini.png"],
+  ["maha_vajreshwari","Mahā Vajreśvarī","mahavajreswari.png"],
+  ["shivaduti","Śivadūtī","sivadooti.png"],
+  ["tvarita","Tvaritā","tvarite.png"],
+  ["kulasundari","Kulasundarī","kulasundari.png"],
+  ["nitya","Nityā","nitya.png"],
+  ["nilapataka","Nīlapatākā","nilapataka.png"],
+  ["vijaya","Vijayā","vijaya.png"],
+  ["sarvamangala","Sarvamaṅgalā","sarvamangala.png"],
+  ["jvalamalini","Jvālāmālinī","jwalamalini.png"],
+  ["chitra","Citrā","chitra.png"],
+  ["maha_tripura_sundari","Mahā Tripura Sundarī","mahatripurasundari.png"],
+];
+const grid = document.getElementById('grid');
+const sz = document.getElementById('sz');
+const szVal = document.getElementById('szVal');
+const szLabel = document.getElementById('szLabel');
+const shapeSel = document.getElementById('shapeSel');
+function render(){
+  const s = Number(sz.value);
+  szVal.textContent = s;
+  szLabel.textContent = s + " px";
+  grid.innerHTML = "";
+  for(const [key,name,file] of FILES){
+    const card = document.createElement('div');
+    card.className='devi';
+    const frame = document.createElement('div');
+    frame.className='frame';
+    frame.style.width = s+'px';
+    frame.style.height = s+'px';
+    if(shapeSel.value==="circle") frame.style.borderRadius="50%";
+    else if(shapeSel.value==="square") frame.style.borderRadius="3px";
+    else frame.style.borderRadius="8px";
+    const img = document.createElement('img');
+    img.loading="lazy";
+    img.alt=name;
+    img.src = "nityas-opt/new-cropped/"+file;
+    frame.appendChild(img);
+    const nm = document.createElement('div'); nm.className='name'; nm.textContent=name;
+    const mm = document.createElement('div'); mm.className='meta'; mm.textContent=key;
+    card.append(frame,nm,mm);
+    grid.appendChild(card);
+  }
+  const h = document.getElementById('heroImg');
+  const d = document.getElementById('detailImg');
+  const c = document.getElementById('cellImg');
+  if(h){ h.style.width=s+'px'; h.style.height=s+'px'; }
+  if(d){ /* detail stays 150 but preview nudge */ }
+}
+sz.addEventListener('input', render);
+shapeSel.addEventListener('change', render);
+render();
+</script>
+</body>
+</html>

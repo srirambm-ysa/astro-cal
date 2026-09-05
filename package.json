@@ -9,6 +9,10 @@
     "test:marriage": "node tests/marriage-tests.mjs",
     "test:alliance": "node tests/guna-milap-tests.mjs",
     "modes": "node tests/mode-summary.mjs",
-    "serve": "node serve.cjs"
+    "serve": "node serve.cjs",
+    "build": "node scripts/build-public.mjs",
+    "build:public": "node scripts/build-public.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "dev": "npm run build && wrangler dev"
   }
 }

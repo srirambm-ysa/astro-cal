@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitya Devis — Image Size Mock</title>
+<link rel="icon" href="favicon-calendar.svg">
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{ --canvas:#FAF8F5; --paper:#fff; --ink:#2C241D; --ink-soft:#706357; --line:#D4C5AC; --line-faint:#E8E0D2; --gold:#C59A4E; --vermilion:#B83A2A; --teal:#2F7E7E; --saffron:#D96B27; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);line-height:1.55;padding:18px 14px}
+  h1,h2{font-family:"Rozha One",serif;font-weight:400}
+  h1{font-size:22px;color:var(--vermilion);margin-bottom:4px}
+  .sub{font-size:12px;color:var(--ink-soft);margin-bottom:16px}
+  .card{border:1px solid var(--line-faint);background:var(--paper);padding:14px;margin-bottom:14px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border:1px solid var(--line);background:var(--canvas);color:var(--ink-soft);border-radius:999px;margin:2px 4px 2px 0}
+  .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 12px;padding:10px;border:1px dashed var(--line);background:#FFFCF6}
+  .controls label{font-size:12px;color:var(--ink-soft)}
+  .controls input[type=range]{width:220px}
+  .controls select,.controls button{font-family:"Eczar",serif;font-size:12px;padding:5px 10px;border:1px solid var(--line);background:var(--paper);cursor:pointer}
+  /* size ladder */
+  .ladder{display:flex;gap:14px;flex-wrap:wrap;align-items:end}
+  .ladder figure{text-align:center;flex:none}
+  .ladder figure figcaption{font-size:10px;color:var(--ink-soft);margin-top:4px}
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+  .devi{display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px;border:1px solid var(--line-faint);background:var(--paper);border-radius:6px}
+  .devi .frame{width:var(--sz,80px);height:var(--sz,80px);border-radius:8px;overflow:hidden;background:#F4EFE6;border:1px solid var(--line-faint);display:flex;align-items:center;justify-content:center}
+  .devi .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .devi .name{font-family:"Rozha One",serif;font-size:11px;color:var(--ink);text-align:center;line-height:1.2}
+  .devi .meta{font-size:10px;color:var(--ink-soft);text-align:center}
+  /* calendar integrations */
+  .mock-row{border:1px solid var(--line-faint);background:var(--paper);padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:8px;border-radius:6px}
+  .mock-row.hero{padding:12px}
+  .mock-row.hero img{border-radius:8px;border:1px solid var(--line-faint);background:#F4EFE6}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:999px;background:var(--paper);border:1px solid var(--line-faint)}
+  .chip.siddhar{background:#5B4A9A;color:#fff;border-color:#5B4A9A}
+  .chip.nitya{background:#A84B4B;color:#fff;border-color:#A84B4B}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--line-faint);text-align:left}
+  th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .note{font-size:11px;color:var(--ink-soft);margin-top:8px}
+  .compare{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .compare figure{flex:1 1 200px;border:1px solid var(--line-faint);padding:6px;background:var(--paper);text-align:center}
+  .compare img{max-width:100%;height:auto;border:1px solid var(--line-faint);background:#F4EFE6}
+</style>
+</head>
+<body>
+<h1>🔱 Nitya Devis — Image Size Mock</h1>
+<p class="sub">16 scanned images · original ~700×960 PNG (20 MB total) → WebP 64/128/256/512 · This page tests what *display size* (CSS px) looks nice in the calendar before we ship resized files. Nothing is deployed yet.</p>
+
+<div class="card">
+  <h2>Payload — actual file sizes (WebP q82 lanczos)</h2>
+  <table>
+    <thead><tr><th>Variant</th><th>Per image</th><th>Total 16</th><th>When to use</th></tr></thead>
+    <tbody>
+      <tr><td>Original PNG</td><td>~1.1–1.5 MB</td><td><b>~20 MB ❌</b></td><td>source only</td></tr>
+      <tr><td><code>nityas-opt/512/*.webp</code></td><td>69–83 KB (Mahatripura 97K)</td><td>~1.4 MB</td><td>too big, only if full-screen modal</td></tr>
+      <tr><td><code>nityas-opt/256/*.webp</code></td><td>20–30 KB (avg 26)</td><td><b>428 KB</b> — high-retina hero</td><td>hero 128 CSS px @2× = 256</td></tr>
+      <tr><td style="background:#E6F3EC"><code>nityas-opt/128/*.webp</code> ✓</td><td>6–8 KB (avg 7) —Mahatripura 12K</td><td><b>144 KB ★</b></td><td>chip 48–64 @2×, hero 64 @2×</td></tr>
+      <tr><td><code>nityas-opt/64/*.webp</code></td><td>2–3 KB</td><td>68 KB</td><td>tiny chips (32 CSS) @2× = 64 — may be soft</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Recommendation: ship <b>128w (≈144 KB total)</b> as baseline — covers 64 CSS @2× retina with ~7 KB per devi. Add 256w only if you want a crisp 120–160 hero modal (adds 428 KB). Mock below lets you judge blur at each display size.</p>
+  <p class="note">For reference: <code>rules/tirumandiram_daily.json</code> 340 KB + <code>rules/in_cities.json</code> 67 KB already ship. +144 KB = ~551 KB of static JSON+images before code — acceptable. +572 KB (128+256) is heavier.</p>
+</div>
+
+<div class="card">
+  <h2>1 · Size ladder — single Devi (Kāmeśvarī) at CSS px</h2>
+  <p class="note" style="margin-bottom:8px">Same file (original PNG via CSS scaling) vs file at native resolution. Drag slider in section 2 to compare blur. Below shows what <em>display size</em> looks like — not file size.</p>
+  <div class="ladder" id="ladder"></div>
+</div>
+
+<div class="card">
+  <h2>2 · Full grid — adjustable display size <span id="szLabel" class="pill">80 px</span></h2>
+  <div class="controls">
+    <label>Display size: <input type="range" id="sz" min="32" max="200" value="80" step="4"> <span id="szVal">80</span> CSS px</label>
+    <label>Source:
+      <select id="srcSel">
+        <option value="original">Original PNG (sharp, heavy)</option>
+        <option value="opt128" selected>Optimized 128w WebP (proposed)</option>
+        <option value="opt64">Optimized 64w WebP (tiny)</option>
+        <option value="opt256">Optimized 256w WebP (high)</option>
+      </select>
+    </label>
+    <label>Shape:
+      <select id="shapeSel">
+        <option value="rounded" selected>Rounded rect (8px)</option>
+        <option value="circle">Circle</option>
+        <option value="square">Square</option>
+      </select>
+    </label>
+    <button id="toggleBg">Toggle bg</button>
+    <span class="pill" id="payloadHint"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Tip: try 48–64 px = month cell inline; 80–96 px = hero card; 120–160 px = detail modal. At 2× retina, a 64 CSS chip needs a 128w file (<code>opt128</code>) to stay crisp.</p>
+</div>
+
+<div class="card">
+  <h2>3 · Calendar integration previews (at current slider size)</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div>
+      <h3 style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">A · Month Tithi cell (inline, 22–28 px)</h3>
+      <div class="mock-row" style="font-size:13px">
+        <span style="font-weight:600;color:var(--vermilion)">12 Tue</span>
+        <span>Śukla Pratipad · <span style="color:var(--ink-soft)">Citrā</span></span>
+        <span class="chip nitya" style="gap:4px"><img id="cellImg" src="nityas/kameshwari.png" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.6)"> Citrā</span>
+        <span class="note" style="margin-left:auto">22 px chip — no extra column</span>
+      </div>
+      <h3 style="font-size:12px;color:var(--ink-soft);margin:10px 0 6px">C · 7-day Pulse chip (tiny)</h3>
+      <div class="mock-row" style="font-size:12px">
+        <span style="font-weight:600;color:var(--vermilion)">Tomorrow</span>
+        <span>Pradosham · Ekadashi</span>
+        <span class="chip nitya"><img src="nityas-opt/64/kameshwari.webp" alt="" style="width:18px;height:18px;border-radius:50%;object-fit:cover"> Kāmeśvarī</span>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">B · Today — Nitya Sadhana hero (mock)</h3>
+      <div class="mock-row hero" id="heroMock">
+        <img id="heroImg" src="nityas-opt/128/kameshwari.webp" alt="" style="width:96px;height:96px;object-fit:cover;flex:none">
+        <div>
+          <div style="font-family:'Rozha One',serif;font-size:14px;color:var(--vermilion)">Today — Kāmeśvarī</div>
+          <div style="font-size:11px;color:var(--ink-soft)">Manadā kalā · bīja अं · Kṛṣṇa Pratipad</div>
+          <div style="font-size:11px;margin-top:4px;border-left:2px solid var(--line);padding-left:8px;color:var(--ink-soft)">Aiṃ Hrīṃ Śrīṃ Aṃ Aiṃ Sa Ka La Hrīṃ — — — mantra preview</div>
+        </div>
+      </div>
+      <p class="note">Hero size is the main visual call. 96 px hero + 128w file = crisp at 2×. Try slider 96–128 to see if it feels sacred vs heavy.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:12px;color:var(--ink-soft);margin:14px 0 6px">D · Detail/expanded row (modal-like, 140–160 px)</h3>
+  <div class="mock-row hero" style="align-items:flex-start">
+    <img src="nityas-opt/256/kameshwari.webp" alt="Kameshwari" style="width:150px;height:150px;object-fit:cover;border-radius:8px;border:1px solid var(--line-faint)">
+    <div style="flex:1">
+      <div style="font-family:'Rozha One',serif;color:var(--vermilion)">Kāmeśvarī — detail</div>
+      <div class="compare" style="margin-top:6px">
+        <figure style="flex:none"><figcaption style="font-size:10px;color:var(--ink-soft)">150 CSS px hero (256w file @1.7× ~ sharp)</figcaption></figure>
+      </div>
+      <div style="font-size:12px;color:var(--ink-soft);margin-top:6px">Used only when user taps the row. Not loaded until needed — can lazy-load 256w.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>4 · One Devi — PNG original vs WebP 128 (at 96 CSS px)</h2>
+  <div class="compare">
+    <figure><img src="nityas/kameshwari.png" alt="png" style="width:96px;height:96px;object-fit:cover"><figcaption style="font-size:10px;color:var(--ink-soft)">PNG original scaled to 96 CSS (1.1 MB file, sharp but heavy)</figcaption></figure>
+    <figure><img src="nityas-opt/128/kameshwari.webp" alt="webp128" style="width:96px;height:96px;object-fit:cover"><figcaption style="font-size:10px;color:var(--ink-soft)">WebP 128w file at 96 CSS (7.1 KB, slight upsample — usually imperceptible)</figcaption></figure>
+    <figure><img src="nityas-opt/64/kameshwari.webp" alt="webp64" style="width:96px;height:96px;object-fit:cover"><figcaption style="font-size:10px;color:var(--ink-soft)">WebP 64w file at 96 CSS (2.5 KB — visibly soft, not recommended)</figcaption></figure>
+  </div>
+  <p class="note">Rule of thumb: display size should be ≤ file native size. 128w file can display up to 128 CSS without blur; at 96 CSS it’s upsampled 0.75× (fine). 64w file at 96 CSS is stretched 1.5× (soft).</p>
+</div>
+
+<div class="card">
+  <h2>How to test</h2>
+  <ul style="font-size:13px;color:var(--ink);padding-left:18px;line-height:1.7">
+    <li>Use the slider in §2 — find the smallest display size you still find devotional/legible. Owner call: do we want delicate (48–64) or reverent hero (96–128)?</li>
+    <li>Switch Source between <code>opt64 / opt128 / opt256</code> at same display size to see file-quality vs payload. <code>opt128</code> is the budget pick.</li>
+    <li>On your phone (DPI 2–3×), a 48 CSS chip needs 96–128w file to stay crisp — that’s why 128w is the sweet spot.</li>
+    <li>When you’ve picked a size, note it (e.g. “hero 96, chips 48, detail 150 lazy”) — I’ll wire that exact mapping into <code>rules/nitya_devis.json</code> + <code>app.js</code> with <code>srcset</code> and ship only those WebPs.</li>
+  </ul>
+  <p class="note">Run locally: <code>node serve.cjs</code> → <code>http://127.0.0.1:8124/nitya.html</code> (or <code>npm run build && npx wrangler dev —assets public</code> — mock not included in <code>public/</code> yet).</p>
+</div>
+
+<script>
+const DEVIS = [
+  ["kameshwari","Kāmeśvarī","1 Manadā · अं"],
+  ["bhagamalini","Bhagamālinī","2 Pūṣā · आं"],
+  ["nityaklinna","Nityaklinnā","3 Tuṣṭi · इं"],
+  ["bherunda","Bheruṇḍā","4 Puṣṭi · ईं"],
+  ["vanhivasini","Vahnivāsinī","5 Rati · उं"],
+  ["mahavajreswari","Mahā Vajreśvarī","6 Dhṛti · ऊं"],
+  ["sivadooti","Śivadūtī","7 Śaśinī · ऋं"],
+  ["tvarite","Tvaritā","8 Chandrikā · ॠं — crown"],
+  ["kulasundari","Kulasundarī","9 Kānti · ऌं"],
+  ["nitya","Nityā","10 Jyotsnā · ॡं"],
+  ["nilapataka","Nīlapatākā","11 Śrī · एं"],
+  ["vijaya","Vijayā","12 Prīti · ऐं"],
+  ["sarvamangala","Sarvamaṅgalā","13 Aṅgadā · ओं"],
+  ["jvalamalini","Jvālāmālinī","14 Pūrṇā · औं"],
+  ["chitra","Citrā","15 — · अं*"],
+  ["mahatripurasundari","Mahā Tripura Sundarī","16 Amṛtā · अः — Pūrṇimā/Amāvāsyā"],
+];
+const origMap = { bhagamalini:"bhagamalini.png", bherunda:"Bherunda.png", chitra:"chitra.png", jvalamalini:"jvalamalini.png", kameshwari:"kameshwari.png", kulasundari:"kulasundari.png", mahatripurasundari:"mahatripurasundari.png", mahavajreswari:"mahavajreswari.png", nilapataka:"Nilapataka.png", nitya:"nitya.png", nityaklinna:"Nityaklinna.png", sarvamangala:"sarvamangala.png", sivadooti:"sivadooti.png", tvarite:"tvarite.png", vanhivasini:"vanhivasini.png", vijaya:"vijaya.png" };
+
+const grid = document.getElementById('grid');
+const sz = document.getElementById('sz');
+const szVal = document.getElementById('szVal');
+const szLabel = document.getElementById('szLabel');
+const srcSel = document.getElementById('srcSel');
+const shapeSel = document.getElementById('shapeSel');
+const payloadHint = document.getElementById('payloadHint');
+
+function srcFor(key){
+  const v = srcSel.value;
+  if(v==="original") return `nityas/${origMap[key]}`;
+  if(v==="opt64") return `nityas-opt/64/${key}.webp`;
+  if(v==="opt128") return `nityas-opt/128/${key}.webp`;
+  if(v==="opt256") return `nityas-opt/256/${key}.webp`;
+  return `nityas-opt/128/${key}.webp`;
+}
+
+function render(){
+  const s = Number(sz.value);
+  szVal.textContent = s;
+  szLabel.textContent = s + " px";
+  grid.style.setProperty('--sz', s + 'px');
+  document.getElementById('heroImg').style.width = s + 'px';
+  document.getElementById('heroImg').style.height = s + 'px';
+  // payload hint
+  const per = srcSel.value==="opt64"? "~2.5 KB" : srcSel.value==="opt128"? "~7 KB" : srcSel.value==="opt256"? "~26 KB": "~1.2 MB";
+  const tot = srcSel.value==="opt64"? "68 KB" : srcSel.value==="opt128"? "144 KB" : srcSel.value==="opt256"? "428 KB": "20 MB";
+  payloadHint.textContent = `payload per devi ${per} → total ${tot}`;
+  // hero mock uses opt file matching slider? keep 128 default
+  document.getElementById('heroImg').src = srcFor('kameshwari');
+  document.getElementById('cellImg').src = srcFor('kameshwari');
+
+  // grid
+  grid.innerHTML = "";
+  for(const [key,name,meta] of DEVIS){
+    const card = document.createElement('div');
+    card.className = 'devi';
+    const frame = document.createElement('div');
+    frame.className='frame';
+    if(shapeSel.value==="circle") frame.style.borderRadius="50%";
+    else if(shapeSel.value==="square") frame.style.borderRadius="3px";
+    else frame.style.borderRadius="8px";
+    const img = document.createElement('img');
+    img.loading="lazy";
+    img.alt=name;
+    img.src = srcFor(key);
+    frame.appendChild(img);
+    const nm = document.createElement('div'); nm.className='name'; nm.textContent=name;
+    const mm = document.createElement('div'); mm.className='meta'; mm.textContent=meta;
+    card.append(frame,nm,mm);
+    grid.appendChild(card);
+  }
+}
+
+function renderLadder(){
+  const sizes=[32,48,64,80,96,128,160,200];
+  const wrap=document.getElementById('ladder');
+  for(const s of sizes){
+    const fig=document.createElement('figure');
+    const img=document.createElement('img');
+    img.src='nityas-opt/128/kameshwari.webp';
+    img.alt='Kameshwari';
+    img.loading='lazy';
+    img.style.width=s+'px'; img.style.height=s+'px'; img.style.objectFit='cover'; img.style.borderRadius='8px'; img.style.border='1px solid #D4C5AC'; img.style.background='#F4EFE6';
+    const cap=document.createElement('figcaption'); cap.textContent=s+' px';
+    fig.append(img,cap); wrap.appendChild(fig);
+  }
+}
+renderLadder(); render();
+sz.addEventListener('input', render);
+srcSel.addEventListener('change', render);
+shapeSel.addEventListener('change', render);
+document.getElementById('toggleBg').addEventListener('click', ()=>{
+  document.body.style.background = document.body.style.background==='rgb(38, 42, 74)' ? '#FAF8F5' : '#262A4A';
+});
+</script>
+</body>
+</html>

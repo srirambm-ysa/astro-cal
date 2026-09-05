@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFEBE0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Muhurta — Shubh Date Finder</title>
+<link rel="icon" type="image/svg+xml" href="favicon-calendar.svg">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
+    --chandra-coarse:#F78C1B; --chandra-peak:#E62E2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);font-size:15px;line-height:1.55}
+  h1,h2,h3,.display{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:24px 26px 30px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:18px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 2px 14px;border-bottom:1.5px solid var(--gold);margin-bottom:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;flex:1 1 100%}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .range{display:flex;align-items:center;gap:6px;border:0;background:transparent}
+  .range button{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--paper);padding:0 10px;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center;min-width:36px;height:38px;border-radius:4px}
+  .range button svg{width:18px;height:18px;display:block}
+  .range .nav{color:var(--vermilion)}
+  .range .nav:hover{background:rgba(197,154,78,.12)}
+  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:0 4px;white-space:nowrap;letter-spacing:.02em;display:flex;align-items:center;border:0;background:transparent}
+  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 14px;font-weight:600;font-size:13px;white-space:nowrap;height:38px;border-radius:999px;cursor:pointer;font-family:"Eczar",serif}
+  .persona:hover{background:rgba(197,154,78,.12)}
+  .icon-btn{width:38px;height:38px;padding:0;border:1px solid var(--gold);background:var(--paper);color:var(--ink);border-radius:4px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+  .icon-btn:hover{background:rgba(197,154,78,.12)}
+  .icon-btn svg{width:18px;height:18px;display:block}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center;border-radius:4px;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost.active{background:var(--vermilion);color:var(--paper);border-color:var(--vermilion)}
+  .btn.small{padding:4px 10px;font-size:13px}
+  .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+  .field .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:3px}
+  .field input,.field select{width:100%;font-family:"Eczar",serif;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:6px 8px}
+  .preset-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;padding:8px 0;border-bottom:1px solid var(--line-faint)}
+  .preset-wrap .pw-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);flex:none}
+  .preset-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .preset-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border:none;background:var(--panel-b);color:var(--ink);font-family:"Eczar",serif;font-size:13px;cursor:pointer;border-radius:999px;white-space:nowrap}
+  .preset-chip:hover{background:rgba(197,154,78,.2)}
+  .preset-chip.active{background:var(--vermilion);color:var(--paper);font-weight:600}
+  .chip.verdict{font-size:10px;padding:2px 8px;border-radius:2px;color:var(--paper);letter-spacing:.05em;text-transform:uppercase}
+  .chip.verdict.Shubh{background:var(--teal)}
+  .chip.verdict.Neutral{background:var(--gold);color:#2b1505}
+  .chip.verdict.Ashubh{background:var(--chandra-peak);color:#fff}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .evtab{width:100%;border-collapse:collapse;font-size:13px}
+  .evtab th,.evtab td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
+  .evtab th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .evtab tr.muhrow{cursor:pointer}
+  .evtab tr.muhrow:hover td{background:rgba(197,154,78,.08)}
+  .evtab tr.selected td{background:rgba(217,116,39,.12)}
+  .note{font-size:11px;color:var(--ink-soft);margin-top:6px;font-style:italic}
+  .muh-detail{border-top:1px solid var(--line-faint);margin-top:12px;padding-top:10px}
+  .muh-line{display:flex;gap:8px;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px}
+  .muh-line .k{font-size:11px;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;flex:none}
+  .muh-line .v{text-align:right;color:var(--ink)}
+  .muh-line.t1 .v{color:var(--chandra-peak)}
+  .muh-line.t2 .v{color:var(--saffron)}
+  .muh-line.t3 .v{color:var(--ink-soft)}
+  .muh-line.good .v{color:var(--teal)}
+  .muh-line.ovr .v{color:var(--gold-bright);font-weight:600}
+  .muh-line strong{color:var(--vermilion);font-size:15px}
+  .evtab .muhwhy td{font-size:11px;color:var(--ink-soft);font-style:italic;padding:2px 8px 10px 12px;border-bottom:1px solid var(--line-faint)}
+  .muh-act{font-size:11px;text-transform:none;letter-spacing:.03em;color:var(--ink-soft);font-family:"Eczar",serif}
+  .muh-acc{margin-top:10px;border-top:1px solid var(--line-faint)}
+  .muh-acc summary{cursor:pointer;font-size:11px;letter-spacing:.05em;color:var(--gold-bright);text-transform:uppercase;font-weight:600;padding:8px 2px}
+  .muh-acc summary span.star-label{text-transform:none;font-weight:400;color:var(--ink-soft)}
+  .classical-foundation{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px}
+  .classical-foundation summary{cursor:pointer;font-size:11px;letter-spacing:.05em;color:var(--gold-bright);text-transform:uppercase;font-weight:600}
+  .classical-foundation summary em{font-style:italic;font-weight:400;color:var(--ink-soft);text-transform:none}
+  .classical-foundation .cf-basis{font-size:11px;color:var(--ink-soft);margin:6px 0}
+  .prov-item{border-left:2px solid var(--line-faint);padding:6px 10px;margin:6px 0;background:var(--panel-a)}
+  .prov-item .prov-ref{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--saffron);text-transform:uppercase}
+  .prov-item .prov-sans{font-family:"Eczar",serif;font-size:15px;line-height:1.7;color:var(--ink);margin:4px 0}
+  .prov-item .prov-label{font-size:11px;font-weight:600;color:var(--teal);margin:2px 0}
+  .prov-item .prov-en{font-size:12px;color:var(--ink);line-height:1.4}
+  .prov-item .prov-logic{font-size:11px;color:var(--ink-soft);font-style:italic;margin-top:3px}
+  .classical-foundation .cf-note{font-size:11px;color:var(--ink-soft);font-style:italic}
+  .classical-foundation .cf-logic{font-size:11px;color:var(--ink-soft);font-style:italic;margin:8px 0 4px}
+  #srcBtn[disabled]{opacity:.45;cursor:not-allowed}
+  .modal-ovl{position:fixed;inset:0;background:rgba(18,14,8,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal-ovl[hidden]{display:none}
+  .modal-panel{background:var(--panel-a);border:1.5px solid var(--gold);box-shadow:0 12px 40px rgba(0,0,0,.35);width:min(720px,100%);max-height:82vh;display:flex;flex-direction:column}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line-faint)}
+  .modal-head h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border:0;padding:0;margin:0}
+  .modal-body{overflow:auto;padding:14px 16px}
+  .modal-foot{padding:10px 16px;border-top:1px solid var(--line-faint);display:flex;justify-content:flex-end;gap:8px}
+  .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .badge.classical{background:var(--teal);color:#fff}
+  .badge.functional_group{background:var(--gold);color:#2b1505}
+  .badge.formula{background:var(--ink-soft);color:#fff}
+  .pf-label{font-size:13px;font-weight:600;color:var(--ink)}
+  .tbwnd{font-size:9px;color:var(--vermilion);font-weight:600;white-space:nowrap}
+  .site-footer{margin-top:4px;padding:14px 16px 12px;border:1px solid var(--line-faint);background:var(--panel-b)}
+  .site-footer .disclaimer{font-size:12px;color:var(--ink-soft);line-height:1.65;margin-bottom:10px}
+  .site-footer .disclaimer strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin-bottom:3px}
+  .site-footer .credit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line-faint);padding-top:9px;font-size:12px}
+  .site-footer .credit .orn{color:var(--gold);font-family:"Rozha One",serif}
+  .site-footer .credit a{color:var(--vermilion);text-decoration:none;font-weight:600}
+  body.night{background:#0D0D0D;--canvas:#0D0D0D;--paper:#1A1A1A;--ink:#E0E0E0;--ink-soft:#999999;--panel-a:#222222;--panel-b:#2A2A2A;--saffron:#E8792B;--vermilion:#E25B4A;--gold:#C9A227;--gold-bright:#E4C45A;--night:#080808;--teal:#35B3B3;--line:#444444;--line-faint:#333333}
+  body.night .frame{background:rgba(26,26,26,.95)}
+  body.night .icon-btn{border-color:var(--line);background:var(--panel-a)}
+  @media(max-width:640px){
+    .page{padding:12px 10px 24px}
+    .frame{padding:10px}
+    header.top{gap:10px;padding-bottom:10px}
+    .controls{gap:6px}
+    .controls .range,.controls .btn,.controls .icon-btn,.persona{min-height:44px}
+    .controls .icon-btn{width:44px;height:44px}
+    .card{padding:12px}
+    .evtab{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="page"><div class="frame">
+<img class="sacred-mark" src="assets/kalash-2-175432.svg" alt="" aria-hidden="true" width="72">
+<img class="frame-ganesha" src="assets/ganesha-219399.svg" alt="" aria-hidden="true" width="48">
+<header class="top">
+  <div class="logo"><span class="mark">॥ श्री ॥</span><div><h1>Muhurta</h1><span class="sub">Shubh date finder — Muhurta Chintamani</span></div></div>
+  <div class="controls">
+    <div class="range" role="group" aria-label="Month navigation">
+      <button class="nav" id="navPrev" title="Previous month" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18L9 12l6-6"/></svg></button>
+      <span class="cur-month" id="curMonth">Month</span>
+      <button class="nav" id="navNext" title="Next month" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <button class="persona" id="persona" type="button" title="Edit birth star & location — click to change" aria-label="Edit birth star & location"><span class="pers-star">★</span><span id="personaText">Set birth star</span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+    <button class="icon-btn" id="themeBtn" title="Toggle day / night mode" aria-label="Toggle day / night mode"><span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span id="themeLabel" style="display:none">Night mode</span></button>
+    <a class="btn ghost" href="index.html">← Calendar</a>
+    <a class="btn ghost" href="marriage.html">💍 Vivaha</a>
+    <a class="btn ghost" href="guna-milap.html">🔍 Guna Milap</a>
+    <a class="icon-btn" href="help-muhurta.html" title="Help" aria-label="Help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.4 9a3 3 0 0 1 5 2c0 1.5-1.5 1.9-2 2.8"/><circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+  </div>
+</header>
+
+<section class="card" id="landing" hidden>
+  <h2 style="display:flex;justify-content:space-between;align-items:center">Set birth details <a href="index.html" class="btn small ghost">← Back to calendar</a></h2>
+  <p class="note">Birth details are shared across Calendar, Muhurta, Vivaha and Guna Milap (stored locally).</p>
+  <div class="form" id="birthForm"></div>
+</section>
+
+<section class="card" id="muhCard">
+  <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span><button class="btn small ghost" id="srcBtn" type="button" disabled title="Select a domain, activity and sub-activity first"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Source</button></span></h2>
+  <div class="preset-wrap" id="presetWrap">
+    <span class="pw-label">Quick picks <a href="catalog.html" class="pw-browse" title="Browse all 140 activities">Browse all</a></span>
+    <div class="preset-chips" id="presetChips"></div>
+    <button class="preset-add" id="presetAdd" type="button"><span class="pa-plus">+</span> Save</button>
+  </div>
+  <div class="form" style="margin-bottom:8px">
+    <div class="field"><div class="k">Domain</div><select id="muhDomain"></select></div>
+    <div class="field"><div class="k">Activity</div><select id="muhSub"></select></div>
+    <div class="field"><div class="k">Sub-activity / Task</div><select id="muhTask"></select></div>
+    <div class="field"><div class="k">Mode</div><select id="muhMode"></select></div>
+    <div class="field"><button class="btn" id="muhCompute" type="button">Compute Muhurta</button></div>
+    <div class="field"><button class="btn ghost" id="muhClear" type="button">Clear</button></div>
+  </div>
+  <div class="note" id="muhHint" hidden>Select activity + mode, then press <strong>Compute Muhurta</strong>.</div>
+  <div class="table-wrap">
+    <table class="evtab">
+      <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Verdict</th></tr></thead>
+      <tbody id="muhurtas"></tbody>
+    </table>
+  </div>
+  <div class="note" id="muhSummary"></div>
+  <details class="muh-acc" id="muhAcc"><summary id="muhAccHead">Muhurta details — click a Shubh day row</summary><div class="muh-detail" id="muhAccBody"></div></details>
+</section>
+
+<footer class="site-footer">
+  <div class="disclaimer"><strong>Disclaimer</strong>This calendar is a personal muhurta aid generated locally from the Swiss Ephemeris and classical Muhurta Chintamani rules. For dates that matter consult a qualified jyotishi.</div>
+  <div class="credit"><span class="orn">॥ श्री ॥</span><a href="https://balaramansriram.com" target="_blank" rel="noopener">Built by balaramansriram.com</a></div>
+</footer>
+</div></div>
+<div class="modal-ovl" id="srcModal" hidden><div class="modal-panel" role="dialog" aria-modal="true"><div class="modal-head"><h2 id="srcTitle">Classical source</h2><button class="btn small ghost" id="srcClose" type="button">×</button></div><div class="modal-body" id="srcBody"></div><div class="modal-foot"><button class="btn small" id="srcCopy" type="button">Copy citation</button></div></div></div>
+<script type="module" src="muhurta.js?v=20260904g"></script>
+</body>
+</html>

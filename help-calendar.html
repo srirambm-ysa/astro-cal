@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>How to Use — Vedic Calendar</title>
+<link rel="icon" type="image/svg+xml" href="favicon-calendar.svg">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="vectors.css">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --panel-a:#FFFFFF; --panel-b:#F4EFE6;
+    --saffron:#D96B27; --vermilion:#B83A2A; --gold:#C59A4E; --gold-bright:#D3A94F;
+    --night:#262A4A; --teal:#2F7E7E;
+    --line:#D4C5AC; --line-faint:#E8E0D2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);font-size:15px;line-height:1.65}
+  h1,h2,h3{font-family:"Rozha One",Georgia,serif;font-weight:400}
+  .page{max-width:900px;margin:0 auto;padding:24px 26px 40px}
+  .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:28px 32px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
+  .frame::before{content:"";position:absolute;inset:8px;border:1px solid var(--line-faint);pointer-events:none}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 14px;border-bottom:1.5px solid var(--gold);margin-bottom:20px;flex-wrap:wrap}
+  .logo{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;flex:1 1 100%}
+  .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
+  h1{font-size:21px}
+  .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--panel-b)}
+  section{margin-bottom:28px}
+  h2{font-size:17px;color:var(--vermilion);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px}
+  h3{font-size:14px;color:var(--ink);margin:18px 0 6px}
+  p{margin-bottom:10px;color:var(--ink)}
+  p .hl{color:var(--vermilion);font-weight:600}
+  ul{margin:0 0 14px 20px}
+  ul li{margin-bottom:4px}
+  code{background:var(--panel-b);padding:1px 5px;border-radius:2px;font-size:13px}
+  .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:0 2px;vertical-align:middle}
+  .tag.moon{background:#262A4A;color:#fff}
+  .tag.chandra{background:#F78C1B;color:#2b1505}
+  .tag.chandra.peak{background:#B83A2A;color:#fff}
+  .tag.nitya{background:#A84B4B;color:#fff}
+  .tag.siddhar{background:#5B4A9A;color:#fff}
+  .tag.festival{background:var(--gold);color:#2b1505}
+  .tag.holiday{background:var(--teal);color:#fff}
+  .note-card{background:var(--panel-b);border-left:3px solid var(--gold);padding:14px 16px;margin:12px 0;font-size:13.5px;color:var(--ink-soft);border-radius:0 3px 3px 0}
+  .note-card strong{color:var(--ink)}
+  table.quick-ref{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  table.quick-ref th,table.quick-ref td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line-faint);vertical-align:top}
+  table.quick-ref th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--panel-b)}
+  body.night{background:#0D0D0D;--canvas:#0D0D0D;--paper:#1A1A1A;--ink:#E0E0E0;--ink-soft:#999999;--panel-a:#222222;--panel-b:#2A2A2A;--saffron:#E8792B;--vermilion:#E25B4A;--gold:#C9A227;--gold-bright:#E4C45A;--night:#080808;--teal:#35B3B3;--line:#444444;--line-faint:#333333}
+  body.night .frame{background:rgba(26,26,26,.95);border-color:var(--gold);box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(26,26,26,.5)}
+  body.night .note-card{background:#222222;border-left-color:var(--gold)}
+  body.night .btn.ghost:hover{background:#222222}
+  @media(max-width:640px){.page{padding:12px 10px 24px}.frame{padding:16px}header{gap:10px}h1{font-size:18px}.logo .mark{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="page"><div class="frame">
+<header>
+  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>How to Use</h1><span class="sub">Vedic Calendar — Panchang &amp; Month</span></div>
+  <a class="btn ghost" href="index.html">← Back to Calendar</a>
+</header>
+
+<section>
+<h2>What This Calendar Does</h2>
+<p>This dashboard is a <strong>daily Panchang calendar</strong> — not a muhurta finder. It shows your personal lunar calendar for the current month, computed at <strong>sunrise</strong> from your birth star and location. Every card is generated <strong>locally in your browser</strong> with the Swiss Ephemeris (WASM, Lahiri ayanamsa); nothing is sent to a server.</p>
+<p>Shubh date search for 140 activities now lives separately: <a href="muhurta.html" style="color:var(--vermilion);font-weight:600">🕰 Muhurta — Shubh Date Finder</a>. Birth star and month are shared between the two pages via local storage.</p>
+<div class="note-card"><strong>Order on the page is fixed:</strong> Key Lunar Days → Avoid Days → Daily Panchang → Daily Nitya → Verse of the Day → 7-day Pulse → Today's Gochara Pulse → Monthly Gochara → Month table. Avoid Days stays at the top (hard-avoid layer).</div>
+</section>
+
+<section>
+<h2>Step 1: Set Your Birth Data</h2>
+<p>In the landing card, pick your <strong>Janma Nakshatra</strong> (birth star, 27). Your <strong>Janma Rashi</strong> is auto-filled from the nakshatra; correct it if your star spans two rashis. Use <strong>City quick-select</strong> (382 cities) to autofill place, lat/lon and timezone — search “Madurai” etc., pick a city chip (Chennai, Coimbatore, Madurai, Trichy, Salem) or type in the combo. Manual lat/lon/tz stay editable as advanced override. Click <strong>Compute calendar</strong>.</p>
+<div class="note-card"><strong>Tip:</strong> If you don't know your nakshatra, use your Moon sign (Rashi) as an approximation and confirm with a jyotishi later. Location is used for sunrise/sunset, Tamil month, and Tamil Nadu-only festival/holiday chips.</div>
+</section>
+
+<section>
+<h2>Key Lunar Days — Amavasya · Purnima · Janma</h2>
+<p>Right before <em>Avoid Days</em>, three pills show this month's anchors:</p>
+<ul>
+  <li><strong>Amavasya</strong> <span class="tag moon">● Amavasya</span> — new-moon tithi day</li>
+  <li><strong>Purnima</strong> <span class="tag moon">○ Purnima</span> — full-moon tithi day</li>
+  <li><strong>Janma Nakshatra</strong> <span class="tag nitya">✦ Janma</span> — transit Moon in your birth star (1–2 dates per civil month, e.g. Ashwini → Sep 01 &amp; 29)</li>
+</ul>
+<p>Tap a pill to select that date in the month table below and scroll to its expanded detail. Dates are sunrise-based. Loading is automatic — the month table loads when you scroll near it (on-demand for fast LCP).</p>
+</section>
+
+<section>
+<h2>Avoid Days — Ashtama Chandra (Chandrashtama)</h2>
+<p>The first hard-avoid layer. Moon in your 8th rashi (~2.25 d, <span class="tag chandra">Coarse</span>) and its peak nakshatra (~24 h, <span class="tag chandra peak">Peak</span>) are flagged as <strong>avoid important initiations</strong> other than routine. Shown at the very top, never diluted by Gochara. The two-tone bar mirrors the calendar chips.</p>
+</section>
+
+<section>
+<h2>Daily Panchang Digest — Today — Panchang</h2>
+<p>Capsule of <code>engine.js:computeDay</code> at sunrise: <strong>Tithi</strong> (lunar day + paksha), <strong>Nakshatra</strong> (moon mansion), <strong>Yoga</strong>, <strong>Karana</strong>, sunrise/sunset, <strong>Rahu/Yama/Gulika</strong> start times, <strong>Abhijit</strong> (~48 min around true solar noon), and today's <strong>Chandrashtama/Tara</strong> status. No birth → Chandrashtama/Tara show “needs janma”.</p>
+</section>
+
+<section>
+<h2>Daily Nitya Sadhana — Today — Nitya</h2>
+<p>Lifts the hidden Tithi Nitya from the month table into a hero card. Based on <em>Tantraraja</em> 16 kalās (15 tithi Nityas + Mahā Nityā Lalitā on Amavasya/Purnima). Shows Devi name, <code>kalā · bīja · paksha</code>, dhyāna link, and the full <strong>tarpaṇa vidyā</strong> with <em>Copy</em> behind a subtle dīkṣā notice. This is the same Nitya shown inline as <code>Pratipad · Kāmeśvarī</code> in the month's Tithi column.</p>
+</section>
+
+<section>
+<h2>Tirumandiram — Verse of the Day</h2>
+<p>Daily rotation <code>dayOfYear % 365</code> from <strong>Thirumoolar's 3047 verses</strong> (`rules/tirumandiram_daily.json`). Shows Tamil verse (pre-wrap), transliteration, English, and <strong>Read on tirumandiram.in ↗</strong> + Copy/Prev/Next. No ayanamsa, purely calendrical.</p>
+</section>
+
+<section>
+<h2>Upcoming 7-day Pulse — Next 7 days</h2>
+<p>Weekly planning strip: next 7 days scanned from the month's <code>dayMap+7</code> — Pradosham (Trayodashi), Ekadashi, Amavasya/Purnima, Tamil festivals, Siddhar/Mahaan pujas, with Nitya tag + chips. Uses the same tithi/tamilDate/siddhar matchers as the month table.</p>
+</section>
+
+<section>
+<h2>Today's Gochara Pulse — Daily Moon Chandrabala + Tārā</h2>
+<p>Daily relevance from monthly Gochara: today's transit Moon house from janma rāśi (1,3,6,7,10,11 favourable green; 4,12 amber; 8th Ashtama red) and Tara (Sampat/Kṣema/Sādhaka/Mitra/Parama-Mitra ✨ vs Vipat/Pratyari/Vadha ⚠️). Vedha-aware (⚑). Times till next rashi/nakshatra before next sunrise shown as <code>till 07:26 → 9th</code> dual chips. Needs birth; without it shows only transit Moon rāśi/nakshatra.</p>
+</section>
+
+<section>
+<h2>Gochara — Monthly Transits</h2>
+<p>Sidereal (Lahiri) rashi ingresses for the month (Moon excluded, 5–7 ingresses). For each: date (IST), planet From→To, <strong>house from janma</strong>, śubha/madhyama/aśubha chip, Tara badge, one-line classical paraphrase + verse cite. Impersonal list shown without birth. Classical basis <em>Bṛhat Parāśara Horā Śāstra</em> Ch.30–32.</p>
+</section>
+
+<section>
+<h2>The Monthly Calendar</h2>
+<p>On-demand table (loads when scrolled into view, or via <strong>Load Panchang</strong>). Columns: <strong>Date</strong> · <strong>Tithi</strong> (with Nitya inline) · <strong>Nakshatra</strong> · <strong>Kalam</strong> (Rahu/Yama/Gulika start times) · <strong>Events</strong>.</p>
+<h3>Events Chips</h3>
+<ul>
+  <li><span class="tag moon">Amavasya / Purnima</span> — tithi phase</li>
+  <li><span class="tag chandra">Chandrashtama</span> / <span class="tag chandra peak">Peak</span> — 8th rashi + peak nakshatra</li>
+  <li><span class="tag siddhar" style="background:#5B4A9A;color:#fff">Siddhar</span> — Guru Pooja / Jayanthi (purple)</li>
+  <li><span class="tag festival" style="background:var(--gold);color:#2b1505">Festival</span> — Tamil festivals (gold)</li>
+  <li><span class="tag holiday" style="background:var(--teal);color:#fff">Holiday</span> — TN holidays (teal, TN-only)</li>
+  <li><span class="tag nitya">Nitya</span> — Tithi Nitya inline</li>
+  <li><span class="tag" style="background:var(--vermilion);color:#fff">Sankranti</span> — Tamil month 1st</li>
+  <li><span class="tag" style="background:var(--saffron);color:#111">Eclipse</span> — solar/lunar</li>
+</ul>
+<h3>Row Details (Tap a Date)</h3>
+<p>Tap any date row to expand its <strong>day detail</strong> card inline (sunrise/sunset, Kalam strips, Tamil date, all windows and festival periods, plus the full Nitya block with mantra <em>Copy</em>). Tap again to collapse. <strong>Copy events</strong> copies the expanded detail; <strong>Print / PDF</strong> and <strong>Download ICS</strong> export the visible month.</p>
+<div class="note-card"><strong>City quick-select:</strong> above the birth form; 5 preset chips + searchable combo (Madurai etc.) autofill <code>bPlace/bLat/bLon/bTz</code>. Manual fields stay editable.</div>
+</section>
+
+<section>
+<h2>Night Mode</h2>
+<p>Moon icon in the header toggles dark theme. In night mode Amavasya/Purnima chips use <code>#34365E</code> on light text for contrast, and all cards/tables switch to dark surfaces.</p>
+</section>
+
+<section>
+<h2>Classical Sources</h2>
+<p>Panchang: local sunrise + Lahiri ayanamsa. Avoid Days: <em>Muhurta Chintamani</em> Tara/Chandra logic. Nitya: <em>Tantraraja / Jñānārṇava</em> 16 kalās. Gochara: <em>BPHS</em> Ch.30–32 + <em>Sārāvalī</em>. Tamil festivals: localised calendar. All verses in provenance registry carry <code>proof==="confirmed"</code>.</p>
+</section>
+
+<section>
+<h2>Limitations</h2>
+<ul>
+  <li>Personal aid, not a substitute for a qualified jyotishi.</li>
+  <li>Panchanga values vary by school, ayanamsa and location; classifications may differ from your family pundit.</li>
+  <li>For dates that matter — marriage, travel, purchases, ceremonies — confirm against a trusted panchang.</li>
+  <li>All computation uses <strong>Lahiri ayanamsa</strong> and Swiss Ephemeris.</li>
+</ul>
+</section>
+
+<section>
+<h2>Related Pages</h2>
+<ul>
+  <li><a href="muhurta.html" style="color:var(--vermilion);font-weight:600">🕰 Muhurta — Shubh Date Finder</a> — 140 activities, Full/Soft/Personal modes, provenance verses</li>
+  <li><a href="help-muhurta.html" style="color:var(--vermilion);font-weight:600">❓ Muhurta Help</a> — how to use Domain → Activity → Mode</li>
+  <li><a href="marriage.html" style="color:var(--vermilion);font-weight:600">💍 Marriage</a> / <a href="help-marriage.html" style="color:var(--vermilion);font-weight:600">Help</a> — Vivaha muhurta for a couple</li>
+  <li><a href="guna-milap.html" style="color:var(--vermilion);font-weight:600">🔍 Guna Milap</a> / <a href="help-guna-milap.html" style="color:var(--vermilion);font-weight:600">Help</a> — compatibility whitelist</li>
+  <li><a href="catalog.html" style="color:var(--vermilion);font-weight:600">📋 Activity Catalog</a> — browse all 140 activities</li>
+</ul>
+</section>
+
+<div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
+<p style="text-align:center;font-size:13px;color:var(--ink-soft)"><a href="index.html" style="color:var(--vermilion);text-decoration:none;font-weight:600">← Back to Calendar</a></p>
+</div></div>
+</body>
+</html>

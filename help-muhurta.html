@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>How to Use — Muhurtha Calendar</title>
+<title>How to Use — Muhurta Finder</title>
 <link rel="icon" type="image/svg+xml" href="favicon-calendar.svg">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="vectors.css">
@@ -16,10 +16,7 @@
     --line:#D4C5AC; --line-faint:#E8E0D2;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);
-    font-size:15px;line-height:1.65;
-  }
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);font-size:15px;line-height:1.65}
   h1,h2,h3{font-family:"Rozha One",Georgia,serif;font-weight:400}
   .page{max-width:900px;margin:0 auto;padding:24px 26px 40px}
   .frame{position:relative;border:1.5px solid var(--gold);background:rgba(252,250,244,.94);padding:28px 32px;box-shadow:0 1px 0 rgba(197,154,78,.3),inset 0 0 0 1px rgba(255,255,255,.5)}
@@ -36,7 +33,6 @@
   h2{font-size:17px;color:var(--vermilion);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px}
   h3{font-size:14px;color:var(--ink);margin:18px 0 6px}
   p{margin-bottom:10px;color:var(--ink)}
-  p .hl{color:var(--vermilion);font-weight:600}
   ul{margin:0 0 14px 20px}
   ul li{margin-bottom:4px}
   code{background:var(--panel-b);padding:1px 5px;border-radius:2px;font-size:13px}
@@ -53,138 +49,123 @@
   body.night .frame{background:rgba(26,26,26,.95);border-color:var(--gold);box-shadow:0 1px 0 rgba(201,162,39,.35),inset 0 0 0 1px rgba(26,26,26,.5)}
   body.night .note-card{background:#222222;border-left-color:var(--gold)}
   body.night .btn.ghost:hover{background:#222222}
-  @media(max-width:640px){
-    .page{padding:12px 10px 24px}
-    .frame{padding:16px}
-    header{gap:10px}
-    h1{font-size:18px}
-    .logo .mark{font-size:20px}
-  }
+  @media(max-width:640px){.page{padding:12px 10px 24px}.frame{padding:16px}header{gap:10px}h1{font-size:18px}.logo .mark{font-size:20px}}
 </style>
 </head>
 <body>
-<div class="page">
-<div class="frame">
-
+<div class="page"><div class="frame">
 <header>
-  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>How to Use</h1><span class="sub">Muhurtha — Vedic Calendar</span></div>
-  <a class="btn ghost" href="index.html">← Back to Calendar</a>
+  <div class="logo"><span class="mark">॥ श्री ॥</span><h1>How to Use</h1><span class="sub">Muhurta — Shubh Date Finder</span></div>
+  <a class="btn ghost" href="muhurta.html">← Back to Muhurta</a>
 </header>
 
 <section>
-<h2>What This Calendar Does</h2>
-<p>This tool computes daily <strong>Vedic muhurta windows</strong> — mathematically determined auspicious time slots — for any activity, filtered through your birth star (Janma Nakshatra). It follows the rules of <em>Muhurta Chintamani</em> (Ch. 2–3) and the classical Panchanga tradition.</p>
-<p>All computation runs <strong>locally in your browser</strong> using the Swiss Ephemeris in WebAssembly — no data is sent to any server.</p>
+<h2>What This Finder Does</h2>
+<p>This standalone tool finds <strong>Shubh dates</strong> for 140 activities — purchase, griha pravesha, travel, ceremonies — by scoring every day in the selected month against the classical rules of <em>Muhurta Chintamani</em> (Ch. 2–3). It uses the same engine as the calendar dashboard, but without loading the full Panchang month table.</p>
+<p>Birth star (Janma Nakshatra) and month are <strong>shared with the calendar</strong> via local storage (<code>astro-cal-birth</code> / <code>astro-cal-view</code>). Set birth once in either page; both stay in sync.</p>
+<p>All computation runs <strong>locally</strong> with the Swiss Ephemeris (WASM, Lahiri ayanamsa) — no server round-trip.</p>
 </section>
 
 <section>
 <h2>Step 1: Set Your Birth Data</h2>
-<p>In the landing card, select your <strong>Janma Nakshatra</strong> (birth star from 1 to 27). Your Janma Rashi is auto-filled from the nakshatra; you may correct it for stars that span two rashis. Enter your <strong>location</strong> (place name or lat/lon) for accurate sunrise &amp; sunset timings. Click <strong>Compute calendar</strong>.</p>
-<div class="note-card"><strong>Tip:</strong> If you do not know your nakshatra, consult your family records or a qualified jyotishi. The closest approximation is your Moon sign (Rashi) — 12 rashis map to 27 nakshatras.</div>
+<p>Tap the <strong>persona pill</strong> (★ Set birth star) or open the birth card. Pick your <strong>Janma Nakshatra</strong> (27); Rashi auto-fills but is correctable for stars spanning two rashis. Place/lat/lon/tz can be filled via city search or manually. The finder shares this birth with the calendar dashboard.</p>
+<div class="note-card"><strong>Shared birth:</strong> Changing birth here updates the calendar's Avoid Days, Gochara, and Key Lunar Days immediately. The calendar's city quick-select (382 cities) writes the same keys.</div>
 </section>
 
 <section>
 <h2>Step 2: Select Domain → Activity → Sub-activity</h2>
-<p>Every muhurta is <strong>activity-specific</strong> — there is no "blanket" auspicious time. Use the three-level cascade:</p>
+<p>Every muhurta is <strong>activity-specific</strong> — there is no blanket auspicious time. Use the three-level cascade:</p>
 <ul>
-  <li><strong>Domain</strong> — broad category (e.g. Real Estate, Marriage, Vehicle, Ceremony)</li>
-  <li><strong>Activity</strong> — specific type (e.g. Griha Pravesha, Vehicle Purchase, Marriage)</li>
-  <li><strong>Sub-activity / Task</strong> — the exact task (e.g. New Home, Used Home, Renovation)</li>
+  <li><strong>Domain</strong> — broad category (e.g. Real Estate, Marriage, Vehicle)</li>
+  <li><strong>Activity</strong> — type (e.g. Griha Pravesha, Vehicle Purchase)</li>
+  <li><strong>Sub-activity / Task</strong> — exact task (e.g. New Home, Used Home)</li>
 </ul>
-<p>Each sub-activity has its own rulebook — Hard Blockers, preferred nakshatras, tithi groups, and functional group (Sthira / Chara / Mridu / Kshipra / Tikshna). The engine picks the correct rules automatically.</p>
-<div class="note-card"><strong>Tip:</strong> Use the <strong>Quick Picks</strong> chips above the dropdowns for frequent combinations. Click a chip to set all three levels instantly. Click <strong>+ Save</strong> to pin your current selection as a new chip.</div>
+<p>Each task has its own Hard Blockers, preferred nakshatras/tithis, and functional group (Sthira/Chara/Mridu/Kshipra/Tikshna). The engine loads the correct rulebook automatically. Use <a href="catalog.html" style="color:var(--vermilion);font-weight:600">📋 Activity Catalog</a> to browse all 140.</p>
+<div class="note-card"><strong>Quick Picks:</strong> Chips above the dropdowns set all three levels in one tap. <strong>+ Save</strong> pins your current selection as a new chip (stored locally); <strong>×</strong> removes a custom chip. Chips wrap and scroll on mobile.</div>
 </section>
 
 <section>
 <h2>Step 3: Choose a Mode</h2>
-<p>The mode selects how strictly the activity's rulebook is applied:</p>
+<p>Mode selects strictness. This replaces the old “Muhurta on the calendar” toggle — now you compute on demand via <strong>Compute Muhurta</strong>.</p>
 <table class="quick-ref">
-  <thead><tr><th>Mode</th><th>Uses birth star?</th><th>Score cutoff</th><th>When to use</th></tr></thead>
+  <thead><tr><th>Mode</th><th>Uses birth star?</th><th>Cutoff</th><th>When to use</th></tr></thead>
   <tbody>
-    <tr><td><strong>Full muhurta</strong></td><td>❌ No</td><td>≥ 80 (Shubh) / 65–79 (Madhyama)</td><td>Important ceremonies, multi-stakeholder events. Strictest window.</td></tr>
-    <tr><td><strong>Soft</strong></td><td>❌ No</td><td>≥ 60</td><td>Urgent tasks, tight deadlines, everyday activities. Relaxed criteria.</td></tr>
-    <tr><td><strong>Personal days</strong></td><td>✅ Tara + Chandra</td><td>≥ 75 (must first pass universal ≥ 60)</td><td>Sole-actor activities. Adds Tara Bala &amp; Chandra Bala from your birth chart.</td></tr>
+    <tr><td><strong>Full muhurta</strong></td><td>❌ No</td><td>≥ 80 Shubh / 65–79 Madhyama</td><td>Important ceremonies, multi-stakeholder events. Strictest.</td></tr>
+    <tr><td><strong>Soft</strong></td><td>❌ No</td><td>≥ 60</td><td>Urgent / everyday tasks. Relaxed.</td></tr>
+    <tr><td><strong>Personal days</strong></td><td>✅ Tara + Chandra</td><td>≥ 75 (must first pass Full ≥ 80)</td><td>Sole-actor activities. Adds Tara + Chandra Bala.</td></tr>
   </tbody>
 </table>
-<p><strong>Full</strong> and <strong>Soft</strong> are <em>impersonal</em> — they evaluate only the universal time quality for the selected activity. <strong>Personal days</strong> first checks the slot passes universal rules, then applies your personal Tara Bala (transit nakshatra vs your birth nakshatra) and Chandra Bala (moon transit vs your birth rashi). If either is severely afflicted (Naidhana Tara / Ashtama Chandra), the slot is rejected regardless of the universal score.</p>
+<p><strong>Full/Soft are impersonal</strong> (universal time quality only). <strong>Personal</strong> first qualifies as a Full slot (≥ 80), then applies <strong>Tara Bala</strong> (transit nakshatra vs birth, 2,4,6,8,9 favourable ✨ vs 3,5,7 bad ⚠️) and <strong>Chandra Bala</strong> (Moon house from janma rāśi, 1,3,6,7,10,11 favourable). <code>Naidhana Tara</code> or <code>Ashtama Chandra (8th)</code> hard-rejects even a Full slot.</p>
 </section>
 
 <section>
-<h2>Step 4: Read the Results</h2>
+<h2>Step 4: Compute &amp; Read the Results</h2>
+<h3>Controls</h3>
+<ul>
+  <li><strong>Month ◀ ▶</strong> — navigate Gregorian month (IST). Changing month clears results (intent only; no auto-compute).</li>
+  <li><strong>Compute Muhurta</strong> — scores every day of the shown month. Requires birth + domain/activity/mode. Heavy scan runs in a worker (falls back to main thread).</li>
+  <li><strong>Clear</strong> — resets domain/activity and wipes table.</li>
+  <li><strong>Source</strong> <code>ⓘ</code> — opens the classical verses governing the selected activity (modal, copy citation).</li>
+</ul>
 <h3>Muhurta Table</h3>
-<p>The table shows every day in the current month that <strong>passes</strong> all Hard Blockers for the selected activity + mode. Columns:</p>
+<p>Shows only days that <strong>pass</strong> as <span class="tag shubh">Shubh</span> for the selected activity+mode (Neutral not listed). Columns:</p>
 <ul>
-  <li><strong>Date</strong> — Gregorian date</li>
-  <li><strong>Tara</strong> — Tara Bala position (1–9) relative to your birth star. Shown for reference in all modes; only used for scoring in Personal mode.</li>
-  <li><strong>Nakshatra</strong> — the ruling lunar mansion for that day</li>
-  <li><strong>Verdict</strong> — quality badge:
-    <span class="tag shubh">Shubh</span> (good window),
-    <span class="tag neutral">Neutral</span> (acceptable),
-    <span class="tag ashubh">Ashubh</span> (not recommended)</li>
+  <li><strong>Date</strong> — e.g. Tue Sep 11 (with <code>till 07:26 → Revati</code> if the nakshatra changes intra-day)</li>
+  <li><strong>Tara</strong> — position 1–9 vs birth (shown for reference in all modes)</li>
+  <li><strong>Nakshatra</strong> — ruling lunar mansion that day</li>
+  <li><strong>Verdict</strong> — <span class="tag shubh">Shubh</span> <code>score</code> (≥ cutoff)</li>
 </ul>
+<p>Below the table: <code>Why others set aside: nakshatra — n days · tithi — n days…</code> lay summary (a day can be set aside for multiple reasons). Footer: <code>Shubh days this month for X · Month · Mode (2-4 expected)</code>.</p>
 
-<h3>Verdict Colour Key</h3>
+<h3>Row Details (Tap a Shubh Day)</h3>
+<p>Tap any <span class="tag shubh">Shubh</span> row to expand the accordion below the table:</p>
 <ul>
-  <li><span class="tag shubh">Shubh</span> — Teal green. The slot meets all criteria with room to spare. Preferred for important tasks.</li>
-  <li><span class="tag neutral">Neutral</span> — Gold / saffron. The slot passes but is borderline. Acceptable for routine or less critical work.</li>
-  <li><span class="tag ashubh">Ashubh</span> — Vermilion red. The slot failed one or more conditions. Skip if possible.</li>
+  <li><strong>Score</strong> 0–100 + verdict (REJECTED → EXCELLENT)</li>
+  <li><strong>Tara / Chandra</strong> — Tara name + nature, and in Personal mode the Chandra house + bonus (<code>+15 favourable / -10 unfavourable / 8th Ashtama blocked</code>)</li>
+  <li><strong>Tier breakdown</strong> — T1 Hard Blockers, T2 Primary (nakshatra/tithi), T3 Secondary (vara/karana), plus Passing lines</li>
+  <li><strong>Override</strong> — if Sarvartha Siddhi / Siddha Yoga / Abhijit etc. downgraded a hit</li>
+  <li><strong>Time window</strong> — <code>validTill → nextStar</code> when the nakshatra changes</li>
+  <li><strong>Classical Foundation</strong> — the <em>Muhurta Chintamani</em> verses that fired that day (or the governing verses if none fired). Sanskrit, translation, applied logic, proof="confirmed" only.</li>
 </ul>
-
-<h3>Row Details (Click a Shubh day)</h3>
-<p>Click any <span class="tag shubh">Shubh</span> row to expand the full muhurta detail panel — you will see:</p>
-<ul>
-  <li><strong>Universal score</strong> (0–100) and tier breakdown (T1 Hard Blockers, T2 Primary, T3 Secondary)</li>
-  <li><strong>Personal metrics</strong> (Tara name &amp; bonus, Chandra house &amp; bonus) — only in Personal mode</li>
-  <li><strong>Time windows</strong> — sunrise/sunset, Abhijit window, specific muhurta timings</li>
-  <li><strong>Classical provenance</strong> — click the <strong>Source</strong> button to see the exact <em>Muhurta Chintamani</em> verse citations behind every rule</li>
-</ul>
-</section>
-
-<section>
-<h2>The Monthly Calendar</h2>
-<p>Below the muhurta results, a full month table shows every day with its <strong>Tithi</strong> (lunar day), <strong>Nakshatra</strong>, <strong>Kalam</strong> (Rahu, Yama, Gulika start times), and <strong>Events</strong> (festivals, sankranti, moon phases, eclipses). Click any row to expand the day's full detail — sunrise/sunset, muhurta windows, and festival periods.</p>
-<div class="note-card"><strong>Tip:</strong> Use the <strong>Print / PDF</strong> button for a clean printable version. The <strong>Download ICS</strong> button exports event data to a calendar file.</div>
+<p>Row selection toggles and is persisted (<code>astro-cal-view.selected</code>). The details stay open on month nav until you tap again.</p>
 </section>
 
 <section>
 <h2>Quick Picks &amp; Presets</h2>
-<p>The <strong>Quick Picks</strong> row above the dropdowns stores your frequently used activity combinations as clickable chips. Click a chip to instantly set domain, activity, and sub-activity. Click <strong>+ Save</strong> to create a new chip from your current dropdown selection. Remove a saved chip by clicking the <strong>×</strong> on it.</p>
+<p>Chips above the dropdowns. Default 5 (Griha Pravesha, Vehicle Purchase, etc.) plus your customs. Clicking a chip sets Domain/Sub/Task and clears the table (you must press Compute again). The active chip highlights. Use <strong>Browse all</strong> to open the catalog.</p>
 </section>
 
 <section>
-<h2>Night Mode</h2>
-<p>Toggle between light and dark theme using the moon icon button in the header. This affects all cards, tables, and the frame border — chosen colours are adjusted for comfortable low-light reading.</p>
+<h2>Night Mode &amp; Sharing</h2>
+<p>Moon icon toggles dark theme (synced with calendar via <code>astro-cal-theme</code>). Birth, month, and view mode are shared; the calendar's month table and this finder do not share computed results — each computes on demand.</p>
 </section>
 
 <section>
 <h2>Classical Sources</h2>
-<p>Every scoring rule, Hard Blocker, and override in this engine is drawn from <em>Muhurta Chintamani</em> by Acharya Rama Daivagya. Click the <strong>Source</strong> button (book icon) next to the activity name to view the exact Sanskrit verse, chapter reference, and English rationale for the current activity's rules.</p>
+<p>Every Hard Blocker (<code>ASTA_GURU / ASTA_SHUKRA / TUESDAY / SANKRANTI / VYATIPATA / VAIDHRITI / BHADRA_MRITYU</code>), nakshatra preference, and override is drawn from <em>Muhurta Chintamani</em> (Rama Daivagya). Tap <strong>Source</strong> (book icon) next to the activity name to see the exact chapter/verse and English rationale. All verses in <code>reference/provenance_registry.json</code> carry <code>proof==="confirmed"</code> — no fabricated citations.</p>
 </section>
 
 <section>
 <h2>Limitations</h2>
 <ul>
-  <li>This tool is a <strong>personal muhurta aid</strong>, not a substitute for professional jyotisha consultation.</li>
-  <li>Panchanga values vary by school, ayanamsa, and location. Classifications here may differ from your family pundit's practice.</li>
-  <li>For dates that matter — marriage, travel, major purchases, ceremonies — consult a qualified jyotishi and confirm against a trusted panchanga.</li>
-  <li>All computation uses the <strong>Lahiri ayanamsa</strong> (True Chitra Paksha) and the <strong>Swiss Ephemeris</strong>.</li>
+  <li>Personal aid, not a substitute for a qualified jyotishi.</li>
+  <li>Panchanga values vary by school, ayanamsa, location; classifications may differ from your family pundit's practice.</li>
+  <li>For dates that matter — consult a jyotishi and confirm against a trusted panchang.</li>
+  <li>Uses <strong>Lahiri ayanamsa</strong> and Swiss Ephemeris. Day = sunrise→sunrise at your location.</li>
 </ul>
 </section>
 
 <section>
 <h2>Related Pages</h2>
 <ul>
-  <li><a href="help-marriage.html" style="color:var(--vermilion);font-weight:600">💍 Marriage Help</a> — Ashtakoota matching + wedding date search for a specific couple</li>
-  <li><a href="help-guna-milap.html" style="color:var(--vermilion);font-weight:600">🔍 Guna Milap Help</a> — Pre-screening compatibility whitelist for one person</li>
-  <li><a href="catalog.html" style="color:var(--vermilion);font-weight:600">📋 Activity Catalog</a> — Browse all 140 activities with their rules</li>
+  <li><a href="index.html" style="color:var(--vermilion);font-weight:600">📅 Calendar</a> / <a href="help-calendar.html" style="color:var(--vermilion);font-weight:600">Help</a> — Panchang dashboard, Avoid Days, Key Lunar Days, Gochara</li>
+  <li><a href="help-marriage.html" style="color:var(--vermilion);font-weight:600">💍 Marriage Help</a> — couple match + wedding date search</li>
+  <li><a href="help-guna-milap.html" style="color:var(--vermilion);font-weight:600">🔍 Guna Milap Help</a> — whitelist for one person</li>
+  <li><a href="catalog.html" style="color:var(--vermilion);font-weight:600">📋 Activity Catalog</a> — all 140 activities</li>
 </ul>
 </section>
 
-<div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
-
-<p style="text-align:center;font-size:13px;color:var(--ink-soft)"><a href="index.html" style="color:var(--vermilion);text-decoration:none;font-weight:600">← Back to Muhurta Calendar</a></p>
-
-</div>
-</div>
+<p style="text-align:center;font-size:13px;color:var(--ink-soft)"><a href="muhurta.html" style="color:var(--vermilion);text-decoration:none;font-weight:600">← Back to Muhurta Finder</a></p>
+</div></div>
 </body>
 </html>

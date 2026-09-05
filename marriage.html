@@ -35,6 +35,11 @@
   .logo .mark{font-family:"Rozha One",serif;color:var(--vermilion);font-size:24px;line-height:1}
   h1{font-size:21px}
   .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .icon-btn{width:38px;height:38px;padding:0;border:1px solid var(--gold);background:var(--paper);color:var(--ink);border-radius:4px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+  .icon-btn:hover{background:rgba(185,138,62,.12)}
+  .icon-btn svg{width:18px;height:18px;display:block}
+  body.night .icon-btn{border-color:var(--line);background:var(--panel-a)}
   .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
   .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -44,6 +49,8 @@
     .page{padding:12px 10px 24px}
     .frame{padding:10px}
     header.top{gap:10px;padding-bottom:10px}
+    .controls{gap:6px}
+    .controls .icon-btn{width:44px;height:44px;min-height:44px}
     .btn{min-height:44px;padding:10px 14px;font-size:16px}
     .field{grid-template-columns:1fr;gap:4px}
     .field label{font-size:14px}
@@ -156,14 +163,15 @@
         <div class="sub">Matchmaking & Shubh Wedding Dates — Muhurta Chintamani, Ch.6</div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn secondary" id="themeBtn" type="button" title="Toggle day / night mode">
+    <div class="controls">
+      <button class="icon-btn" id="themeBtn" type="button" title="Toggle day / night mode" aria-label="Toggle day / night mode">
         <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
-        <span id="themeLabel">Night mode</span>
+        <span id="themeLabel" style="display:none">Night mode</span>
       </button>
-      <a class="btn" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
-      <a class="btn" href="index.html" style="text-decoration:none">← Muhurta Calendar</a>
-      <a class="btn ghost" href="help-marriage.html" style="text-decoration:none;font-size:13px">? Help</a>
+      <a class="btn ghost" href="muhurta.html" style="text-decoration:none">🕰 Muhurta</a>
+      <a class="btn ghost" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
+      <a class="btn ghost" href="index.html" style="text-decoration:none">← Calendar</a>
+      <a class="icon-btn" href="help-marriage.html" title="Help" aria-label="Help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.4 9a3 3 0 0 1 5 2c0 1.5-1.5 1.9-2 2.8"/><circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg></a>
     </div>
   </header>
 

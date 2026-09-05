@@ -37,17 +37,27 @@
   h1{font-size:21px}
   .logo .sub{font-size:11px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
   .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .range{display:flex;align-items:stretch;border:1px solid var(--gold);background:var(--paper)}
-  .range button{font-family:"Eczar",serif;border:0;background:transparent;padding:0 12px;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center}
+  .range{display:flex;align-items:center;gap:6px;border:0;background:transparent}
+  .range button{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--paper);padding:0 10px;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center;min-width:36px;height:38px;border-radius:4px}
+  .range button svg{width:18px;height:18px;display:block}
   .range button.active{background:var(--saffron);color:#2b1505;font-weight:600}
-  .range .nav{color:var(--vermilion);font-weight:600}
-  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:0 12px;white-space:nowrap;letter-spacing:.02em;display:flex;align-items:center}
-  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 14px;font-weight:600;font-size:13px;white-space:nowrap;height:38px}
+  .range .nav{color:var(--vermilion)}
+  .range .nav:hover{background:rgba(197,154,78,.12)}
+  .cur-month{font-family:"Rozha One",serif;font-size:17px;color:var(--vermilion);padding:0 4px;white-space:nowrap;letter-spacing:.02em;display:flex;align-items:center;border:0;background:transparent}
+  .persona{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:var(--paper);color:var(--ink);padding:5px 14px;font-weight:600;font-size:13px;white-space:nowrap;height:38px;border-radius:999px;cursor:pointer;font-family:"Eczar",serif}
+  .persona:hover{background:rgba(197,154,78,.12);border-color:var(--gold)}
+  .persona:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   .controls .range,.controls .btn{height:38px}
   .persona .pers-star{color:var(--saffron);font-size:12px;line-height:1}
-  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+  .btn{font-family:"Eczar",serif;border:1px solid var(--gold);background:var(--vermilion);color:var(--paper);padding:7px 14px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:6px;justify-content:center;border-radius:4px}
   .btn.ghost{background:transparent;color:var(--ink)}
   .btn.small{padding:4px 10px;font-size:13px}
+  .icon-btn{width:38px;height:38px;padding:0;border:1px solid var(--gold);background:var(--paper);color:var(--ink);border-radius:4px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  .icon-btn:hover{background:rgba(197,154,78,.12)}
+  .icon-btn svg{width:18px;height:18px;display:block}
+  .icon-btn.primary{background:var(--vermilion);color:var(--paper);border-color:var(--gold)}
+  .icon-btn.primary:hover{background:var(--saffron);color:#2b1505}
+  body.night .icon-btn{border-color:var(--line);background:var(--panel-a)}
   .card{border:1px solid var(--line-faint);background:var(--panel-a);padding:15px;margin-bottom:15px}
   .card.panel-b{background:var(--panel-b)}
   .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid var(--line-faint);padding-bottom:6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
@@ -102,14 +112,21 @@
   .copy-btn{flex:none;font-size:11px;padding:6px 10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;cursor:pointer}
   .copy-btn:hover{background:var(--panel-b)}
   .diksa-footnote{margin:4px 0 2px 36px;font-size:10px;color:var(--ink-faint);border-left:2px solid var(--line);padding-left:8px;line-height:1.4}
+  .nitya-detail-main{display:flex;gap:10px;align-items:flex-start;margin:8px 0 4px 0}
+  .nitya-detail-img{width:64px;height:64px;flex:none;border-radius:50%;object-fit:cover;border:1px solid var(--line-faint);background:#F4EFE6}
+  .nitya-detail-main .nitya-mantra-wrap{margin:0}
+  @media(max-width:640px){ .nitya-detail-main{margin-top:8px} }
   .nitya-link{color:var(--ink-faint);text-decoration:underline;text-underline-offset:2px}
   /* Tirumandiram Verse of the Day */
-  .verse-body{padding:2px 0}
+  .verse-wrap{display:flex;gap:14px;align-items:flex-start}
+  .verse-img{width:96px;height:96px;flex:none;border-radius:50%;object-fit:cover;border:1px solid var(--line-faint);background:#F4EFE6}
+  .verse-body{flex:1;min-width:0;padding:2px 0}
   .verse-tag{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);padding:2px 7px;border-radius:999px;background:var(--panel-b);margin-bottom:8px}
   .verse-tamil{font-family:"Noto Sans Tamil","Latha","Tamil Sangam MN",system-ui,serif;font-size:17px;line-height:1.8;color:var(--ink);white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
   .verse-tr{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);white-space:pre-wrap;word-break:break-word;background:var(--panel-b);border:1px solid var(--line-faint);border-radius:6px;padding:7px 10px;margin-bottom:8px}
   .verse-en{font-size:13px;line-height:1.6;color:var(--ink);border-left:3px solid var(--gold);padding-left:10px;margin-bottom:4px}
   .verse-cite{font-size:11px;color:var(--ink-soft);margin-top:4px}
+  @media(max-width:640px){ .verse-wrap{flex-direction:column;align-items:center} .verse-body{width:100%} }
   @media(max-width:640px){ .verse-tamil{font-size:16px} }
   /* ---------- A · Daily Panchang Digest (hero) ---------- */
   .panchang-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
@@ -119,6 +136,9 @@
   .panchang-grid .kv .v small{font-weight:400;color:var(--ink-soft);font-size:11px}
   .panchang-abhijit{margin-top:8px;padding:8px 10px;border-left:3px solid var(--teal);background:var(--panel-b);font-size:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
   /* ---------- B · Daily Nitya Sadhana (hero) ---------- */
+  .nitya-hero{display:flex;gap:14px;align-items:flex-start}
+  .nitya-hero-img{width:96px;height:96px;flex:none;border-radius:8px;object-fit:cover;border:1px solid var(--line-faint);background:#F4EFE6}
+  .nitya-hero-body{flex:1;min-width:0}
   .nitya-hero-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
   .nitya-hero-name{font-family:"Rozha One",serif;font-size:18px;color:var(--vermilion)}
   .nitya-hero-sub{font-size:12px;color:var(--ink-soft)}
@@ -127,6 +147,7 @@
   .nitya-hero-grid .kv .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
   .nitya-hero-grid .kv .v{font-size:13px;font-weight:600;margin-top:2px}
   .nitya-hero-mantra{margin-top:8px}
+  @media(max-width:640px){ .nitya-hero{flex-direction:column;align-items:center} .nitya-hero-body{width:100%} }
   /* ---------- C · Upcoming 7-day Pulse ---------- */
   .pulse-list{display:grid;gap:6px}
   .pulse-row{display:grid;grid-template-columns:92px 1fr;gap:8px;padding:8px 10px;border:1px solid var(--line-faint);background:var(--paper);border-radius:4px;align-items:start}
@@ -302,10 +323,28 @@
   body.night .evtab td{border-color:#333333}
   body.night .evtab tr.selected td{background:rgba(232,121,43,.14)}
   body.night .chip.festival{background:var(--gold-bright);color:#111111}
-  body.night .chip.moon{background:#333333}
+  body.night .chip.moon{background:#34365E;color:#E0E0FF;border:1px solid #4A4D85}
+  body.night .chip.chandra{background:#D97A18;color:#FFF8E8}
+  body.night .chip.chandra.peak{background:#E94444;color:#fff}
+  body.night .chip.eclipse{background:#E8792B;color:#111}
+  body.night .chip.nitya{background:#C45A5A;color:#fff}
   body.night .muh-line .v{color:var(--ink)}
   body.night .muh-act{color:#aaaaaa}
   body.night .chip.verdict.Neutral{color:#111111}
+  /* ---------- KEY LUNAR DAYS (Amavasya · Purnima · Janma) ---------- */
+  .keydays-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .keyday{border:1px solid var(--line-faint);background:var(--paper);padding:10px 8px;border-radius:6px;text-align:center;min-width:0}
+  .keyday .k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:4px}
+  .keyday .k svg{width:12px;height:12px;flex:none}
+  .keyday .v{font-size:14px;font-weight:700;color:var(--vermilion);line-height:1.25;white-space:normal;word-break:break-word}
+  .keyday .v small{font-weight:600;color:var(--ink);font-size:12px}
+  .keyday .sub{font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.3}
+  .keyday.missing{opacity:.65}
+  .keyday.missing .v{color:var(--ink-soft)}
+  .keyday.highlight{border-color:var(--gold);background:rgba(197,154,78,.06)}
+  body.night .keyday{background:var(--panel-a);border-color:var(--line-faint)}
+  body.night .keyday.highlight{background:rgba(201,162,39,.12)}
+  @media(max-width:640px){ .keydays-row{grid-template-columns:1fr;gap:8px} .keyday{padding:10px;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center} .keyday .k{justify-content:flex-start;margin:0} .keyday .v{text-align:left} .keyday .sub{text-align:left} }
   @media(max-width:840px){.controls{justify-content:flex-start}.frame{padding:12px}}
   /* ---------- MOBILE ---------- */
   @media(max-width:640px){
@@ -313,7 +352,8 @@
     .frame{padding:10px}
     header.top{gap:10px;padding-bottom:10px}
     .controls{gap:6px}
-    .controls .range,.controls .btn,.persona{min-height:44px;font-size:15px}
+    .controls .range,.controls .btn,.controls .icon-btn,.persona{min-height:44px;font-size:15px}
+    .controls .icon-btn{width:44px;height:44px}
     .controls .btn{padding:0 12px}
     .btn{padding:10px 14px;font-size:16px;min-height:44px}
     .btn.small{min-height:44px;font-size:14px}
@@ -378,21 +418,22 @@
   <header class="top">
     <div class="logo"><span class="mark">॥ श्री ॥</span><div><h1>Muhurtha</h1><span class="sub">vedic calendar</span></div></div>
     <div class="controls">
-      <div class="range">
-        <button class="nav" id="navPrev" title="Previous month">‹</button>
+      <div class="range" role="group" aria-label="Month navigation">
+        <button class="nav" id="navPrev" title="Previous month" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18L9 12l6-6"/></svg></button>
         <span class="cur-month" id="curMonth">Month</span>
-        <button class="nav" id="navNext" title="Next month">›</button>
+        <button class="nav" id="navNext" title="Next month" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
-      <div class="persona" id="persona" title="Janma nakshatra & location"><span class="pers-star">★</span><span id="personaText">Set birth star</span></div>
-      <button class="btn ghost" id="themeBtn" title="Toggle day / night mode">
+      <button class="persona" id="persona" type="button" title="Edit birth star & location — click to change" aria-label="Edit birth star & location"><span class="pers-star">★</span><span id="personaText">Set birth star</span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+      <button class="icon-btn" id="themeBtn" title="Toggle day / night mode" aria-label="Toggle day / night mode">
         <span id="themeIcon" style="display:inline-flex"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
-        <span id="themeLabel">Night mode</span>
+        <span id="themeLabel" style="display:none">Night mode</span>
       </button>
+      <a class="btn ghost" href="muhurta.html" style="text-decoration:none">🕰 Muhurta</a>
       <a class="btn ghost" href="marriage.html" style="text-decoration:none">💍 Vivaha</a>
       <a class="btn ghost" href="guna-milap.html" style="text-decoration:none">🔍 Guna Milap</a>
-      <button class="btn" id="printBtn">Print / PDF</button>
-      <button class="btn" id="icsBtn">Download ICS</button>
-      <a class="btn ghost" href="help-muhurta.html" style="text-decoration:none;font-size:13px">? Help</a>
+      <button class="icon-btn" id="printBtn" title="Print / PDF" aria-label="Print / PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/><path d="M9 18h6"/></svg></button>
+      <button class="icon-btn" id="icsBtn" title="Download ICS" aria-label="Download ICS"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M12 13v6M9 16l3 3 3-3"/></svg></button>
+      <a class="icon-btn" href="help-calendar.html" title="Help" aria-label="Help" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.4 9a3 3 0 0 1 5 2c0 1.5-1.5 1.9-2 2.8"/><circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg></a>
     </div>
   </header>
 
@@ -427,6 +468,16 @@
       </button>
     </h2>
     <div class="profile" id="profile"></div>
+  </section>
+
+  <!-- Key Lunar Days — Amavasya · Purnima · Janma Nakshatra (compact, before Avoid) -->
+  <section class="card" id="keyDaysCard">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span>◎ Key Lunar Days</span>
+      <span class="note" style="font-size:11px;color:var(--ink-soft)">Amavasya · Purnima · Your Janma Nakshatra</span>
+    </h2>
+    <div id="keyDaysBody"><div class="note">Loading key days…</div></div>
+    <div class="note" style="margin-top:6px;font-size:11px">Sunrise-based tithi/nakshatra. Janma days are transit Moon in your birth star — good for personal observances. Amavasya/Purnima are lunar-phase anchors.</div>
   </section>
 
   <!-- Avoid Days — Ashtama Chandra (Chandrashtama) — invariant, always at top (docs/gochara_addition.md §0) -->
@@ -468,8 +519,11 @@
       <span>📜 Tirumandiram — Verse of the Day</span>
       <span class="note" id="verseMeta" style="font-size:11px;color:var(--ink-soft)"></span>
     </h2>
-    <div id="verseBody" class="verse-body">
-      <div class="note">Loading verse…</div>
+    <div class="verse-wrap">
+      <img id="verseImg" class="verse-img" src="tirumoolar.webp" alt="Tirumoolar" width="96" height="96" loading="lazy" decoding="async" onerror="this.style.display='none'">
+      <div id="verseBody" class="verse-body">
+        <div class="note">Loading verse…</div>
+      </div>
     </div>
     <div class="verse-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
       <button class="btn small ghost" id="verseCopy" type="button">Copy verse</button>
@@ -517,37 +571,6 @@
     <div class="note" style="margin-top:6px;font-size:11px">Classical indication per <em>Bṛhat Parāśara Horā Śāstra</em> Ch.30-32 / <em>Sārāvalī</em>; not financial/medical advice. Consult a paṇḍita for personal decisions.</div>
   </section>
 
-  <div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ श्री ॥</span><span class="sd-line"></span></div>
-
-  <section class="card" id="muhCard">
-    <h2 style="justify-content:space-between">Muhurta <span class="muh-act"><span id="muhActName"></span><button class="btn small ghost" id="srcBtn" type="button" disabled title="Select a domain, activity and sub-activity first"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Source</button></span></h2>
-    <div class="preset-wrap" id="presetWrap">
-      <span class="pw-label">Quick picks <a href="catalog.html" class="pw-browse" title="Browse all 140 activities">Browse all</a></span>
-      <div class="preset-chips" id="presetChips"></div>
-      <button class="preset-add" id="presetAdd" type="button" title="Save current selection as a quick pick"><span class="pa-plus">+</span> Save</button>
-    </div>
-    <div class="form" style="margin-bottom:8px">
-      <div class="field"><div class="k">Domain</div><select id="muhDomain"></select></div>
-      <div class="field"><div class="k">Activity</div><select id="muhSub"></select></div>
-      <div class="field"><div class="k">Sub-activity / Task</div><select id="muhTask"></select></div>
-      <div class="field"><div class="k">Mode</div><select id="muhMode"></select></div>
-      <div class="field"><button class="btn" id="muhCompute" type="button">Compute Muhurta</button></div>
-      <div class="field"><button class="btn ghost" id="muhClear" type="button">Clear</button></div>
-    </div>
-    <div class="note" id="muhHint" hidden>Select activity + mode, then press <strong>Compute Muhurta</strong>.</div>
-<div class="table-wrap">
-    <table class="evtab">
-      <thead><tr><th>Date</th><th>Tara</th><th>Nakshatra</th><th>Verdict</th></tr></thead>
-      <tbody id="muhurtas"></tbody>
-    </table>
-    </div>
-    <div class="note" id="muhSummary"></div>
-    <details class="muh-acc" id="muhAcc">
-      <summary id="muhAccHead">Muhurta details — click a Shubh day row</summary>
-      <div class="muh-detail" id="muhAccBody"></div>
-    </details>
-  </section>
-
   <div class="sacred-divider" aria-hidden="true"><span class="sd-line"></span><span class="sd-icon">॥ ॐ ॥</span><span class="sd-line"></span></div>
 
   <section class="card" id="monthCard">
@@ -557,13 +580,17 @@
     <div class="cal-head">
       <span class="title" id="calTitle"></span><span class="tamil-year" id="calTamilYear"></span>
     </div>
-    <div class="table-wrap">
+    <div id="monthPlaceholder" style="padding:16px;text-align:center;border:1px dashed var(--line);background:var(--panel-b);border-radius:4px">
+      <button class="btn" id="loadMonthBtn" type="button">Load Panchang for <span id="loadMonthLabel">this month</span></button>
+      <div class="note" style="margin-top:6px">Month details computed on demand for faster load — cross-month scanning is deferred until requested.</div>
+    </div>
+    <div class="table-wrap" id="monthWrap" hidden>
     <table class="evtab monthtab">
       <thead><tr><th>Date</th><th>Tithi</th><th>Nakshatra</th><th>Kalam</th><th>Events</th></tr></thead>
       <tbody id="monthEvents"></tbody>
     </table>
     </div>
-    <div class="note">Kalam shows start times (Rahu · Yama · Gulika). Select a row to expand the day: sunrise/sunset, full windows and festival periods.</div>
+    <div class="note" id="monthHint" hidden>Kalam shows start times (Rahu · Yama · Gulika). Select a row to expand the day: sunrise/sunset, full windows and festival periods.</div>
     <div id="tnHolidayNote" class="note" style="display:none;margin-top:6px;font-size:11px;color:var(--ink-soft)">Current place is outside Tamil Nadu — festival/holiday chips are curated for Tamil Nadu only (other regions: data not curated). National fixed holidays still shown where they coincide.</div>
   </section>
 
@@ -589,6 +616,6 @@
     </div>
   </div>
 </div>
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=20260904k"></script>
 </body>
 </html>

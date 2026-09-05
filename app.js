@@ -475,6 +475,8 @@ let view = { range: "month", anchor: todayISO(), activity: "ACT_REAL_GRIHA_PRAVE
 // 2026-08-13). render() skips renderMuhurta unless this is true, so browsing the
 // activity/mode dropdowns (which clear + show the hint) never triggers a recalculation.
 let muhComputed = false;
+let monthLoadState = { key:null, loading:false, dayMap:null, flagMap:null, windowsByDay:null, chandraWindows:null };
+let monthObserverSetup=false;
 
 /* ---------- Web Worker client (PRD §2.5 v1.0) ---------- */
 // Offloads swisseph computation to ephemeris.worker.js so multi-month scans
@@ -573,6 +575,28 @@ function isMahaNitya(day) {
   const e = nityaForDay(day);
   return !!(e && e.key === 'maha_tripura_sundari');
 }
+const NITYA_ICON_MAP = {
+  kameshwari: "kameshwari",
+  bhagamalini: "bhagamalini",
+  nityaklinna: "nityaklinna",
+  bherunda: "bherunda",
+  vahnivasini: "vanhivasini",
+  maha_vajreshwari: "mahavajreswari",
+  shivaduti: "sivadooti",
+  tvarita: "tvarita",
+  kulasundari: "kulasundari",
+  nitya: "nitya",
+  nilapataka: "nilapataka",
+  vijaya: "vijaya",
+  sarvamangala: "sarvamangala",
+  jvalamalini: "jvalamalini",
+  chitra: "chitra",
+  maha_tripura_sundari: "mahatripurasundari",
+};
+function nityaIconPath(key){
+  const base = NITYA_ICON_MAP[key] || key;
+  return `nityas/${base}.webp`;
+}
 function isInTN(lat, lon){
   const b = TN_BBOX?.bbox || {minLat:8.0,maxLat:13.6,minLon:76.1,maxLon:80.9};
   return lat>=b.minLat && lat<=b.maxLat && lon>=b.minLon && lon<=b.maxLon;
@@ -663,42 +687,80 @@ async function render() {
   $("calTitle").textContent = title;
   const tamilYearName = swe.tamilYear(rangeStart.y, rangeStart.m, rangeStart.d);
   $("calTamilYear").textContent = `${TAMIL_MONTH[tmOf(swe, rangeStart.y, rangeStart.m, rangeStart.d, geo)]} · Tamil ${tamilYearName.name} (${tamilYearName.index})`;
+  // update on-demand placeholder label
+  const loadLbl=$("loadMonthLabel"); if(loadLbl) loadLbl.textContent = title;
 
-  // build day cache (offloaded to worker when available — PRD §2.5 v1.0)
-  const tz = birth.tz || TZ_IST;
-  const dayMap = await buildDayMap(rangeStart, rangeEnd, geo, birth.nakshatra, tz);
-
-  // overlay per-day flags (chandrashtama, eclipses, festivals)
-  const flagMap = new Map();
-  const windowsByDay = new Map();
-  for (const w of chandraWindows) {
-    // assign window to each civil day it overlaps (for the bar)
-    let t = w.start;
-    while (t < w.end) {
-      const r = swe.revjul(t);
-      const iso = ymdToISO(r.year, r.month, r.day);
-      if (dayMap.has(iso)) {
-        const dl = windowsByDay.get(iso) || [];
-        dl.push({ kind: w.kind, start: w.start, end: w.end, nakshatra: w.nakshatra, rashi: w.rashi });
-        windowsByDay.set(iso, dl);
-      }
-      t += 1; // advance ~1 day per iteration (coarse windows span ~2.25d)
-    }
+  // immediate lightweight layers (no dayMap scan)
+  renderAvoidDays(chandraWindows);
+  renderGochara(y0, m0);
+  // reset month on-demand state for this anchor (new month navigated)
+  const ph=$("monthPlaceholder"), wrap=$("monthWrap"), hint=$("monthHint");
+  const monthKey=`${y0}-${String(m0).padStart(2,"0")}`;
+  if(monthLoadState.key!==monthKey){
+    monthLoadState={key:monthKey, loading:false, dayMap:null, flagMap:null, windowsByDay:null, chandraWindows};
+    monthObserverSetup=false;
+    if(ph) ph.hidden=false;
+    if(wrap) wrap.hidden=true;
+    if(hint) hint.hidden=true;
+    if($("monthEvents")) $("monthEvents").innerHTML="";
   }
-  for (const ecl of solarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Solar eclipse${ecl.total ? " (total)" : ecl.annular ? " (annular)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
-  for (const ecl of lunarEcl) flagMap.set(dateOfJD(swe, ecl.max), { key: "ecl", name: `Lunar eclipse${ecl.total ? " (total)" : " (partial)"}`, start: ecl.begin, end: ecl.end });
-
-  // daily heroes with full month context (re-render with dayMap-backed detail)
+  // hero re-render with light context (dayMap not needed for single-day digest)
   try{ renderPanchangDigest(); }catch(e){ console.warn("panchang digest+",e); }
   try{ renderNityaHero(); }catch(e){ console.warn("nitya hero+",e); }
   try{ renderPulse(); }catch(e){ console.warn("pulse+",e); }
   try{ renderGocharaPulse(); }catch(e){ console.warn("gochara pulse+",e); }
-  // full-month table (one row per day; select a row to expand its detail)
-  renderMonthEvents(dayMap, flagMap, windowsByDay);
-  renderAvoidDays(chandraWindows);
-  renderGochara(y0, m0);
-  if (muhComputed) renderMuhurta(dayMap); // only via "Compute Muhurta" (owner request 2026-08-13)
+  // defer heavy month scan until user requests — auto-load when card approaches viewport
+  setupMonthOnDemandObserver();
+  // if month already loaded, keep table in sync (e.g. row select toggle via render())
+  if(monthLoadState.dayMap && !monthLoadState.loading){
+    renderMonthEvents(monthLoadState.dayMap, monthLoadState.flagMap, monthLoadState.windowsByDay);
+    const ph2=$("monthPlaceholder"), wrap2=$("monthWrap"), hint2=$("monthHint");
+    if(ph2) ph2.hidden=true; if(wrap2) wrap2.hidden=false; if(hint2) hint2.hidden=false;
+  }
+  // key lunar days strip (amavasya · purnima · janma) — before Avoid Days
+  try{ renderKeyDays(); }catch(e){ console.warn("keyDays",e); }
+  // if muhurta was computed for previous month, keep hint but don't auto-scan muhurta here (muhurta now on muhurta.html)
   $("monthEvTitle").querySelector("span").textContent = title;
+}
+/* ---------- month on-demand (deferred dayMap scan for faster dashboard LCP) ---------- */
+async function loadMonthData(){
+  if(!birth || !swe || monthLoadState.loading || monthLoadState.dayMap) return;
+  monthLoadState.loading=true;
+  const btn=$("loadMonthBtn"); if(btn){ btn.disabled=true; btn.textContent="Computing…"; }
+  try{
+    const { y: ay, m: am } = isoToYMD(view.anchor);
+    const y0=ay, m0=am;
+    const rangeStart={ y:y0, m:m0, d:1 }, rangeEnd={ y:y0, m:m0, d:new Date(y0,m0,0).getDate() };
+    const geo=[birth.lon, birth.lat, 0];
+    const tz=birth.tz||TZ_IST;
+    const dayMap=await buildDayMap(rangeStart, rangeEnd, geo, birth.nakshatra, tz);
+    const flagMap=new Map(), windowsByDay=new Map();
+    for(const w of (monthLoadState.chandraWindows||[])){
+      let t=w.start; while(t<w.end){ const r=swe.revjul(t); const iso=ymdToISO(r.year,r.month,r.day); if(dayMap.has(iso)){ const dl=windowsByDay.get(iso)||[]; dl.push({kind:w.kind,start:w.start,end:w.end,nakshatra:w.nakshatra,rashi:w.rashi}); windowsByDay.set(iso,dl);} t+=1; }
+    }
+    const tStart=swe.julday(rangeStart.y,rangeStart.m,rangeStart.d,0), tEnd=swe.julday(rangeEnd.y,rangeEnd.m,rangeEnd.d,24-TZ_IST)+0.5;
+    const solarEcl=swe.solarEclipses(tStart,tEnd), lunarEcl=swe.lunarEclipses(tStart,tEnd);
+    for(const ecl of solarEcl) flagMap.set(dateOfJD(swe,ecl.max),{key:"ecl",name:`Solar eclipse${ecl.total?" (total)":ecl.annular?" (annular)":" (partial)"}`,start:ecl.begin,end:ecl.end});
+    for(const ecl of lunarEcl) flagMap.set(dateOfJD(swe,ecl.max),{key:"ecl",name:`Lunar eclipse${ecl.total?" (total)":" (partial)"}`,start:ecl.begin,end:ecl.end});
+    monthLoadState.dayMap=dayMap; monthLoadState.flagMap=flagMap; monthLoadState.windowsByDay=windowsByDay;
+    renderMonthEvents(dayMap, flagMap, windowsByDay);
+    try{ renderKeyDays(); }catch(e){ console.warn("keyDays",e); }
+    const ph=$("monthPlaceholder"), wrap=$("monthWrap"), hint=$("monthHint");
+    if(ph) ph.hidden=true; if(wrap) wrap.hidden=false; if(hint) hint.hidden=false;
+  }catch(e){ console.warn("loadMonthData",e); const btn2=$("loadMonthBtn"); if(btn2){ btn2.disabled=false; btn2.textContent="Load Panchang — retry"; } }
+  finally{ monthLoadState.loading=false; }
+}
+function setupMonthOnDemandObserver(){
+  if(monthObserverSetup) return;
+  const ph=$("monthPlaceholder"), card=$("monthCard"), btn=$("loadMonthBtn");
+  if(btn && !btn._bound){ btn.addEventListener("click", loadMonthData); btn._bound=true; }
+  if(!card || !ph || monthObserverSetup) return;
+  if(!("IntersectionObserver" in window)) return;
+  const obs=new IntersectionObserver((entries)=>{
+    for(const e of entries){ if(e.isIntersecting){ loadMonthData(); obs.disconnect(); break; } }
+  }, { rootMargin:"200px" });
+  obs.observe(card);
+  monthObserverSetup=true;
 }
 
 const REJ_LABEL = {
@@ -882,11 +944,16 @@ function renderMonthEvents(dayMap, flagMap, windowsByDay) {
     if(birth && !isInTN(birth.lat, birth.lon)) tnNote.style.display="block";
     else tnNote.style.display="none";
   }
-  // row click = select / toggle the day (re-render to expand or close its detail)
+  // row click = select / toggle the day (re-render from cached dayMap to expand detail)
   tbody.querySelectorAll(".mrow").forEach((tr) => tr.addEventListener("click", () => {
     view.selected = tr.dataset.iso === view.selected ? "" : tr.dataset.iso;
     save(LS.view, view);
-    render();
+    if(monthLoadState.dayMap){
+      renderMonthEvents(monthLoadState.dayMap, monthLoadState.flagMap, monthLoadState.windowsByDay);
+      try{ renderKeyDays(); }catch(e){}
+    } else {
+      render();
+    }
   }));
   // copy mantra buttons inside expanded detail row
   tbody.querySelectorAll(".copy-btn").forEach((btn) => btn.addEventListener("click", async (e) => {
@@ -950,15 +1017,10 @@ function dayDetailHTML(day, flagMap, windowsByDay) {
     const mantraEsc = String(nitya.mantraTarpana).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
     const dhyanaLink = nitya.dhyanaRef ? ` · <a href="https://stotranidhi.com/en/nitya-devi-dhyana-shloka-in-english/" target="_blank" rel="noopener" class="nitya-link">dhyāna</a>` : "";
     const nityaTitle = `${nitya.display} — ${nitya.deviName !== nitya.display ? nitya.deviName : nitya.tamilName}`;
-    const mantraBlock = `<div class="nitya-mantra-wrap">`
-      + `<div class="mantra" lang="sa">${mantraEsc}</div>`
-      + `<button class="copy-btn" data-mantra="${mantraEsc.replace(/"/g,'&quot;')}" aria-label="Copy Nitya mantra">Copy</button>`
-      + `</div>`;
+    const iconSrc = nityaIconPath(nitya.key);
+    const mantraBlock = `<div class="nitya-detail-main"><img class="nitya-detail-img" src="${iconSrc}" alt="${nitya.display}" width="64" height="64" loading="lazy" decoding="async" onerror="this.style.display='none'"><div class="nitya-mantra-wrap" style="margin-left:0;flex:1"><div class="mantra" lang="sa">${mantraEsc}</div><button class="copy-btn" data-mantra="${mantraEsc.replace(/"/g,'&quot;')}" aria-label="Copy Nitya mantra">Copy</button></div></div>`;
     const footer = `<div class="diksa-footnote">ⓘ Śrī Vidyā Nitya vidyās are traditionally dīkṣā-bound. These mantras appear here as public-domain Tantrarāja transcriptions for study. Please chant or practise only as your own guru instructs.</div>`;
-    parts.push(
-      periodRow(I.nitya, nityaTitle, kalaBija + dhyanaLink, "mut", "Nitya")
-      + mantraBlock + footer
-    );
+    parts.push(periodRow(I.nitya, nityaTitle, kalaBija + dhyanaLink, "mut", "Nitya") + mantraBlock + footer);
   }
   const body = parts.length ? parts.join("") : '<div class="note">No flagged periods today.</div>';
   return `<div class="detail">${strip}${body}</div>`;
@@ -1152,13 +1214,19 @@ function renderNityaHero(){
   const mantraEsc = String(nitya.mantraTarpana||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   const dhyanaLink = nitya.dhyanaRef ? `<a href="https://stotranidhi.com/en/nitya-devi-dhyana-shloka-in-english/" target="_blank" rel="noopener" class="nitya-link">dhyāna śloka ↗</a>` : "";
   if(meta) meta.textContent = `${t.iso} · Tithi ${day.tithi.name} (${paksha}) · ${isMaha?"Amṛtā kalā — Bindu":"kalā "+nitya.kalaName}`;
+  const iconSrc = nityaIconPath(nitya.key);
   body.innerHTML = `
-    <div class="nitya-hero-head"><span class="nitya-hero-name">${nitya.display}</span><span class="nitya-hero-sub">${nitya.deviName}${nitya.tamilName && nitya.tamilName!==nitya.display? " · "+nitya.tamilName:""}</span>${isMaha?'<span class="chip nitya" style="font-size:10px">Mahā Nityā</span>':""}</div>
-    <div class="nitya-hero-grid">
-      <div class="kv"><div class="k">Kalā</div><div class="v">${nitya.kalaName}</div></div>
-      <div class="kv"><div class="k">Bīja</div><div class="v" lang="sa">${nitya.bija}</div></div>
-      <div class="kv"><div class="k">Pakṣa</div><div class="v">${paksha}</div></div>
-      <div class="kv"><div class="k">Tithi</div><div class="v">${day.tithi.name}</div></div>
+    <div class="nitya-hero">
+      <img class="nitya-hero-img" src="${iconSrc}" alt="${nitya.display}" width="96" height="96" loading="lazy" decoding="async" onerror="this.style.display='none'">
+      <div class="nitya-hero-body">
+        <div class="nitya-hero-head"><span class="nitya-hero-name">${nitya.display}</span><span class="nitya-hero-sub">${nitya.deviName}${nitya.tamilName && nitya.tamilName!==nitya.display? " · "+nitya.tamilName:""}</span>${isMaha?'<span class="chip nitya" style="font-size:10px">Mahā Nityā</span>':""}</div>
+        <div class="nitya-hero-grid">
+          <div class="kv"><div class="k">Kalā</div><div class="v">${nitya.kalaName}</div></div>
+          <div class="kv"><div class="k">Bīja</div><div class="v" lang="sa">${nitya.bija}</div></div>
+          <div class="kv"><div class="k">Pakṣa</div><div class="v">${paksha}</div></div>
+          <div class="kv"><div class="k">Tithi</div><div class="v">${day.tithi.name}</div></div>
+        </div>
+      </div>
     </div>
     <div class="nitya-hero-mantra">
       <div class="nitya-mantra-wrap" style="margin-left:0"><div class="mantra" lang="sa">${mantraEsc}</div><button class="copy-btn" data-mantra="${mantraEsc.replace(/"/g,'&quot;')}" aria-label="Copy Nitya mantra">Copy</button></div>
@@ -1369,6 +1437,60 @@ function renderGocharaPulse(){
     const vk=a.dataset.verse;
     if(window.showProvenanceForVerse) window.showProvenanceForVerse(vk);
   }));
+}
+
+function renderKeyDays(){
+  const body=$("keyDaysBody");
+  if(!body) return;
+  if(!birth){
+    body.innerHTML=`<div class="keydays-row">
+      <div class="keyday missing"><div class="k">○ Amavasya</div><div class="v">—</div><div class="sub">Set birth star to enable month data</div></div>
+      <div class="keyday missing"><div class="k">◐ Purnima</div><div class="v">—</div><div class="sub">Set birth star to see dates</div></div>
+      <div class="keyday missing"><div class="k">✦ Janma Nakshatra</div><div class="v">${birth ? NAKSHATRA[birth.nakshatra] : "—"}</div><div class="sub">Requires janma nakshatra</div></div>
+    </div>`;
+    return;
+  }
+  if(!monthLoadState.dayMap){
+    body.innerHTML=`<div class="note" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">Load month Panchang to see Amavasya, Purnima & your Janma days for <strong>${monthLoadState.key||""}</strong> <button class="btn small" type="button" onclick="document.getElementById('loadMonthBtn')?.click()">Compute now</button></div>`;
+    return;
+  }
+  const days=[...monthLoadState.dayMap.values()];
+  const fmt=(d)=>{
+    const dt=new Date(d.y, d.m-1, d.d);
+    const wd=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][dt.getDay()];
+    const mon=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.m-1];
+    return `${wd} ${String(d.d).padStart(2,"0")} ${mon}`;
+  };
+  const amavs=days.filter(d=> d.tithi && d.tithi.amavasya);
+  const purns=days.filter(d=> d.tithi && d.tithi.purnima);
+  const janmas=days.filter(d=> d.moonNakshatra===birth.nakshatra);
+  const chip=(label, arr, icon)=>{
+    if(!arr.length) return `<div class="keyday missing"><div class="k">${icon} ${label}</div><div class="v">—</div><div class="sub">None in this month</div></div>`;
+    const first=arr[0];
+    const isToday=()=> first.iso===todayISO();
+    const list=arr.map(d=> fmt(d)).join(" · ");
+    const sub=arr.length>1 ? `${arr.length} days in month` : `${NAKSHATRA[first.moonNakshatra]||""} · ${first.tithi?first.tithi.name:""}`;
+    const tithiSub= label==="Janma Nakshatra" ? `${NAKSHATRA[birth.nakshatra]} · ${arr.length} occurrence${arr.length>1?"s":""}` : sub;
+    const cls= first.iso===view.selected || isToday() ? "keyday highlight" : "keyday";
+    return `<div class="${cls}" data-iso="${first.iso}" style="cursor:pointer" title="Tap to scroll to ${first.iso}"><div class="k">${icon} ${label}</div><div class="v">${list}</div><div class="sub">${tithiSub}</div></div>`;
+  };
+  body.innerHTML=`<div class="keydays-row">${chip("Amavasya", amavs, "●")}${chip("Purnima", purns, "○")}${chip("Janma Nakshatra", janmas, "✦")}</div>`;
+  // tap to select & expand that day in month table
+  body.querySelectorAll(".keyday[data-iso]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const iso=el.dataset.iso;
+      if(!iso) return;
+      view.selected= iso;
+      save(LS.view, view);
+      if(monthLoadState.dayMap){
+        renderMonthEvents(monthLoadState.dayMap, monthLoadState.flagMap, monthLoadState.windowsByDay);
+        try{ renderKeyDays(); }catch(e){}
+        // scroll month table into view and highlight
+        const row=document.querySelector(`.mrow[data-iso="${iso}"]`);
+        if(row) row.scrollIntoView({behavior:"smooth", block:"center"});
+      }
+    });
+  });
 }
 
 /* City quick-selector — SimpleMaps 382 + GeoNames fallback */
@@ -1606,10 +1728,12 @@ function renderProfile() {
 function renderPersona() {
   const text = $("personaText");
   if (birth) {
-    $("persona").title = `Janma nakshatra ${NAKSHATRA[birth.nakshatra]} · rashi ${RASHI[birth.rashi]} · ${birth.place}`;
+    $("persona").title = `Janma nakshatra ${NAKSHATRA[birth.nakshatra]} · rashi ${RASHI[birth.rashi]} · ${birth.place} — click to edit`;
+    $("persona").setAttribute("aria-label", `Birth star ${NAKSHATRA[birth.nakshatra]} · ${RASHI[birth.rashi]} — click to edit`);
     text.textContent = `${NAKSHATRA[birth.nakshatra]} · ${RASHI[birth.rashi]}`;
   } else {
-    $("persona").title = "Set your birth nakshatra & location";
+    $("persona").title = "Set your birth nakshatra & location — click to edit";
+    $("persona").setAttribute("aria-label", "Set birth star — click to edit");
     text.textContent = "Set birth star";
   }
 }
@@ -1724,6 +1848,14 @@ function copyDayEvents() {
 
 /* ---------- birth form ---------- */
 function openBirthForm() {
+  // keep city search in sync with saved place (so user isn't forced to re-search)
+  try{
+    const search=$("bCitySearch"), place=$("bPlace");
+    if(search && place && place.value && IN_CITIES){
+      const m=IN_CITIES.entries.find(e=> e.city.toLowerCase()===place.value.trim().toLowerCase() || e.city_ascii.toLowerCase()===place.value.trim().toLowerCase());
+      if(m) search.value = m.city + " · " + m.admin_name;
+    }
+  }catch(e){}
   $("landing").scrollIntoView({ behavior: "smooth" });
   $("birthForm").scrollIntoView({ behavior: "smooth" });
 }
@@ -1895,87 +2027,92 @@ async function init() {
   const muhDomain = $("muhDomain");
   const muhSub = $("muhSub");
   const muhTask = $("muhTask");
+  const hasMuhurta = !!(muhDomain && muhSub && muhTask);
   const PH = '<option value="" disabled selected>Please select</option>';
   const fillSubs = () => {
+    if(!hasMuhurta) return;
     const subs = TAX.subDomains(muhDomain.value);
     muhSub.innerHTML = "";
     muhSub.insertAdjacentHTML("beforeend", PH);
     subs.forEach((s) => muhSub.insertAdjacentHTML("beforeend", `<option value="${s.code}">${s.name}</option>`));
   };
   const fillTasks = () => {
+    if(!hasMuhurta) return;
     const tasks = muhSub.value ? TAX.activities(muhDomain.value, muhSub.value) : [];
     muhTask.innerHTML = "";
     muhTask.insertAdjacentHTML("beforeend", PH);
     tasks.forEach((t) => muhTask.insertAdjacentHTML("beforeend", `<option value="${t.activity_id}">${t.activity_name}</option>`));
   };
-  muhDomain.insertAdjacentHTML("beforeend", PH);
-  TAX.domains().forEach((d) => muhDomain.insertAdjacentHTML("beforeend", `<option value="${d.code}">${d.name}</option>`));
-  // Dropdown changes only update the INTENT (view) — no computation runs. The muhurta
-  // engine triggers ONLY via the Compute Muhurta button, so browsing the cascade to
-  // decide an activity never recalculates (owner request 2026-08-13).
-  const syncMuhFromDropdowns = () => {
-    view.activity = muhTask.value;
-    view.mode = muhModeSel.value;
-    save(LS.view, view);
-  };
-  const refreshSourceBtn = () => {
-    const on = !!(muhDomain.value && muhSub.value && muhTask.value);
-    $("srcBtn").disabled = !on;
-    $("srcBtn").title = on ? "Show classical source for this activity" : "Select a domain, activity and sub-activity first";
-  };
-  const clearMuhurta = () => {
-    muhComputed = false;
-    $("muhurtas").innerHTML = "";
-    $("muhSummary").textContent = "";
-    $("muhActName").textContent = "";
-    $("muhHint").innerHTML = "Select activity + mode, then press <strong>Compute Muhurta</strong>.";
-    $("muhHint").hidden = false;
-    $("muhAccBody").innerHTML = "";
-    $("muhAccHead").textContent = "Muhurta details — click a Shubh day row";
-    $("muhAcc").open = false;
-  };
-  // Selecting an activity/mode never computes — it only updates the intent and wipes
-  // any stale table. Computation happens exclusively via "Compute Muhurta".
-  muhDomain.addEventListener("change", () => { fillSubs(); fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
-  muhSub.addEventListener("change", () => { fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
-  muhTask.addEventListener("change", () => { syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
-  $("muhCompute").addEventListener("click", () => {
-    syncMuhFromDropdowns();
-    if (!muhDomain.value || !muhSub.value || !muhTask.value) {
+  if(hasMuhurta){
+    muhDomain.insertAdjacentHTML("beforeend", PH);
+    TAX.domains().forEach((d) => muhDomain.insertAdjacentHTML("beforeend", `<option value="${d.code}">${d.name}</option>`));
+    // Dropdown changes only update the INTENT (view) — no computation runs. The muhurta
+    // engine triggers ONLY via the Compute Muhurta button, so browsing the cascade to
+    // decide an activity never recalculates (owner request 2026-08-13).
+    const syncMuhFromDropdowns = () => {
+      view.activity = muhTask.value;
+      view.mode = muhModeSel.value;
+      save(LS.view, view);
+    };
+    const refreshSourceBtn = () => {
+      const on = !!(muhDomain.value && muhSub.value && muhTask.value);
+      const el=$("srcBtn"); if(el){ el.disabled = !on; el.title = on ? "Show classical source for this activity" : "Select a domain, activity and sub-activity first"; }
+    };
+    const clearMuhurta = () => {
+      muhComputed = false;
+      const tb=$("muhurtas"); if(tb) tb.innerHTML = "";
+      const sm=$("muhSummary"); if(sm) sm.textContent = "";
+      const an=$("muhActName"); if(an) an.textContent = "";
+      const hint=$("muhHint"); if(hint){ hint.innerHTML = "Select activity + mode, then press <strong>Compute Muhurta</strong>."; hint.hidden = false; }
+      const body=$("muhAccBody"); if(body) body.innerHTML = "";
+      const head=$("muhAccHead"); if(head) head.textContent = "Muhurta details — click a Shubh day row";
+      const acc=$("muhAcc"); if(acc) acc.open = false;
+    };
+    // Selecting an activity/mode never computes — it only updates the intent and wipes
+    // any stale table. Computation happens exclusively via "Compute Muhurta".
+    muhDomain.addEventListener("change", () => { fillSubs(); fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+    muhSub.addEventListener("change", () => { fillTasks(); syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+    muhTask.addEventListener("change", () => { syncMuhFromDropdowns(); clearMuhurta(); refreshSourceBtn(); });
+    const compBtn=$("muhCompute"); if(compBtn) compBtn.addEventListener("click", () => {
+      syncMuhFromDropdowns();
+      if (!muhDomain.value || !muhSub.value || !muhTask.value) {
+        clearMuhurta();
+        const h=$("muhHint"); if(h) h.textContent = "Please select a domain, activity and sub-activity, then press Compute Muhurta.";
+        return;
+      }
+      if (!birth) {
+        clearMuhurta();
+        $("landing").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+      muhComputed = true;
+      const h2=$("muhHint"); if(h2) h2.hidden = true;
+      render();
+    });
+    const clrBtn=$("muhClear"); if(clrBtn) clrBtn.addEventListener("click", () => {
+      muhDomain.value = ""; muhSub.value = ""; muhTask.value = "";
+      view.activity = ""; save(LS.view, view);
       clearMuhurta();
-      $("muhHint").textContent = "Please select a domain, activity and sub-activity, then press Compute Muhurta.";
-      return;
-    }
-    if (!birth) {
-      clearMuhurta();
-      $("landing").scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-    muhComputed = true;
-    $("muhHint").hidden = true;
-    render();
-  });
-  $("muhClear").addEventListener("click", () => {
-    muhDomain.value = ""; muhSub.value = ""; muhTask.value = "";
-    view.activity = ""; save(LS.view, view);
-    clearMuhurta();
-    refreshSourceBtn();
-    renderPresetChips();
-    $("muhCard").scrollIntoView({ behavior: "smooth", block: "nearest" });
-  });
+      refreshSourceBtn();
+      renderPresetChips();
+      const card=$("muhCard"); if(card) card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }
 
   /* Quick Selector Presets — chip rendering + save button */
-  renderPresetChips();
-  /* Re-render chips whenever any dropdown changes so active state stays in sync */
-  muhDomain.addEventListener("change", () => { renderPresetChips(); });
-  muhSub.addEventListener("change", () => { renderPresetChips(); });
-  muhTask.addEventListener("change", () => { renderPresetChips(); });
-  $("presetAdd").addEventListener("click", promptSavePreset);
+  if(hasMuhurta){ renderPresetChips();
+    /* Re-render chips whenever any dropdown changes so active state stays in sync */
+    muhDomain.addEventListener("change", () => { renderPresetChips(); });
+    muhSub.addEventListener("change", () => { renderPresetChips(); });
+    muhTask.addEventListener("change", () => { renderPresetChips(); });
+    const pa=$("presetAdd"); if(pa) pa.addEventListener("click", promptSavePreset);
+  }
 
   /* Classical source modal (§ owner request 2026-08-13) — instant provenance for the
      selected activity, no compute required. */
-  const closeSrcModal = () => { $("srcModal").hidden = true; document.body.style.overflow = ""; };
-  $("srcBtn").addEventListener("click", () => {
+  const closeSrcModal = () => { const m=$("srcModal"); if(m){ m.hidden = true; document.body.style.overflow = ""; } };
+  const _srcBtn=$("srcBtn");
+  if(_srcBtn && hasMuhurta) _srcBtn.addEventListener("click", () => {
     const act = TAX.getActivity(muhTask.value);
     if (!act) return;
     $("srcTitle").textContent = "Classical source — " + act.activity_name;
@@ -1983,10 +2120,10 @@ async function init() {
     $("srcModal").hidden = false;
     document.body.style.overflow = "hidden";
   });
-  $("srcClose").addEventListener("click", closeSrcModal);
-  $("srcModal").addEventListener("click", (e) => { if (e.target === $("srcModal")) closeSrcModal(); });
+  const _srcClose=$("srcClose"); if(_srcClose) _srcClose.addEventListener("click", closeSrcModal);
+  const _srcModal=$("srcModal"); if(_srcModal) _srcModal.addEventListener("click", (e) => { if (e.target === $("srcModal")) closeSrcModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSrcModal(); });
-  $("srcCopy").addEventListener("click", () => {
+  const _srcCopy=$("srcCopy"); if(_srcCopy) _srcCopy.addEventListener("click", () => {
     const act = TAX.getActivity(muhTask.value);
     const cls = act ? TAX.toMuhurta(act).classical : null;
     if (!cls) return;
@@ -2002,36 +2139,41 @@ async function init() {
   });
 
   // restore saved selection (with legacy migration), else default to first task
-  const savedAct = LEGACY_ACTIVITY[view.activity] || view.activity;
-  const saved = savedAct && TAX.getActivity(savedAct);
-  if (saved) {
-    muhDomain.value = saved.domain;
-    fillSubs();
-    muhSub.value = saved.sub_domain;
-    fillTasks();
-    muhTask.value = saved.activity_id;
-    view.activity = saved.activity_id;
-  } else {
-    fillSubs(); fillTasks();
+  if(hasMuhurta){
+    const savedAct2 = LEGACY_ACTIVITY[view.activity] || view.activity;
+    const saved2 = savedAct2 && TAX.getActivity(savedAct2);
+    if (saved2) {
+      muhDomain.value = saved2.domain;
+      fillSubs();
+      muhSub.value = saved2.sub_domain;
+      fillTasks();
+      muhTask.value = saved2.activity_id;
+      view.activity = saved2.activity_id;
+    } else {
+      fillSubs(); fillTasks();
+    }
     view.activity = muhTask.value;
   }
   save(LS.view, view);
-  refreshSourceBtn();
-  renderPresetChips();
+  { const _rs=$("muhDomain"); if(_rs) refreshSourceBtn(); }
+  if(hasMuhurta) renderPresetChips();
 
-  // populate selection mode selector (§2.6.7)
-  const muhModeSel = $("muhMode");
-  Object.entries(SELECTION_MODES).forEach(([key, m]) => {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = m.label;
-    if (key === view.mode) opt.selected = true;
-    muhModeSel.appendChild(opt);
-  });
-  muhModeSel.addEventListener("change", () => { view.mode = muhModeSel.value; save(LS.view, view); clearMuhurta(); });
-
-  // initial muhurta state: nothing computed yet, show the compute hint
-  clearMuhurta();
+  // populate selection mode selector (§2.6.7) — only if muhurta UI exists
+  if(hasMuhurta){
+    const muhModeSel = $("muhMode");
+    if(muhModeSel){
+      Object.entries(SELECTION_MODES).forEach(([key, m]) => {
+        const opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = m.label;
+        if (key === view.mode) opt.selected = true;
+        muhModeSel.appendChild(opt);
+      });
+      muhModeSel.addEventListener("change", () => { view.mode = muhModeSel.value; save(LS.view, view); clearMuhurta(); });
+    }
+    // initial muhurta state: nothing computed yet, show the compute hint
+    clearMuhurta();
+  }
 
   // populate janma nakshatra dropdown (flat 27 list) + rashi select (editable, auto-filled)
   const nakSel = $("bNakshatra");
@@ -2056,6 +2198,8 @@ async function init() {
     body.innerHTML=`<div class="prov-item"><div class="prov-ref">Bṛhat Parāśara Horā Śāstra Ch.30-32 · Sārāvalī / Phaladīpikā Ch.26</div><div class="prov-en">Gochara house favourability counted from janma rāśi (natal Moon). Each transit row shows the house (Candrabala) + Tārā (Sampat/Vipat…) — the two filters panchang users know. Vedha obstructs śubha when the vedha planet is in its vedha house at the same instant.</div><div class="prov-logic">Source files: rules/gochara_rules.json (84 rows) + reference/provenance_registry.json chapter gochara_bphs (131 verses). Moon excluded (2.5d cadence, owner 2026-09-02). No invented phala.</div></div>`;
     modal.hidden=false;
   });
+  const personaBtn=$("persona");
+  if(personaBtn) personaBtn.addEventListener("click", () => { $("landing").hidden = false; openBirthForm(); });
   $("themeBtn").addEventListener("click", toggleTheme);
   $("navPrev").addEventListener("click", () => nav(-1));
   $("navNext").addEventListener("click", () => nav(1));
