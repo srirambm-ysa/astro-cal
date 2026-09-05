@@ -1,7 +1,7 @@
 # Enhancements Pipeline — astro-cal
 
 > **Source:** `docs/weather-and-city-research.md` Q1–Q4 locks + owner directive 2026-09-03  
-> **Status:** 6 shipped / 1 queued (A+B+C+D added 2026-09-03). Single source for return-driver roadmap.  
+> **Status:** 6 shipped / 1 deferred (F cancelled 2026-09-06). Single source for return-driver roadmap.  
 > **Ordering invariant:** Avoid Days stays #1 (`docs/gochara_addition.md:0`) — every new card slots after it. Order now: **Avoid → Panchang (A) → Nitya (B) → Verse (E) → 7-day Pulse (C) → Gochara Pulse (D) → Gochara → Muhurta → Month**.
 
 ---
@@ -29,9 +29,9 @@ Full research: `docs/weather-and-city-research.md`.
 | **B** | **Daily Nitya Sadhana** | Daily | Large card `Today — Nitya {Citrā} · kāla/bīja · dhyana + copyable mantra` behind dīkṣā note. Lifts hidden `nitya.mjs` (16 kalās `nitya-devi-v1` `rules/nitya_devis.json`) from table cell `app.js:812`. | `Tantrarāja / nitya_devis.json` | S | ✅ **Shipped 2026-09-03** `index.html:396` `app.js:680` `nitya.mjs:1` | Avoid → (A+B) → Verse → Gochara |
 | **C** | **Upcoming 7-day Pulse** | Weekly | Banner `Next 7 days: Pradosham Dec 6, Ekadashi Dec 8, Seshadri Jayanthi Thai Hastham, Amavasya…` — weekly planning. | `engine.js:tithi`, `tamilDate`, `siddhar_pujas.json`, `shaiva_guru_pujas.json` | S | ✅ **Shipped 2026-09-03** `index.html:410` `app.js:730` | Scan `dayMap+7` — 7 rows, Nitya tag + chip set |
 | **D** | **Today’s Gochara Pulse** | Daily | Tighten monthly `gochara.mjs:1` (5 ingresses/mo) → daily line `Transit Moon in 8th → Chandrabala · Tara Vadha ⚠️` (`moonRashi`+`taraBala `engine.js:140``). | `BPHS Gochara` | S | ✅ **Shipped 2026-09-03** `index.html:460` `app.js:1255` `gochara.mjs:1` | Daily relevance — Moon house + Tara today, Vedha-aware |
-| **F** | **Pradosha/Ekadashi/Amavasya Reminders** | Fortnightly | Ekadashi fast + Pradosha puja + Amavasya/Purnima push via `D:\notif` hub + ICS `app.js:1180`. | `tithi 10/11/14` | M | ⏳ Queue (hub wiring) | Notif + calendar chips already emit, push deferred |
+| **F** | **Pradosha/Ekadashi/Amavasya Reminders** | Fortnightly | Ekadashi fast + Pradosha puja + Amavasya/Purnima push via `D:\notif` hub + ICS `app.js:1180`. | `tithi 10/11/14` | M | ❌ **Cancelled / Deferred** (per owner 2026-09-06 — release first, notify later) | Notif + calendar chips already emit, push deferred indefinitely |
 
-**Build order (return per LOC):** A+B as “Today” hero (pure offline, zero deps) → C → D → F. City + Verse + A+B+C+D now live.
+**Build order (return per LOC):** A+B as “Today” hero (pure offline, zero deps) → C → D. City + Verse + A+B+C+D now live. **F deferred** until post-release.
 
 ---
 

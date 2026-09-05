@@ -4,7 +4,7 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-09-06 (verified + v1.1.0 tagged + deployed — READY)
+Last updated: 2026-09-06 (v1.1.0 + muhurta.balaramansriram.com live + F deferred — READY)
 
 ## Goal Accomplished (this session — 2026-09-05/06)
 
@@ -22,6 +22,11 @@ Last updated: 2026-09-06 (verified + v1.1.0 tagged + deployed — READY)
 - `npm test` green (310 INV/BND/OVR/PRS + 51 marriage + 45 guna + 51 gochara + 15 nitya + 10 verse + 21 city).
 - `npm run build` → `public/ 70 files 4765.2 KB`; `git push origin master` 7734fb5..a5d5826; `git tag v1.1.0` pushed; `wrangler deploy` → `5d4173f3-5d49-489d-8001-b60a96322249` https://astro-cal.srirambm.workers.dev (no asset diff, already current).
 
+## Custom Domain 2026-09-06
+- Wired `muhurta.balaramansriram.com` → `astro-cal` worker via Cloudflare Workers Custom Domain API (`PUT /accounts/e4ef7397/workers/domains` → `ab59784e` cert `ffbce306`). DNS auto-proxied to `104.21.12.36`/`172.67.193.163` (same zone `9470017d` as `balaramansriram.com`). Verified `curl -I https://muhurta.balaramansriram.com` 200 + `nslookup` resolves. `balaramansriram.com` (portfolio worker) untouched; `astro-cal.srirambm.workers.dev` still active as fallback.
+- **CI/CD safe:** `wrangler.toml:1` unchanged (no `routes`/`route` added) — custom domain lives outside code, so `npm run deploy` / `wrangler deploy` never removes it. Future deploys keep domain. No manual DNS needed (Cloudflare auto-creates proxied CNAME).
+- **F deferred:** `docs/enhancements-pipeline.md:32` F **Cancelled / Deferred** per owner — release first, notify later; no hub wiring now.
+
 ## Architectural Decisions
 - Muhurta stays standalone `muhurta.html/muhurta.js/muhurta-scoring.mjs` sharing `LS.birth/view` — no taxonomy fetch in `index` (`hasMuhurta` guard `app.js:1925`).
 - Month table deferred via `IntersectionObserver 200px` + `monthPlaceholder` Compute button; `dayMap` cached `monthLoadState` — selection re-renders from cache, not full `render()`.
@@ -31,9 +36,9 @@ Last updated: 2026-09-06 (verified + v1.1.0 tagged + deployed — READY)
 
 ## Immediate Next Steps
 
-1. ~~Manual QA~~ — done 2026-09-06; `v1.1.0` tagged + pushed + deployed.
+1. ~~Manual QA~~ — done 2026-09-06; `v1.1.0` tagged + pushed + deployed; custom domain live.
 2. PWA/ICS/Print audit for new Key Days card deferred (optional).
-3. Next pipeline item: **F Pradosha/Ekadashi/Amavasya push** via `D:\notif` hub when ready.
+3. Share `https://muhurta.balaramansriram.com` — no further code needed; F remains deferred until post-release.
 
 ## Watch Outs
 
@@ -46,4 +51,4 @@ Last updated: 2026-09-06 (verified + v1.1.0 tagged + deployed — READY)
 - Master session log: `D:\knowledge-base\HANDOFF.md`
 - Project card: `D:\knowledge-base\projects\apps\astro-cal.md`
 - PRD: `D:\astro-cal\PRD.md` · `what-is-personal-mode.md` · `docs/sodashi-tithi-nitya.md`
-- Live: `https://astro-cal.srirambm.workers.dev` · `public/ 70 files` · `serve.cjs http://127.0.0.1:8124/`
+- Live: `https://muhurta.balaramansriram.com` (custom) · `https://astro-cal.srirambm.workers.dev` (fallback) · `public/ 70 files` · `serve.cjs http://127.0.0.1:8124/`
