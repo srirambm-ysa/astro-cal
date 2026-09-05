@@ -166,7 +166,31 @@ Free, private, offline-first.
     </div>
   </div>
 
-  <div class="section-title">Instagram — 6-slide carousel (1080×1080 mock)</div>
+  <div class="section-title">Generated Cards — Ready to post (PNG + WebP in <code>assets/marketing/</code>)</div>
+  <div class="card">
+    <h2>Hero — One big card for Twitter / LinkedIn / Insta <span>reuse across platforms</span></h2>
+    <p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px">Covers all 6 drivers in one share. Use <code>hero-1200x630-og.png</code> for Twitter/LinkedIn OG, <code>hero-1080x1080-square.png</code> for Insta feed, <code>hero-1080x1350-portrait.png</code> for Insta portrait/Reels cover. OG meta already points to <code>/assets/marketing/hero-1200x630-og.png</code> in <code>index.html:10</code>.</p>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 0.9fr;gap:10px;align-items:start">
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px">1200×630 OG (Twitter/LinkedIn)</div><a href="../assets/marketing/hero-1200x630-og.png" target="_blank"><img src="../assets/marketing/hero-1200x630-og.png" alt="Hero 1200x630" style="width:100%;border:1px solid var(--line);border-radius:8px;display:block"></a><div style="font-size:11px;color:var(--ink-soft);margin-top:4px">52 KB PNG · 35 KB WebP — <a href="../assets/marketing/hero-1200x630-og.png" download>Download PNG</a> · <a href="../assets/marketing/hero-1200x630-og.webp" download>WebP</a></div></div>
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px">1080×1080 Square</div><a href="../assets/marketing/hero-1080x1080-square.png" target="_blank"><img src="../assets/marketing/hero-1080x1080-square.png" alt="Hero 1080x1080" style="width:100%;border:1px solid var(--line);border-radius:8px;display:block"></a><div style="font-size:11px;color:var(--ink-soft);margin-top:4px">58 KB PNG · <a href="../assets/marketing/hero-1080x1080-square.png" download>PNG</a> · <a href="../assets/marketing/hero-1080x1080-square.webp" download>WebP</a></div></div>
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px">1080×1350 Portrait</div><a href="../assets/marketing/hero-1080x1350-portrait.png" target="_blank"><img src="../assets/marketing/hero-1080x1350-portrait.png" alt="Hero 1080x1350" style="width:100%;border:1px solid var(--line);border-radius:8px;display:block"></a><div style="font-size:11px;color:var(--ink-soft);margin-top:4px">59 KB PNG · <a href="../assets/marketing/hero-1080x1350-portrait.png" download>PNG</a></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h2>Carousel — 6 slides (1080×1080 + 1080×1350) <span>if you prefer swipe</span></h2>
+    <p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px">Same 6 drivers as code-generated PNGs. Use <code>slide-*-1080.png</code> for feed, <code>slide-*-1350.png</code> for portrait. All in <code>assets/marketing/</code> and auto-deployed via <code>public/assets/marketing/</code>.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <a href="../assets/marketing/slide-01-1080.png" target="_blank"><img src="../assets/marketing/slide-01-1080.png" alt="Slide 1 Avoid Days" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+      <a href="../assets/marketing/slide-02-1080.png" target="_blank"><img src="../assets/marketing/slide-02-1080.png" alt="Slide 2 Panchang" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+      <a href="../assets/marketing/slide-03-1080.png" target="_blank"><img src="../assets/marketing/slide-03-1080.png" alt="Slide 3 Nitya" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+      <a href="../assets/marketing/slide-04-1080.png" target="_blank"><img src="../assets/marketing/slide-04-1080.png" alt="Slide 4 Verse" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+      <a href="../assets/marketing/slide-05-1080.png" target="_blank"><img src="../assets/marketing/slide-05-1080.png" alt="Slide 5 Gochara" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+      <a href="../assets/marketing/slide-06-1080.png" target="_blank"><img src="../assets/marketing/slide-06-1080.png" alt="Slide 6 Muhurta" style="width:100%;border:1px solid var(--line);border-radius:8px"></a>
+    </div>
+    <div style="font-size:11px;color:var(--ink-soft);margin-top:8px">Files: <code>slide-01-1080.png</code> (Avoid) · <code>slide-02-1080.png</code> (Panchang) · <code>slide-03-1080.png</code> (Nitya) · <code>slide-04-1080.png</code> (Verse) · <code>slide-05-1080.png</code> (Gochara) · <code>slide-06-1080.png</code> (Muhurta) + portrait variants. Click any to view full-res.</div>
+  </div>
+
+  <div class="section-title">Instagram — 6-slide carousel (1080×1080 mock — CSS version)</div>
   <div class="ig-grid">
     <div class="slide">
       <div class="kicker">Slide 1 · Avoid Days</div>
