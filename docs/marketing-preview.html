@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Preview — muhurta.balaramansriram.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  :root{
+    --canvas:#FAF8F5; --paper:#FFFFFF; --ink:#2C241D; --ink-soft:#706357;
+    --gold:#C59A4E; --gold-faint:#E8E0D2; --saffron:#D96B27; --vermilion:#B83A2A;
+    --line:#D4C5AC; --teal:#2F7E7E; --night:#262A4A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Eczar",Georgia,serif;background:var(--canvas);color:var(--ink);line-height:1.5;padding:28px 18px}
+  .wrap{max-width:1160px;margin:0 auto}
+  h1{font-family:"Rozha One",Georgia,serif;font-weight:400;font-size:26px;color:var(--vermilion);margin-bottom:4px}
+  .sub{color:var(--ink-soft);font-size:13px;margin-bottom:22px}
+  .sub a{color:var(--vermilion);text-decoration:none;border-bottom:1px solid var(--gold-faint)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;box-shadow:0 1px 0 rgba(197,154,78,.2)}
+  .card h2{font-family:"Rozha One",serif;font-weight:400;font-size:15px;letter-spacing:.02em;margin-bottom:8px;color:var(--ink)}
+  .card h2 span{font-family:"Eczar",serif;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;margin-left:6px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;white-space:pre-wrap;word-break:break-word;background:#FFF9EF;border:1px solid var(--gold-faint);border-radius:8px;padding:10px 11px;line-height:1.55}
+  .copy{margin-top:8px;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gold);background:#fff;padding:5px 10px;border-radius:999px;font-size:12px;cursor:pointer}
+  .copy:active{transform:translateY(1px)}
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+  @media(max-width:760px){.ig-grid{grid-template-columns:repeat(2,1fr)}}
+  .slide{aspect-ratio:1;background:linear-gradient(180deg,#FFFBF0 0%,#F4EFE6 100%);border:1.5px solid var(--gold);border-radius:14px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .slide::before{content:"";position:absolute;inset:8px;border:1px solid var(--gold-faint);border-radius:10px;pointer-events:none}
+  .slide .kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);position:relative}
+  .slide .big{font-family:"Rozha One",serif;font-size:18px;line-height:1.1;color:var(--ink);position:relative}
+  .slide .meta{font-size:11px;color:var(--ink-soft);position:relative;line-height:1.4}
+  .badge{display:inline-block;font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:999px;border:1px solid var(--gold);background:#fff}
+  .badge.vermilion{color:#fff;background:var(--vermilion);border-color:var(--vermilion)}
+  .badge.teal{color:#fff;background:var(--teal);border-color:var(--teal)}
+  .badge.gold{color:#2b1505;background:var(--gold)}
+  .section-title{font-family:"Rozha One",serif;font-weight:400;font-size:18px;margin:18px 0 10px;color:var(--ink)}
+  .pill-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .pill{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--gold-faint);background:#fff;color:var(--ink-soft)}
+  .cta{display:inline-block;margin-top:10px;background:var(--vermilion);color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  .cta.saffron{background:var(--saffron)}
+  .tweet{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;max-width:520px}
+  .tweet .handle{font-size:12px;color:var(--ink-soft)}
+  .tweet .body{font-size:14px;margin:6px 0;line-height:1.5}
+  .tweet .link{color:var(--vermilion);word-break:break-all}
+  .linkedin{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px;max-width:640px}
+  .wa{background:#E7F8EA;border:1px solid #C8E6C9;border-radius:12px;padding:12px;max-width:520px;font-size:13px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .toolbar a{border:1px solid var(--gold);background:#fff;padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--ink);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Marketing Preview — muhurta.balaramansriram.com</h1>
+  <p class="sub">Drafts from <a href="./marketing-drafts.md">docs/marketing-drafts.md</a> · v1.1.0 · Live: <a href="https://muhurta.balaramansriram.com">muhurta.balaramansriram.com</a> · Fallback: <a href="https://astro-cal.srirambm.workers.dev">astro-cal.srirambm.workers.dev</a> — copy any block with the Copy button.</p>
+
+  <div class="toolbar">
+    <a href="https://muhurta.balaramansriram.com" target="_blank" rel="noreferrer">Open Live Site ↗</a>
+    <a href="./marketing-drafts.md" target="_blank">Open Markdown ↗</a>
+    <a href="./remove-custom-domain.md" target="_blank">Domain Removal Doc ↗</a>
+  </div>
+
+  <div class="section-title">Twitter / X — 280c cards</div>
+  <div class="grid">
+    <div class="card">
+      <h2>Pinned Launch <span>1A</span></h2>
+      <div class="mono" id="t1a">We built a Vedic calendar that actually respects the tradition.
+
+Panchang · Chandrashtama (Avoid Days) · Nitya Sadhana · Tirumandiram Verse · Gochara · Muhurta scoring from Muhurta Chintamani
+
+No login. No ads. Free. Offline-first.
+
+→ muhurta.balaramansriram.com
+
+#Panchang #Muhurta #Jyotisha #Tamil</div>
+      <button class="copy" onclick="copyText('t1a')">⎘ Copy</button>
+      <div style="margin-top:10px" class="tweet">
+        <div class="handle">muhurta · @muhurta · 2m</div>
+        <div class="body">We built a Vedic calendar that actually respects the tradition.<br><br>Panchang · Chandrashtama · Nitya Sadhana · Tirumandiram · Gochara · Muhurta scoring from Muhurta Chintamani<br><br>No login. No ads. Free. Offline-first.<br><span class="link">→ muhurta.balaramansriram.com</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Problem / Solution <span>1B</span></h2>
+      <div class="mono" id="t1b">Most muhurta apps dump dates.
+We score them.
+
+Griha Pravesh, Vehicle, Travel — each day rated Shubh/Neutral/Ashubh with classical verse provenance + your personal Tara/Chandrabala.
+
+Try it: muhurta.balaramansriram.com</div>
+      <button class="copy" onclick="copyText('t1b')">⎘ Copy</button>
+    </div>
+    <div class="card">
+      <h2>Thread Hook 1/4 <span>1C</span></h2>
+      <div class="mono" id="t1c">1/ Your birth nakshatra decides more than you think.
+
+We made a daily calendar that shows:
+→ Chandrashtama Avoid Days (first)
+→ Today's Nitya Devi & mantra
+→ Tirumandiram verse
+→ Gochara transit for YOUR rashi
+
+Thread ↓
+muhurta.balaramansriram.com</div>
+      <button class="copy" onclick="copyText('t1c')">⎘ Copy</button>
+      <div class="mono" style="margin-top:8px" id="t1c2">2/ Avoid Days stays at the top. Always. If it's your Ashtama Chandra, avoid big initiations — routine only. Classical, not cute.
+
+3/ Then: today's Panchang digest (Tithi·Nakshatra·Yoga·Karana·Rahu/Yama/Gulika·Abhijit) + Nitya Devi with kala/bija behind a diksha note.
+
+4/ Add Tirumandiram Verse of the Day (365), 7-day Pradosham/Ekadashi pulse, and Gochara pulse (Moon house + Tara Bala till/from). Local-first. No backend.</div>
+      <button class="copy" onclick="copyText('t1c2')">⎘ Copy 2-4</button>
+    </div>
+    <div class="card">
+      <h2>Marriage Angle <span>1D</span></h2>
+      <div class="mono" id="t1d">Planning an alliance?
+
+Check 36-guna Ashtakoota, Nadi/Bhakoot pariharas, then scan 6 months for marriage muhurta — all in one page.
+
+→ muhurta.balaramansriram.com/marriage.html
+
+#GunaMilap #VivahaMuhurta</div>
+      <button class="copy" onclick="copyText('t1d')">⎘ Copy</button>
+    </div>
+  </div>
+
+  <div class="section-title">LinkedIn — Founder Story (copy-ready)</div>
+  <div class="grid">
+    <div class="card">
+      <h2>LinkedIn — Founder Story <span>2A recommended</span></h2>
+      <div class="mono" id="li2a">I wanted a muhurta calendar I could trust — not a Sun-sign horoscope, not a scraped Drik list.
+
+So we built muhurta.balaramansriram.com — a classical, local-first Vedic calendar.
+
+What it does:
+• Panchang Digest — Tithi, Nakshatra, Yoga, Karana, Sunrise, Rahu/Yama/Gulika, Abhijit
+• Avoid Days — Chandrashtama (Ashtama Chandra) stays at the very top, never diluted
+• Nitya Sadhana — Daily 16 Kalā Devi with kala/bija & mantra (Sri Vidya, behind diksha note)
+• Tirumandiram Verse of the Day — 365 curated verses, Tamil + transliteration + English
+• Gochara — Monthly transits + Today's Gochara Pulse (Moon house + Tara Bala, Vedha-aware)
+• Muhurta Finder — Classical scoring (Muhurta Chintamani corpus, 250 rules) with Full/Soft/Personal modes
+• Marriage & Guna Milap — 36-guna matching with parihaaras + wedding date scan
+
+Built with swisseph-wasm (Lahiri ayanamsa), runs 100% offline. No tracking. No paywall.
+
+It's live for everyday use: https://muhurta.balaramansriram.com
+I'd love feedback from panchangam users, purohits, and families planning 2026-27 events.
+
+#VedicCalendar #MuhurtaChintamani #TamilCulture #OpenSource #Jyotisha</div>
+      <button class="copy" onclick="copyText('li2a')">⎘ Copy</button>
+    </div>
+    <div class="card">
+      <h2>LinkedIn — Short <span>2B</span></h2>
+      <div class="mono" id="li2b">New launch: A serious muhurta calendar for Tamil Nadu — built on BPHS & Muhurta Chintamani, not pop astrology.
+
+→ Daily Nitya, Panchang, 7-day pulse of Pradosham/Ekadashi/Siddhar Jayanthis, and a classical muhurta scorer you can verify verse-by-verse.
+
+Free, private, offline-first.
+→ https://muhurta.balaramansriram.com</div>
+      <button class="copy" onclick="copyText('li2b')">⎘ Copy</button>
+      <div class="linkedin" style="margin-top:10px">
+        <strong style="font-family: Rozha One,serif">Preview as LinkedIn card</strong>
+        <p style="margin-top:6px;font-size:13px;color:var(--ink-soft)">Image: Panchang digest screenshot + Nitya card + “Offline-first · No login · Free”</p>
+        <a class="cta" href="https://muhurta.balaramansriram.com" target="_blank">Try muhurta.balaramansriram.com →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Instagram — 6-slide carousel (1080×1080 mock)</div>
+  <div class="ig-grid">
+    <div class="slide">
+      <div class="kicker">Slide 1 · Avoid Days</div>
+      <div class="big">Avoid Days<br>First.</div>
+      <div class="meta"><span class="badge vermilion">Chandrashtama</span> Peak 06 Sep · routine only</div>
+    </div>
+    <div class="slide">
+      <div class="kicker">Slide 2 · Today's Panchang</div>
+      <div class="big">Saptami<br>· Krittika</div>
+      <div class="meta">Vyāghāta · Viṣṭi · Rahu 11:12 · Abhijit 11:48<br><span class="badge">Sunrise 05:57</span></div>
+    </div>
+    <div class="slide">
+      <div class="kicker">Slide 3 · Nitya Sadhana</div>
+      <div class="big">Śivadūtī</div>
+      <div class="meta">kala Śaśinī · bīja ṛṃ · mantra copy<br><span class="badge gold">16 Kalās</span> dīkṣā note</div>
+    </div>
+    <div class="slide">
+      <div class="kicker">Slide 4 · Verse of the Day</div>
+      <div class="big" style="font-size:13px;line-height:1.4">Tantra #2046<br>திருமந்திரம்</div>
+      <div class="meta">Tamil pre-wrap + transliteration + English<br><span class="badge">Read on tirumandiram.in ↗</span></div>
+    </div>
+    <div class="slide">
+      <div class="kicker">Slide 5 · Gochara Pulse</div>
+      <div class="big" style="font-size:15px">Moon in 8th<br>→ Aśubha</div>
+      <div class="meta"><span class="badge teal">till 07:26</span> → 9th Aśubha from 07:26<br>Tara Vadha ⚠️</div>
+    </div>
+    <div class="slide">
+      <div class="kicker">Slide 6 · Muhurta Score</div>
+      <div class="big" style="font-size:15px">Griha Pravesh<br>Sep 2026</div>
+      <div class="meta"><span class="badge gold">5 Shubh</span> <span class="badge">12 Soft</span> <span class="badge">2 Personal</span></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h2>Instagram Caption A <span>copy</span></h2>
+    <div class="mono" id="igcap">Your day, according to the sastra — not the algorithm.
+
+Daily panchang, Chandrashtama avoid days, Nitya Devi sadhana, Tirumandiram verse, and a classical muhurta finder.
+
+No login. No ads. Just tradition, made usable.
+
+Link in bio → muhurta.balaramansriram.com
+
+#Panchangam #Muhurtham #Tirumandiram #NityaDevi #Gochara #TamilTradition #VedicCalendar</div>
+    <button class="copy" onclick="copyText('igcap')">⎘ Copy</button>
+    <p style="margin-top:8px;font-size:11px;color:var(--ink-soft)">Alt text per slide: Avoid bar with legend, Panchang hero with 8 fields, Nitya card with copy button, Verse Tamil pre-wrap, Gochara dual chips till/from, Muhurta table Shubh chips.</p>
+  </div>
+
+  <div class="section-title">WhatsApp / Telegram Forward</div>
+  <div class="card">
+    <h2>Family Group Forward <span>copy</span></h2>
+    <div class="mono" id="wafwd">🙏 *Vedic Calendar — Now Live*
+
+Namaste — we launched a free daily Panchang & Muhurta tool made for Tamil Nadu families:
+
+✓ Today's Tithi-Nakshatra-Yoga-Karana
+✓ Chandrashtama / Avoid Days (top)
+✓ Daily Nitya Devi + mantra
+✓ Tirumandiram Verse of the Day
+✓ 7-day Pradosham / Ekadashi / Siddhar puja reminder
+✓ Muhurta finder for Grha Pravesh, Vehicle, Travel
+
+No app to install. Works offline.
+👉 https://muhurta.balaramansriram.com
+
+Please share with family / purohit. Feedback welcome.</div>
+    <button class="copy" onclick="copyText('wafwd')">⎘ Copy</button>
+    <div class="wa" style="margin-top:10px">Preview as WhatsApp bubble — same text, check marks render with system font. Keep the 👉 link unfurled.</div>
+  </div>
+
+  <div class="section-title">Tamil version + Hashtags</div>
+  <div class="grid">
+    <div class="card">
+      <h2>Tamil <span>for Tamil pages</span></h2>
+      <div class="mono" id="tam">முகூர்த்த காலண்டர் — இன்று நேரடியாக
+
+தின பஞ்சாங்கம் · சந்திராஷ்டமம் (Avoid Days) · நித்யா தேவி · திருமந்திரம் பாடல் · கோச்சார பலன் · முகூர்த்த மதிப்பீடு (முகூர்த்த சிந்தாமணி)
+
+இலவசம் · உள்நுழைவு இல்லை · ஆஃப்லைனில் இயங்கும்
+
+→ https://muhurta.balaramansriram.com</div>
+      <button class="copy" onclick="copyText('tam')">⎘ Copy</button>
+    </div>
+    <div class="card">
+      <h2>Hashtag Packs <span>copy</span></h2>
+      <div class="pill-row">
+        <span class="pill">#Muhurta</span><span class="pill">#Panchang</span><span class="pill">#Panchangam</span><span class="pill">#Jyotisha</span><span class="pill">#VedicAstrology</span><span class="pill">#TamilCulture</span><span class="pill">#TamilTradition</span><span class="pill">#SanatanaDharma</span><span class="pill">#SriVidya</span><span class="pill">#Tirumandiram</span>
+      </div>
+      <div class="mono" id="tags">#Muhurta #Panchang #Panchangam #Jyotisha #VedicAstrology #TamilCulture #TamilTradition #SanatanaDharma #SriVidya #Tirumandiram
+#GunaMilap #Ashtakoota #VivahaMuhurta
+#Gochara #Chandrabala #TaraBala #BPHS</div>
+      <button class="copy" onclick="copyText('tags')">⎘ Copy</button>
+    </div>
+  </div>
+
+  <p style="margin:22px 0 40px;color:var(--ink-soft);font-size:11px">Generated 2026-09-06 · Source: docs/marketing-drafts.md · Assets: favicon-calendar.svg, vectors.css, provenance_registry.json · Next: update copy after feedback; do not claim beyond 6 shipped drivers (Panchang/Nitya/Verse/Pulse/Gochara/City).</p>
+</div>
+<script>
+function copyText(id){
+  const el=document.getElementById(id);
+  const text=el.innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=el.nextElementSibling;
+    if(btn && btn.classList.contains('copy')){ const o=btn.innerText; btn.innerText='✓ Copied'; setTimeout(()=>btn.innerText=o,1200); }
+  }).catch(()=>{
+    const r=document.createRange(); r.selectNodeContents(el); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  });
+}
+</script>
+</body>
+</html>
