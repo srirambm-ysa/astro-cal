@@ -1,6 +1,6 @@
 {
   "name": "astro-cal",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Vedic muhurta calendar (vanilla ESM + swisseph-wasm)",
   "type": "module",

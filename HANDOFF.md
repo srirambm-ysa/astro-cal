@@ -4,7 +4,7 @@
 > [`D:\knowledge-base\HANDOFF.md`](file:///D:/knowledge-base/HANDOFF.md); this file is a convenience copy
 > so the folder is self-describing when opened directly. Refreshed by `close-work astro-cal`.
 
-Last updated: 2026-09-06 (Key Days + Help split + Nitya tradition + deploy — READY)
+Last updated: 2026-09-06 (verified + v1.1.0 tagged + deployed — READY)
 
 ## Goal Accomplished (this session — 2026-09-05/06)
 
@@ -17,6 +17,11 @@ Last updated: 2026-09-06 (Key Days + Help split + Nitya tradition + deploy — R
 - **Deploy** `wrangler deploy` → `1788206d-b44f-4831-b559-f8bc24e9acfd` https://astro-cal.srirambm.workers.dev — 27 assets uploaded.
 - Previous Nitya images + micro-icons still live (`nityas-webp` 4-8KB, header `icon-btn` 38px).
 
+## Verified 2026-09-06
+- Nitya mantras **verified by owner** — 16 verbatim `nityas/nitya-mantras.txt` kept as-is.
+- `npm test` green (310 INV/BND/OVR/PRS + 51 marriage + 45 guna + 51 gochara + 15 nitya + 10 verse + 21 city).
+- `npm run build` → `public/ 70 files 4765.2 KB`; `git push origin master` 7734fb5..a5d5826; `git tag v1.1.0` pushed; `wrangler deploy` → `5d4173f3-5d49-489d-8001-b60a96322249` https://astro-cal.srirambm.workers.dev (no asset diff, already current).
+
 ## Architectural Decisions
 - Muhurta stays standalone `muhurta.html/muhurta.js/muhurta-scoring.mjs` sharing `LS.birth/view` — no taxonomy fetch in `index` (`hasMuhurta` guard `app.js:1925`).
 - Month table deferred via `IntersectionObserver 200px` + `monthPlaceholder` Compute button; `dayMap` cached `monthLoadState` — selection re-renders from cache, not full `render()`.
@@ -26,9 +31,9 @@ Last updated: 2026-09-06 (Key Days + Help split + Nitya tradition + deploy — R
 
 ## Immediate Next Steps
 
-1. Manual QA pending your nitya mantra check — confirm 16 strings as printed `nitya_devis.json:20` before final tag.
-2. Optional: tag release `git tag v1.x` + changelog if manual check passes; no code blockers.
-3. PWA/ICS/Print audit for new Key Days card deferred.
+1. ~~Manual QA~~ — done 2026-09-06; `v1.1.0` tagged + pushed + deployed.
+2. PWA/ICS/Print audit for new Key Days card deferred (optional).
+3. Next pipeline item: **F Pradosha/Ekadashi/Amavasya push** via `D:\notif` hub when ready.
 
 ## Watch Outs
 
